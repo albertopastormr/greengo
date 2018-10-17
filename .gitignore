@@ -12,6 +12,7 @@
 
 # Package Files #
 *.jar
+!lib/*.jar
 *.war
 *.nar
 *.ear
@@ -29,3 +30,5 @@ code.iml
 .project
 .classpath
 META-INF/
+log/
+package-info.java
