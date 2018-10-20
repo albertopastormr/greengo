@@ -1,4 +1,12 @@
 package business.vehicle.factory.imp;
 
-public class ASVehicleFactoryImp {
+import business.vehicle.as.ASVehicle;
+import business.vehicle.as.imp.ASVehicleImp;
+import business.vehicle.factory.ASVehicleFactory;
+
+public class ASVehicleFactoryImp extends ASVehicleFactory {
+    @Override
+    public ASVehicle generateASVehicle() {
+        return new ASVehicleImp();
+    }
 }

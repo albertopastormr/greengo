@@ -1,20 +1,14 @@
-package business.city.as.imp;
+package integration.city.dao.imp;
 
 import business.city.TCity;
-import business.city.as.ASCity;
 import business.client.TClient;
+import integration.city.dao.DAOCity;
 
 import java.util.Collection;
 
-public class ASCityImp implements ASCity {
-
+public class DAOCityImp implements DAOCity {
     @Override
     public Integer create(TCity city) {
-        return null;
-    }
-
-    @Override
-    public Integer drop(TCity city) {
         return null;
     }
 
@@ -24,12 +18,12 @@ public class ASCityImp implements ASCity {
     }
 
     @Override
-    public TCity show(Integer id) {
+    public TCity readById(Integer id) {
         return null;
     }
 
     @Override
-    public Collection<TCity> showAll() {
+    public Collection<TCity> readAll() {
         return null;
     }
 

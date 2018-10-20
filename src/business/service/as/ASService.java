@@ -1,4 +1,20 @@
 package business.service.as;
 
-public class ASService {
+import business.service.TService;
+
+import java.util.Collection;
+
+public interface ASService {
+    Integer create(TService service);
+
+    Integer drop(TService service);
+
+    Integer update(TService service);
+
+    TService show (Integer id);
+
+    Collection<TService> showAll ();
+
+    Collection<TService> showServicesFromLevel(Integer level);
+
 }

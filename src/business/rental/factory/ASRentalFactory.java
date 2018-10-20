@@ -1,4 +1,16 @@
 package business.rental.factory;
 
-public class ASRentalFactory {
+import business.rental.as.ASRental;
+import business.rental.factory.imp.ASRentalFactoryImp;
+
+public abstract class ASRentalFactory {
+    private static ASRentalFactory instance;
+
+    public static ASRentalFactory getInstance(){
+        if(instance == null)
+            instance = new ASRentalFactoryImp();
+        return instance;
+    }
+
+    public abstract ASRental generateASRental();
 }
