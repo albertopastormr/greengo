@@ -1,4 +1,20 @@
 package business.client.as;
 
-public class ASClient {
+import business.client.TClient;
+
+import java.util.Collection;
+
+public interface ASClient {
+    Integer create(TClient client);
+
+    Integer drop(TClient client);
+
+    Integer update(TClient client);
+
+    TClient show (Integer id);
+
+    Collection<TClient> showAll ();
+
+    Collection<TClient> showAllNRentals (Integer N);
+
 }
