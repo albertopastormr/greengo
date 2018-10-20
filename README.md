@@ -26,11 +26,11 @@ Go to /bin directory:
 
 If you are in MariaDb terminal: (keys) Ctrl + C
 
-`mysql -u manager -p ifesoft < {PATH}/ifesoft-create-db.sql`
+`mysql -u manager -p greengo < {PATH}/greengo-create-db.sql`
 
 Insert the password `manager-if`.
 
-this imports an existing database with a valid structure for ifesoft.
+this imports an existing database with a valid structure for greengo.
 
 ## Authors
 The development team consists in a class-group of seven students:
