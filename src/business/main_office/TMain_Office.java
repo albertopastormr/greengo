@@ -5,14 +5,12 @@ public class TMain_Office {
 	private int id;
 	private String city;
 	private String adress;
-	private float total_salary;
 	private boolean active;
 
-	public TMain_Office(int id, String city, String adress, float total_salary, boolean active) {
+	public TMain_Office(int id, String city, String adress, boolean active) {
 		this.id = id;
 		this.city = city;
 		this.adress = adress;
-		this.total_salary = total_salary;
 		this.active = active;
 	}
 
@@ -38,14 +36,6 @@ public class TMain_Office {
 
 	public void setAdress(String adress) {
 		this.adress = adress;
-	}
-
-	public float getTotal_salary() {
-		return total_salary;
-	}
-
-	public void setTotal_salary(float total_salary) {
-		this.total_salary = total_salary;
 	}
 
 	public boolean isActive() {
