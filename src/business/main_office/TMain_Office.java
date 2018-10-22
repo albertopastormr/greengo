@@ -2,12 +2,12 @@ package business.main_office;
 
 public class TMain_Office {
 
-	private int id;
+	private Integer id;
 	private String city;
 	private String adress;
 	private boolean active;
 
-	public TMain_Office(int id, String city, String adress, boolean active) {
+	public TMain_Office(Integer id, String city, String adress, boolean active) {
 		this.id = id;
 		this.city = city;
 		this.adress = adress;
@@ -17,11 +17,11 @@ public class TMain_Office {
 	public TMain_Office(){
 	}
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 

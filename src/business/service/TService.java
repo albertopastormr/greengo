@@ -2,14 +2,14 @@ package business.service;
 
 public class TService {
 
-	private int id;
+	private Integer id;
 	private int capacity;
 	private boolean active;
 	private String type;
 	private String address;
 	private int vehicles_attended;
 
-	public TService(int id,  String type, String address, int capacity, int vehicles_attended,  boolean active) {
+	public TService(Integer id,  String type, String address, int capacity, int vehicles_attended,  boolean active) {
 		this.id = id;
 		this.type = type;
 		this.capacity = capacity;
@@ -21,11 +21,11 @@ public class TService {
 	public TService(){
 	}
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 

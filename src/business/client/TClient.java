@@ -1,13 +1,15 @@
 package business.client;
 
+import org.omg.PortableInterceptor.INACTIVE;
+
 public class TClient {
 
-	private int id;
+	private Integer id;
 	private String id_card_number;
 	private int rentals_number;
 	private boolean active;
 
-	public TClient(int id, String id_card_number, int rentals_number, boolean active) {
+	public TClient(Integer id, String id_card_number, int rentals_number, boolean active) {
 		this.id = id;
 		this.id_card_number = id_card_number;
 		this.rentals_number = rentals_number;
@@ -17,11 +19,11 @@ public class TClient {
 	public TClient(){
 	}
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 

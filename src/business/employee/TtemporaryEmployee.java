@@ -8,7 +8,7 @@ public class TtemporaryEmployee extends TEmployee {
 
 	}
 
-	public TtemporaryEmployee(int id, String id_card_number, float salary, boolean active, int id_main_office, int worked_hours){
+	public TtemporaryEmployee(Integer id, String id_card_number, float salary, boolean active, Integer id_main_office, int worked_hours){
 		super(id, id_card_number, salary, active, id_main_office, "Temporary");
 		this.worked_hours = worked_hours;
 	}

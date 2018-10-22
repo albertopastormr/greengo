@@ -2,14 +2,14 @@ package business.vehicle;
 
 public class TVehicle {
 
-	private int id;
+	private Integer id;
 	private String brand;
 	private boolean active;
 	private boolean occupied;
 	private int km_travelled;
 	private int estimated_duration;
 
-	public TVehicle(int id, String brand, boolean active, boolean occupied, int km_travelled, int estimated_duration) {
+	public TVehicle(Integer id, String brand, boolean active, boolean occupied, int km_travelled, int estimated_duration) {
 		this.id = id;
 		this.brand = brand;
 		this.active = active;
@@ -21,11 +21,11 @@ public class TVehicle {
 	public TVehicle(){
 	}
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 

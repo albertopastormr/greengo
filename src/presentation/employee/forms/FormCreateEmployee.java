@@ -143,7 +143,7 @@ public class FormCreateEmployee extends JDialog {
 
 						//Invoke the controller and execute "Set salary" operation.
 					}
-
+					dispose();
 					//Invoke the controller and execute "Create Employee" operation.
 
 				} catch(Exception e){
@@ -194,7 +194,10 @@ public class FormCreateEmployee extends JDialog {
 
 	}
 
-
+	public static void main(String[] Args){
+		FormCreateEmployee f = new FormCreateEmployee();
+		f.setVisible(true);
+	}
 
 
 
