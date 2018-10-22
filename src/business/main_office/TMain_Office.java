@@ -14,6 +14,9 @@ public class TMain_Office {
 		this.active = active;
 	}
 
+	public TMain_Office(){
+	}
+
 	public int getId() {
 		return id;
 	}

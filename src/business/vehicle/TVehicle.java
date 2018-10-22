@@ -18,6 +18,9 @@ public class TVehicle {
 		this.estimated_duration = estimated_duration;
 	}
 
+	public TVehicle(){
+	}
+
 	public int getId() {
 		return id;
 	}

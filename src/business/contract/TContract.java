@@ -16,6 +16,9 @@ public class TContract {
 		this.active = active;
 	}
 
+	public  TContract(){
+	}
+
 	public int getId() {
 		return id;
 	}

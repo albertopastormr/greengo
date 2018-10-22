@@ -14,6 +14,9 @@ public class TClient {
 		this.active = active;
 	}
 
+	public TClient(){
+	}
+
 	public int getId() {
 		return id;
 	}

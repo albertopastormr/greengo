@@ -1,5 +1,5 @@
 package presentation.service;
 
-public class UIServiceImp {
+public class UIServiceImp{
 
 }

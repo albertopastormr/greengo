@@ -16,6 +16,9 @@ public class TEmployee {
 		this.id_main_office = id_main_office;
 	}
 
+	public TEmployee(){
+	}
+
 	public int getId() {
 		return id;
 	}

@@ -15,6 +15,8 @@ public class TRental {
 		this.km_rented = km_rented;
 		this.id_client = id_client;
 	}
+	public TRental(){
+	}
 
 	public int getId() {
 		return id;

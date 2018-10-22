@@ -9,13 +9,16 @@ public class TService {
 	private String address;
 	private int vehicles_attended;
 
-	public TService(int id, int capacity, boolean active, String type, String address, int vehicles_attended) {
+	public TService(int id,  String type, String address, int capacity, int vehicles_attended,  boolean active) {
 		this.id = id;
-		this.capacity = capacity;
-		this.active = active;
 		this.type = type;
+		this.capacity = capacity;
 		this.address = address;
 		this.vehicles_attended = vehicles_attended;
+		this.active = active;
+	}
+
+	public TService(){
 	}
 
 	public int getId() {

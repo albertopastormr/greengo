@@ -12,6 +12,9 @@ public class TCity {
 		this.active = active;
 	}
 
+	public TCity(){
+	}
+
 	public int getId() {
 		return id;
 	}
