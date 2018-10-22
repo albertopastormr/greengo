@@ -94,10 +94,10 @@ public class FormCreateService extends JDialog{
 			public void actionPerformed(ActionEvent e) {
 				TService service = new TService();
 				try {
-					service.setType(Util.parseaString(typeText.getText()));
-					service.setAddress(Util.parseaString(addressText.getText()));
-					service.setCapacity(Util.parseaIntNoNegativo(capacityText.getText()));
-					service.setVehicles_attended(Util.parseaIntNoNegativo(vehicles_attendedText.getText()));
+					service.setType(Util.parseString(typeText.getText()));
+					service.setAddress(Util.parseString(addressText.getText()));
+					service.setCapacity(Util.parseNoNegativeInt(capacityText.getText()));
+					service.setVehicles_attended(Util.parseNoNegativeInt(vehicles_attendedText.getText()));
 				} catch (Exception ex) {
 					JOptionPane.showMessageDialog(getRootPane(), ex.getMessage(), "ERROR CREATE SERVICE", JOptionPane.ERROR_MESSAGE);
 				}

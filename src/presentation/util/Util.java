@@ -21,14 +21,14 @@ public class Util {
 				JComponent.WHEN_IN_FOCUSED_WINDOW);
 	}
 
-	public static String parseaString(String s){
+	public static String parseString(String s){
 		if (s == null || s.isEmpty()){
 			throw new NullPointerException("Field empty");
 		}
 		return s;
 	}
 
-	public static int parseaIntNoNegativo(String s) throws ParseException, NumberFormatException, NullPointerException {
+	public static int parseNoNegativeInt(String s) throws ParseException, NumberFormatException, NullPointerException {
 		if (s == null || s.isEmpty()){
 			throw new ParseException("Value incorrect", 0);
 		}
@@ -40,7 +40,7 @@ public class Util {
 		return x;
 	}
 
-	public static float parseaFloatNoNegativo(String s)throws ParseException, NumberFormatException, NullPointerException{
+	public static float parseNoNegativeFloat(String s)throws ParseException, NumberFormatException, NullPointerException{
 		if (s == null || s.isEmpty()){
 			throw new ParseException("Value incorrect", 0);
 		}
@@ -52,11 +52,11 @@ public class Util {
 		return x;
 	}
 
-	public static boolean parseaActiva(String s){
+	public static boolean parseActive(String s){
 		return s.equals("true");
 	}
 
-	public static void informar(String s) {
+	public static void inform(String s) {
 		JOptionPane.showMessageDialog(null, s);
 	}
 }

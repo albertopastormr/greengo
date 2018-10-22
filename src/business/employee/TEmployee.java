@@ -7,17 +7,23 @@ public class TEmployee {
 	private float salary;
 	private boolean active;
 	private int id_main_office;
+	private String type;
 
-	public TEmployee(int id, String id_card_number, float salary, boolean active, int id_main_office) {
+
+	public TEmployee(){
+
+	}
+
+
+	public TEmployee(int id, String id_card_number, float salary, boolean active, int id_main_office, String type) {
 		this.id = id;
 		this.id_card_number = id_card_number;
 		this.salary = salary;
 		this.active = active;
 		this.id_main_office = id_main_office;
+		this.type = type;
 	}
 
-	public TEmployee(){
-	}
 
 	public int getId() {
 		return id;
@@ -57,5 +63,13 @@ public class TEmployee {
 
 	public void setId_main_office(int id_main_office) {
 		this.id_main_office = id_main_office;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 }
