@@ -1,4 +1,6 @@
-# GreenGO
+# GreenGo
+
+
 ## About
 GreenGo is an manage car rentals desktop java organizer made for the subject Software Modeling of Software Engineer Bachelor's Degree at Universidad Complutense Madrid.
 The documentation has been written in spanish because of a language constraint in the assignment for the subject as some classes at the code.
