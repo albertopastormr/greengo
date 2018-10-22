@@ -2,11 +2,11 @@ package business.city;
 
 public class TCity {
 
-	private int id;
+	private Integer id;
 	private String name;
 	private boolean active;
 
-	public TCity(int id, String name, boolean active) {
+	public TCity(Integer id, String name, boolean active) {
 		this.id = id;
 		this.name = name;
 		this.active = active;
