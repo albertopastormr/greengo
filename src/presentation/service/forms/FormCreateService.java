@@ -23,7 +23,7 @@ public class FormCreateService extends JDialog{
 	public FormCreateService() {
 		setTitle("Create service");
 		setResizable(false);
-		//Util.addEscapeListener(this); an util class is needed
+		Util.addEscapeListener(this);
 		initGUI();
 	}
 
@@ -98,6 +98,7 @@ public class FormCreateService extends JDialog{
 					service.setAddress(Util.parseString(addressText.getText()));
 					service.setCapacity(Util.parseNoNegativeInt(capacityText.getText()));
 					service.setVehicles_attended(Util.parseNoNegativeInt(vehicles_attendedText.getText()));
+					dispose();
 				} catch (Exception ex) {
 					JOptionPane.showMessageDialog(getRootPane(), ex.getMessage(), "ERROR CREATE SERVICE", JOptionPane.ERROR_MESSAGE);
 				}
@@ -123,5 +124,11 @@ public class FormCreateService extends JDialog{
 		activeComboBox = new JComboBox();
 		activeComboBox.addItem("true");
 		activeComboBox.addItem("false");
+	}
+
+	public static void main(String[] args) {
+
+		FormCreateService formCreateService = new FormCreateService();
+		formCreateService.setVisible(true);
 	}
 }
