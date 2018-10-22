@@ -6,6 +6,8 @@ public class TCity {
 	private String name;
 	private boolean active;
 
+	public TCity(){}
+
 	public TCity(Integer id, String name, boolean active) {
 		this.id = id;
 		this.name = name;

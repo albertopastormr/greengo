@@ -8,6 +8,8 @@ public class TRental {
 	private Integer km_rented;
 	private Integer id_client;
 
+	public TRental(){}
+
 	public TRental(Integer id, Integer id_vehicle, boolean active, Integer km_rented, Integer id_client) {
 		this.id = id;
 		this.id_vehicle = id_vehicle;

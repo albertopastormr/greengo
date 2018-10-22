@@ -9,6 +9,8 @@ public class TVehicle {
 	private Integer km_travelled;
 	private Integer estimated_duration;
 
+	public TVehicle(){}
+
 	public TVehicle(Integer id, String brand, boolean active, boolean occupied, Integer km_travelled, Integer estimated_duration) {
 		this.id = id;
 		this.brand = brand;

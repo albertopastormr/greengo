@@ -8,6 +8,8 @@ public class TContract {
 	private Integer id_service;
 	private boolean active;
 
+	public TContract(){}
+
 	public TContract(Integer id, Integer service_level, Integer id_main_office, Integer id_service, boolean active) {
 		this.id = id;
 		this.service_level = service_level;

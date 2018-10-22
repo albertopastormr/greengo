@@ -7,6 +7,8 @@ public class TMain_Office {
 	private String adress;
 	private boolean active;
 
+	public TMain_Office(){}
+
 	public TMain_Office(Integer id, String city, String adress, boolean active) {
 		this.id = id;
 		this.city = city;

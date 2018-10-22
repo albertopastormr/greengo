@@ -7,6 +7,7 @@ public class TClient {
 	private Integer rentals_number;
 	private boolean active;
 
+	public TClient(){}
 	public TClient(Integer id, String id_card_number, Integer rentals_number, boolean active) {
 		this.id = id;
 		this.id_card_number = id_card_number;

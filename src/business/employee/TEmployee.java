@@ -2,12 +2,14 @@ package business.employee;
 
 public class TEmployee {
 
-	private Integer id;
-	private String id_card_number;
-	private float salary;
-	private boolean active;
-	private Integer id_main_office;
+	private Integer id = null;
+	private String id_card_number = null;
+	private Float salary = null;
+	private Boolean active = null;
+	private Integer id_main_office = null;
 
+	public TEmployee(){}
+	
 	public TEmployee(Integer id, String id_card_number, float salary, boolean active, Integer id_main_office) {
 		this.id = id;
 		this.id_card_number = id_card_number;

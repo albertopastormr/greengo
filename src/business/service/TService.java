@@ -9,6 +9,8 @@ public class TService {
 	private String address;
 	private Integer vehicles_attended;
 
+	public TService(){}
+
 	public TService(Integer id, Integer capacity, boolean active, String type, String address, Integer vehicles_attended) {
 		this.id = id;
 		this.capacity = capacity;
