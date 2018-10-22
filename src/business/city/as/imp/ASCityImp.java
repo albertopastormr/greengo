@@ -14,7 +14,7 @@ public class ASCityImp implements ASCity {
     }
 
     @Override
-    public Integer drop(TCity city) {
+    public Integer drop(Integer city) {
         return null;
     }
 

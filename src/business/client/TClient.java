@@ -2,19 +2,19 @@ package business.client;
 
 public class TClient {
 
-	private int id;
+	private Integer id;
 	private String id_card_number;
-	private int rentals_number;
+	private Integer rentals_number;
 	private boolean active;
 
-	public TClient(int id, String id_card_number, int rentals_number, boolean active) {
+	public TClient(Integer id, String id_card_number, Integer rentals_number, boolean active) {
 		this.id = id;
 		this.id_card_number = id_card_number;
 		this.rentals_number = rentals_number;
 		this.active = active;
 	}
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
@@ -30,7 +30,7 @@ public class TClient {
 		this.id_card_number = id_card_number;
 	}
 
-	public int getRentals_number() {
+	public Integer getRentals_number() {
 		return rentals_number;
 	}
 

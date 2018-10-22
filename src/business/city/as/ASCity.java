@@ -8,7 +8,7 @@ import java.util.Collection;
 public interface ASCity {
     Integer create(TCity city);
 
-    Integer drop(TCity city);
+    Integer drop(Integer city);
 
     Integer update(TCity city);
 

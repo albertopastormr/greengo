@@ -2,13 +2,13 @@ package business.employee;
 
 public class TEmployee {
 
-	private int id;
+	private Integer id;
 	private String id_card_number;
 	private float salary;
 	private boolean active;
-	private int id_main_office;
+	private Integer id_main_office;
 
-	public TEmployee(int id, String id_card_number, float salary, boolean active, int id_main_office) {
+	public TEmployee(Integer id, String id_card_number, float salary, boolean active, Integer id_main_office) {
 		this.id = id;
 		this.id_card_number = id_card_number;
 		this.salary = salary;
@@ -16,7 +16,7 @@ public class TEmployee {
 		this.id_main_office = id_main_office;
 	}
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
@@ -48,11 +48,11 @@ public class TEmployee {
 		this.active = active;
 	}
 
-	public int getId_main_office() {
+	public Integer getId_main_office() {
 		return id_main_office;
 	}
 
-	public void setId_main_office(int id_main_office) {
+	public void setId_main_office(Integer id_main_office) {
 		this.id_main_office = id_main_office;
 	}
 }
