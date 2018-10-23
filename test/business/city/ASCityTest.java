@@ -1,6 +1,8 @@
 package business.city;
 
+import business.city.as.ASCity;
 import business.city.as.imp.ASCityImp;
+import business.city.factory.ASCityFactory;
 import business.client.TClient;
 import business.rental.TRental;
 import business.vehicle.TVehicle;
@@ -24,13 +26,13 @@ import java.util.Collection;
 
 public class ASCityTest {
 
-    private static ASCityImp as;
+    private static ASCity as;
 
 	@BeforeEach
-	public void setUp() throws Exception {
+	private void setUp() throws Exception {
 		DAOCity dao = DAOCityFactory.getInstance().generateDAOCity();
 		dao.deleteAll();
-		as = new ASCityImp();
+		as = ASCityFactory.getInstance().generateASCity();
 	}
 
 	//create method tests
