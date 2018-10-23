@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.text.ParseException;
+import java.util.Date;
 
 public class Util {
 
@@ -54,6 +55,15 @@ public class Util {
 
 	public static boolean parseActive(String s){
 		return s.equals("true");
+	}
+
+	public static boolean parseDates(Date d1, Date d2){ //TODO. This method has to return true if d2 > d1.
+		return true;
+	}
+
+	public static boolean parseDateNull(Date d) throws NullPointerException{
+		if(d == null) throw new NullPointerException("Date field is empty");
+		else return true;
 	}
 
 	public static void inform(String s) {

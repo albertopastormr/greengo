@@ -1,5 +1,7 @@
 package business.rental;
 
+import java.util.Date;
+
 public class TRental {
 
 	private Integer id;
@@ -7,15 +9,19 @@ public class TRental {
 	private boolean active;
 	private Integer km_rented;
 	private Integer id_client;
+	private Date dateFrom;
+	private Date dateTo;
 
 	public TRental(){}
 
-	public TRental(Integer id, Integer id_vehicle, boolean active, Integer km_rented, Integer id_client) {
+	public TRental(Integer id, Integer id_vehicle, boolean active, Integer km_rented, Integer id_client, Date dateFrom, Date dateTo) {
 		this.id = id;
 		this.id_vehicle = id_vehicle;
 		this.active = active;
 		this.km_rented = km_rented;
 		this.id_client = id_client;
+		this.dateFrom = dateFrom;
+		this.dateTo = dateTo;
 	}
 
 	public Integer getId() {
@@ -57,4 +63,12 @@ public class TRental {
 	public void setId_client(int id_client) {
 		this.id_client = id_client;
 	}
+
+	public Date getDateTo() { return dateTo; }
+
+	public void setDateTo(Date dateTo) { this.dateTo = dateTo; }
+
+	public Date getDateFrom() { return dateFrom; }
+
+	public void setDateFrom(Date dateFrom) { this.dateFrom = dateFrom; }
 }
