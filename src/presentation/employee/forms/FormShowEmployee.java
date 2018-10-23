@@ -54,6 +54,9 @@ public class FormShowEmployee extends JDialog {
 		JPanel ret = new JPanel(new FlowLayout());
 
 		JButton show = new JButton("MOSTRAR");
+		show.setForeground(Color.white);
+		show.setBackground(new Color(119,171,89));
+
 		show.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent actionEvent) {
@@ -72,6 +75,9 @@ public class FormShowEmployee extends JDialog {
 		});
 
 		JButton cancel = new JButton("CANCELAR");
+		cancel.setForeground(Color.white);
+		cancel.setBackground(new Color(119,171,89));
+
 		cancel.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent actionEvent) {

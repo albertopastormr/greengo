@@ -54,12 +54,12 @@ public class FormShowService extends JDialog{
 		//Buttons
 		JPanel buttonsPanel = new JPanel(new FlowLayout());
 
-		JButton delete = new JButton("SHOW");
-		delete.setBounds(0, 0, 25, 20);
-		delete.setForeground(Color.white);
-		delete.setBackground(new Color(119,171,89));
+		JButton show = new JButton("SHOW");
+		show.setBounds(0, 0, 25, 20);
+		show.setForeground(Color.white);
+		show.setBackground(new Color(119,171,89));
 
-		delete.addActionListener(new ActionListener() {
+		show.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -87,7 +87,7 @@ public class FormShowService extends JDialog{
 			}
 		});
 
-		buttonsPanel.add(delete);
+		buttonsPanel.add(show);
 		buttonsPanel.add(cancel);
 
 		return buttonsPanel;

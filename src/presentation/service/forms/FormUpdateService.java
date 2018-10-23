@@ -96,8 +96,11 @@ public class FormUpdateService extends  JDialog{
 		//Buttons
 		JPanel buttonsPanel = new JPanel(new FlowLayout());
 
-		JButton create = new JButton("CREATE");
-		create.addActionListener(new ActionListener(){
+		JButton update = new JButton("CREATE");
+		update.setForeground(Color.white);
+		update.setBackground(new Color(119,171,89));
+
+		update.addActionListener(new ActionListener(){
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -116,7 +119,10 @@ public class FormUpdateService extends  JDialog{
 		});
 
 		JButton cancel = new JButton("CANCEL");
-		create.addActionListener(new ActionListener(){
+		cancel.setForeground(Color.white);
+		cancel.setBackground(new Color(119,171,89));
+
+		update.addActionListener(new ActionListener(){
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -124,7 +130,7 @@ public class FormUpdateService extends  JDialog{
 			}
 		});
 
-		buttonsPanel.add(create);
+		buttonsPanel.add(update);
 		buttonsPanel.add(cancel);
 
 		return buttonsPanel;

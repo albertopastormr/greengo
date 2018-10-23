@@ -53,8 +53,11 @@ public class FormDropEmployee extends JDialog {
 	private JPanel buttonsPanel() {
 		JPanel ret = new JPanel(new FlowLayout());
 
-		JButton delete = new JButton("ELIMINAR");
-		delete.addActionListener(new ActionListener() {
+		JButton drop = new JButton("ELIMINAR");
+		drop.setForeground(Color.white);
+		drop.setBackground(new Color(119,171,89));
+
+		drop.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent actionEvent) {
 				TEmployee emp = new TEmployee();
@@ -71,6 +74,9 @@ public class FormDropEmployee extends JDialog {
 		});
 
 		JButton cancel = new JButton("CANCELAR");
+		cancel.setForeground(Color.white);
+		cancel.setBackground(new Color(119,171,89));
+
 		cancel.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent actionEvent) {
@@ -78,7 +84,7 @@ public class FormDropEmployee extends JDialog {
 			}
 		});
 
-		ret.add(delete);
+		ret.add(drop);
 		ret.add(cancel);
 
 		return ret;

@@ -103,8 +103,11 @@ public class FormUpdateRental extends JDialog {
 	private JPanel buttonsPanel(){
 		JPanel ret = new JPanel(new FlowLayout());
 
-		JButton createButton = new JButton("MODIFICAR");
-		createButton.addActionListener(new ActionListener() {
+		JButton update = new JButton("MODIFICAR");
+		update.setForeground(Color.white);
+		update.setBackground(new Color(119,171,89));
+
+		update.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent actionEvent) {
 				TRental rent = new TRental();
@@ -132,16 +135,19 @@ public class FormUpdateRental extends JDialog {
 			}
 		});
 
-		JButton cancelButton = new JButton("CANCELAR");
-		cancelButton.addActionListener(new ActionListener() {
+		JButton cancel = new JButton("CANCELAR");
+		cancel.setForeground(Color.white);
+		cancel.setBackground(new Color(119,171,89));
+
+		cancel.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent actionEvent) {
 				dispose();
 			}
 		});
 
-		ret.add(createButton);
-		ret.add(cancelButton);
+		ret.add(update);
+		ret.add(cancel);
 
 		return ret;
 	}

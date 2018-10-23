@@ -117,8 +117,11 @@ public class FormCreateEmployee extends JDialog {
 		JPanel ret = new JPanel(new FlowLayout());
 
 
-		JButton createButton = new JButton("CREAR");
-		createButton.addActionListener(new ActionListener() {
+		JButton create = new JButton("CREAR");
+		create.setForeground(Color.white);
+		create.setBackground(new Color(119,171,89));
+
+		create.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent actionEvent) {
 				try {
@@ -153,16 +156,19 @@ public class FormCreateEmployee extends JDialog {
 			}
 		});
 
-		JButton cancelButton = new JButton("CANCELAR");
-		cancelButton.addActionListener(new ActionListener() {
+		JButton cancel = new JButton("CANCELAR");
+		cancel.setForeground(Color.white);
+		cancel.setBackground(new Color(119,171,89));
+
+		cancel.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent actionEvent) {
 				dispose();
 			}
 		});
 
-		ret.add(createButton);
-		ret.add(cancelButton);
+		ret.add(create);
+		ret.add(cancel);
 
 		return ret;
 	}
