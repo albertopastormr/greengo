@@ -1,7 +1,7 @@
 package presentation.service.forms;
 
-import business.service.TService;
 import presentation.util.Util;
+import presentation.util.ViewHelpers;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -54,10 +54,7 @@ public class FormShowService extends JDialog{
 		//Buttons
 		JPanel buttonsPanel = new JPanel(new FlowLayout());
 
-		JButton show = new JButton("SHOW");
-		show.setBounds(0, 0, 25, 20);
-		show.setForeground(Color.white);
-		show.setBackground(new Color(119,171,89));
+		JButton show = ViewHelpers.buttonsForms("SHOW");
 
 		show.addActionListener(new ActionListener() {
 
@@ -70,15 +67,12 @@ public class FormShowService extends JDialog{
 
 					dispose();
 				}catch (Exception ex){
-					JOptionPane.showMessageDialog(getRootPane(), ex.getMessage(), "ERROR DROP SERVICE", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(getRootPane(), ex.getMessage(), "ERROR SHOW SERVICE", JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
 
-		JButton cancel = new JButton("CANCEL");
-		cancel.setBounds(0, 0, 25, 20);
-		cancel.setForeground(Color.white);
-		cancel.setBackground(new Color(119,171,89));
+		JButton cancel = ViewHelpers.buttonsForms("CANCEL");
 
 		cancel.addActionListener(new ActionListener(){
 
