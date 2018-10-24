@@ -37,7 +37,6 @@ public class FormCreateRental extends JDialog {
 		Util.addEscapeListener(this);
 		setResizable(false);
 		initGUI();
-
 	}
 
 	private void initGUI(){

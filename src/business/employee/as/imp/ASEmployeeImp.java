@@ -4,7 +4,7 @@ import business.employee.as.ASEmployee;
 
 import java.util.Collection;
 
-public class ASEmployeeImp /*implements ASEmployee*/ {
+public class ASEmployeeImp implements ASEmployee {
 
     /*This is related to JPA*/
 

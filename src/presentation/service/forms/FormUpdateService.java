@@ -2,6 +2,7 @@ package presentation.service.forms;
 
 import business.service.TService;
 import presentation.util.Util;
+import presentation.util.ViewHelpers;
 
 import javax.sound.sampled.Line;
 import javax.swing.*;
@@ -86,7 +87,7 @@ public class FormUpdateService extends  JDialog{
 		JLabel activeLabel = new JLabel("Active");
 		ret.add(activeLabel);
 
-		selectActive();
+		activeComboBox = ViewHelpers.selectActive();
 		ret.add(activeComboBox);
 
 		return ret;
@@ -96,21 +97,17 @@ public class FormUpdateService extends  JDialog{
 		//Buttons
 		JPanel buttonsPanel = new JPanel(new FlowLayout());
 
-		JButton update = new JButton("CREATE");
-		update.setForeground(Color.white);
-		update.setBackground(new Color(119,171,89));
+		JButton update = ViewHelpers.buttonsForms("UPDATE");
 
 		update.addActionListener(new ActionListener(){
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				TService service = new TService();
 				try {
-					service.setId(Util.parseNoNegativeInt(idText.getText()));
-					service.setType(Util.parseString(typeText.getText()));
-					service.setAddress(Util.parseString(addressText.getText()));
-					service.setCapacity(Util.parseNoNegativeInt(capacityText.getText()));
-					service.setVehicles_attended(Util.parseNoNegativeInt(vehicles_attendedText.getText()));
+					/*This is related to JPA*/
+
+					//Invoke the controller and execute "Set salary" operation.
+
 					dispose();
 				} catch (Exception ex) {
 					JOptionPane.showMessageDialog(getRootPane(), ex.getMessage(), "ERROR CREATE SERVICE", JOptionPane.ERROR_MESSAGE);
@@ -118,9 +115,7 @@ public class FormUpdateService extends  JDialog{
 			}
 		});
 
-		JButton cancel = new JButton("CANCEL");
-		cancel.setForeground(Color.white);
-		cancel.setBackground(new Color(119,171,89));
+		JButton cancel = ViewHelpers.buttonsForms("CANCEL");
 
 		update.addActionListener(new ActionListener(){
 
@@ -136,14 +131,7 @@ public class FormUpdateService extends  JDialog{
 		return buttonsPanel;
 	}
 
-	private void selectActive() {
-		activeComboBox = new JComboBox();
-		activeComboBox.addItem("true");
-		activeComboBox.addItem("false");
-	}
-
 	public static void main(String[] args) {
-
 		FormUpdateService formUpdateService = new FormUpdateService();
 		formUpdateService.setVisible(true);
 	}

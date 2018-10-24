@@ -63,11 +63,12 @@ public class FormShowService extends JDialog{
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				TService service = new TService();
 				try {
-					service.setId(Util.parseNoNegativeInt(idText.getText()));
+					/*This is related to JPA*/
+
+					//Invoke the controller and execute "Set salary" operation.
+
 					dispose();
-					// TODO***needed CONTROLLER***
 				}catch (Exception ex){
 					JOptionPane.showMessageDialog(getRootPane(), ex.getMessage(), "ERROR DROP SERVICE", JOptionPane.ERROR_MESSAGE);
 				}

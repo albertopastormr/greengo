@@ -4,7 +4,7 @@ import business.main_office.as.ASMain_Office;
 
 import java.util.Collection;
 
-public class ASMain_OfficeImp /*implements ASMain_Office*/ {
+public class ASMain_OfficeImp implements ASMain_Office {
 
     /*This is related to JPA*/
 

@@ -4,7 +4,7 @@ import business.contract.as.ASContract;
 
 import java.util.Collection;
 
-public class ASContractImp /*implements ASContract*/ {
+public class ASContractImp implements ASContract {
 
     /*This is related to JPA*/
 

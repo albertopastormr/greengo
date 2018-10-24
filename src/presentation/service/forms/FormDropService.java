@@ -2,6 +2,7 @@ package presentation.service.forms;
 
 import business.service.TService;
 import presentation.util.Util;
+import presentation.util.ViewHelpers;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -54,28 +55,25 @@ public class FormDropService extends JDialog{
 		//Buttons
 		JPanel buttonsPanel = new JPanel(new FlowLayout());
 
-		JButton drop = new JButton("DELETE");
-		drop.setForeground(Color.white);
-		drop.setBackground(new Color(119,171,89));
+		JButton drop = ViewHelpers.buttonsForms("DROP");
 
 		drop.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				TService service = new TService();
 				try {
-					service.setId(Util.parseNoNegativeInt(idText.getText()));
+					/*This is related to JPA*/
+
+					//Invoke the controller and execute "Set salary" operation.
+
 					dispose();
-					// TODO***needed CONTROLLER***
 				}catch (Exception ex){
 					JOptionPane.showMessageDialog(getRootPane(), ex.getMessage(), "ERROR DROP SERVICE", JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
 
-		JButton cancel = new JButton("CANCEL");
-		cancel.setForeground(Color.white);
-		cancel.setBackground(new Color(119,171,89));
+		JButton cancel = ViewHelpers.buttonsForms("CANCEL");
 
 		cancel.addActionListener(new ActionListener(){
 
