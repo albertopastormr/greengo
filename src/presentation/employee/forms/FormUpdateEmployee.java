@@ -1,11 +1,13 @@
 package presentation.employee.forms;
 
 import presentation.util.Util;
+import presentation.util.ViewHelpers;
 
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
+import javax.swing.text.View;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -82,7 +84,7 @@ public class FormUpdateEmployee extends JDialog {
 		JLabel activeLabel = new JLabel("Active");
 		ret.add(activeLabel);
 
-		selectActive();
+		activeComboBox = ViewHelpers.selectActive();
 		ret.add(activeComboBox);
 
 		//Type
@@ -118,9 +120,7 @@ public class FormUpdateEmployee extends JDialog {
 		JPanel ret = new JPanel(new FlowLayout());
 
 
-		JButton update = new JButton("CREAR");
-		update.setForeground(Color.white);
-		update.setBackground(new Color(119,171,89));
+		JButton update = ViewHelpers.buttonsForms("ACTUALIZAR");
 
 		update.addActionListener(new ActionListener() {
 			@Override
@@ -142,14 +142,12 @@ public class FormUpdateEmployee extends JDialog {
 
 				} catch(Exception e){
 					JOptionPane.showMessageDialog(getRootPane(), e.getMessage(),
-							"ERROR ALTA EMPLEADO", JOptionPane.ERROR_MESSAGE);
+							"ERROR ACTUALIZAR EMPLEADO", JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
 
-		JButton cancel = new JButton("CANCELAR");
-		cancel.setForeground(Color.white);
-		cancel.setBackground(new Color(119,171,89));
+		JButton cancel = ViewHelpers.buttonsForms("CANCELAR");
 
 		cancel.addActionListener(new ActionListener() {
 			@Override
@@ -162,12 +160,6 @@ public class FormUpdateEmployee extends JDialog {
 		ret.add(cancel);
 
 		return ret;
-	}
-
-	private void selectActive() {
-		activeComboBox = new JComboBox();
-		activeComboBox.addItem("True");
-		activeComboBox.addItem("False");
 	}
 
 	private void selectType(){

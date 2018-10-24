@@ -1,6 +1,7 @@
 package presentation.employee.forms;
 
 import presentation.util.Util;
+import presentation.util.ViewHelpers;
 
 import javax.swing.*;
 import javax.swing.border.*;
@@ -52,9 +53,7 @@ public class FormDropEmployee extends JDialog {
 	private JPanel buttonsPanel() {
 		JPanel ret = new JPanel(new FlowLayout());
 
-		JButton drop = new JButton("ELIMINAR");
-		drop.setForeground(Color.white);
-		drop.setBackground(new Color(119,171,89));
+		JButton drop = ViewHelpers.buttonsForms("ELIMINAR");
 
 		drop.addActionListener(new ActionListener() {
 			@Override
@@ -71,9 +70,7 @@ public class FormDropEmployee extends JDialog {
 			}
 		});
 
-		JButton cancel = new JButton("CANCELAR");
-		cancel.setForeground(Color.white);
-		cancel.setBackground(new Color(119,171,89));
+		JButton cancel = ViewHelpers.buttonsForms("CANCELAR");
 
 		cancel.addActionListener(new ActionListener() {
 			@Override
