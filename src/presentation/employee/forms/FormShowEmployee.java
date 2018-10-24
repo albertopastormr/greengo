@@ -16,7 +16,7 @@ public class FormShowEmployee extends JDialog {
 	private JTextField idText;
 
 	public FormShowEmployee(){
-		setTitle("Mostrar empleado");
+		setTitle("Show employee");
 		setResizable(false);
 		Util.addEscapeListener(this);
 		initGUI();
@@ -53,7 +53,7 @@ public class FormShowEmployee extends JDialog {
 	private JPanel buttonsPanel(){
 		JPanel ret = new JPanel(new FlowLayout());
 
-		JButton show = ViewHelpers.buttonsForms("MOSTRAR");
+		JButton show = ViewHelpers.buttonsForms("SHOW");
 
 		show.addActionListener(new ActionListener() {
 			@Override
@@ -65,13 +65,13 @@ public class FormShowEmployee extends JDialog {
 				}
 				catch(Exception e){
 					JOptionPane.showMessageDialog(getRootPane(), e.getMessage(),
-							"ERROR MOSTRAR EMPLEADO", JOptionPane.ERROR_MESSAGE);
+							"ERROR IN SHOW EMLOYEE", JOptionPane.ERROR_MESSAGE);
 				}
 
 			}
 		});
 
-		JButton cancel = ViewHelpers.buttonsForms("CANCELAR");
+		JButton cancel = ViewHelpers.buttonsForms("CANCEL");
 
 		cancel.addActionListener(new ActionListener() {
 			@Override

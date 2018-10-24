@@ -5,6 +5,7 @@ import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
 import presentation.util.Util;
+import presentation.util.ViewHelpers;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -32,7 +33,7 @@ public class FormUpdateRental extends JDialog {
 	private JDatePickerImpl dateTo;
 
 	public FormUpdateRental(){
-		setTitle("Modificar alquiler");
+		setTitle("Update rental");
 		Util.addEscapeListener(this);
 		setResizable(false);
 		initGUI();
@@ -65,22 +66,21 @@ public class FormUpdateRental extends JDialog {
 		ret.add(idText);
 
 		//Km rented
-		JLabel kmRentedLabel = new JLabel("Km a recorrer");
+		JLabel kmRentedLabel = new JLabel("Km to travel");
 		ret.add(kmRentedLabel);
 
 		kmRentedText = new JTextField(10);
 		ret.add(kmRentedText);
 
 		//Active
-		JLabel activeLabel = new JLabel("Activo");
+		JLabel activeLabel = new JLabel("Active");
 		ret.add(activeLabel);
 
-		selectActive();
-
+		activeComboBox = ViewHelpers.selectActive();
 		ret.add(activeComboBox);
 
 		//Date from
-		JLabel dateFromLabel = new JLabel("Desde");
+		JLabel dateFromLabel = new JLabel("From");
 		ret.add(dateFromLabel);
 
 		JDatePanelImpl dateFromPicker = createDatePanel();
@@ -89,7 +89,7 @@ public class FormUpdateRental extends JDialog {
 		ret.add(dateFrom);
 
 		//Date To
-		JLabel dateToLabel = new JLabel("Hasta");
+		JLabel dateToLabel = new JLabel("To");
 		ret.add(dateToLabel);
 
 		JDatePanelImpl dateToPicker = createDatePanel();
@@ -103,9 +103,7 @@ public class FormUpdateRental extends JDialog {
 	private JPanel buttonsPanel(){
 		JPanel ret = new JPanel(new FlowLayout());
 
-		JButton update = new JButton("MODIFICAR");
-		update.setForeground(Color.white);
-		update.setBackground(new Color(119,171,89));
+		JButton update = ViewHelpers.buttonsForms("UPDATE");
 
 		update.addActionListener(new ActionListener() {
 			@Override
@@ -130,14 +128,12 @@ public class FormUpdateRental extends JDialog {
 				}
 				catch(Exception exc){
 					JOptionPane.showMessageDialog(getRootPane(), exc.getMessage(),
-							"ERROR MODIFICAR ALQUILER", JOptionPane.ERROR_MESSAGE);
+							"ERROR IN UPDATE RENTAL", JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
 
-		JButton cancel = new JButton("CANCELAR");
-		cancel.setForeground(Color.white);
-		cancel.setBackground(new Color(119,171,89));
+		JButton cancel = ViewHelpers.buttonsForms("CANCEL");
 
 		cancel.addActionListener(new ActionListener() {
 			@Override
@@ -161,12 +157,6 @@ public class FormUpdateRental extends JDialog {
 		JDatePanelImpl datePanel = new JDatePanelImpl(model, p);
 
 		return datePanel;
-	}
-
-	private void selectActive(){
-		activeComboBox = new JComboBox();
-		activeComboBox.addItem("True");
-		activeComboBox.addItem("False");
 	}
 
 	public static void main(String[] Args){

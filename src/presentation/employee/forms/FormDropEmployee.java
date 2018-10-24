@@ -16,7 +16,7 @@ public class FormDropEmployee extends JDialog {
 	private JTextField idText;
 
 	public FormDropEmployee(){
-		setTitle("Baja empleado");
+		setTitle("Drop employee");
 		setResizable(false);
 		Util.addEscapeListener(this);
 		initGUI();
@@ -53,7 +53,7 @@ public class FormDropEmployee extends JDialog {
 	private JPanel buttonsPanel() {
 		JPanel ret = new JPanel(new FlowLayout());
 
-		JButton drop = ViewHelpers.buttonsForms("ELIMINAR");
+		JButton drop = ViewHelpers.buttonsForms("DROP");
 
 		drop.addActionListener(new ActionListener() {
 			@Override
@@ -64,13 +64,13 @@ public class FormDropEmployee extends JDialog {
 					//Invoke the controller with the operation "Drop Employee"
 				}
 				catch(Exception e){
-					JOptionPane.showMessageDialog(getRootPane(), e.getMessage(), "ERROR BAJA EMPLEADO",
+					JOptionPane.showMessageDialog(getRootPane(), e.getMessage(), "ERROR IN DROP EMPLOYEE",
 							JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
 
-		JButton cancel = ViewHelpers.buttonsForms("CANCELAR");
+		JButton cancel = ViewHelpers.buttonsForms("CANCEL");
 
 		cancel.addActionListener(new ActionListener() {
 			@Override

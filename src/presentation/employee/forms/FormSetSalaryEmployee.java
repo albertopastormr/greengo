@@ -17,7 +17,7 @@ public class FormSetSalaryEmployee extends JDialog {
 	private JTextField idText;
 
 	public FormSetSalaryEmployee(){
-		setTitle("Establecer salario");
+		setTitle("Set salary");
 		setResizable(false);
 		Util.addEscapeListener(this);
 		initGUI();
@@ -54,7 +54,7 @@ public class FormSetSalaryEmployee extends JDialog {
 	private JPanel buttonsPanel(){
 		JPanel ret = new JPanel(new FlowLayout());
 
-		JButton show = ViewHelpers.buttonsForms("ESTABLECER");
+		JButton show = ViewHelpers.buttonsForms("SET");
 
 		show.addActionListener(new ActionListener() {
 			@Override
@@ -66,13 +66,13 @@ public class FormSetSalaryEmployee extends JDialog {
 				}
 				catch(Exception e){
 					JOptionPane.showMessageDialog(getRootPane(), e.getMessage(),
-							"ERROR ESTABLECER SALARIO EMPLEADO", JOptionPane.ERROR_MESSAGE);
+							"ERROR IN SET SALARY EMPLOYEE", JOptionPane.ERROR_MESSAGE);
 				}
 
 			}
 		});
 
-		JButton cancel = ViewHelpers.buttonsForms("CANCELAR");
+		JButton cancel = ViewHelpers.buttonsForms("CANCEL");
 
 		cancel.addActionListener(new ActionListener() {
 			@Override

@@ -28,7 +28,7 @@ public class FormUpdateEmployee extends JDialog {
 	private JComboBox typeComboBox;
 
 	public FormUpdateEmployee(){
-		setTitle("Modificar empleado");
+		setTitle("Update employee");
 		setResizable(false);
 		Util.addEscapeListener(this);
 		initGUI();
@@ -60,7 +60,7 @@ public class FormUpdateEmployee extends JDialog {
 		ret.add(idText);
 
 		//Id card
-		JLabel idCardLabel = new JLabel("DNI");
+		JLabel idCardLabel = new JLabel("Id number");
 		ret.add(idCardLabel);
 
 		idCardNumberText = new JTextField(10);
@@ -74,7 +74,7 @@ public class FormUpdateEmployee extends JDialog {
 		ret.add(salaryText);
 
 		//Id Main Office
-		JLabel idMainOfficeLabel = new JLabel("Id sede");
+		JLabel idMainOfficeLabel = new JLabel("Id main office");
 		ret.add(idMainOfficeLabel);
 
 		idMainOfficeText = new JTextField(10);
@@ -120,7 +120,7 @@ public class FormUpdateEmployee extends JDialog {
 		JPanel ret = new JPanel(new FlowLayout());
 
 
-		JButton update = ViewHelpers.buttonsForms("ACTUALIZAR");
+		JButton update = ViewHelpers.buttonsForms("UPDATE");
 
 		update.addActionListener(new ActionListener() {
 			@Override
@@ -142,12 +142,12 @@ public class FormUpdateEmployee extends JDialog {
 
 				} catch(Exception e){
 					JOptionPane.showMessageDialog(getRootPane(), e.getMessage(),
-							"ERROR ACTUALIZAR EMPLEADO", JOptionPane.ERROR_MESSAGE);
+							"ERROR UPDATE EMLOYEE", JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
 
-		JButton cancel = ViewHelpers.buttonsForms("CANCELAR");
+		JButton cancel = ViewHelpers.buttonsForms("CANCEL");
 
 		cancel.addActionListener(new ActionListener() {
 			@Override

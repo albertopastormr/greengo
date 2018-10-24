@@ -5,6 +5,7 @@ import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
 import presentation.util.Util;
+import presentation.util.ViewHelpers;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -82,7 +83,7 @@ public class FormCreateRental extends JDialog {
 		JLabel activeLabel = new JLabel("Activo");
 		ret.add(activeLabel);
 
-		selectActive();
+		activeComboBox = ViewHelpers.selectActive();
 
 		ret.add(activeComboBox);
 
@@ -110,9 +111,7 @@ public class FormCreateRental extends JDialog {
 	private JPanel buttonsPanel(){
 		JPanel ret = new JPanel(new FlowLayout());
 
-		JButton create = new JButton("CREAR");
-		create.setForeground(Color.white);
-		create.setBackground(new Color(119,171,89));
+		JButton create = ViewHelpers.buttonsForms("CREATE");
 
 		create.addActionListener(new ActionListener() {
 			@Override
@@ -138,14 +137,12 @@ public class FormCreateRental extends JDialog {
 				}
 				catch(Exception exc){
 					JOptionPane.showMessageDialog(getRootPane(), exc.getMessage(),
-							"ERROR ALTA ALQUILER", JOptionPane.ERROR_MESSAGE);
+							"ERROR IN CREATE RENTAL", JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
 
-		JButton cancel = new JButton("CANCELAR");
-		cancel.setForeground(Color.white);
-		cancel.setBackground(new Color(119,171,89));
+		JButton cancel = ViewHelpers.buttonsForms("CANCEL");
 
 		cancel.addActionListener(new ActionListener() {
 			@Override
@@ -160,7 +157,7 @@ public class FormCreateRental extends JDialog {
 		return ret;
 	}
 
-	private JDatePanelImpl createDatePanel(){
+	private JDatePanelImpl createDatePanel() {
 		UtilDateModel model = new UtilDateModel();
 		Properties p = new Properties();
 		p.put("text.today", "Today");
@@ -169,12 +166,6 @@ public class FormCreateRental extends JDialog {
 		JDatePanelImpl datePanel = new JDatePanelImpl(model, p);
 
 		return datePanel;
-	}
-
-	private void selectActive(){
-		activeComboBox = new JComboBox();
-		activeComboBox.addItem("True");
-		activeComboBox.addItem("False");
 	}
 
 	public static void main(String[] Args){

@@ -30,7 +30,7 @@ public class FormCreateEmployee extends JDialog {
 
 
 	public FormCreateEmployee(){
-		setTitle("Alta empleado");
+		setTitle("Create employee");
 		setResizable(false);
 		Util.addEscapeListener(this);
 		initGUI();
@@ -58,7 +58,7 @@ public class FormCreateEmployee extends JDialog {
 		ret.setBorder(new CompoundBorder(border, margin));
 
 		//Id card
-		JLabel idCardLabel = new JLabel("DNI");
+		JLabel idCardLabel = new JLabel("Id number");
 		ret.add(idCardLabel);
 
 		idCardNumberText = new JTextField(10);
@@ -117,7 +117,7 @@ public class FormCreateEmployee extends JDialog {
 		JPanel ret = new JPanel(new FlowLayout());
 
 
-		JButton create = ViewHelpers.buttonsForms("CREAR");
+		JButton create = ViewHelpers.buttonsForms("CREATE");
 
 		create.addActionListener(new ActionListener() {
 			@Override
@@ -139,12 +139,12 @@ public class FormCreateEmployee extends JDialog {
 
 				} catch(Exception e){
 					JOptionPane.showMessageDialog(getRootPane(), e.getMessage(),
-							"ERROR ALTA EMPLEADO", JOptionPane.ERROR_MESSAGE);
+							"ERROR IN CREATE EMPLOYEE", JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
 
-		JButton cancel = ViewHelpers.buttonsForms("CANCELAR");
+		JButton cancel = ViewHelpers.buttonsForms("CANCEL");
 
 		cancel.addActionListener(new ActionListener() {
 			@Override
