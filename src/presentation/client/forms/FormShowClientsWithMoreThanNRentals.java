@@ -1,4 +1,4 @@
-package presentation.service.forms;
+package presentation.client.forms;
 
 import presentation.util.Util;
 import presentation.util.ViewHelpers;
@@ -11,21 +11,21 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class FormDropService extends JDialog{
+public class FormShowClientsWithMoreThanNRentals extends JDialog{
 
-	private JTextField idText;
+	private JTextField nrentalsText;
 
-	public FormDropService() {
-		setTitle("Drop Service");
+	public FormShowClientsWithMoreThanNRentals() {
+		setTitle("Show clients with more than N rentals");
 		setResizable(false);
 		Util.addEscapeListener(this);
 		initGUI();
 	}
 
-	private void initGUI(){
+	private void initGUI() {
 		JPanel mainPanel = new JPanel();
 		mainPanel.setLayout(new BoxLayout(mainPanel,BoxLayout.Y_AXIS));
-
+		mainPanel.setBackground(Color.white);
 		mainPanel.add(fieldsPanel());
 		mainPanel.add(buttonsPanel());
 
@@ -34,29 +34,30 @@ public class FormDropService extends JDialog{
 		setLocationRelativeTo(null);
 	}
 
-	private JPanel fieldsPanel(){
-		JPanel ret = new JPanel(new GridLayout(1, 2, 0, 7));
+	private JPanel fieldsPanel() {
+		JPanel ret = new JPanel(new GridLayout(1,2,0,7));
 		Border border = ret.getBorder();
-		Border margin = new EmptyBorder(10, 10, 10, 10);
+		Border margin = new EmptyBorder(10,10,10,10);
 		ret.setBorder(new CompoundBorder(border, margin));
 
-		//ID
-		JLabel idLabel = new JLabel("ID");
-		ret.add(idLabel);
+		//NRentals
+		JLabel nrentalsLabel = new JLabel("NºRentals");
+		ret.add(nrentalsLabel);
 
-		idText = new JTextField(10);
-		ret.add(idText);
+		nrentalsText = new JTextField(10);
+		ret.add(nrentalsText);
 
 		return  ret;
 	}
 
-	private JPanel buttonsPanel() {
+	private JPanel buttonsPanel(){
+
 		//Buttons
 		JPanel buttonsPanel = new JPanel(new FlowLayout());
 
-		JButton drop = ViewHelpers.buttonsForms("DROP");
+		JButton showN = ViewHelpers.buttonsForms("SHOW");
 
-		drop.addActionListener(new ActionListener() {
+		showN.addActionListener(new ActionListener(){
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -66,8 +67,8 @@ public class FormDropService extends JDialog{
 					//Invoke the controller and execute "Set salary" operation.
 
 					dispose();
-				}catch (Exception ex){
-					JOptionPane.showMessageDialog(getRootPane(), ex.getMessage(), "ERROR DROP SERVICE", JOptionPane.ERROR_MESSAGE);
+				} catch (Exception ex) {
+					JOptionPane.showMessageDialog(getRootPane(), ex.getMessage(), "ERROR SHOW CLIENTS WITH MORE THAN N RENTALS", JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
@@ -82,14 +83,14 @@ public class FormDropService extends JDialog{
 			}
 		});
 
-		buttonsPanel.add(drop);
+		buttonsPanel.add(showN);
 		buttonsPanel.add(cancel);
 
 		return buttonsPanel;
 	}
 
-	public static void main(String[] args){
-		FormDropService formDropService = new FormDropService();
-		formDropService.setVisible(true);
+	public static void main(String[] args) {
+		FormShowClientsWithMoreThanNRentals formShowClientsWithMoreThanNRentals = new FormShowClientsWithMoreThanNRentals();
+		formShowClientsWithMoreThanNRentals.setVisible(true);
 	}
 }

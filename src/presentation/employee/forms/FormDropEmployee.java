@@ -1,7 +1,7 @@
 package presentation.employee.forms;
 
-import business.employee.TEmployee;
 import presentation.util.Util;
+import presentation.util.ViewHelpers;
 
 import javax.swing.*;
 import javax.swing.border.*;
@@ -16,7 +16,7 @@ public class FormDropEmployee extends JDialog {
 	private JTextField idText;
 
 	public FormDropEmployee(){
-		setTitle("Baja empleado");
+		setTitle("Drop employee");
 		setResizable(false);
 		Util.addEscapeListener(this);
 		initGUI();
@@ -53,29 +53,24 @@ public class FormDropEmployee extends JDialog {
 	private JPanel buttonsPanel() {
 		JPanel ret = new JPanel(new FlowLayout());
 
-		JButton drop = new JButton("ELIMINAR");
-		drop.setForeground(Color.white);
-		drop.setBackground(new Color(119,171,89));
+		JButton drop = ViewHelpers.buttonsForms("DROP");
 
 		drop.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent actionEvent) {
-				TEmployee emp = new TEmployee();
 				try{
-					emp.setId(Util.parseNoNegativeInt(idText.getText()));
+					/*This is related to JPA*/
 					dispose();
 					//Invoke the controller with the operation "Drop Employee"
 				}
 				catch(Exception e){
-					JOptionPane.showMessageDialog(getRootPane(), e.getMessage(), "ERROR BAJA EMPLEADO",
+					JOptionPane.showMessageDialog(getRootPane(), e.getMessage(), "ERROR IN DROP EMPLOYEE",
 							JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
 
-		JButton cancel = new JButton("CANCELAR");
-		cancel.setForeground(Color.white);
-		cancel.setBackground(new Color(119,171,89));
+		JButton cancel = ViewHelpers.buttonsForms("CANCEL");
 
 		cancel.addActionListener(new ActionListener() {
 			@Override

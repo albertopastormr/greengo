@@ -1,11 +1,12 @@
 package business.contract.as;
 
-import business.contract.TContract;
-
 import java.util.Collection;
 
 public interface ASContract {
-    Integer create(TContract contract);
+
+    /*This is related to JPA*/
+
+    /*Integer create(TContract contract);
 
     Integer drop(TContract contract);
 
@@ -13,6 +14,6 @@ public interface ASContract {
 
     TContract show (Integer id);
 
-    Collection<TContract> showAll ();
+    Collection<TContract> showAll ();*/
 
 }

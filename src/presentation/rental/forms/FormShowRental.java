@@ -2,6 +2,7 @@ package presentation.rental.forms;
 
 import business.rental.TRental;
 import presentation.util.Util;
+import presentation.util.ViewHelpers;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -17,7 +18,7 @@ public class FormShowRental extends JDialog{
 	private JTextField idText;
 
 	public FormShowRental(){
-		setTitle("Mostrar alquiler");
+		setTitle("Show rental");
 		setResizable(false);
 		Util.addEscapeListener(this);
 		initGUI();
@@ -54,9 +55,7 @@ public class FormShowRental extends JDialog{
 	private JPanel buttonsPanel(){
 		JPanel ret = new JPanel(new FlowLayout());
 
-		JButton show = new JButton("MOSTRAR");
-		show.setForeground(Color.white);
-		show.setBackground(new Color(119,171,89));
+		JButton show = ViewHelpers.buttonsForms("SHOW");
 
 		show.addActionListener(new ActionListener() {
 			@Override
@@ -69,15 +68,13 @@ public class FormShowRental extends JDialog{
 				}
 				catch(Exception e){
 					JOptionPane.showMessageDialog(getRootPane(), e.getMessage(),
-							"ERROR MOSTRAR ALQUILER", JOptionPane.ERROR_MESSAGE);
+							"ERROR IN SHOW RENTAL", JOptionPane.ERROR_MESSAGE);
 				}
 
 			}
 		});
 
-		JButton cancel = new JButton("CANCELAR");
-		cancel.setForeground(Color.white);
-		cancel.setBackground(new Color(119,171,89));
+		JButton cancel = ViewHelpers.buttonsForms("CANCEL");
 
 		cancel.addActionListener(new ActionListener() {
 			@Override

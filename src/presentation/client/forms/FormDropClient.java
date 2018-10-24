@@ -1,4 +1,4 @@
-package presentation.service.forms;
+package presentation.client.forms;
 
 import presentation.util.Util;
 import presentation.util.ViewHelpers;
@@ -11,21 +11,21 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class FormDropService extends JDialog{
+public class FormDropClient extends JDialog{
 
 	private JTextField idText;
 
-	public FormDropService() {
-		setTitle("Drop Service");
+	public FormDropClient() {
+		setTitle("Drop client");
 		setResizable(false);
 		Util.addEscapeListener(this);
 		initGUI();
 	}
 
-	private void initGUI(){
+	private void initGUI() {
 		JPanel mainPanel = new JPanel();
 		mainPanel.setLayout(new BoxLayout(mainPanel,BoxLayout.Y_AXIS));
-
+		mainPanel.setBackground(Color.white);
 		mainPanel.add(fieldsPanel());
 		mainPanel.add(buttonsPanel());
 
@@ -35,12 +35,12 @@ public class FormDropService extends JDialog{
 	}
 
 	private JPanel fieldsPanel(){
-		JPanel ret = new JPanel(new GridLayout(1, 2, 0, 7));
+		JPanel ret = new JPanel(new GridLayout(1,2,0,7));
 		Border border = ret.getBorder();
-		Border margin = new EmptyBorder(10, 10, 10, 10);
+		Border margin = new EmptyBorder(10,10,10,10);
 		ret.setBorder(new CompoundBorder(border, margin));
 
-		//ID
+		//id
 		JLabel idLabel = new JLabel("ID");
 		ret.add(idLabel);
 
@@ -50,13 +50,14 @@ public class FormDropService extends JDialog{
 		return  ret;
 	}
 
-	private JPanel buttonsPanel() {
+	private JPanel buttonsPanel(){
+
 		//Buttons
 		JPanel buttonsPanel = new JPanel(new FlowLayout());
 
 		JButton drop = ViewHelpers.buttonsForms("DROP");
 
-		drop.addActionListener(new ActionListener() {
+		drop.addActionListener(new ActionListener(){
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -66,8 +67,8 @@ public class FormDropService extends JDialog{
 					//Invoke the controller and execute "Set salary" operation.
 
 					dispose();
-				}catch (Exception ex){
-					JOptionPane.showMessageDialog(getRootPane(), ex.getMessage(), "ERROR DROP SERVICE", JOptionPane.ERROR_MESSAGE);
+				} catch (Exception ex) {
+					JOptionPane.showMessageDialog(getRootPane(), ex.getMessage(), "ERROR DROP CLIENT", JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
@@ -88,8 +89,8 @@ public class FormDropService extends JDialog{
 		return buttonsPanel;
 	}
 
-	public static void main(String[] args){
-		FormDropService formDropService = new FormDropService();
-		formDropService.setVisible(true);
+	public static void main(String[] args) {
+		FormDropClient formDropClient = new FormDropClient();
+		formDropClient.setVisible(true);
 	}
 }

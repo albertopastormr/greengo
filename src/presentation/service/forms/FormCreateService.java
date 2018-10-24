@@ -1,8 +1,7 @@
 package presentation.service.forms;
 
-import business.service.TService;
-import javafx.scene.control.ComboBox;
 import presentation.util.Util;
+import presentation.util.ViewHelpers;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -29,8 +28,8 @@ public class FormCreateService extends JDialog{
 
 	private void initGUI(){
 		JPanel mainPanel = new JPanel();
-		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
-
+		mainPanel.setLayout(new BoxLayout(mainPanel,BoxLayout.Y_AXIS));
+		mainPanel.setBackground(Color.white);
 		mainPanel.add(fieldsPanel());
 		mainPanel.add(buttonsPanel());
 
@@ -77,7 +76,7 @@ public class FormCreateService extends JDialog{
 		JLabel activeLabel = new JLabel("Active");
 		ret.add(activeLabel);
 
-		selectActive();
+		activeComboBox = ViewHelpers.selectActive();
 		ret.add(activeComboBox);
 
 		return ret;
@@ -87,20 +86,17 @@ public class FormCreateService extends JDialog{
 		//Buttons
 		JPanel buttonsPanel = new JPanel(new FlowLayout());
 
-		JButton create = new JButton("CREATE");
-		create.setForeground(Color.white);
-		create.setBackground(new Color(119,171,89));
+		JButton create = ViewHelpers.buttonsForms("CREATE");
 
 		create.addActionListener(new ActionListener(){
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				TService service = new TService();
 				try {
-					service.setType(Util.parseString(typeText.getText()));
-					service.setAddress(Util.parseString(addressText.getText()));
-					service.setCapacity(Util.parseNoNegativeInt(capacityText.getText()));
-					service.setVehicles_attended(Util.parseNoNegativeInt(vehicles_attendedText.getText()));
+					/*This is related to JPA*/
+
+					//Invoke the controller and execute "Set salary" operation.
+
 					dispose();
 				} catch (Exception ex) {
 					JOptionPane.showMessageDialog(getRootPane(), ex.getMessage(), "ERROR CREATE SERVICE", JOptionPane.ERROR_MESSAGE);
@@ -108,11 +104,9 @@ public class FormCreateService extends JDialog{
 			}
 		});
 
-		JButton cancel = new JButton("CANCEL");
-		cancel.setForeground(Color.white);
-		cancel.setBackground(new Color(119,171,89));
+		JButton cancel = ViewHelpers.buttonsForms("CANCEL");
 
-		create.addActionListener(new ActionListener(){
+		cancel.addActionListener(new ActionListener(){
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -126,14 +120,7 @@ public class FormCreateService extends JDialog{
 		return buttonsPanel;
 	}
 
-	private void selectActive() {
-		activeComboBox = new JComboBox();
-		activeComboBox.addItem("true");
-		activeComboBox.addItem("false");
-	}
-
 	public static void main(String[] args) {
-
 		FormCreateService formCreateService = new FormCreateService();
 		formCreateService.setVisible(true);
 	}

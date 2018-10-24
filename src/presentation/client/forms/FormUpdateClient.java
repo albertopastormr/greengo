@@ -1,4 +1,4 @@
-package presentation.service.forms;
+package presentation.client.forms;
 
 import presentation.util.Util;
 import presentation.util.ViewHelpers;
@@ -11,21 +11,23 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class FormDropService extends JDialog{
+public class FormUpdateClient extends JDialog{
 
 	private JTextField idText;
+	private JTextField dniText;
+	private JComboBox activeComboBox;
 
-	public FormDropService() {
-		setTitle("Drop Service");
+	public FormUpdateClient() {
+		setTitle("Update client");
 		setResizable(false);
 		Util.addEscapeListener(this);
 		initGUI();
 	}
 
-	private void initGUI(){
+	private void initGUI() {
 		JPanel mainPanel = new JPanel();
 		mainPanel.setLayout(new BoxLayout(mainPanel,BoxLayout.Y_AXIS));
-
+		mainPanel.setBackground(Color.white);
 		mainPanel.add(fieldsPanel());
 		mainPanel.add(buttonsPanel());
 
@@ -34,10 +36,10 @@ public class FormDropService extends JDialog{
 		setLocationRelativeTo(null);
 	}
 
-	private JPanel fieldsPanel(){
-		JPanel ret = new JPanel(new GridLayout(1, 2, 0, 7));
+	private JPanel fieldsPanel() {
+		JPanel ret = new JPanel(new GridLayout(3,2,0,7));
 		Border border = ret.getBorder();
-		Border margin = new EmptyBorder(10, 10, 10, 10);
+		Border margin = new EmptyBorder(10,10,10,10);
 		ret.setBorder(new CompoundBorder(border, margin));
 
 		//ID
@@ -47,16 +49,31 @@ public class FormDropService extends JDialog{
 		idText = new JTextField(10);
 		ret.add(idText);
 
+		//DNI
+		JLabel dniLabel = new JLabel("DNI");
+		ret.add(dniLabel);
+
+		dniText = new JTextField(10);
+		ret.add(dniText);
+
+		//Active
+		JLabel activeLabel = new JLabel("Active");
+		ret.add(activeLabel);
+
+		activeComboBox = ViewHelpers.selectActive();
+		ret.add(activeComboBox);
+
 		return  ret;
 	}
 
-	private JPanel buttonsPanel() {
+	private JPanel buttonsPanel(){
+
 		//Buttons
 		JPanel buttonsPanel = new JPanel(new FlowLayout());
 
-		JButton drop = ViewHelpers.buttonsForms("DROP");
+		JButton update = ViewHelpers.buttonsForms("UPDATE");
 
-		drop.addActionListener(new ActionListener() {
+		update.addActionListener(new ActionListener(){
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -66,8 +83,8 @@ public class FormDropService extends JDialog{
 					//Invoke the controller and execute "Set salary" operation.
 
 					dispose();
-				}catch (Exception ex){
-					JOptionPane.showMessageDialog(getRootPane(), ex.getMessage(), "ERROR DROP SERVICE", JOptionPane.ERROR_MESSAGE);
+				} catch (Exception ex) {
+					JOptionPane.showMessageDialog(getRootPane(), ex.getMessage(), "ERROR UPDATE CLIENT", JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
@@ -82,14 +99,14 @@ public class FormDropService extends JDialog{
 			}
 		});
 
-		buttonsPanel.add(drop);
+		buttonsPanel.add(update);
 		buttonsPanel.add(cancel);
 
 		return buttonsPanel;
 	}
 
-	public static void main(String[] args){
-		FormDropService formDropService = new FormDropService();
-		formDropService.setVisible(true);
+	public static void main(String[] args) {
+		FormUpdateClient formUpdateClient = new FormUpdateClient();
+		formUpdateClient.setVisible(true);
 	}
 }

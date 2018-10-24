@@ -1,5 +1,6 @@
-package presentation.employee.forms;
+package presentation.city.forms;
 
+import business.city.TCity;
 import presentation.util.Util;
 import presentation.util.ViewHelpers;
 
@@ -11,13 +12,17 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class FormSetSalaryEmployee extends JDialog {
-
+public class FormUpdateCity extends JDialog {
 	/*Attributes*/
+	/*JTextField fields*/
+	private JTextField nameText;
 	private JTextField idText;
 
-	public FormSetSalaryEmployee(){
-		setTitle("Set salary");
+	/*JComboBox fields*/
+	private JComboBox activeComboBox;
+
+	public FormUpdateCity(){
+		setTitle("Update city");
 		setResizable(false);
 		Util.addEscapeListener(this);
 		initGUI();
@@ -36,17 +41,31 @@ public class FormSetSalaryEmployee extends JDialog {
 	}
 
 	private JPanel fieldsPanel(){
-		JPanel ret = new JPanel(new GridLayout(1, 2, 0, 7 ));
+		JPanel ret = new JPanel(new GridLayout(3, 2, 0, 7));
 		Border border = ret.getBorder();
 		Border margin = new EmptyBorder(10, 10, 10, 10);
 		ret.setBorder(new CompoundBorder(border, margin));
 
-		//ID
+		//Id
 		JLabel idLabel = new JLabel("Id");
 		ret.add(idLabel);
 
 		idText = new JTextField(10);
 		ret.add(idText);
+
+		//Name
+		JLabel nameLabel = new JLabel("Name");
+		ret.add(nameLabel);
+
+		nameText = new JTextField(10);
+		ret.add(nameText);
+
+		//Active
+		JLabel activeLabel = new JLabel("Active");
+		ret.add(activeLabel);
+
+		activeComboBox = ViewHelpers.selectActive();
+		ret.add(activeComboBox);
 
 		return ret;
 	}
@@ -54,26 +73,26 @@ public class FormSetSalaryEmployee extends JDialog {
 	private JPanel buttonsPanel(){
 		JPanel ret = new JPanel(new FlowLayout());
 
-		JButton show = ViewHelpers.buttonsForms("SET");
-
-		show.addActionListener(new ActionListener() {
+		JButton create = ViewHelpers.buttonsForms("UPDATE");
+		create.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent actionEvent) {
+				TCity city = new TCity();
 				try{
-					/*This is related to JPA*/
-					//invoke controller with the operation "Set Salary Employee".
-					dispose();
+					city.setId(Util.parseNoNegativeInt(idText.getText()));
+					city.setName(Util.parseString(nameText.getText()));
+					city.setActive(Util.parseActive(activeComboBox.getSelectedItem().toString()));
+
+					//Invoke the controller with the operation "Update City"
 				}
 				catch(Exception e){
 					JOptionPane.showMessageDialog(getRootPane(), e.getMessage(),
-							"ERROR IN SET SALARY EMPLOYEE", JOptionPane.ERROR_MESSAGE);
+							"ERROR IN UPDATE CITY", JOptionPane.ERROR_MESSAGE);
 				}
-
 			}
 		});
 
 		JButton cancel = ViewHelpers.buttonsForms("CANCEL");
-
 		cancel.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent actionEvent) {
@@ -81,14 +100,14 @@ public class FormSetSalaryEmployee extends JDialog {
 			}
 		});
 
-		ret.add(show);
+		ret.add(create);
 		ret.add(cancel);
 
 		return ret;
 	}
 
 	public static void main(String[] Args){
-		FormSetSalaryEmployee f = new FormSetSalaryEmployee();
+		FormUpdateCity f = new FormUpdateCity();
 		f.setVisible(true);
 	}
 

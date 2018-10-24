@@ -2,6 +2,7 @@ package presentation.rental.forms;
 
 import business.rental.TRental;
 import presentation.util.Util;
+import presentation.util.ViewHelpers;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -17,7 +18,7 @@ public class FormDropRental extends JDialog {
 	private JTextField idText;
 
 	public FormDropRental(){
-		setTitle("Baja alquiler");
+		setTitle("Drop rental");
 		setResizable(false);
 		Util.addEscapeListener(this);
 		initGUI();
@@ -54,9 +55,7 @@ public class FormDropRental extends JDialog {
 	private JPanel buttonsPanel() {
 		JPanel ret = new JPanel(new FlowLayout());
 
-		JButton drop = new JButton("ELIMINAR");
-		drop.setForeground(Color.white);
-		drop.setBackground(new Color(119,171,89));
+		JButton drop = ViewHelpers.buttonsForms("DROP");
 
 		drop.addActionListener(new ActionListener() {
 			@Override
@@ -68,15 +67,13 @@ public class FormDropRental extends JDialog {
 					//Invoke the controller with the operation "Drop Rental"
 				}
 				catch(Exception e){
-					JOptionPane.showMessageDialog(getRootPane(), e.getMessage(), "ERROR BAJA ALQUILER",
+					JOptionPane.showMessageDialog(getRootPane(), e.getMessage(), "ERROR IN DROP RENTAL",
 							JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
 
-		JButton cancel = new JButton("CANCELAR");
-		cancel.setForeground(Color.white);
-		cancel.setBackground(new Color(119,171,89));
+		JButton cancel = ViewHelpers.buttonsForms("CANCEL");
 
 		cancel.addActionListener(new ActionListener() {
 			@Override

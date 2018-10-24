@@ -1,4 +1,4 @@
-package presentation.service.forms;
+package presentation.client.forms;
 
 import presentation.util.Util;
 import presentation.util.ViewHelpers;
@@ -11,18 +11,18 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class FormDropService extends JDialog{
+public class FormShowClient extends JDialog{
 
 	private JTextField idText;
 
-	public FormDropService() {
-		setTitle("Drop Service");
+	public FormShowClient() {
+		setTitle("Show client");
 		setResizable(false);
 		Util.addEscapeListener(this);
 		initGUI();
 	}
 
-	private void initGUI(){
+	private void initGUI() {
 		JPanel mainPanel = new JPanel();
 		mainPanel.setLayout(new BoxLayout(mainPanel,BoxLayout.Y_AXIS));
 
@@ -54,9 +54,9 @@ public class FormDropService extends JDialog{
 		//Buttons
 		JPanel buttonsPanel = new JPanel(new FlowLayout());
 
-		JButton drop = ViewHelpers.buttonsForms("DROP");
+		JButton show = ViewHelpers.buttonsForms("SHOW");
 
-		drop.addActionListener(new ActionListener() {
+		show.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -67,7 +67,7 @@ public class FormDropService extends JDialog{
 
 					dispose();
 				}catch (Exception ex){
-					JOptionPane.showMessageDialog(getRootPane(), ex.getMessage(), "ERROR DROP SERVICE", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(getRootPane(), ex.getMessage(), "ERROR SHOW CLIENT", JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
@@ -82,14 +82,14 @@ public class FormDropService extends JDialog{
 			}
 		});
 
-		buttonsPanel.add(drop);
+		buttonsPanel.add(show);
 		buttonsPanel.add(cancel);
 
 		return buttonsPanel;
 	}
 
 	public static void main(String[] args){
-		FormDropService formDropService = new FormDropService();
-		formDropService.setVisible(true);
+		FormShowClient formShowClient = new FormShowClient();
+		formShowClient.setVisible(true);
 	}
 }

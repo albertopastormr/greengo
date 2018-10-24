@@ -1,7 +1,7 @@
 package presentation.employee.forms;
 
-import business.employee.TEmployee;
 import presentation.util.Util;
+import presentation.util.ViewHelpers;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -16,7 +16,7 @@ public class FormShowEmployee extends JDialog {
 	private JTextField idText;
 
 	public FormShowEmployee(){
-		setTitle("Mostrar empleado");
+		setTitle("Show employee");
 		setResizable(false);
 		Util.addEscapeListener(this);
 		initGUI();
@@ -53,30 +53,25 @@ public class FormShowEmployee extends JDialog {
 	private JPanel buttonsPanel(){
 		JPanel ret = new JPanel(new FlowLayout());
 
-		JButton show = new JButton("MOSTRAR");
-		show.setForeground(Color.white);
-		show.setBackground(new Color(119,171,89));
+		JButton show = ViewHelpers.buttonsForms("SHOW");
 
 		show.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent actionEvent) {
-				TEmployee emp = new TEmployee();
 				try{
-					emp.setId(Util.parseNoNegativeInt(idText.getText()));
+					/*This is related to JPA*/
 					//invoke controller with the operation "Show Employee".
 					dispose();
 				}
 				catch(Exception e){
 					JOptionPane.showMessageDialog(getRootPane(), e.getMessage(),
-							"ERROR MOSTRAR EMPLEADO", JOptionPane.ERROR_MESSAGE);
+							"ERROR IN SHOW EMLOYEE", JOptionPane.ERROR_MESSAGE);
 				}
 
 			}
 		});
 
-		JButton cancel = new JButton("CANCELAR");
-		cancel.setForeground(Color.white);
-		cancel.setBackground(new Color(119,171,89));
+		JButton cancel = ViewHelpers.buttonsForms("CANCEL");
 
 		cancel.addActionListener(new ActionListener() {
 			@Override

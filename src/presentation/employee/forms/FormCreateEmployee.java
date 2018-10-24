@@ -1,13 +1,13 @@
 package presentation.employee.forms;
 
-import business.employee.TpermanentEmployee;
-import business.employee.TtemporaryEmployee;
 import presentation.util.Util;
+import presentation.util.ViewHelpers;
 
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
+import javax.swing.text.View;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -30,7 +30,7 @@ public class FormCreateEmployee extends JDialog {
 
 
 	public FormCreateEmployee(){
-		setTitle("Alta empleado");
+		setTitle("Create employee");
 		setResizable(false);
 		Util.addEscapeListener(this);
 		initGUI();
@@ -58,7 +58,7 @@ public class FormCreateEmployee extends JDialog {
 		ret.setBorder(new CompoundBorder(border, margin));
 
 		//Id card
-		JLabel idCardLabel = new JLabel("DNI");
+		JLabel idCardLabel = new JLabel("Id number");
 		ret.add(idCardLabel);
 
 		idCardNumberText = new JTextField(10);
@@ -82,7 +82,7 @@ public class FormCreateEmployee extends JDialog {
 		JLabel activeLabel = new JLabel("Active");
 		ret.add(activeLabel);
 
-		selectActive();
+		activeComboBox = ViewHelpers.selectActive();
 		ret.add(activeComboBox);
 
 		//Type
@@ -117,32 +117,20 @@ public class FormCreateEmployee extends JDialog {
 		JPanel ret = new JPanel(new FlowLayout());
 
 
-		JButton create = new JButton("CREAR");
-		create.setForeground(Color.white);
-		create.setBackground(new Color(119,171,89));
+		JButton create = ViewHelpers.buttonsForms("CREATE");
 
 		create.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent actionEvent) {
 				try {
 					if (typeComboBox.getSelectedItem().equals("Temporary")) {
-						TtemporaryEmployee emp = new TtemporaryEmployee();
-						emp.setId_card_number(Util.parseString(idCardNumberText.getText()));
-						emp.setActive(Util.parseActive(activeComboBox.getSelectedItem().toString()));
-						emp.setWorked_hours(Util.parseNoNegativeInt(workedHoursText.getText()));
-						emp.setSalary(Util.parseNoNegativeFloat(salaryText.getText()));
-						emp.setType(Util.parseString(typeComboBox.getSelectedItem().toString()));
+						/*This is related to JPA*/
 
 						//Invoke the controller and execute "Set salary" operation.
 
 					}
 					else{
-						TpermanentEmployee emp = new TpermanentEmployee();
-						emp.setId_card_number(Util.parseString(idCardNumberText.getText()));
-						emp.setActive(Util.parseActive(activeComboBox.getSelectedItem().toString()));
-						emp.setApportionment(Util.parseNoNegativeInt(appotionmentText.getText()));
-						emp.setSalary(Util.parseNoNegativeFloat(salaryText.getText()));
-						emp.setType(Util.parseString(typeComboBox.getSelectedItem().toString()));
+						/*This is related to JPA*/
 
 						//Invoke the controller and execute "Set salary" operation.
 					}
@@ -151,14 +139,12 @@ public class FormCreateEmployee extends JDialog {
 
 				} catch(Exception e){
 					JOptionPane.showMessageDialog(getRootPane(), e.getMessage(),
-							"ERROR ALTA EMPLEADO", JOptionPane.ERROR_MESSAGE);
+							"ERROR IN CREATE EMPLOYEE", JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
 
-		JButton cancel = new JButton("CANCELAR");
-		cancel.setForeground(Color.white);
-		cancel.setBackground(new Color(119,171,89));
+		JButton cancel = ViewHelpers.buttonsForms("CANCEL");
 
 		cancel.addActionListener(new ActionListener() {
 			@Override
@@ -171,12 +157,6 @@ public class FormCreateEmployee extends JDialog {
 		ret.add(cancel);
 
 		return ret;
-	}
-
-	private void selectActive() {
-		activeComboBox = new JComboBox();
-		activeComboBox.addItem("True");
-		activeComboBox.addItem("False");
 	}
 
 	private void selectType(){

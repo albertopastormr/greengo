@@ -1,5 +1,6 @@
-package presentation.service.forms;
+package presentation.city.forms;
 
+import business.city.TCity;
 import presentation.util.Util;
 import presentation.util.ViewHelpers;
 
@@ -11,12 +12,13 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class FormDropService extends JDialog{
+public class FormShowCity extends JDialog{
 
+	/*Attributes*/
 	private JTextField idText;
 
-	public FormDropService() {
-		setTitle("Drop Service");
+	public FormShowCity(){
+		setTitle("Show city");
 		setResizable(false);
 		Util.addEscapeListener(this);
 		initGUI();
@@ -24,7 +26,7 @@ public class FormDropService extends JDialog{
 
 	private void initGUI(){
 		JPanel mainPanel = new JPanel();
-		mainPanel.setLayout(new BoxLayout(mainPanel,BoxLayout.Y_AXIS));
+		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 
 		mainPanel.add(fieldsPanel());
 		mainPanel.add(buttonsPanel());
@@ -32,6 +34,7 @@ public class FormDropService extends JDialog{
 		add(mainPanel);
 		pack();
 		setLocationRelativeTo(null);
+
 	}
 
 	private JPanel fieldsPanel(){
@@ -40,56 +43,52 @@ public class FormDropService extends JDialog{
 		Border margin = new EmptyBorder(10, 10, 10, 10);
 		ret.setBorder(new CompoundBorder(border, margin));
 
-		//ID
-		JLabel idLabel = new JLabel("ID");
+		//Name
+		JLabel idLabel = new JLabel("Id");
 		ret.add(idLabel);
 
 		idText = new JTextField(10);
 		ret.add(idText);
 
-		return  ret;
+		return ret;
 	}
 
-	private JPanel buttonsPanel() {
-		//Buttons
-		JPanel buttonsPanel = new JPanel(new FlowLayout());
+	private JPanel buttonsPanel(){
+		JPanel ret = new JPanel(new FlowLayout());
 
-		JButton drop = ViewHelpers.buttonsForms("DROP");
-
+		JButton drop = ViewHelpers.buttonsForms("SHOW");
 		drop.addActionListener(new ActionListener() {
-
 			@Override
-			public void actionPerformed(ActionEvent e) {
-				try {
-					/*This is related to JPA*/
+			public void actionPerformed(ActionEvent actionEvent) {
+				TCity city = new TCity();
+				try{
+					city.setId(Util.parseNoNegativeInt(idText.getText()));
 
-					//Invoke the controller and execute "Set salary" operation.
-
-					dispose();
-				}catch (Exception ex){
-					JOptionPane.showMessageDialog(getRootPane(), ex.getMessage(), "ERROR DROP SERVICE", JOptionPane.ERROR_MESSAGE);
+					//Invoke the controller with the operation "Show City"
+				}
+				catch(Exception e){
+					JOptionPane.showMessageDialog(getRootPane(), e.getMessage(),
+							"ERROR IN SHOW CITY", JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
 
 		JButton cancel = ViewHelpers.buttonsForms("CANCEL");
-
-		cancel.addActionListener(new ActionListener(){
-
+		cancel.addActionListener(new ActionListener() {
 			@Override
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent actionEvent) {
 				dispose();
 			}
 		});
 
-		buttonsPanel.add(drop);
-		buttonsPanel.add(cancel);
+		ret.add(drop);
+		ret.add(cancel);
 
-		return buttonsPanel;
+		return ret;
 	}
 
-	public static void main(String[] args){
-		FormDropService formDropService = new FormDropService();
-		formDropService.setVisible(true);
+	public static void main(String[] Args){
+		FormShowCity f = new FormShowCity();
+		f.setVisible(true);
 	}
 }
