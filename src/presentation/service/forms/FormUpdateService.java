@@ -1,15 +1,12 @@
 package presentation.service.forms;
 
-import business.service.TService;
 import presentation.util.Util;
 import presentation.util.ViewHelpers;
 
-import javax.sound.sampled.Line;
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
-import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -110,7 +107,7 @@ public class FormUpdateService extends  JDialog{
 
 					dispose();
 				} catch (Exception ex) {
-					JOptionPane.showMessageDialog(getRootPane(), ex.getMessage(), "ERROR CREATE SERVICE", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(getRootPane(), ex.getMessage(), "ERROR UPDATE SERVICE", JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});

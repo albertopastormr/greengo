@@ -1,5 +1,6 @@
 package presentation.service.forms;
 
+import presentation.client.forms.FormDropClient;
 import presentation.util.Util;
 import presentation.util.ViewHelpers;
 
@@ -11,21 +12,21 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class FormDropService extends JDialog{
+public class FormShowServiceByLevel extends JDialog{
 
-	private JTextField idText;
+	private JTextField levelText;
 
-	public FormDropService() {
-		setTitle("Drop Service");
+	public FormShowServiceByLevel() {
+		setTitle("Show service by level");
 		setResizable(false);
 		Util.addEscapeListener(this);
 		initGUI();
 	}
 
-	private void initGUI(){
+	private void initGUI() {
 		JPanel mainPanel = new JPanel();
 		mainPanel.setLayout(new BoxLayout(mainPanel,BoxLayout.Y_AXIS));
-
+		mainPanel.setBackground(Color.white);
 		mainPanel.add(fieldsPanel());
 		mainPanel.add(buttonsPanel());
 
@@ -35,28 +36,29 @@ public class FormDropService extends JDialog{
 	}
 
 	private JPanel fieldsPanel(){
-		JPanel ret = new JPanel(new GridLayout(1, 2, 0, 7));
+		JPanel ret = new JPanel(new GridLayout(1,2,0,7));
 		Border border = ret.getBorder();
-		Border margin = new EmptyBorder(10, 10, 10, 10);
+		Border margin = new EmptyBorder(10,10,10,10);
 		ret.setBorder(new CompoundBorder(border, margin));
 
-		//ID
-		JLabel idLabel = new JLabel("ID");
-		ret.add(idLabel);
+		//Level
+		JLabel typeLabel = new JLabel("Level");
+		ret.add(typeLabel);
 
-		idText = new JTextField(10);
-		ret.add(idText);
+		levelText = new JTextField(10);
+		ret.add(levelText);
 
 		return  ret;
 	}
 
-	private JPanel buttonsPanel() {
+	private JPanel buttonsPanel(){
+
 		//Buttons
 		JPanel buttonsPanel = new JPanel(new FlowLayout());
 
-		JButton drop = ViewHelpers.buttonsForms("DROP");
+		JButton showBy = ViewHelpers.buttonsForms("SHOW");
 
-		drop.addActionListener(new ActionListener() {
+		showBy.addActionListener(new ActionListener(){
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -66,8 +68,8 @@ public class FormDropService extends JDialog{
 					//Invoke the controller and execute "Set salary" operation.
 
 					dispose();
-				}catch (Exception ex){
-					JOptionPane.showMessageDialog(getRootPane(), ex.getMessage(), "ERROR DROP SERVICE", JOptionPane.ERROR_MESSAGE);
+				} catch (Exception ex) {
+					JOptionPane.showMessageDialog(getRootPane(), ex.getMessage(), "ERROR SHOW SERVICE BY LEVEL", JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
@@ -82,14 +84,14 @@ public class FormDropService extends JDialog{
 			}
 		});
 
-		buttonsPanel.add(drop);
+		buttonsPanel.add(showBy);
 		buttonsPanel.add(cancel);
 
 		return buttonsPanel;
 	}
 
-	public static void main(String[] args){
-		FormDropService formDropService = new FormDropService();
-		formDropService.setVisible(true);
+	public static void main(String[] args) {
+		FormShowServiceByLevel formShowServiceByLevel = new FormShowServiceByLevel();
+		formShowServiceByLevel.setVisible(true);
 	}
 }

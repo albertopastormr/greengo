@@ -1,7 +1,5 @@
 package presentation.service.forms;
 
-import business.service.TService;
-import javafx.scene.control.ComboBox;
 import presentation.util.Util;
 import presentation.util.ViewHelpers;
 
@@ -30,8 +28,8 @@ public class FormCreateService extends JDialog{
 
 	private void initGUI(){
 		JPanel mainPanel = new JPanel();
-		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
-
+		mainPanel.setLayout(new BoxLayout(mainPanel,BoxLayout.Y_AXIS));
+		mainPanel.setBackground(Color.white);
 		mainPanel.add(fieldsPanel());
 		mainPanel.add(buttonsPanel());
 
@@ -123,7 +121,6 @@ public class FormCreateService extends JDialog{
 	}
 
 	public static void main(String[] args) {
-
 		FormCreateService formCreateService = new FormCreateService();
 		formCreateService.setVisible(true);
 	}

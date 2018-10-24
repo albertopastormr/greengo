@@ -8,6 +8,8 @@ import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class FormCreateClient extends JDialog{
 
@@ -17,10 +19,6 @@ public class FormCreateClient extends JDialog{
 	public FormCreateClient() {
 		setTitle("Create client");
 		setResizable(false);
-
-		setUndecorated(true);
-		getRootPane().setWindowDecorationStyle(JRootPane.FRAME);
-
 		Util.addEscapeListener(this);
 		initGUI();
 	}
@@ -38,14 +36,14 @@ public class FormCreateClient extends JDialog{
 	}
 
 	private JPanel fieldsPanel() {
-		JPanel ret = new JPanel(new GridLayout(3,2,0,7));
+		JPanel ret = new JPanel(new GridLayout(2,2,0,7));
 		Border border = ret.getBorder();
 		Border margin = new EmptyBorder(10,10,10,10);
 		ret.setBorder(new CompoundBorder(border, margin));
 
 		//DNI
-		JLabel typeLabel = new JLabel("Type");
-		ret.add(typeLabel);
+		JLabel dniLabel = new JLabel("DNI");
+		ret.add(dniLabel);
 
 		dniText = new JTextField(10);
 		ret.add(dniText);
@@ -60,9 +58,47 @@ public class FormCreateClient extends JDialog{
 		return  ret;
 	}
 
-
 	private JPanel buttonsPanel(){
 
-		return null;
+		//Buttons
+		JPanel buttonsPanel = new JPanel(new FlowLayout());
+
+		JButton create = ViewHelpers.buttonsForms("CREATE");
+
+		create.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					/*This is related to JPA*/
+
+					//Invoke the controller and execute "Set salary" operation.
+
+					dispose();
+				} catch (Exception ex) {
+					JOptionPane.showMessageDialog(getRootPane(), ex.getMessage(), "ERROR CREATE CLIENT", JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		});
+
+		JButton cancel = ViewHelpers.buttonsForms("CANCEL");
+
+		cancel.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
+		});
+
+		buttonsPanel.add(create);
+		buttonsPanel.add(cancel);
+
+		return buttonsPanel;
+	}
+
+	public static void main(String[] args) {
+		FormCreateClient formCreateClient = new FormCreateClient();
+		formCreateClient.setVisible(true);
 	}
 }
