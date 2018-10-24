@@ -1,7 +1,5 @@
 package business.employee.as;
 
-import business.employee.TEmployee;
-
 import java.util.Collection;
 
 public interface ASEmployee {

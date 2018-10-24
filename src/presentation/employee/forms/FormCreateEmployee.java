@@ -1,7 +1,5 @@
 package presentation.employee.forms;
 
-import business.employee.TpermanentEmployee;
-import business.employee.TtemporaryEmployee;
 import presentation.util.Util;
 
 import javax.swing.*;
@@ -126,23 +124,13 @@ public class FormCreateEmployee extends JDialog {
 			public void actionPerformed(ActionEvent actionEvent) {
 				try {
 					if (typeComboBox.getSelectedItem().equals("Temporary")) {
-						TtemporaryEmployee emp = new TtemporaryEmployee();
-						emp.setId_card_number(Util.parseString(idCardNumberText.getText()));
-						emp.setActive(Util.parseActive(activeComboBox.getSelectedItem().toString()));
-						emp.setWorked_hours(Util.parseNoNegativeInt(workedHoursText.getText()));
-						emp.setSalary(Util.parseNoNegativeFloat(salaryText.getText()));
-						emp.setType(Util.parseString(typeComboBox.getSelectedItem().toString()));
+						/*This is related to JPA*/
 
 						//Invoke the controller and execute "Set salary" operation.
 
 					}
 					else{
-						TpermanentEmployee emp = new TpermanentEmployee();
-						emp.setId_card_number(Util.parseString(idCardNumberText.getText()));
-						emp.setActive(Util.parseActive(activeComboBox.getSelectedItem().toString()));
-						emp.setApportionment(Util.parseNoNegativeInt(appotionmentText.getText()));
-						emp.setSalary(Util.parseNoNegativeFloat(salaryText.getText()));
-						emp.setType(Util.parseString(typeComboBox.getSelectedItem().toString()));
+						/*This is related to JPA*/
 
 						//Invoke the controller and execute "Set salary" operation.
 					}

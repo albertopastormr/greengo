@@ -1,6 +1,5 @@
 package presentation.employee.forms;
 
-import business.employee.TEmployee;
 import presentation.util.Util;
 
 import javax.swing.*;
@@ -60,9 +59,8 @@ public class FormDropEmployee extends JDialog {
 		drop.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent actionEvent) {
-				TEmployee emp = new TEmployee();
 				try{
-					emp.setId(Util.parseNoNegativeInt(idText.getText()));
+					/*This is related to JPA*/
 					dispose();
 					//Invoke the controller with the operation "Drop Employee"
 				}

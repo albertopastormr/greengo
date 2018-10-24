@@ -1,6 +1,5 @@
 package presentation.employee.forms;
 
-import business.employee.TEmployee;
 import presentation.util.Util;
 
 import javax.swing.*;
@@ -61,9 +60,8 @@ public class FormSetSalaryEmployee extends JDialog {
 		show.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent actionEvent) {
-				TEmployee emp = new TEmployee();
 				try{
-					emp.setId(Util.parseNoNegativeInt(idText.getText()));
+					/*This is related to JPA*/
 					//invoke controller with the operation "Set Salary Employee".
 					dispose();
 				}
