@@ -1,12 +1,14 @@
 package business.main_office.as.imp;
 
-import business.main_office.TMain_Office;
 import business.main_office.as.ASMain_Office;
 
 import java.util.Collection;
 
-public class ASMain_OfficeImp implements ASMain_Office {
-    @Override
+public class ASMain_OfficeImp /*implements ASMain_Office*/ {
+
+    /*This is related to JPA*/
+
+   /* @Override
     public Integer create(TMain_Office client) {
         return null;
     }
@@ -34,5 +36,5 @@ public class ASMain_OfficeImp implements ASMain_Office {
     @Override
     public float showSalary(Integer id) {
         return 0;
-    }
+    }*/
 }
