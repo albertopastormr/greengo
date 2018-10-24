@@ -49,8 +49,8 @@ public class ASClientTest {
 
     @Test (expected = IncorrectInputException.class)
     public void createClientIncorrectInput1(){
-        TClient tc = new TClient(null,"000",0,false); //id_card_number must have
-                                                                        // 9 digits, including a letter at the end.
+        TClient tc = new TClient(null,"000",0,false); //id_card_number
+        // must have 8 numbers and 1 letter at the end
         as.create(tc);
     }
 
@@ -114,8 +114,89 @@ public class ASClientTest {
 
 
     //TODO Show method
+
+    @Test
+    public void showClientSuccessful(){
+        TClient tc = new TClient(null,"00000000X",0,false);
+        Integer idC = as.create(tc);
+
+        TClient out = as.show(idC);
+
+        assertEquals(out.getId(),idC);
+        assertEquals(out.getId_card_number(),tc.getId_card_number());
+        assertEquals(out.getRentals_number(),tc.getRentals_number());
+        assertEquals(out.isActive(),tc.isActive());
+    }
+
+    @Test (expected = IncorrectInputException.class)
+    public void showClientIncorrectInputID1(){
+        as.show(0); //id must be > 0
+    }
+
+    @Test (expected = IncorrectInputException.class)
+    public void showClientIncorrectInputID2(){
+        as.show(-1); //id must be > 0
+    }
+
+    @Test (expected = ASException.class)
+    public void showClientNotExists(){
+        as.show(1);
+    }
+
     //TODO ShowAll method
     //TODO ShowAllNrentals method
     //TODO Update method
 
+    @Test
+    public void updateClientSuccessful(){
+        TClient oldClient = new TClient(null,"00000000X",0,false);
+        Integer idC = as.create(oldClient);
+
+        TClient updtClient = new TClient(idC,"11111111X",0,true);
+        Integer idOut = as.update(updtClient);
+
+        TClient out = as.show(idOut);
+
+        assertEquals(out.getId(),updtClient.getId());
+        assertEquals(out.getId_card_number(),updtClient.getId_card_number());
+        assertEquals(out.getRentals_number(),updtClient.getRentals_number());
+        assertEquals(out.isActive(),updtClient.isActive());
+    }
+
+    @Test (expected = IncorrectInputException.class)
+    public void updateClientIncorrectInputID(){
+        //id can't be null
+        TClient updtClient = new TClient(null,"11111111",0,true);
+        as.update(updtClient);
+    }
+
+    @Test (expected = IncorrectInputException.class)
+    public void updateClientIncorrectInputID_card_number1(){
+        //id_card_number must have 8 numbers and 1 letter at the end
+        TClient updtClient = new TClient(1,"1111X",0,true);
+        as.update(updtClient);
+    }
+
+    @Test (expected = IncorrectInputException.class)
+    public void updateClientIncorrectInputID_card_number2(){
+        //id_card_number must have 8 numbers and 1 letter at the end
+        TClient updtClient = new TClient(1,"11111111",0,true);
+        as.update(updtClient);
+    }
+
+    @Test (expected = IncorrectInputException.class)
+    public void updateClientIncorrectInputRentals_number(){
+        //rentals number must be >= 0
+        TClient updtClient = new TClient(1,"11111111X",-1,true);
+        as.update(updtClient);
+    }
+
+    @Test (expected = IncorrectInputException.class)
+    public void updateClientIncorrectInputActive(){
+        //active must be true
+        TClient updtClient = new TClient(1,"11111111X",-1,true);
+        as.update(updtClient);
+    }
+
+    //todo update sobre cliente no existente
 }
