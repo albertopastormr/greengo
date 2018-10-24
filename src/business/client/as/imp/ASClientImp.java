@@ -32,7 +32,7 @@ public class ASClientImp implements ASClient {
     }
 
     @Override
-    public Collection<TClient> showAllNRentals(Integer N) {
+    public Collection<TClient> showAllWithMoreThanNRentals(Integer N) {
         return null;
     }
 }

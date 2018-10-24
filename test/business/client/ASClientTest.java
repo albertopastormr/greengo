@@ -10,12 +10,15 @@ import integration.rental.dao.DAORental;
 import integration.rental.factory.DAORentalFactory;
 import integration.vehicle.dao.DAOVehicle;
 import integration.vehicle.factory.DAOVehicleFactory;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Collection;
 import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ASClientTest {
@@ -68,7 +71,7 @@ public class ASClientTest {
         as.create(tc);
     }
 
-    //Drop methods
+    //Drop method
     @Test (expected = ASException.class)
     public void dropSuccessful(){
         TClient tc = new TClient(null,"00000000X",0,false);
@@ -143,16 +146,58 @@ public class ASClientTest {
         as.show(1);
     }
 
-    //TODO ShowAll method
-    //TODO ShowAllNrentals method
-    //TODO Update method
+    //showAll method
+    @Test
+    public void showAllClientsSuccessful() {
+        TClient tc1 = new TClient(null, "00000000X", 0, false);
+        Integer idC1 = as.create(tc1);
+        TClient tc2 = new TClient(null, "11111111X", 0, false);
+        as.create(tc2);
 
+        Collection<TClient> collec = as.showAll();
+        for (TClient tmp : collec) {
+            if (tmp.getId().equals(idC1))
+                assertTrue(checkTransferValues(tmp, tc1.getId_card_number(), tc1.getRentals_number()));
+           else
+                assertTrue(checkTransferValues(tmp, tc2.getId_card_number(), tc2.getRentals_number()));
+        }
+    }
+
+    @Test
+    public void showAllClientsSuccessful2(){
+        Collection<TClient> c = as.showAll();
+        assertTrue(c.isEmpty());
+    }
+    private boolean checkTransferValues(TClient tc,String id_card_number,Integer rentals_number){
+        return  tc.getId_card_number().equals(id_card_number) &&
+                tc.getRentals_number().equals(rentals_number) && tc.isActive();
+    }
+    //showAllWithMoreNrentals method
+
+    @Test
+    public void showAllClientsWithMoreNrentalsSuccessful(){
+        final Integer N = 2;
+        TClient tc1 = new TClient(null, "00000000X", 3, false);
+        Integer idC1 = as.create(tc1);
+        TClient tc2 = new TClient(null, "11111111X", 2, false);
+        Integer idC2 = as.create(tc2);
+        TClient tc3 = new TClient(null, "11121111Y", 0, false);
+        Integer idC3 = as.create(tc3);
+
+        Collection<TClient> collec = as.showAllWithMoreThanNRentals(N);
+        for(TClient tmp : collec){
+            assertTrue(tmp.getRentals_number() > N);
+            assertNotEquals(tmp.getId(),idC2);
+            assertNotEquals(tmp.getId(),idC3);
+        }
+    }
+    //Update method
     @Test
     public void updateClientSuccessful(){
         TClient oldClient = new TClient(null,"00000000X",0,false);
         Integer idC = as.create(oldClient);
 
-        TClient updtClient = new TClient(idC,"11111111X",0,true);
+        TClient updtClient = new TClient(idC,"11111111X",1,true);
         Integer idOut = as.update(updtClient);
 
         TClient out = as.show(idOut);
@@ -194,9 +239,14 @@ public class ASClientTest {
     @Test (expected = IncorrectInputException.class)
     public void updateClientIncorrectInputActive(){
         //active must be true
-        TClient updtClient = new TClient(1,"11111111X",-1,true);
+        TClient updtClient = new TClient(1,"11111111X",0,false);
         as.update(updtClient);
     }
 
-    //todo update sobre cliente no existente
+    @Test (expected = IncorrectInputException.class)
+    public void updateClientNotExists(){
+        //active must be true
+        TClient updtClient = new TClient(1,"11111111X",0,true);
+        as.update(updtClient);
+    }
 }

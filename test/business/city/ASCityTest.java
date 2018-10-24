@@ -168,10 +168,11 @@ public class ASCityTest {
 		Collection<TCity> c = as.showAll();
 
 		for(TCity tmp : c){
-		    if(tmp.getId() == idMad)
+		    if(tmp.getId().equals(idMad))
 			   assertTrue(checkTransferValues(tmp,"Madrid"));
 			else
 			    assertTrue(checkTransferValues(tmp,"Barcelona"));
+
 		}
 	}
 

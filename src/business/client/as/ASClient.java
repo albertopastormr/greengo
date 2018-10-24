@@ -15,6 +15,6 @@ public interface ASClient {
 
     Collection<TClient> showAll ();
 
-    Collection<TClient> showAllNRentals (Integer N);
+    Collection<TClient> showAllWithMoreThanNRentals (Integer N);
 
 }
