@@ -20,8 +20,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.Collection;
-
-
+import java.util.Date;
 
 
 public class ASCityTest {
@@ -114,7 +113,8 @@ public class ASCityTest {
 		Integer id = as.create(tmp);
 
 		DAOVehicle dao = DAOVehicleFactory.getInstance().generateDAOVehicle();
-		TVehicle tv = new TVehicle(null,"Audi",false,false,0,1000);
+		TVehicle tv = new TVehicle(null,"Audi",false,
+                false,0,1000);
 		dao.create(tv);
 
 		as.drop(id);
@@ -190,14 +190,17 @@ public class ASCityTest {
     //TODO falta id city en algunos transfer
 	@Test
 	public void showClientsByCitySuccessful(){
+        Date dFrom = new Date(1540373530000L);
+        Date dTo = new Date(1543051930000L);
 		DAOClient dc = DAOClientFactory.getInstance().generateDAOClient();
 		TClient tc = new TClient(null,"00000000X",0,false);
 		Integer idC = dc.create(tc);
         DAOVehicle dv = DAOVehicleFactory.getInstance().generateDAOVehicle();
-        TVehicle tv = new TVehicle(null,"Audi",false,false,0,1000);
+        TVehicle tv = new TVehicle(null,"Audi",false,
+                false,0,1000);
 		Integer idV = dv.create(tv);
         DAORental dr = DAORentalFactory.getInstance().generateDAORental();
-        TRental tr = new TRental(null,idV,false,10,idC);
+        TRental tr = new TRental(null,idV,false,10,idC,dFrom,dTo);
         dr.create(tr);
 
         TCity tcity = new TCity(null,"Madrid",false);

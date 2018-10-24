@@ -101,7 +101,8 @@ public class ASClientTest {
         Integer idC = as.create(tc);
 
         DAOVehicle dao = DAOVehicleFactory.getInstance().generateDAOVehicle();
-        TVehicle tv = new TVehicle(null,"Audi",false,false,0,1000);
+        TVehicle tv = new TVehicle(null,"Audi",false,false,
+                0,1000);
         Integer idV = dao.create(tv);
 
         DAORental dr = DAORentalFactory.getInstance().generateDAORental();
