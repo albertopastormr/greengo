@@ -7,7 +7,7 @@ import java.util.Collection;
 public interface ASClient {
     Integer create(TClient client);
 
-    Integer drop(TClient client);
+    Integer drop(Integer client);
 
     Integer update(TClient client);
 

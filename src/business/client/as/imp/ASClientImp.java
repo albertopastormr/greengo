@@ -12,7 +12,7 @@ public class ASClientImp implements ASClient {
     }
 
     @Override
-    public Integer drop(TClient city) {
+    public Integer drop(Integer city) {
         return null;
     }
 

@@ -1,12 +1,19 @@
 package business.client;
 
 import business.client.as.ASClient;
-import business.client.as.imp.ASClientImp;
 import business.client.factory.ASClientFactory;
+import business.rental.TRental;
+import business.vehicle.TVehicle;
 import integration.client.dao.DAOClient;
 import integration.client.factory.DAOClientFactory;
+import integration.rental.dao.DAORental;
+import integration.rental.factory.DAORentalFactory;
+import integration.vehicle.dao.DAOVehicle;
+import integration.vehicle.factory.DAOVehicleFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -60,7 +67,51 @@ public class ASClientTest {
                                                                                                   //as input
         as.create(tc);
     }
-    //TODO Drop method
+
+    //Drop methods
+    @Test (expected = ASException.class)
+    public void dropSuccessful(){
+        TClient tc = new TClient(null,"00000000X",0,false);
+        Integer id = as.create(tc);
+
+        as.drop(id);
+        as.show(id);
+    }
+
+    @Test (expected = IncorrectInputException.class)
+    public void dropClientIncorrectInput0(){
+        as.drop(0); //id must be > 0
+    }
+
+    @Test (expected = IncorrectInputException.class)
+    public void dropClientIncorrectInput1(){
+        as.drop(-1); //id must be > 0
+    }
+
+    @Test (expected = ASException.class)
+    public void dropClientNotExists(){
+        as.drop(1);
+    }
+
+    @Test (expected = ASException.class)
+    public void dropClientWithActiveRentals(){
+        Date dFrom = new Date(1540373530000L);
+        Date dTo = new Date(1543051930000L);
+        TClient tc = new TClient(null,"00000000X",0,false);
+        Integer idC = as.create(tc);
+
+        DAOVehicle dao = DAOVehicleFactory.getInstance().generateDAOVehicle();
+        TVehicle tv = new TVehicle(null,"Audi",false,false,0,1000);
+        Integer idV = dao.create(tv);
+
+        DAORental dr = DAORentalFactory.getInstance().generateDAORental();
+        TRental tr = new TRental(null,idV,false,10,idC,dFrom,dTo);
+        dr.create(tr);
+
+        as.drop(idC);
+    }
+
+
     //TODO Show method
     //TODO ShowAll method
     //TODO ShowAllNrentals method
