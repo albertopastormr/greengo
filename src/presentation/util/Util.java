@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.text.ParseException;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class Util {
 
@@ -57,8 +58,28 @@ public class Util {
 		return s.equals("true");
 	}
 
-	public static boolean parseDates(Date d1, Date d2){ //TODO. This method has to return true if d2 > d1.
-		return true;
+	public static boolean parseDates(Date d1, Date d2) throws ParseException { //Return true id d2 > d1.
+        GregorianCalendar gc1 = new GregorianCalendar();
+        GregorianCalendar gc2 = new GregorianCalendar();
+
+        gc1.setTimeInMillis(d1.getTime());
+        gc2.setTimeInMillis(d2.getTime());
+
+        /*We know that GregorianCalendar has an equal method, but this operation takes in care the minutes and hour, and we don't want to be that precise*/
+
+        int day1 = gc1.get(GregorianCalendar.DAY_OF_MONTH);
+        int year1 = gc1.get(GregorianCalendar.YEAR);
+        int month1 = gc1.get(GregorianCalendar.MONTH);
+
+        int day2 = gc2.get(GregorianCalendar.DAY_OF_MONTH);
+        int year2 = gc2.get(GregorianCalendar.YEAR);
+        int month2 = gc2.get(GregorianCalendar.MONTH);
+
+
+		if((day1 == day2 && month1 == month2 && year1 == year2) ||
+                (year2 < year1 || month2 < month1 ||
+                        ( (year1 == year2 && month1 == month2) && day2 < day1)))throw new ParseException("Fail in date", 0);
+		else return true;
 	}
 
 	public static boolean parseDateNull(Date d) throws NullPointerException{

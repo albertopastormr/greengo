@@ -54,8 +54,11 @@ public class FormDropService extends JDialog{
 		//Buttons
 		JPanel buttonsPanel = new JPanel(new FlowLayout());
 
-		JButton delete = new JButton("DELETE");
-		delete.addActionListener(new ActionListener() {
+		JButton drop = new JButton("DELETE");
+		drop.setForeground(Color.white);
+		drop.setBackground(new Color(119,171,89));
+
+		drop.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -71,6 +74,9 @@ public class FormDropService extends JDialog{
 		});
 
 		JButton cancel = new JButton("CANCEL");
+		cancel.setForeground(Color.white);
+		cancel.setBackground(new Color(119,171,89));
+
 		cancel.addActionListener(new ActionListener(){
 
 			@Override
@@ -79,7 +85,7 @@ public class FormDropService extends JDialog{
 			}
 		});
 
-		buttonsPanel.add(delete);
+		buttonsPanel.add(drop);
 		buttonsPanel.add(cancel);
 
 		return buttonsPanel;

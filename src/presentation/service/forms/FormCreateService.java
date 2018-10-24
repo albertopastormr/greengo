@@ -88,6 +88,9 @@ public class FormCreateService extends JDialog{
 		JPanel buttonsPanel = new JPanel(new FlowLayout());
 
 		JButton create = new JButton("CREATE");
+		create.setForeground(Color.white);
+		create.setBackground(new Color(119,171,89));
+
 		create.addActionListener(new ActionListener(){
 
 			@Override
@@ -106,6 +109,9 @@ public class FormCreateService extends JDialog{
 		});
 
 		JButton cancel = new JButton("CANCEL");
+		cancel.setForeground(Color.white);
+		cancel.setBackground(new Color(119,171,89));
+
 		create.addActionListener(new ActionListener(){
 
 			@Override
