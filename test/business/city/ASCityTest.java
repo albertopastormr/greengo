@@ -186,12 +186,11 @@ public class ASCityTest {
 	}
 
 	//TODO showClientsByCity tests
-
 	@Test
 	public void showClientsByCitySuccessful(){
         Date dFrom = new Date(1540373530000L);
         Date dTo = new Date(1543051930000L);
-
+        //TODO refactorizar -> parte exitosa
         ASClient asC = ASClientFactory.getInstance().generateASClient();
 		TClient tc = new TClient(null,"00000000X",0,false);
 		Integer idC = asC.create(tc);
@@ -201,21 +200,41 @@ public class ASCityTest {
 
         ASVehicle asV = ASVehicleFactory.getInstance().generateASVehicle();
         TVehicle tv = new TVehicle(null,"Audi",6000,0,
-                false,1,false);
+                false,idCity,false);
 		Integer idV = asV.create(tv);
 
 		ASRental asR = ASRentalFactory.getInstance().generateASRental();
         TRental tr = new TRental(null,idV,false,10,idC,dFrom,dTo);
         asR.create(tr);
 
+        //TODO refactorizar -> parte fallo
+        TClient tcFail = new TClient(null,"11111111X",0,false);
+        Integer idCFail = asC.create(tcFail);
+
+        TCity tcity2 = new TCity(null,"Barcelona",false);
+        Integer idCity2 = as.create(tcity2);
+
+        TVehicle tvFail = new TVehicle(null,"Audi",6000,0,
+                false,idCity2,false);
+        Integer idVFail = asV.create(tvFail);
+
+        TRental trFail = new TRental(null,idVFail,false,10,idCFail,dFrom,dTo);
+        asR.create(trFail);
 
 
         Collection<TClient> out = as.showClientsByCity(idCity);
 
         for(TClient client : out){
             assertEquals(client.getId(), idC);
+            assertNotEquals(client.getId(),idCFail);
         }
 	}
+
+
+
+
+
+
 
 	//update method tests
 
