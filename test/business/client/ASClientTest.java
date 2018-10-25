@@ -21,10 +21,11 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ASClientTest {
+    TClient tc1 = new TClient(1,"00000000X",0,false);
     private static ASClient as;
 
     @BeforeEach
-    private void setUp(){
+    private void setUp() throws Exception{
         DAOClient dao = DAOClientFactory.getInstance().generateDAOClient();
         dao.deleteAll();
 
@@ -34,9 +35,9 @@ public class ASClientTest {
     //Create method
     @Test
     public void createClientSuccessful(){
-        TClient tc = new TClient(null,"00000000X",0,false);
-        Integer id = as.create(tc);
-        tc = as.show(id);
+
+        Integer id = as.create(tc1);
+        TClient tc_test1 = as.show(id);
         assertTrue(tc.getId() > 0);
         assertTrue(id > 0);
         assertEquals(tc.getId(),id);
@@ -44,16 +45,15 @@ public class ASClientTest {
 
     @Test (expected = IncorrectInputException.class)
     public void createClientIncorrectInput0(){
-        TClient tc = new TClient(0,"00000000X",-1,false); //id must be null
-                                                                                                // as input
-        as.create(tc);
+        tc1.setRentals_number(-1);
+        as.create(tc1);
     }
 
     @Test (expected = IncorrectInputException.class)
     public void createClientIncorrectInput1(){
-        TClient tc = new TClient(null,"000",0,false); //id_card_number
+        tc1.setId(null);
         // must have 8 numbers and 1 letter at the end
-        as.create(tc);
+        as.create(tc1);
     }
 
     @Test (expected = IncorrectInputException.class)

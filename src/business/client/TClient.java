@@ -19,7 +19,7 @@ public class TClient {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -35,7 +35,7 @@ public class TClient {
 		return rentals_number;
 	}
 
-	public void setRentals_number(int rentals_number) {
+	public void setRentals_number(Integer rentals_number) {
 		this.rentals_number = rentals_number;
 	}
 
