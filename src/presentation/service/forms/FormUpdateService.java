@@ -1,5 +1,6 @@
 package presentation.service.forms;
 
+import business.service.TService;
 import presentation.util.Util;
 import presentation.util.ViewHelpers;
 
@@ -40,10 +41,7 @@ public class FormUpdateService extends  JDialog{
 	}
 
 	private JPanel fieldsPanel(){
-		JPanel ret = new JPanel(new GridLayout(6,2,0,7));
-		Border border = ret.getBorder();
-		Border margin = new EmptyBorder(10,10,10,10);
-		ret.setBorder(new CompoundBorder(border, margin));
+		JPanel ret = ViewHelpers.createFieldPanel(6);
 
 		//ID
 		JLabel idLabel = new JLabel("ID");
@@ -100,11 +98,14 @@ public class FormUpdateService extends  JDialog{
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				TService service = new TService();
 				try {
 					/*This is related to JPA*/
-
-					//Invoke the controller and execute "Set salary" operation.
-
+					service.setId(Util.parseNoNegativeInt(idText.getText()));
+					service.setType(Util.parseString(typeText.getText()));
+					service.setAddress(Util.parseString(addressText.getText()));
+					service.setCapacity(Util.parseNoNegativeInt(capacityText.getText()));
+					service.setVehicles_attended(Util.parseNoNegativeInt(vehicles_attendedText.getText()));
 					dispose();
 				} catch (Exception ex) {
 					JOptionPane.showMessageDialog(getRootPane(), ex.getMessage(), "ERROR UPDATE SERVICE", JOptionPane.ERROR_MESSAGE);

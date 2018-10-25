@@ -1,5 +1,6 @@
 package presentation.service.forms;
 
+import business.service.TService;
 import presentation.util.Util;
 import presentation.util.ViewHelpers;
 
@@ -35,10 +36,7 @@ public class FormDropService extends JDialog{
 	}
 
 	private JPanel fieldsPanel(){
-		JPanel ret = new JPanel(new GridLayout(1, 2, 0, 7));
-		Border border = ret.getBorder();
-		Border margin = new EmptyBorder(10, 10, 10, 10);
-		ret.setBorder(new CompoundBorder(border, margin));
+		JPanel ret = ViewHelpers.createFieldPanel(1);
 
 		//ID
 		JLabel idLabel = new JLabel("ID");
@@ -60,11 +58,10 @@ public class FormDropService extends JDialog{
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				TService service = new TService();
 				try {
 					/*This is related to JPA*/
-
-					//Invoke the controller and execute "Set salary" operation.
-
+					service.setId(Util.parseNoNegativeInt(idText.getText()));
 					dispose();
 				}catch (Exception ex){
 					JOptionPane.showMessageDialog(getRootPane(), ex.getMessage(), "ERROR DROP SERVICE", JOptionPane.ERROR_MESSAGE);
