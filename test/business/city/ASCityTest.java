@@ -1,26 +1,25 @@
 package business.city;
 
 import business.city.as.ASCity;
-import business.city.as.imp.ASCityImp;
 import business.city.factory.ASCityFactory;
 import business.client.TClient;
+import business.client.as.ASClient;
+import business.client.factory.ASClientFactory;
 import business.rental.TRental;
+import business.rental.as.ASRental;
+import business.rental.factory.ASRentalFactory;
 import business.vehicle.TVehicle;
+import business.vehicle.as.ASVehicle;
+import business.vehicle.factory.ASVehicleFactory;
 import integration.city.dao.DAOCity;
 import integration.city.factory.DAOCityFactory;
-import integration.client.dao.DAOClient;
-import integration.client.factory.DAOClientFactory;
-import integration.rental.dao.DAORental;
-import integration.rental.factory.DAORentalFactory;
-import integration.vehicle.dao.DAOVehicle;
-import integration.vehicle.factory.DAOVehicleFactory;
-
-import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.Collection;
 import java.util.Date;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 
 public class ASCityTest {
@@ -112,10 +111,10 @@ public class ASCityTest {
 		TCity tmp = new TCity(null,"Madrid",false);
 		Integer id = as.create(tmp);
 
-		DAOVehicle dao = DAOVehicleFactory.getInstance().generateDAOVehicle();
+		ASVehicle asV = ASVehicleFactory.getInstance().generateASVehicle();
 		TVehicle tv = new TVehicle(null,"Audi",false,
                 false,0,1000);
-		dao.create(tv);
+		asV.create(tv);
 
 		as.drop(id);
 	}
@@ -187,32 +186,55 @@ public class ASCityTest {
 	}
 
 	//TODO showClientsByCity tests
-
-    //TODO falta id city en algunos transfer
 	@Test
 	public void showClientsByCitySuccessful(){
         Date dFrom = new Date(1540373530000L);
         Date dTo = new Date(1543051930000L);
-		DAOClient dc = DAOClientFactory.getInstance().generateDAOClient();
+        //TODO refactorizar -> parte exitosa
+        ASClient asC = ASClientFactory.getInstance().generateASClient();
 		TClient tc = new TClient(null,"00000000X",0,false);
-		Integer idC = dc.create(tc);
-        DAOVehicle dv = DAOVehicleFactory.getInstance().generateDAOVehicle();
-        TVehicle tv = new TVehicle(null,"Audi",false,
-                false,0,1000);
-		Integer idV = dv.create(tv);
-        DAORental dr = DAORentalFactory.getInstance().generateDAORental();
-        TRental tr = new TRental(null,idV,false,10,idC,dFrom,dTo);
-        dr.create(tr);
+		Integer idC = asC.create(tc);
 
-        TCity tcity = new TCity(null,"Madrid",false);
+		TCity tcity = new TCity(null,"Madrid",false);
         Integer idCity = as.create(tcity);
+
+        ASVehicle asV = ASVehicleFactory.getInstance().generateASVehicle();
+        TVehicle tv = new TVehicle(null,"Audi",6000,0,
+                false,idCity,false);
+		Integer idV = asV.create(tv);
+
+		ASRental asR = ASRentalFactory.getInstance().generateASRental();
+        TRental tr = new TRental(null,idV,false,10,idC,dFrom,dTo);
+        asR.create(tr);
+
+        //TODO refactorizar -> parte fallo
+        TClient tcFail = new TClient(null,"11111111X",0,false);
+        Integer idCFail = asC.create(tcFail);
+
+        TCity tcity2 = new TCity(null,"Barcelona",false);
+        Integer idCity2 = as.create(tcity2);
+
+        TVehicle tvFail = new TVehicle(null,"Audi",6000,0,
+                false,idCity2,false);
+        Integer idVFail = asV.create(tvFail);
+
+        TRental trFail = new TRental(null,idVFail,false,10,idCFail,dFrom,dTo);
+        asR.create(trFail);
+
 
         Collection<TClient> out = as.showClientsByCity(idCity);
 
         for(TClient client : out){
             assertEquals(client.getId(), idC);
+            assertNotEquals(client.getId(),idCFail);
         }
 	}
+
+
+
+
+
+
 
 	//update method tests
 

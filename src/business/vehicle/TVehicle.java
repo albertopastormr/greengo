@@ -4,67 +4,77 @@ public class TVehicle {
 
 	private Integer id;
 	private String brand;
-	private boolean active;
-	private boolean occupied;
-	private Integer km_travelled;
-	private Integer estimated_duration;
+    private Integer estimated_duration;
+    private Integer km_travelled;
+    private boolean occupied;
+    private Integer city;
+    private boolean active;
 
 	public TVehicle(){}
 
-	public TVehicle(Integer id, String brand, boolean active, boolean occupied, Integer km_travelled, Integer estimated_duration) {
-		this.id = id;
-		this.brand = brand;
-		this.active = active;
-		this.occupied = occupied;
-		this.km_travelled = km_travelled;
-		this.estimated_duration = estimated_duration;
-	}
+    public TVehicle(Integer id, String brand, Integer estimated_duration, Integer km_travelled, boolean occupied, Integer city, boolean active) {
+        this.id = id;
+        this.brand = brand;
+        this.estimated_duration = estimated_duration;
+        this.km_travelled = km_travelled;
+        this.occupied = occupied;
+        this.city = city;
+        this.active = active;
+    }
 
-	public Integer getId() {
-		return id;
-	}
+    public Integer getId() {
+        return id;
+    }
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-	public String getBrand() {
-		return brand;
-	}
+    public String getBrand() {
+        return brand;
+    }
 
-	public void setBrand(String brand) {
-		this.brand = brand;
-	}
+    public void setBrand(String brand) {
+        this.brand = brand;
+    }
 
-	public boolean isActive() {
-		return active;
-	}
+    public Integer getEstimated_duration() {
+        return estimated_duration;
+    }
 
-	public void setActive(boolean active) {
-		this.active = active;
-	}
+    public void setEstimated_duration(Integer estimated_duration) {
+        this.estimated_duration = estimated_duration;
+    }
 
-	public boolean isOccupied() {
-		return occupied;
-	}
+    public Integer getKm_travelled() {
+        return km_travelled;
+    }
 
-	public void setOccupied(boolean occupied) {
-		this.occupied = occupied;
-	}
+    public void setKm_travelled(Integer km_travelled) {
+        this.km_travelled = km_travelled;
+    }
 
-	public Integer getKm_travelled() {
-		return km_travelled;
-	}
+    public boolean isOccupied() {
+        return occupied;
+    }
 
-	public void setKm_travelled(Integer km_travelled) {
-		this.km_travelled = km_travelled;
-	}
+    public void setOccupied(boolean occupied) {
+        this.occupied = occupied;
+    }
 
-	public Integer getEstimated_duration() {
-		return estimated_duration;
-	}
+    public Integer getCity() {
+        return city;
+    }
 
-	public void setEstimated_duration(Integer estimated_duration) {
-		this.estimated_duration = estimated_duration;
-	}
+    public void setCity(Integer city) {
+        this.city = city;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
 }

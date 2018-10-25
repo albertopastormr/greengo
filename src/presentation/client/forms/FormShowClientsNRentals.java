@@ -11,11 +11,11 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class FormShowClientsWithMoreThanNRentals extends JDialog{
+public class FormShowClientsNRentals extends JDialog{
 
 	private JTextField nrentalsText;
 
-	public FormShowClientsWithMoreThanNRentals() {
+	public FormShowClientsNRentals() {
 		setTitle("Show clients with more than N rentals");
 		setResizable(false);
 		Util.addEscapeListener(this);
@@ -35,10 +35,7 @@ public class FormShowClientsWithMoreThanNRentals extends JDialog{
 	}
 
 	private JPanel fieldsPanel() {
-		JPanel ret = new JPanel(new GridLayout(1,2,0,7));
-		Border border = ret.getBorder();
-		Border margin = new EmptyBorder(10,10,10,10);
-		ret.setBorder(new CompoundBorder(border, margin));
+		JPanel ret = ViewHelpers.createFieldPanel(1);
 
 		//NRentals
 		JLabel nrentalsLabel = new JLabel("NºRentals");
@@ -90,7 +87,7 @@ public class FormShowClientsWithMoreThanNRentals extends JDialog{
 	}
 
 	public static void main(String[] args) {
-		FormShowClientsWithMoreThanNRentals formShowClientsWithMoreThanNRentals = new FormShowClientsWithMoreThanNRentals();
-		formShowClientsWithMoreThanNRentals.setVisible(true);
+		FormShowClientsNRentals formShowClientsNRentals = new FormShowClientsNRentals();
+		formShowClientsNRentals.setVisible(true);
 	}
 }
