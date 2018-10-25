@@ -53,10 +53,7 @@ public class FormUpdateRental extends JDialog {
 	}
 
 	private JPanel fieldsPanel(){
-		JPanel ret = new JPanel(new GridLayout(5, 2, 0, 7));
-		Border border = ret.getBorder();
-		Border margin = new EmptyBorder(10, 10, 10, 10);
-		ret.setBorder(new CompoundBorder(border, margin));
+		JPanel ret = ViewHelpers.createFieldPanel(5);
 
 		//Id
 		JLabel idLabel = new JLabel("Id");

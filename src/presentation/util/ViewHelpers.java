@@ -1,6 +1,9 @@
 package presentation.util;
 
 import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
 public class ViewHelpers {
@@ -20,5 +23,14 @@ public class ViewHelpers {
 		button.setBackground(new Color(119,171,89));
 
 		return button;
+	}
+
+	public static JPanel createFieldPanel(int column){
+		JPanel panel = new JPanel(new GridLayout(column, 2, 0, 7));
+		Border border = panel.getBorder();
+		Border margin = new EmptyBorder(10, 10, 10, 10);
+		panel.setBorder(new CompoundBorder(border, margin));
+
+		return  panel;
 	}
 }
