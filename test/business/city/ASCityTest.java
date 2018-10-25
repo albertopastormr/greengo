@@ -187,7 +187,6 @@ public class ASCityTest {
 
 	//TODO showClientsByCity tests
 
-    //TODO falta id city en algunos transfer
 	@Test
 	public void showClientsByCitySuccessful(){
         Date dFrom = new Date(1540373530000L);
