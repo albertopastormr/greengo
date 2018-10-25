@@ -13,13 +13,13 @@ import business.vehicle.as.ASVehicle;
 import business.vehicle.factory.ASVehicleFactory;
 import integration.city.dao.DAOCity;
 import integration.city.factory.DAOCityFactory;
-
-import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.Collection;
 import java.util.Date;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 
 public class ASCityTest {
