@@ -41,10 +41,7 @@ public class FormUpdateCity extends JDialog {
 	}
 
 	private JPanel fieldsPanel(){
-		JPanel ret = new JPanel(new GridLayout(3, 2, 0, 7));
-		Border border = ret.getBorder();
-		Border margin = new EmptyBorder(10, 10, 10, 10);
-		ret.setBorder(new CompoundBorder(border, margin));
+		JPanel ret = ViewHelpers.createFieldPanel(3);
 
 		//Id
 		JLabel idLabel = new JLabel("Id");
