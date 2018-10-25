@@ -1,19 +1,18 @@
 package business.city;
 
 import business.city.as.ASCity;
-import business.city.as.imp.ASCityImp;
 import business.city.factory.ASCityFactory;
 import business.client.TClient;
+import business.client.as.ASClient;
+import business.client.factory.ASClientFactory;
 import business.rental.TRental;
+import business.rental.as.ASRental;
+import business.rental.factory.ASRentalFactory;
 import business.vehicle.TVehicle;
+import business.vehicle.as.ASVehicle;
+import business.vehicle.factory.ASVehicleFactory;
 import integration.city.dao.DAOCity;
 import integration.city.factory.DAOCityFactory;
-import integration.client.dao.DAOClient;
-import integration.client.factory.DAOClientFactory;
-import integration.rental.dao.DAORental;
-import integration.rental.factory.DAORentalFactory;
-import integration.vehicle.dao.DAOVehicle;
-import integration.vehicle.factory.DAOVehicleFactory;
 
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
@@ -112,10 +111,10 @@ public class ASCityTest {
 		TCity tmp = new TCity(null,"Madrid",false);
 		Integer id = as.create(tmp);
 
-		DAOVehicle dao = DAOVehicleFactory.getInstance().generateDAOVehicle();
+		ASVehicle asV = ASVehicleFactory.getInstance().generateASVehicle();
 		TVehicle tv = new TVehicle(null,"Audi",false,
                 false,0,1000);
-		dao.create(tv);
+		asV.create(tv);
 
 		as.drop(id);
 	}
@@ -193,19 +192,24 @@ public class ASCityTest {
 	public void showClientsByCitySuccessful(){
         Date dFrom = new Date(1540373530000L);
         Date dTo = new Date(1543051930000L);
-		DAOClient dc = DAOClientFactory.getInstance().generateDAOClient();
-		TClient tc = new TClient(null,"00000000X",0,false);
-		Integer idC = dc.create(tc);
-        DAOVehicle dv = DAOVehicleFactory.getInstance().generateDAOVehicle();
-        TVehicle tv = new TVehicle(null,"Audi",false,
-                false,0,1000);
-		Integer idV = dv.create(tv);
-        DAORental dr = DAORentalFactory.getInstance().generateDAORental();
-        TRental tr = new TRental(null,idV,false,10,idC,dFrom,dTo);
-        dr.create(tr);
 
-        TCity tcity = new TCity(null,"Madrid",false);
+        ASClient asC = ASClientFactory.getInstance().generateASClient();
+		TClient tc = new TClient(null,"00000000X",0,false);
+		Integer idC = asC.create(tc);
+
+		TCity tcity = new TCity(null,"Madrid",false);
         Integer idCity = as.create(tcity);
+
+        ASVehicle asV = ASVehicleFactory.getInstance().generateASVehicle();
+        TVehicle tv = new TVehicle(null,"Audi",6000,0,
+                false,1,false);
+		Integer idV = asV.create(tv);
+
+		ASRental asR = ASRentalFactory.getInstance().generateASRental();
+        TRental tr = new TRental(null,idV,false,10,idC,dFrom,dTo);
+        asR.create(tr);
+
+
 
         Collection<TClient> out = as.showClientsByCity(idCity);
 

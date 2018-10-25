@@ -3,14 +3,13 @@ package business.client;
 import business.client.as.ASClient;
 import business.client.factory.ASClientFactory;
 import business.rental.TRental;
+import business.rental.as.ASRental;
+import business.rental.factory.ASRentalFactory;
 import business.vehicle.TVehicle;
+import business.vehicle.as.ASVehicle;
+import business.vehicle.factory.ASVehicleFactory;
 import integration.client.dao.DAOClient;
 import integration.client.factory.DAOClientFactory;
-import integration.rental.dao.DAORental;
-import integration.rental.factory.DAORentalFactory;
-import integration.vehicle.dao.DAOVehicle;
-import integration.vehicle.factory.DAOVehicleFactory;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -103,20 +102,20 @@ public class ASClientTest {
         TClient tc = new TClient(null,"00000000X",0,false);
         Integer idC = as.create(tc);
 
-        DAOVehicle dao = DAOVehicleFactory.getInstance().generateDAOVehicle();
+        ASVehicle asV = ASVehicleFactory.getInstance().generateASVehicle();
         TVehicle tv = new TVehicle(null,"Audi",false,false,
                 0,1000);
-        Integer idV = dao.create(tv);
+        Integer idV = asV.create(tv);
 
-        DAORental dr = DAORentalFactory.getInstance().generateDAORental();
+        ASRental asR = ASRentalFactory.getInstance().generateASRental();
         TRental tr = new TRental(null,idV,false,10,idC,dFrom,dTo);
-        dr.create(tr);
+        asR.create(tr);
 
         as.drop(idC);
     }
 
 
-    //TODO Show method
+    //Show method
 
     @Test
     public void showClientSuccessful(){
@@ -178,7 +177,7 @@ public class ASClientTest {
     public void showAllClientsWithMoreNrentalsSuccessful(){
         final Integer N = 2;
         TClient tc1 = new TClient(null, "00000000X", 3, false);
-        Integer idC1 = as.create(tc1);
+        as.create(tc1);
         TClient tc2 = new TClient(null, "11111111X", 2, false);
         Integer idC2 = as.create(tc2);
         TClient tc3 = new TClient(null, "11121111Y", 0, false);
