@@ -1,5 +1,7 @@
 package presentation.employee.forms;
 
+import business.employee.TPermanentEmployee;
+import business.employee.TTemporaryEmployee;
 import presentation.util.Util;
 import presentation.util.ViewHelpers;
 
@@ -125,12 +127,26 @@ public class FormUpdateEmployee extends JDialog {
 				try {
 					if (typeComboBox.getSelectedItem().equals("Temporary")) {
 						/*This is related to JPA*/
+						TTemporaryEmployee emp = new TTemporaryEmployee();
+						emp.setId(Util.parseNoNegativeInt(idText.getText()));
+						emp.setId_card_number(Util.parseString(idCardNumberText.getText()));
+						emp.setActive(Util.parseActive(activeComboBox.getSelectedItem().toString()));
+						emp.setWorked_hours(Util.parseNoNegativeInt(workedHoursText.getText()));
+						emp.setSalary(Util.parseNoNegativeFloat(salaryText.getText()));
+						emp.setType(Util.parseString(typeComboBox.getSelectedItem().toString()));
 
 						//Invoke the controller and execute "Set salary" operation.
 
 					}
 					else{
 						/*This is related to JPA*/
+						TPermanentEmployee emp = new TPermanentEmployee();
+						emp.setId(Util.parseNoNegativeInt(idText.getText()));
+						emp.setId_card_number(Util.parseString(idCardNumberText.getText()));
+						emp.setActive(Util.parseActive(activeComboBox.getSelectedItem().toString()));
+						emp.setApportionment(Util.parseNoNegativeInt(appotionmentText.getText()));
+						emp.setSalary(Util.parseNoNegativeFloat(salaryText.getText()));
+						emp.setType(Util.parseString(typeComboBox.getSelectedItem().toString()));
 
 						//Invoke the controller and execute "Set salary" operation.
 					}
