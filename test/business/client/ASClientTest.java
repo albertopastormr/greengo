@@ -103,8 +103,8 @@ public class ASClientTest {
         Integer idC = as.create(tc);
 
         ASVehicle asV = ASVehicleFactory.getInstance().generateASVehicle();
-        TVehicle tv = new TVehicle(null,"Audi",false,false,
-                0,1000);
+        TVehicle tv = new TVehicle(null,"Audi",6000,0,
+                false,1,false);
         Integer idV = asV.create(tv);
 
         ASRental asR = ASRentalFactory.getInstance().generateASRental();
