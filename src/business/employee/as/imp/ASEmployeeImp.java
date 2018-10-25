@@ -1,14 +1,13 @@
 package business.employee.as.imp;
 
+import business.employee.TEmployee;
 import business.employee.as.ASEmployee;
 
 import java.util.Collection;
 
 public class ASEmployeeImp implements ASEmployee {
 
-    /*This is related to JPA*/
-
-    /*@Override
+    @Override
     public Integer create(TEmployee client) {
         return null;
     }
@@ -36,5 +35,5 @@ public class ASEmployeeImp implements ASEmployee {
     @Override
     public Integer setSalary(Integer idEmployee, Integer salary) {
         return null;
-    }*/
+    }
 }

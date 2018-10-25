@@ -1,5 +1,6 @@
 package presentation.client.forms;
 
+import business.client.TClient;
 import presentation.util.Util;
 import presentation.util.ViewHelpers;
 
@@ -36,10 +37,7 @@ public class FormCreateClient extends JDialog{
 	}
 
 	private JPanel fieldsPanel() {
-		JPanel ret = new JPanel(new GridLayout(2,2,0,7));
-		Border border = ret.getBorder();
-		Border margin = new EmptyBorder(10,10,10,10);
-		ret.setBorder(new CompoundBorder(border, margin));
+		JPanel ret = ViewHelpers.createFieldPanel(2);
 
 		//DNI
 		JLabel dniLabel = new JLabel("DNI");
@@ -69,11 +67,11 @@ public class FormCreateClient extends JDialog{
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				TClient client = new TClient();
 				try {
 					/*This is related to JPA*/
-
-					//Invoke the controller and execute "Set salary" operation.
-
+					client.setId_card_number(Util.parseString(dniText.getText()));
+					client.setActive(Util.parseActive(activeComboBox.getSelectedItem().toString()));
 					dispose();
 				} catch (Exception ex) {
 					JOptionPane.showMessageDialog(getRootPane(), ex.getMessage(), "ERROR CREATE CLIENT", JOptionPane.ERROR_MESSAGE);

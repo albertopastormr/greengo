@@ -1,5 +1,6 @@
 package presentation.employee.forms;
 
+import business.employee.TEmployee;
 import presentation.util.Util;
 import presentation.util.ViewHelpers;
 
@@ -55,8 +56,11 @@ public class FormShowEmployee extends JDialog {
 		show.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent actionEvent) {
+				TEmployee emp = new TEmployee();
 				try{
 					/*This is related to JPA*/
+					emp.setId(Util.parseNoNegativeInt(idText.getText()));
+
 					//invoke controller with the operation "Show Employee".
 					dispose();
 				}
