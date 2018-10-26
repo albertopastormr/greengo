@@ -1,5 +1,7 @@
 package presentation.employee.forms;
 
+import business.employee.TPermanentEmployee;
+import business.employee.TTemporaryEmployee;
 import presentation.util.Util;
 import presentation.util.ViewHelpers;
 
@@ -122,14 +124,21 @@ public class FormCreateEmployee extends JDialog {
 				try {
 					if (typeComboBox.getSelectedItem().equals("Temporary")) {
 						/*This is related to JPA*/
-
-						//Invoke the controller and execute "Set salary" operation.
-
+						TTemporaryEmployee emp = new TTemporaryEmployee();
+						emp.setId_card_number(Util.parseString(idCardNumberText.getText()));
+						emp.setActive(Util.parseActive(activeComboBox.getSelectedItem().toString()));
+						emp.setWorked_hours(Util.parseNoNegativeInt(workedHoursText.getText()));
+						emp.setSalary(Util.parseNoNegativeFloat(salaryText.getText()));
+						emp.setType(Util.parseString(typeComboBox.getSelectedItem().toString()));
 					}
 					else{
 						/*This is related to JPA*/
-
-						//Invoke the controller and execute "Set salary" operation.
+						TPermanentEmployee emp = new TPermanentEmployee();
+						emp.setId_card_number(Util.parseString(idCardNumberText.getText()));
+						emp.setActive(Util.parseActive(activeComboBox.getSelectedItem().toString()));
+						emp.setApportionment(Util.parseNoNegativeInt(appotionmentText.getText()));
+						emp.setSalary(Util.parseNoNegativeFloat(salaryText.getText()));
+						emp.setType(Util.parseString(typeComboBox.getSelectedItem().toString()));
 					}
 					dispose();
 					//Invoke the controller and execute "Create Employee" operation.

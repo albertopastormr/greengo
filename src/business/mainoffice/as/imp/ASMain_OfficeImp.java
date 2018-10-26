@@ -1,8 +1,6 @@
-package business.main_office.as.imp;
+package business.mainoffice.as.imp;
 
-import business.main_office.as.ASMain_Office;
-
-import java.util.Collection;
+import business.mainoffice.as.ASMain_Office;
 
 public class ASMain_OfficeImp implements ASMain_Office {
 

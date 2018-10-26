@@ -35,7 +35,7 @@ Insert the password `manager-if`.
 this imports an existing database with a valid structure for greengo.
 
 ## Authors
-The development team consists in a class-group of seven students:
+The development team consists in a class-group of six students:
   - [Alberto Pastor Moreno](https://github.com/albertopastormr/) @albertopastormr
   - [Iván Fernandez Mena](https://github.com/ivanfermena) @ivanf3rmena
   - [Manuel Monforte](https://github.com/manumonforte) @manumonforte

@@ -1,8 +1,8 @@
-package business.main_office.factory;
+package business.mainoffice.factory;
 
 
-import business.main_office.as.ASMain_Office;
-import business.main_office.factory.imp.ASMain_OfficeFactoryImp;
+import business.mainoffice.as.ASMain_Office;
+import business.mainoffice.factory.imp.ASMain_OfficeFactoryImp;
 
 public abstract class ASMain_OfficeFactory {
     private static ASMain_OfficeFactory instance;

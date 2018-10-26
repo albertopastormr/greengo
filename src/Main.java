@@ -1,6 +1,12 @@
-public class Main{
+import presentation.MainWindow;
 
-	public static void main(String[]args){
-		System.out.println("Hola");
+import javax.swing.*;
+
+
+public class Main {
+
+	public static void main(String[] args) {
+		SwingUtilities.invokeLater(MainWindow:: new);
 	}
 }
+
