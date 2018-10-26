@@ -1,6 +1,6 @@
 package integration.transactionManager.transactionFactory;
 
-import integration.transactionManager.Transaction;
+import integration.Transaction.Transaction;
 import integration.transactionManager.transactionFactory.imp.TransactionFactoryImp;
 
 public abstract class TransactionFactory {

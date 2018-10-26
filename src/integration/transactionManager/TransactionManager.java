@@ -1,5 +1,6 @@
 package integration.transactionManager;
 
+import integration.Transaction.Transaction;
 import integration.transactionManager.imp.TransactionManagerImp;
 
 public abstract class TransactionManager {

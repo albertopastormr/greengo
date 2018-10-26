@@ -1,6 +1,6 @@
-package integration.transactionManager.imp;
+package integration.Transaction.imp;
 
-import integration.transactionManager.Transaction;
+import integration.Transaction.Transaction;
 
 import java.sql.Connection;
 

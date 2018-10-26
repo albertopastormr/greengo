@@ -1,7 +1,7 @@
 package integration.transactionManager.transactionFactory.imp;
 
-import integration.transactionManager.Transaction;
-import integration.transactionManager.imp.TransactionMariaDB;
+import integration.Transaction.Transaction;
+import integration.Transaction.imp.TransactionMariaDB;
 import integration.transactionManager.transactionFactory.TransactionFactory;
 
 public class TransactionFactoryImp extends TransactionFactory {
