@@ -21,14 +21,23 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ASClientTest {
+    private static Date dFrom;
+    private static Date dTo;
     private static ASClient as;
-
+    private static ASRental asR;
+    private static TRental tr;
     @BeforeEach
     private void setUp(){
         DAOClient dao = DAOClientFactory.getInstance().generateDAOClient();
         dao.deleteAll();
-
+        //dates
+        dFrom = new Date(1540373530000L);
+        dTo = new Date(1543051930000L);
+        //app service
         as = ASClientFactory.getInstance().generateASClient();
+        asR = ASRentalFactory.getInstance().generateASRental();
+        //transfers
+        tr = new TRental(null,null,false,10,null,dFrom,dTo);
     }
 
     //Create method
@@ -71,13 +80,14 @@ public class ASClientTest {
     }
 
     //Drop method
-    @Test (expected = ASException.class)
+    @Test
     public void dropSuccessful(){
         TClient tc = new TClient(null,"00000000X",0,false);
         Integer id = as.create(tc);
-
+//todo crear un alquiler para comprobar el borrado del lado n
         as.drop(id);
-        as.show(id);
+        assertTrue(as.showAll().isEmpty());
+        assertTrue(asR.showAll().isEmpty());
     }
 
     @Test (expected = IncorrectInputException.class)
@@ -97,18 +107,18 @@ public class ASClientTest {
 
     @Test (expected = ASException.class)
     public void dropClientWithActiveRentals(){
-        Date dFrom = new Date(1540373530000L);
-        Date dTo = new Date(1543051930000L);
+        //todo refactorizar en todos sitios el cliente
         TClient tc = new TClient(null,"00000000X",0,false);
         Integer idC = as.create(tc);
 
+        //todo refactorizar el vehiculo
         ASVehicle asV = ASVehicleFactory.getInstance().generateASVehicle();
         TVehicle tv = new TVehicle(null,"Audi",6000,0,
                 false,1,false);
         Integer idV = asV.create(tv);
 
-        ASRental asR = ASRentalFactory.getInstance().generateASRental();
-        TRental tr = new TRental(null,idV,false,10,idC,dFrom,dTo);
+        tr.setId_client(idC);
+        tr.setId_vehicle(idV);
         asR.create(tr);
 
         as.drop(idC);

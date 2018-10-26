@@ -12,7 +12,8 @@ public class TVehicle {
 
 	public TVehicle(){}
 
-    public TVehicle(Integer id, String brand, Integer estimated_duration, Integer km_travelled, boolean occupied, Integer city, boolean active) {
+    public TVehicle(Integer id, String brand, Integer estimated_duration,
+                    Integer km_travelled, boolean occupied, Integer city, boolean active) {
         this.id = id;
         this.brand = brand;
         this.estimated_duration = estimated_duration;
