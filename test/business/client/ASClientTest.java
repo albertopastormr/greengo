@@ -21,12 +21,8 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ASClientTest {
-<<<<<<< HEAD
     private static Date dFrom;
     private static Date dTo;
-=======
-    TClient tc1 = new TClient(1,"00000000X",0,false);
->>>>>>> cf81cc75ab0594ec01e0a5a7162ed868004d3df6
     private static ASClient as;
     private static ASRental asR;
     private static TRental tr;
