@@ -9,11 +9,12 @@ public class TVehicle {
     private boolean occupied;
     private Integer city;
     private boolean active;
+    private String type;
 
 	public TVehicle(){}
 
     public TVehicle(Integer id, String brand, Integer estimated_duration,
-                    Integer km_travelled, boolean occupied, Integer city, boolean active) {
+                    Integer km_travelled, boolean occupied, Integer city, boolean active, String type) {
         this.id = id;
         this.brand = brand;
         this.estimated_duration = estimated_duration;
@@ -21,6 +22,7 @@ public class TVehicle {
         this.occupied = occupied;
         this.city = city;
         this.active = active;
+        this.type = type;
     }
 
     public Integer getId() {
@@ -78,4 +80,8 @@ public class TVehicle {
     public void setActive(boolean active) {
         this.active = active;
     }
+
+    public String getType() { return type; }
+
+    public void setType(String type) { this.type = type; }
 }
