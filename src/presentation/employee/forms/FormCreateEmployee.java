@@ -130,6 +130,8 @@ public class FormCreateEmployee extends JDialog {
 						emp.setWorked_hours(Util.parseNoNegativeInt(workedHoursText.getText()));
 						emp.setSalary(Util.parseNoNegativeFloat(salaryText.getText()));
 						emp.setType(Util.parseString(typeComboBox.getSelectedItem().toString()));
+                        dispose();
+                        //Invoke the controller and execute "Create Employee" operation.
 					}
 					else{
 						/*This is related to JPA*/
@@ -140,8 +142,7 @@ public class FormCreateEmployee extends JDialog {
 						emp.setSalary(Util.parseNoNegativeFloat(salaryText.getText()));
 						emp.setType(Util.parseString(typeComboBox.getSelectedItem().toString()));
 					}
-					dispose();
-					//Invoke the controller and execute "Create Employee" operation.
+
 
 				} catch(Exception e){
 					JOptionPane.showMessageDialog(getRootPane(), e.getMessage(),
