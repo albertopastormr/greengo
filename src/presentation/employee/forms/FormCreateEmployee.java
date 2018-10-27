@@ -141,6 +141,8 @@ public class FormCreateEmployee extends JDialog {
 						emp.setApportionment(Util.parseNoNegativeInt(appotionmentText.getText()));
 						emp.setSalary(Util.parseNoNegativeFloat(salaryText.getText()));
 						emp.setType(Util.parseString(typeComboBox.getSelectedItem().toString()));
+                        dispose();
+                        //Invoke the controller and execute "Create Employee" operation.
 					}
 
 

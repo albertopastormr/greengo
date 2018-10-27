@@ -134,8 +134,8 @@ public class FormUpdateEmployee extends JDialog {
 						emp.setWorked_hours(Util.parseNoNegativeInt(workedHoursText.getText()));
 						emp.setSalary(Util.parseNoNegativeFloat(salaryText.getText()));
 						emp.setType(Util.parseString(typeComboBox.getSelectedItem().toString()));
-
-						//Invoke the controller and execute "Set salary" operation.
+                        dispose();
+                        //Invoke the controller and execute "Update Employee" operation.
 
 					}
 					else{
@@ -147,11 +147,9 @@ public class FormUpdateEmployee extends JDialog {
 						emp.setApportionment(Util.parseNoNegativeInt(appotionmentText.getText()));
 						emp.setSalary(Util.parseNoNegativeFloat(salaryText.getText()));
 						emp.setType(Util.parseString(typeComboBox.getSelectedItem().toString()));
-
-						//Invoke the controller and execute "Set salary" operation.
+                        dispose();
+                        //Invoke the controller and execute "Update Employee" operation.
 					}
-					dispose();
-					//Invoke the controller and execute "Update Employee" operation.
 
 				} catch(Exception e){
 					JOptionPane.showMessageDialog(getRootPane(), e.getMessage(),
