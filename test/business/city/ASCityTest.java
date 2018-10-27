@@ -48,7 +48,7 @@ public class ASCityTest {
 		//transfers
         tc = new TCity(null,"Madrid",false);
 		tv = new TVehicle(null,"Audi",6000,0,
-                false,null,false);
+                false,null,false,"car");
         tclient = new TClient(null,"00000000X",0,false);
         tr = new TRental(null,null,false,10,null,null,null);
 
@@ -57,7 +57,7 @@ public class ASCityTest {
 	//create method tests
 	@Test
 	public void createCitySuccessful(){
-		assert(as.create(tc) > 0);
+		assertTrue(as.create(tc) > 0);
 	}
 
 	@Test (expected = IncorrectInputException.class)
@@ -85,9 +85,14 @@ public class ASCityTest {
 
 	@Test
 	public void dropCitySuccessful(){
-        //todo crear vehiculo,cliente y alquiler
+        Integer idV = asV.create(tv);
 		Integer id = as.create(tc);
-		assertEquals(as.drop(id),id);
+		Integer idC = asC.create(tclient);
+		tr.setId_vehicle(idV);
+		tr.setId_client(idC);
+		asR.create(tr);
+
+		assertTrue(as.showAll().isEmpty());
 		assertTrue(as.showClientsByCity(id).isEmpty());
 		assertTrue(asV.showAll().isEmpty());
 		assertTrue(asR.showAll().isEmpty());
