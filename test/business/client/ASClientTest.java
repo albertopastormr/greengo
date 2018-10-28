@@ -1,6 +1,7 @@
 package business.client;
 
 import business.ASException;
+import business.IncorrectInputException;
 import business.client.as.ASClient;
 import business.client.factory.ASClientFactory;
 import business.rental.TRental;
@@ -17,9 +18,7 @@ import org.junit.jupiter.api.Test;
 import java.util.Collection;
 import java.util.Date;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class ASClientTest {
     private static Date dFrom = new Date(1540373530000L);
@@ -45,23 +44,23 @@ public class ASClientTest {
        assertTrue(as.create(tc)>0);
     }
 
-    @Test (expected = IncorrectInputException.class)
+    @Test
     public void createClientIncorrectInput0(){
         tc.setIdCardNumber("0000X");// must have 8 numbers and 1 letter at the end
-        as.create(tc);
+        assertThrows(IncorrectInputException.class, () -> {as.create(tc);});
     }
 
-    @Test (expected = IncorrectInputException.class)
+    @Test
     public void createClientIncorrectInput1(){
         tc.setIdCardNumber("00000000");
         // must have 8 numbers and 1 letter at the end
-        as.create(tc);
+        assertThrows(IncorrectInputException.class, () -> {as.create(tc);});
     }
 
-    @Test (expected = IncorrectInputException.class)
+    @Test
     public void createClientIncorrectInput2(){
         tc.setNumRentals(-1); //rentals_number must be >= 0
-        as.create(tc);
+        assertThrows(IncorrectInputException.class, () -> {as.create(tc);});
     }
 
 
@@ -79,17 +78,17 @@ public class ASClientTest {
         assertTrue(asR.showAll().isEmpty());
     }
 
-    @Test (expected = IncorrectInputException.class)
+    @Test
     public void dropClientIncorrectInput0(){
-        as.drop(0); //id must be > 0
+        assertThrows(IncorrectInputException.class, () -> {as.drop(0);} ); //id must be > 0
     }
 
-    @Test (expected = ASException.class)
+    @Test
     public void dropClientNotExists(){
-        as.drop(50);
+        assertThrows(ASException.class, () -> {as.drop(50);});
     }
 
-    @Test (expected = ASException.class)
+    @Test
     public void dropClientWithActiveRentals(){
         Integer idC = as.create(tc);
         Integer idV = asV.create(tv);
@@ -98,7 +97,7 @@ public class ASClientTest {
         tr.setIdVehicle(idV);
         asR.create(tr);
 
-        as.drop(idC);
+        assertThrows(ASException.class,()->{as.drop(idC);});
     }
 
 
@@ -116,19 +115,19 @@ public class ASClientTest {
         assertEquals(out.isActive(),tc.isActive());
     }
 
-    @Test (expected = IncorrectInputException.class)
+    @Test
     public void showClientIncorrectInputID1(){
-        as.show(0); //id must be > 0
+        assertThrows(IncorrectInputException.class, () -> {as.show(0);}); //id must be > 0
     }
 
-    @Test (expected = IncorrectInputException.class)
+    @Test
     public void showClientIncorrectInputID2(){
-        as.show(-1); //id must be > 0
+        assertThrows(IncorrectInputException.class, () -> {as.show(-1); }); //id must be > 0
     }
 
-    @Test (expected = ASException.class)
+    @Test
     public void showClientNotExists(){
-        as.show(1);
+        assertThrows(ASException.class, () -> {as.show(1);});
     }
 
     //showAll method
@@ -191,44 +190,44 @@ public class ASClientTest {
         assertEquals(out.isActive(),updtClient.isActive());
     }
 
-    @Test (expected = IncorrectInputException.class)
+    @Test
     public void updateClientIncorrectInputID(){
         //id can't be null and must be > 0
         tc.setId(null);
-        as.update(tc);
+        assertThrows(IncorrectInputException.class, () -> {as.update(tc);});
     }
 
-    @Test (expected = IncorrectInputException.class)
+    @Test
     public void updateClientIncorrectInputID_card_number1(){
         //id_card_number must have 8 numbers and 1 letter at the end
        tc.setIdCardNumber("1111X");
-        as.update(tc);
+        assertThrows(IncorrectInputException.class, () -> {as.update(tc);});
     }
 
-    @Test (expected = IncorrectInputException.class)
+    @Test
     public void updateClientIncorrectInputID_card_number2(){
         //id_card_number must have 8 numbers and 1 letter at the end
         tc.setIdCardNumber("11111111");
-        as.update(tc);
+        assertThrows(IncorrectInputException.class, () -> {as.update(tc);});
     }
 
-    @Test (expected = IncorrectInputException.class)
+    @Test
     public void updateClientIncorrectInputRentals_number(){
         //rentals number must be >= 0
         tc.setNumRentals(-1);
-        as.update(tc);
+        assertThrows(IncorrectInputException.class, () -> {as.update(tc);});
     }
 
-    @Test (expected = ASException.class)
+    @Test
     public void updateClientIncorrectInputActive(){
         //active must be true
         tc.setActive(false);
-        as.update(tc);
+        assertThrows(IncorrectInputException.class, () -> {as.update(tc);});
     }
 
-    @Test (expected = IncorrectInputException.class)
+    @Test
     public void updateClientNotExists(){
         tc.setId(1);
-        as.update(tc);
+        assertThrows(ASException.class, () -> {as.update(tc);});
     }
 }
