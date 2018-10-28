@@ -5,22 +5,22 @@ import java.util.Date;
 public class TRental {
 
 	private Integer id;
-	private Integer id_vehicle;
+	private Integer idVehicle;
+	private Integer idClient;
 	private boolean active;
-	private Integer km_rented;
-	private Integer id_client;
+	private Integer numKmRented;
 	private Date dateFrom;
 	private Date dateTo;
 
 	public TRental(){}
 
-	public TRental(Integer id, Integer id_vehicle, boolean active, Integer km_rented,
-                   Integer id_client, Date dateFrom, Date dateTo) {
+	public TRental(Integer id, Integer idVehicle, boolean active, Integer numKmRented,
+                   Integer idClient, Date dateFrom, Date dateTo) {
 		this.id = id;
-		this.id_vehicle = id_vehicle;
+		this.idVehicle = idVehicle;
 		this.active = active;
-		this.km_rented = km_rented;
-		this.id_client = id_client;
+		this.numKmRented = numKmRented;
+		this.idClient = idClient;
 		this.dateFrom = dateFrom;
 		this.dateTo = dateTo;
 	}
@@ -29,16 +29,16 @@ public class TRental {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
-	public Integer getId_vehicle() {
-		return id_vehicle;
+	public Integer getIdVehicle() {
+		return idVehicle;
 	}
 
-	public void setId_vehicle(Integer id_vehicle) {
-		this.id_vehicle = id_vehicle;
+	public void setIdVehicle(Integer idVehicle) {
+		this.idVehicle = idVehicle;
 	}
 
 	public boolean isActive() {
@@ -49,27 +49,35 @@ public class TRental {
 		this.active = active;
 	}
 
-	public Integer getKm_rented() {
-		return km_rented;
+	public Integer getNumKmRented() {
+		return numKmRented;
 	}
 
-	public void setKm_rented(Integer km_rented) {
-		this.km_rented = km_rented;
+	public void setNumKmRented(Integer numKmRented) {
+		this.numKmRented = numKmRented;
 	}
 
-	public Integer getId_client() {
-		return id_client;
+	public Integer getIdClient() {
+		return idClient;
 	}
 
-	public void setId_client(int id_client) {
-		this.id_client = id_client;
+	public void setIdClient(Integer idClient) {
+		this.idClient = idClient;
 	}
 
-	public Date getDateTo() { return dateTo; }
+	public Date getDateFrom() {
+		return dateFrom;
+	}
 
-	public void setDateTo(Date dateTo) { this.dateTo = dateTo; }
+	public void setDateFrom(Date dateFrom) {
+		this.dateFrom = dateFrom;
+	}
 
-	public Date getDateFrom() { return dateFrom; }
+	public Date getDateTo() {
+		return dateTo;
+	}
 
-	public void setDateFrom(Date dateFrom) { this.dateFrom = dateFrom; }
+	public void setDateTo(Date dateTo) {
+		this.dateTo = dateTo;
+	}
 }

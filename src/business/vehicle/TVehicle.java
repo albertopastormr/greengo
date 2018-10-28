@@ -4,8 +4,8 @@ public class TVehicle {
 
 	private Integer id;
 	private String brand;
-    private Integer estimated_duration;
-    private Integer km_travelled;
+    private Integer estimatedDuration;
+    private Integer numKmTravelled;
     private boolean occupied;
     private Integer city;
     private boolean active;
@@ -13,12 +13,12 @@ public class TVehicle {
 
 	public TVehicle(){}
 
-    public TVehicle(Integer id, String brand, Integer estimated_duration,
-                    Integer km_travelled, boolean occupied, Integer city, boolean active, String type) {
+    public TVehicle(Integer id, String brand, Integer estimatedDuration,
+                    Integer numKmTravelled, boolean occupied, Integer city, boolean active, String type) {
         this.id = id;
         this.brand = brand;
-        this.estimated_duration = estimated_duration;
-        this.km_travelled = km_travelled;
+        this.estimatedDuration = estimatedDuration;
+        this.numKmTravelled = numKmTravelled;
         this.occupied = occupied;
         this.city = city;
         this.active = active;
@@ -41,20 +41,20 @@ public class TVehicle {
         this.brand = brand;
     }
 
-    public Integer getEstimated_duration() {
-        return estimated_duration;
+    public Integer getEstimatedDuration() {
+        return estimatedDuration;
     }
 
-    public void setEstimated_duration(Integer estimated_duration) {
-        this.estimated_duration = estimated_duration;
+    public void setEstimatedDuration(Integer estimatedDuration) {
+        this.estimatedDuration = estimatedDuration;
     }
 
-    public Integer getKm_travelled() {
-        return km_travelled;
+    public Integer getNumKmTravelled() {
+        return numKmTravelled;
     }
 
-    public void setKm_travelled(Integer km_travelled) {
-        this.km_travelled = km_travelled;
+    public void setNumKmTravelled(Integer numKmTravelled) {
+        this.numKmTravelled = numKmTravelled;
     }
 
     public boolean isOccupied() {
@@ -81,7 +81,11 @@ public class TVehicle {
         this.active = active;
     }
 
-    public String getType() { return type; }
+    public String getType() {
+        return type;
+    }
 
-    public void setType(String type) { this.type = type; }
+    public void setType(String type) {
+        this.type = type;
+    }
 }

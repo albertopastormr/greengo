@@ -1,5 +1,6 @@
 package business.city;
 
+import business.ASException;
 import business.city.as.ASCity;
 import business.city.factory.ASCityFactory;
 import business.client.TClient;
@@ -25,14 +26,18 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class ASCityTest {
 
-    private static ASCity as;
-    private static TCity tc;
-    private static ASVehicle asV;
-    private static TVehicle tv;
-    private static ASClient asC;
-    private static TClient tclient;
-    private static ASRental asR;
-    private static TRental tr;
+    private static ASCity 	as = ASCityFactory.getInstance().generateASCity();
+	private static TCity tc = new TCity(null,"Madrid",false);
+    private static ASVehicle 	asV = ASVehicleFactory.getInstance().generateASVehicle();
+    private static TVehicle tv = new TVehicle(null,"Audi",6000,0,
+            false,null,false,"car");
+    private static ASClient asC = ASClientFactory.getInstance().generateASClient();
+    private static TClient tclient = new TClient(null,"00000000X",0,false);
+    private static ASRental asR = ASRentalFactory.getInstance().generateASRental();
+    private static TRental tr = new TRental(null,null,false,10,null,null,null);
+
+
+
 
 
 
@@ -40,18 +45,6 @@ public class ASCityTest {
 	private void setUp() throws Exception {
 		DAOCity dao = DAOCityFactory.getInstance().generateDAOCity();
 		dao.deleteAll();
-		//app service
-		as = ASCityFactory.getInstance().generateASCity();
-        asV = ASVehicleFactory.getInstance().generateASVehicle();
-        asC = ASClientFactory.getInstance().generateASClient();
-        asR = ASRentalFactory.getInstance().generateASRental();
-		//transfers
-        tc = new TCity(null,"Madrid",false);
-		tv = new TVehicle(null,"Audi",6000,0,
-                false,null,false,"car");
-        tclient = new TClient(null,"00000000X",0,false);
-        tr = new TRental(null,null,false,10,null,null,null);
-
 	}
 
 	//create method tests
@@ -88,8 +81,8 @@ public class ASCityTest {
         Integer idV = asV.create(tv);
 		Integer id = as.create(tc);
 		Integer idC = asC.create(tclient);
-		tr.setId_vehicle(idV);
-		tr.setId_client(idC);
+		tr.setIdVehicle(idV);
+		tr.setIdClient(idC);
 		asR.create(tr);
 
 		assertTrue(as.showAll().isEmpty());
@@ -215,12 +208,12 @@ public class ASCityTest {
         tv.setCity(idCity);
 		Integer idV = asV.create(tv);
 
-		tr.setId_client(idC);
-		tr.setId_vehicle(idV);
+		tr.setIdClient(idC);
+		tr.setIdVehicle(idV);
         asR.create(tr);
 
         //data for city 2
-        tclient.setId_card_number("11111111X");
+        tclient.setIdCardNumber("11111111X");
         Integer idCFail = asC.create(tclient);
 
         tc.setName("Barcelona");
@@ -229,8 +222,8 @@ public class ASCityTest {
        tv.setCity(idCity2);
         Integer idVFail = asV.create(tv);
 
-        tr.setId_vehicle(idVFail);
-        tr.setId_client(idCFail);
+        tr.setIdVehicle(idVFail);
+        tr.setIdClient(idCFail);
         asR.create(tr);
 
 
@@ -272,9 +265,8 @@ public class ASCityTest {
 
     @Test (expected = IncorrectInputException.class)
     public void updateCityIncorrectInput3(){
-        //TODO Revisar el comentario en ingles
-        tc.setActive(false); //active must be true on the update operation, to deactivate,
-                            // has to be used the drop operation
+        tc.setActive(false); //active must be true on the update operation, to deactivate the entity,
+                            // it's necessary to use the drop operation
         as.update(tc);
     }
 

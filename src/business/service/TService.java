@@ -7,17 +7,17 @@ public class TService {
 	private boolean active;
 	private String type;
 	private String address;
-	private Integer vehicles_attended;
+	private Integer numVehiclesAttended;
 
 	public TService(){}
 
-	public TService(Integer id, Integer capacity, boolean active, String type, String address, Integer vehicles_attended) {
+	public TService(Integer id, Integer capacity, boolean active, String type, String address, Integer numVehiclesAttended) {
 		this.id = id;
 		this.capacity = capacity;
 		this.active = active;
 		this.type = type;
 		this.address = address;
-		this.vehicles_attended = vehicles_attended;
+		this.numVehiclesAttended = numVehiclesAttended;
 	}
 
 	public Integer getId() {
@@ -28,11 +28,11 @@ public class TService {
 		this.id = id;
 	}
 
-	public int getCapacity() {
+	public Integer getCapacity() {
 		return capacity;
 	}
 
-	public void setCapacity(int capacity) {
+	public void setCapacity(Integer capacity) {
 		this.capacity = capacity;
 	}
 
@@ -60,11 +60,11 @@ public class TService {
 		this.address = address;
 	}
 
-	public Integer getVehicles_attended() {
-		return vehicles_attended;
+	public Integer getNumVehiclesAttended() {
+		return numVehiclesAttended;
 	}
 
-	public void setVehicles_attended(Integer vehicles_attended) {
-		this.vehicles_attended = vehicles_attended;
+	public void setNumVehiclesAttended(Integer numVehiclesAttended) {
+		this.numVehiclesAttended = numVehiclesAttended;
 	}
 }

@@ -1,5 +1,6 @@
 package business.client;
 
+import business.ASException;
 import business.client.as.ASClient;
 import business.client.factory.ASClientFactory;
 import business.rental.TRental;
@@ -21,30 +22,21 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ASClientTest {
-    private static Date dFrom;
-    private static Date dTo;
-    private static ASClient as;
-    private static TClient tc;
-    private static ASVehicle asV;
-    private static TVehicle tv;
-    private static ASRental asR;
-    private static TRental tr;
+    private static Date dFrom = new Date(1540373530000L);
+    private static Date dTo = new Date(1543051930000L);
+    private static ASClient as = ASClientFactory.getInstance().generateASClient();
+    private static TClient tc = new TClient(null,"00000000X",0,false);
+    private static ASVehicle asV = ASVehicleFactory.getInstance().generateASVehicle();
+    private static TVehicle tv = new TVehicle(null,"Audi",6000,0,
+            false,null,false,"car");
+    private static ASRental asR = ASRentalFactory.getInstance().generateASRental();
+    private static TRental tr = new TRental(null,null,false,10,null,dFrom,dTo);
+
     @BeforeEach
     private void setUp() throws Exception{
         DAOClient dao = DAOClientFactory.getInstance().generateDAOClient();
         dao.deleteAll();
-        //dates
-        dFrom = new Date(1540373530000L);
-        dTo = new Date(1543051930000L);
-        //app service
-        as = ASClientFactory.getInstance().generateASClient();
-        asV = ASVehicleFactory.getInstance().generateASVehicle();
-        asR = ASRentalFactory.getInstance().generateASRental();
-        //transfers
-        tc = new TClient(null,"00000000X",0,false);
-        tv = new TVehicle(null,"Audi",6000,0,
-                false,null,false,"car");
-        tr = new TRental(null,null,false,10,null,dFrom,dTo);
+
     }
 
     //Create method
@@ -55,37 +47,31 @@ public class ASClientTest {
 
     @Test (expected = IncorrectInputException.class)
     public void createClientIncorrectInput0(){
-        tc.setId_card_number("0000X");// must have 8 numbers and 1 letter at the end
+        tc.setIdCardNumber("0000X");// must have 8 numbers and 1 letter at the end
         as.create(tc);
     }
 
     @Test (expected = IncorrectInputException.class)
     public void createClientIncorrectInput1(){
-        tc.setId_card_number("00000000");
+        tc.setIdCardNumber("00000000");
         // must have 8 numbers and 1 letter at the end
         as.create(tc);
     }
 
     @Test (expected = IncorrectInputException.class)
     public void createClientIncorrectInput2(){
-        tc.setRentals_number(-1); //rentals_number must be >= 0
+        tc.setNumRentals(-1); //rentals_number must be >= 0
         as.create(tc);
     }
 
-    @Test (expected = IncorrectInputException.class)
-    public void createClientIncorrectInput3(){
-        tc.setActive(true); //active must be false
-                            //as input
-        as.create(tc);
-    }
 
     //Drop method
     @Test
     public void dropSuccessful(){
         Integer idV = asV.create(tv);
         Integer id = as.create(tc);
-        tr.setId_client(id);
-        tr.setId_vehicle(idV);
+        tr.setIdClient(id);
+        tr.setIdVehicle(idV);
         asR.create(tr);
 
         as.drop(id);
@@ -98,14 +84,9 @@ public class ASClientTest {
         as.drop(0); //id must be > 0
     }
 
-    @Test (expected = IncorrectInputException.class)
-    public void dropClientIncorrectInput1(){
-        as.drop(-1); //id must be > 0
-    }
-
     @Test (expected = ASException.class)
     public void dropClientNotExists(){
-        as.drop(1);
+        as.drop(50);
     }
 
     @Test (expected = ASException.class)
@@ -113,8 +94,8 @@ public class ASClientTest {
         Integer idC = as.create(tc);
         Integer idV = asV.create(tv);
 
-        tr.setId_client(idC);
-        tr.setId_vehicle(idV);
+        tr.setIdClient(idC);
+        tr.setIdVehicle(idV);
         asR.create(tr);
 
         as.drop(idC);
@@ -130,8 +111,8 @@ public class ASClientTest {
         TClient out = as.show(idC);
 
         assertEquals(out.getId(),idC);
-        assertEquals(out.getId_card_number(),tc.getId_card_number());
-        assertEquals(out.getRentals_number(),tc.getRentals_number());
+        assertEquals(out.getIdCardNumber(),tc.getIdCardNumber());
+        assertEquals(out.getNumRentals(),tc.getNumRentals());
         assertEquals(out.isActive(),tc.isActive());
     }
 
@@ -160,9 +141,9 @@ public class ASClientTest {
         Collection<TClient> collec = as.showAll();
         for (TClient tmp : collec) {
             if (tmp.getId().equals(idC))
-                assertTrue(checkTransferValues(tmp, tc.getId_card_number(), tc.getRentals_number()));
+                assertTrue(checkTransferValues(tmp, tc.getIdCardNumber(), tc.getNumRentals()));
            else
-                assertTrue(checkTransferValues(tmp, tc2.getId_card_number(), tc2.getRentals_number()));
+                assertTrue(checkTransferValues(tmp, tc2.getIdCardNumber(), tc2.getNumRentals()));
         }
     }
 
@@ -172,15 +153,15 @@ public class ASClientTest {
         assertTrue(c.isEmpty());
     }
     private boolean checkTransferValues(TClient tc,String id_card_number,Integer rentals_number){
-        return  tc.getId_card_number().equals(id_card_number) &&
-                tc.getRentals_number().equals(rentals_number) && tc.isActive();
+        return  tc.getIdCardNumber().equals(id_card_number) &&
+                tc.getNumRentals().equals(rentals_number) && tc.isActive();
     }
     //showAllWithMoreNrentals method
 
     @Test
     public void showAllClientsWithMoreNrentalsSuccessful(){
         final Integer N = 2;
-        tc.setRentals_number(3);
+        tc.setNumRentals(3);
         as.create(tc);
         TClient tc2 = new TClient(null, "11111111X", 2, false);
         Integer idC2 = as.create(tc2);
@@ -189,7 +170,7 @@ public class ASClientTest {
 
         Collection<TClient> collec = as.showAllWithMoreThanNRentals(N);
         for(TClient tmp : collec){
-            assertTrue(tmp.getRentals_number() > N);
+            assertTrue(tmp.getNumRentals() > N);
             assertNotEquals(tmp.getId(),idC2);
             assertNotEquals(tmp.getId(),idC3);
         }
@@ -205,8 +186,8 @@ public class ASClientTest {
         TClient out = as.show(idOut);
 
         assertEquals(out.getId(),idC);
-        assertEquals(out.getId_card_number(),updtClient.getId_card_number());
-        assertEquals(out.getRentals_number(),updtClient.getRentals_number());
+        assertEquals(out.getIdCardNumber(),updtClient.getIdCardNumber());
+        assertEquals(out.getNumRentals(),updtClient.getNumRentals());
         assertEquals(out.isActive(),updtClient.isActive());
     }
 
@@ -220,21 +201,21 @@ public class ASClientTest {
     @Test (expected = IncorrectInputException.class)
     public void updateClientIncorrectInputID_card_number1(){
         //id_card_number must have 8 numbers and 1 letter at the end
-       tc.setId_card_number("1111X");
+       tc.setIdCardNumber("1111X");
         as.update(tc);
     }
 
     @Test (expected = IncorrectInputException.class)
     public void updateClientIncorrectInputID_card_number2(){
         //id_card_number must have 8 numbers and 1 letter at the end
-        tc.setId_card_number("11111111");
+        tc.setIdCardNumber("11111111");
         as.update(tc);
     }
 
     @Test (expected = IncorrectInputException.class)
     public void updateClientIncorrectInputRentals_number(){
         //rentals number must be >= 0
-        tc.setRentals_number(-1);
+        tc.setNumRentals(-1);
         as.update(tc);
     }
 

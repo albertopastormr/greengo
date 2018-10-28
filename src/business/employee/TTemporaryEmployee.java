@@ -1,21 +1,21 @@
 package business.employee;
 
 public class TTemporaryEmployee extends TEmployee {
-	private int worked_hours;
+	private Integer numWorkedHours;
 
 	public TTemporaryEmployee() {
 	}
 
-	public TTemporaryEmployee(Integer id, String id_card_number, float salary, boolean active, Integer id_main_office, int worked_hours) {
+	public TTemporaryEmployee(Integer id, String id_card_number, float salary, boolean active, Integer id_main_office, Integer numWorkedHours) {
 		super(id, id_card_number, salary, active, id_main_office, "Temporary");
-		this.worked_hours = worked_hours;
+		this.numWorkedHours = numWorkedHours;
 	}
 
-	public int getWorked_hours() {
-		return worked_hours;
+	public Integer getNumWorkedHours() {
+		return numWorkedHours;
 	}
 
-	public void setWorked_hours(int worked_hours) {
-		this.worked_hours = worked_hours;
+	public void setNumWorkedHours(Integer numWorkedHours) {
+		this.numWorkedHours = numWorkedHours;
 	}
 }

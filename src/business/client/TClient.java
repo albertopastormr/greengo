@@ -3,15 +3,15 @@ package business.client;
 public class TClient {
 
 	private Integer id;
-	private String id_card_number;
-	private Integer rentals_number;
+	private String idCardNumber;
+	private Integer numRentals;
 	private boolean active;
 
 	public TClient(){}
-	public TClient(Integer id, String id_card_number, Integer rentals_number, boolean active) {
+	public TClient(Integer id, String idCardNumber, Integer numRentals, boolean active) {
 		this.id = id;
-		this.id_card_number = id_card_number;
-		this.rentals_number = rentals_number;
+		this.idCardNumber = idCardNumber;
+		this.numRentals = numRentals;
 		this.active = active;
 	}
 
@@ -23,21 +23,21 @@ public class TClient {
         this.id = id;
     }
 
-    public String getId_card_number() {
-        return id_card_number;
+    public String getIdCardNumber() {
+        return idCardNumber;
     }
 
-    public void setId_card_number(String id_card_number) {
-        this.id_card_number = id_card_number;
+    public void setIdCardNumber(String idCardNumber) {
+        this.idCardNumber = idCardNumber;
     }
 
-    public Integer getRentals_number() {
-        return rentals_number;
+    public Integer getNumRentals() {
+        return numRentals;
     }
 
-	public void setRentals_number(Integer rentals_number) {
-		this.rentals_number = rentals_number;
-	}
+    public void setNumRentals(Integer numRentals) {
+        this.numRentals = numRentals;
+    }
 
     public boolean isActive() {
         return active;
