@@ -105,7 +105,7 @@ public class FormUpdateService extends  JDialog{
 					service.setType(Util.parseString(typeText.getText()));
 					service.setAddress(Util.parseString(addressText.getText()));
 					service.setCapacity(Util.parseNoNegativeInt(capacityText.getText()));
-					service.setVehicles_attended(Util.parseNoNegativeInt(vehicles_attendedText.getText()));
+					service.setNumVehiclesAttended(Util.parseNoNegativeInt(vehicles_attendedText.getText()));
 					dispose();
 				} catch (Exception ex) {
 					JOptionPane.showMessageDialog(getRootPane(), ex.getMessage(), "ERROR UPDATE SERVICE", JOptionPane.ERROR_MESSAGE);

@@ -115,9 +115,9 @@ public class FormCreateRental extends JDialog {
 			public void actionPerformed(ActionEvent actionEvent) {
 				TRental rent = new TRental();
 				try{
-					rent.setId_client(Util.parseNoNegativeInt(idClientText.getText()));
-					rent.setId_vehicle(Util.parseNoNegativeInt(idVehicleText.getText()));
-					rent.setKm_rented(Util.parseNoNegativeInt(kmRentedText.getText()));
+					rent.setIdClient(Util.parseNoNegativeInt(idClientText.getText()));
+					rent.setIdVehicle(Util.parseNoNegativeInt(idVehicleText.getText()));
+					rent.setNumKmRented(Util.parseNoNegativeInt(kmRentedText.getText()));
 					rent.setActive(Util.parseActive(activeComboBox.getSelectedItem().toString()));
 
 					Date dateFromToCheck = (Date)dateFrom.getModel().getValue();

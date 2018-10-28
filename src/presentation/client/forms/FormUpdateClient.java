@@ -79,7 +79,7 @@ public class FormUpdateClient extends JDialog{
 				try {
 					/*This is related to JPA*/
 					client.setId(Util.parseNoNegativeInt(idText.getText()));
-					client.setId_card_number(Util.parseString(dniText.getText()));
+					client.setIdCardNumber(Util.parseString(dniText.getText()));
 					client.setActive(Util.parseActive(activeComboBox.getSelectedItem().toString()));
 					dispose();
 				} catch (Exception ex) {
