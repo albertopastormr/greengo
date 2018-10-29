@@ -1,4 +1,15 @@
 package presentation.vehicle;
 
-public class UIVehicleImp {
+import presentation.UI;
+
+public class UIVehicleImp implements UI {
+	@Override
+	public void execute() {
+
+	}
+
+	@Override
+	public void update() {
+
+	}
 }

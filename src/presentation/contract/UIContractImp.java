@@ -1,4 +1,15 @@
 package presentation.contract;
 
-public class UIContractImp {
+import presentation.UI;
+
+public class UIContractImp implements UI {
+	@Override
+	public void execute() {
+
+	}
+
+	@Override
+	public void update() {
+
+	}
 }

@@ -1,5 +1,16 @@
 package presentation.service;
 
-public class UIServiceImp{
+import presentation.UI;
 
+public class UIServiceImp implements UI {
+
+	@Override
+	public void execute() {
+
+	}
+
+	@Override
+	public void update() {
+
+	}
 }

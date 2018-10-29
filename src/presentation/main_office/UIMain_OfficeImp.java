@@ -1,4 +1,15 @@
 package presentation.main_office;
 
-public class UIMain_OfficeImp {
+import presentation.UI;
+
+public class UIMain_OfficeImp implements UI {
+	@Override
+	public void execute() {
+
+	}
+
+	@Override
+	public void update() {
+
+	}
 }

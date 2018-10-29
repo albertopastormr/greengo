@@ -1,4 +1,11 @@
 package presentation.command.city;
 
-public class ShowCity {
+import presentation.command.Command;
+import presentation.controller.LightContext;
+
+public class ShowCity implements Command {
+	@Override
+	public LightContext execute(LightContext in) {
+		return null;
+	}
 }

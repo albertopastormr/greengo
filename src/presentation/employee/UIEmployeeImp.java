@@ -1,4 +1,15 @@
 package presentation.employee;
 
-public class UIEmployeeImp {
+import presentation.UI;
+
+public class UIEmployeeImp implements UI {
+	@Override
+	public void execute() {
+
+	}
+
+	@Override
+	public void update() {
+
+	}
 }

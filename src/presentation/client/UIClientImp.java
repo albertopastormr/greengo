@@ -1,4 +1,15 @@
 package presentation.client;
 
-public class UIClientImp {
+import presentation.UI;
+
+public class UIClientImp implements UI {
+	@Override
+	public void execute() {
+
+	}
+
+	@Override
+	public void update() {
+
+	}
 }

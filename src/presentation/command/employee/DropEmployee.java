@@ -1,4 +1,11 @@
 package presentation.command.employee;
 
-public class DropEmployee {
+import presentation.command.Command;
+import presentation.controller.LightContext;
+
+public class DropEmployee implements Command {
+	@Override
+	public LightContext execute(LightContext in) {
+		return null;
+	}
 }

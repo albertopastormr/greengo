@@ -1,4 +1,11 @@
 package presentation.command.client;
 
-public class ShowAllClient {
+import presentation.command.Command;
+import presentation.controller.LightContext;
+
+public class ShowAllClient implements Command {
+	@Override
+	public LightContext execute(LightContext in) {
+		return null;
+	}
 }
