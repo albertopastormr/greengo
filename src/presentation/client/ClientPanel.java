@@ -9,17 +9,17 @@ import java.awt.*;
 
 public class ClientPanel extends JPanel {
 
-	private final String[] columnId = {"Id" , "Id card number", "Rentals number", "Active"};
+	private final String[] columnId = {"Id", "Id card number", "Rentals number", "Active"};
 	private TableModel model;
 
 	public ClientPanel(PanelTabs panelTabs) {
-			setLayout(new BorderLayout());
-			//add(new ToolBarCerveza(panelTabs), BorderLayout.NORTH);
-			model = new ClientTableModel(columnId);
-			add(new TablePanel<>(model), BorderLayout.CENTER);
-		}
+		setLayout(new BorderLayout());
+		//add(new ToolBarCerveza(panelTabs), BorderLayout.NORTH);
+		model = new ClientTableModel(columnId);
+		add(new TablePanel<>(model), BorderLayout.CENTER);
+	}
 
-		public TableModel getModelo() {
-			return model;
-		}
+	public TableModel getModel() {
+		return model;
+	}
 }
