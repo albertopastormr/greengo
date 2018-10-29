@@ -1,5 +1,6 @@
-package presentation.client.forms;
+package presentation.contract.forms;
 
+import business.contract.TContract;
 import presentation.util.Util;
 import presentation.util.ViewHelpers;
 
@@ -8,12 +9,12 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class FormShowClientsNRentals extends JDialog{
+public class FormShowContract extends JDialog {
 
-	private JTextField nrentalsText;
+	private JTextField idText;
 
-	public FormShowClientsNRentals() {
-		setTitle("Show clients with more than N rentals");
+	public FormShowContract() {
+		setTitle("Show contract");
 		setResizable(false);
 		Util.addEscapeListener(this);
 		initGUI();
@@ -21,7 +22,7 @@ public class FormShowClientsNRentals extends JDialog{
 
 	private void initGUI() {
 		JPanel mainPanel = new JPanel();
-		mainPanel.setLayout(new BoxLayout(mainPanel,BoxLayout.Y_AXIS));
+		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 		mainPanel.setBackground(Color.white);
 		mainPanel.add(fieldsPanel());
 		mainPanel.add(buttonsPanel());
@@ -34,14 +35,14 @@ public class FormShowClientsNRentals extends JDialog{
 	private JPanel fieldsPanel() {
 		JPanel ret = ViewHelpers.createFieldPanel(1);
 
-		//NRentals
-		JLabel nrentalsLabel = new JLabel("NºRentals");
-		ret.add(nrentalsLabel);
+		//ID
+		JLabel idLabel = new JLabel("ID");
+		ret.add(idLabel);
 
-		nrentalsText = new JTextField(10);
-		ret.add(nrentalsText);
+		idText = new JTextField(10);
+		ret.add(idText);
 
-		return  ret;
+		return ret;
 	}
 
 	private JPanel buttonsPanel(){
@@ -49,20 +50,19 @@ public class FormShowClientsNRentals extends JDialog{
 		//Buttons
 		JPanel buttonsPanel = new JPanel(new FlowLayout());
 
-		JButton showN = ViewHelpers.buttonsForms("SHOW");
+		JButton create = ViewHelpers.buttonsForms("SHOW");
 
-		showN.addActionListener(new ActionListener(){
+		create.addActionListener(new ActionListener(){
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				TContract contract = new TContract();
 				try {
 					/*This is related to JPA*/
-
-					//Invoke the controller and execute "Set salary" operation.
-
+					contract.setId(Util.parseNoNegativeInt(idText.getText()));
 					dispose();
 				} catch (Exception ex) {
-					JOptionPane.showMessageDialog(getRootPane(), ex.getMessage(), "ERROR SHOW CLIENTS WITH MORE THAN N RENTALS", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(getRootPane(), ex.getMessage(), "ERROR SHOW CONTRACT", JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
@@ -77,14 +77,14 @@ public class FormShowClientsNRentals extends JDialog{
 			}
 		});
 
-		buttonsPanel.add(showN);
+		buttonsPanel.add(create);
 		buttonsPanel.add(cancel);
 
 		return buttonsPanel;
 	}
 
 	public static void main(String[] args) {
-		FormShowClientsNRentals formShowClientsNRentals = new FormShowClientsNRentals();
-		formShowClientsNRentals.setVisible(true);
+		FormShowContract formShowContract = new FormShowContract();
+		formShowContract.setVisible(true);
 	}
 }
