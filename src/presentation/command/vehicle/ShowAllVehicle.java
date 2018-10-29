@@ -1,4 +1,11 @@
 package presentation.command.vehicle;
 
-public class ShowAllVehicle {
+import presentation.command.Command;
+import presentation.controller.LightContext;
+
+public class ShowAllVehicle implements Command {
+	@Override
+	public LightContext execute(LightContext in) {
+		return null;
+	}
 }

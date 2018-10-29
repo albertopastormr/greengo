@@ -1,4 +1,11 @@
 package presentation.command.contract;
 
-public class DropContract {
+import presentation.command.Command;
+import presentation.controller.LightContext;
+
+public class DropContract implements Command {
+	@Override
+	public LightContext execute(LightContext in) {
+		return null;
+	}
 }

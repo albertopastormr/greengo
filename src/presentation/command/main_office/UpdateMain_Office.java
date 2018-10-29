@@ -1,4 +1,11 @@
 package presentation.command.main_office;
 
-public class UpdateMain_Office {
+import presentation.command.Command;
+import presentation.controller.LightContext;
+
+public class UpdateMain_Office implements Command {
+	@Override
+	public LightContext execute(LightContext in) {
+		return null;
+	}
 }
