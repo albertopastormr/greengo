@@ -1,7 +1,6 @@
 package presentation.contract.forms;
 
 import business.contract.TContract;
-import presentation.client.forms.FormUpdateClient;
 import presentation.util.Util;
 import presentation.util.ViewHelpers;
 
@@ -83,9 +82,9 @@ public class FormUpdateContract extends JDialog {
 		//Buttons
 		JPanel buttonsPanel = new JPanel(new FlowLayout());
 
-		JButton create = ViewHelpers.buttonsForms("UPDATE");
+		JButton update = ViewHelpers.buttonsForms("UPDATE");
 
-		create.addActionListener(new ActionListener(){
+		update.addActionListener(new ActionListener(){
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -114,7 +113,7 @@ public class FormUpdateContract extends JDialog {
 			}
 		});
 
-		buttonsPanel.add(create);
+		buttonsPanel.add(update);
 		buttonsPanel.add(cancel);
 
 		return buttonsPanel;

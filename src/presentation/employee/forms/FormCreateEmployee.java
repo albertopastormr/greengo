@@ -115,7 +115,6 @@ public class FormCreateEmployee extends JDialog {
 	private JPanel buttonsPanel() {
 		JPanel ret = new JPanel(new FlowLayout());
 
-
 		JButton create = ViewHelpers.buttonsForms("CREATE");
 
 		create.addActionListener(new ActionListener() {

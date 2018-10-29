@@ -1,6 +1,6 @@
-package presentation.contract.forms;
+package presentation.main_office.forms;
 
-import business.contract.TContract;
+import business.mainoffice.TMainOffice;
 import presentation.util.Util;
 import presentation.util.ViewHelpers;
 
@@ -9,12 +9,12 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class FormShowContract extends JDialog {
+public class FormDropMainOffice extends JDialog{
 
 	private JTextField idText;
 
-	public FormShowContract() {
-		setTitle("Show contract");
+	public FormDropMainOffice(){
+		setTitle("Drop main office");
 		setResizable(false);
 		Util.addEscapeListener(this);
 		initGUI();
@@ -23,7 +23,7 @@ public class FormShowContract extends JDialog {
 	private void initGUI() {
 		JPanel mainPanel = new JPanel();
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
-		mainPanel.setBackground(Color.white);
+
 		mainPanel.add(fieldsPanel());
 		mainPanel.add(buttonsPanel());
 
@@ -33,6 +33,7 @@ public class FormShowContract extends JDialog {
 	}
 
 	private JPanel fieldsPanel() {
+
 		JPanel ret = ViewHelpers.createFieldPanel(1);
 
 		//ID
@@ -45,31 +46,31 @@ public class FormShowContract extends JDialog {
 		return ret;
 	}
 
-	private JPanel buttonsPanel(){
+	private JPanel buttonsPanel() {
 
 		//Buttons
 		JPanel buttonsPanel = new JPanel(new FlowLayout());
 
-		JButton show = ViewHelpers.buttonsForms("SHOW");
+		JButton drop = ViewHelpers.buttonsForms("DROP");
 
-		show.addActionListener(new ActionListener(){
+		drop.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				TContract contract = new TContract();
+				TMainOffice mainOffice = new TMainOffice();
 				try {
 					/*This is related to JPA*/
-					contract.setId(Util.parseNoNegativeInt(idText.getText()));
+					mainOffice.setId(Util.parseNoNegativeInt(idText.getText()));
 					dispose();
 				} catch (Exception ex) {
-					JOptionPane.showMessageDialog(getRootPane(), ex.getMessage(), "ERROR SHOW CONTRACT", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(getRootPane(), ex.getMessage(), "ERROR DROP MAIN OFFICE", JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
 
 		JButton cancel = ViewHelpers.buttonsForms("CANCEL");
 
-		cancel.addActionListener(new ActionListener(){
+		cancel.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -77,14 +78,14 @@ public class FormShowContract extends JDialog {
 			}
 		});
 
-		buttonsPanel.add(show);
+		buttonsPanel.add(drop);
 		buttonsPanel.add(cancel);
 
 		return buttonsPanel;
 	}
 
 	public static void main(String[] args) {
-		FormShowContract formShowContract = new FormShowContract();
-		formShowContract.setVisible(true);
+		FormDropMainOffice formDropMainOffice = new FormDropMainOffice();
+		formDropMainOffice.setVisible(true);
 	}
 }

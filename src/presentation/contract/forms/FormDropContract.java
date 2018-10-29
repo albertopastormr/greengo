@@ -50,9 +50,9 @@ public class FormDropContract extends JDialog{
 		//Buttons
 		JPanel buttonsPanel = new JPanel(new FlowLayout());
 
-		JButton create = ViewHelpers.buttonsForms("DROP");
+		JButton drop = ViewHelpers.buttonsForms("DROP");
 
-		create.addActionListener(new ActionListener(){
+		drop.addActionListener(new ActionListener(){
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -77,7 +77,7 @@ public class FormDropContract extends JDialog{
 			}
 		});
 
-		buttonsPanel.add(create);
+		buttonsPanel.add(drop);
 		buttonsPanel.add(cancel);
 
 		return buttonsPanel;
