@@ -1,6 +1,7 @@
 package business.vehicle;
 
 
+import business.ASException;
 import business.IncorrectInputException;
 import business.city.TCity;
 import business.city.as.ASCity;
@@ -22,16 +23,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Date;
 
-
-
-
 public class ASVehicleTest {
 
     private static Date dFrom = new Date(1540373530000L);
     private static Date dTo = new Date(1543051930000L);
     private static ASVehicle as = ASVehicleFactory.getInstance().generateASVehicle();
-    private static TVehicle tv = new TVehicle(null,"Audi",6000,0,
-            false,null,false,"car");
+    private static TVehicle tv = new TVehicle(null,"Audi",6000,0, false,null,false,"car");
     private static ASCity asCity = ASCityFactory.getInstance().generateASCity();
     private static TCity tCity = new TCity(null,"Madrid",false);
     private static ASClient asClient = ASClientFactory.getInstance().generateASClient();
@@ -72,6 +69,32 @@ public class ASVehicleTest {
         tv.setEstimatedDuration(0); //estimated duration must be > 0
         assertThrows(IncorrectInputException.class, () -> {as.create(tv);});
     }
+
+    //Drop methods
+    @Test
+    public void dropSuccessful(){
+        Integer id = as.create(tv);
+        Integer idC = asCity.create(tCity);
+
+        tv.setId(id);
+        tv.setCity(idC);
+
+        as.drop(id);
+
+        assertTrue(as.showAll().isEmpty());
+        assertTrue(asCity.show(idC).isActive());
+    }
+
+    @Test
+    public void dropVehicleIncorrectInput0(){
+        assertThrows(IncorrectInputException.class, () -> {as.drop(0);} ); //id must be > 0
+    }
+
+    @Test
+    public void dropVehicletNotExists(){
+        assertThrows(ASException.class, () -> {as.drop(50);});
+    }
+
 
     
 }
