@@ -50,35 +50,35 @@ public class PanelTabs extends JTabbedPane {
 
 		//vista employee
 		JComponent employeeTab = new JPanel(new GridLayout(1, 1));
-		addTab("Employee", new ImageIcon("resources/images/employee.png"), contractTab, "Employee view");
+		addTab("Employee", new ImageIcon("resources/images/employee.png"), employeeTab, "Employee view");
 		setMnemonicAt(0, KeyEvent.VK_4);
 		employeePane = new EmployeePanel(this);
 		employeeTab.add(employeePane);
 
 		//vista main office
 		JComponent mainOfficeTab = new JPanel(new GridLayout(1, 1));
-		addTab("MainOffice", new ImageIcon("resources/images/mainOffice.png"), contractTab, "MainOffice view");
+		addTab("MainOffice", new ImageIcon("resources/images/mainOffice.png"), mainOfficeTab, "MainOffice view");
 		setMnemonicAt(0, KeyEvent.VK_5);
 		mainOfficePane = new MainOfficePanel(this);
 		mainOfficeTab.add(mainOfficePane);
 
 		//vista rental
 		JComponent rentalTab = new JPanel(new GridLayout(1, 1));
-		addTab("Rental", new ImageIcon("resources/images/rental.png"), contractTab, "Rental view");
+		addTab("Rental", new ImageIcon("resources/images/rental.png"), rentalTab, "Rental view");
 		setMnemonicAt(0, KeyEvent.VK_6);
 		rentalPane = new RentalPanel(this);
 		rentalTab.add(rentalPane);
 
 		//vista service
 		JComponent serviceTab = new JPanel(new GridLayout(1, 1));
-		addTab("Service", new ImageIcon("resources/images/service.png"), contractTab, "Service view");
+		addTab("Service", new ImageIcon("resources/images/service.png"), serviceTab, "Service view");
 		setMnemonicAt(0, KeyEvent.VK_7);
 		servicePane = new ServicePanel(this);
 		serviceTab.add(servicePane);
 
 		//vista vehicle
 		JComponent vehicleTab = new JPanel(new GridLayout(1, 1));
-		addTab("Vehicle", new ImageIcon("resources/images/vehicle.png"), contractTab, "Vehicle view");
+		addTab("Vehicle", new ImageIcon("resources/images/vehicle.png"), vehicleTab, "Vehicle view");
 		setMnemonicAt(0, KeyEvent.VK_8);
 		vehiclePane = new VehiclePanel(this);
 		vehicleTab.add(vehiclePane);
