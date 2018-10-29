@@ -15,11 +15,9 @@ public class MainWindow extends JFrame{
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
 
-			/*
-			PanelTabs tabbedPane = new PanelTabs();
-			setContentPane(tabbedPane);
-			tabbedPane.actualizarMarca();
-			*/
+		PanelTabs tabbedPane = new PanelTabs();
+		setContentPane(tabbedPane);
+		//tabbedPane.actualizarMarca();
 
 		pack();
 		setVisible(true);
