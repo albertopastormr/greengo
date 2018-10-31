@@ -1,9 +1,9 @@
-package presentation.command.main_office;
+package presentation.command.rental;
 
 import presentation.command.Command;
 import presentation.controller.LightContext;
 
-public class SwitchToMainOffice implements Command {
+public class ReloadRental implements Command {
 	@Override
 	public LightContext execute(LightContext in) {
 		return in;

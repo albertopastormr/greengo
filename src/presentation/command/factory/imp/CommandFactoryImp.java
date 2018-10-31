@@ -156,29 +156,29 @@ public class CommandFactoryImp extends CommandFactory {
 			case SHOW_CLIENTS_FROM_CITY:
 				ret = new ShowClientsByCity();
 				break;
-			case SWITCH_TO_CITY:
-				ret = new SwitchToCity();
+			case RELOAD_CITY:
+				ret = new ReloadCity();
 				break;
-			case SWITCH_TO_CLIENT:
-				ret = new SwitchToClient();
+			case RELOAD_CLIENT:
+				ret = new ReloadClient();
 				break;
-			case SWITCH_TO_CONTRACT:
-				ret = new SwitchToContract();
+			case RELOAD_CONTRACT:
+				ret = new ReloadContract();
 				break;
-			case SWITCH_TO_EMPLOYEE:
-				ret = new SwitchToEmployee();
+			case RELOAD_EMPLOYEE:
+				ret = new ReloadEmployee();
 				break;
-			case SWITCH_TO_MAIN_OFFICE:
-				ret = new SwitchToMainOffice();
+			case REALOAD_MAIN_OFFICE:
+				ret = new ReloadMainOffice();
 				break;
-			case SWITCH_TO_RENTAL:
-				ret =  new SwitchToRental();
+			case RELOAD_RENTAL:
+				ret =  new ReloadRental();
 				break;
-			case SWITCH_TO_SERVICE:
-				ret = new SwitchToService();
+			case RELOAD_SERVICE:
+				ret = new ReloadService();
 				break;
-			case SWITCH_TO_VEHICLE:
-				ret = new SwitchToVehicle();
+			case RELOAD_VEHICLE:
+				ret = new ReloadVehicle();
 				break;
 		}
 		return ret;

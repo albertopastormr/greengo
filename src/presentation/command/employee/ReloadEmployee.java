@@ -1,9 +1,9 @@
-package presentation.command.client;
+package presentation.command.employee;
 
 import presentation.command.Command;
 import presentation.controller.LightContext;
 
-public class SwitchToClient implements Command {
+public class ReloadEmployee implements Command {
 	@Override
 	public LightContext execute(LightContext in) {
 		return in;

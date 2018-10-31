@@ -96,28 +96,28 @@ public class PanelTabs extends JTabbedPane {
 			public void stateChanged(ChangeEvent changeEvent) {
 				switch (getSelectedIndex()) {
 					case 0:
-						AppController.getInstance().execute(new LightContext(Event.SWITCH_TO_CITY, null));
+						AppController.getInstance().execute(new LightContext(Event.RELOAD_CITY, null));
 						break;
 					case 1:
-						AppController.getInstance().execute(new LightContext(Event.SWITCH_TO_CLIENT, null));
+						AppController.getInstance().execute(new LightContext(Event.RELOAD_CLIENT, null));
 						break;
 					case 2:
-						AppController.getInstance().execute(new LightContext(Event.SWITCH_TO_CONTRACT, null));
+						AppController.getInstance().execute(new LightContext(Event.RELOAD_CONTRACT, null));
 						break;
 					case 3:
-						AppController.getInstance().execute(new LightContext(Event.SWITCH_TO_EMPLOYEE, null));
+						AppController.getInstance().execute(new LightContext(Event.RELOAD_EMPLOYEE, null));
 						break;
 					case 4:
-						AppController.getInstance().execute(new LightContext(Event.SWITCH_TO_MAIN_OFFICE, null));
+						AppController.getInstance().execute(new LightContext(Event.REALOAD_MAIN_OFFICE, null));
 						break;
 					case 5:
-						AppController.getInstance().execute(new LightContext(Event.SWITCH_TO_RENTAL, null));
+						AppController.getInstance().execute(new LightContext(Event.RELOAD_RENTAL, null));
 						break;
 					case 6:
-						AppController.getInstance().execute(new LightContext(Event.SWITCH_TO_SERVICE, null));
+						AppController.getInstance().execute(new LightContext(Event.RELOAD_SERVICE, null));
 						break;
 					case 7:
-						AppController.getInstance().execute(new LightContext(Event.SWITCH_TO_VEHICLE, null));
+						AppController.getInstance().execute(new LightContext(Event.RELOAD_VEHICLE, null));
 						break;
 				}
 			}
@@ -150,8 +150,12 @@ public class PanelTabs extends JTabbedPane {
 			case 7:
 				vehiclePane.getModel().setList(newList);
 				break;
-
-
 		}
+
+	}
+
+
+	public void initialize(){
+		AppController.getInstance().execute(new LightContext(Event.RELOAD_CITY, null));
 	}
 }

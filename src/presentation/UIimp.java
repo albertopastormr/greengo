@@ -22,6 +22,8 @@ public class UIimp extends UI{
 		tabbedPane = new PanelTabs();
 		setContentPane(tabbedPane);
 
+		tabbedPane.initialize();
+
 		pack();
 		setVisible(true);
 	}
@@ -29,10 +31,7 @@ public class UIimp extends UI{
 	@Override
 	public void update(LightContext context) {
 		switch (context.getEvent()){
-			case CREATE_VEHICLE:
-			case DROP_VEHICLE:
-			case UPDATE_VEHICLE:
-			case SWITCH_TO_VEHICLE:
+			case RELOAD_VEHICLE:
 				ArrayList vehicleList = new ArrayList();
 				AppController.getInstance().execute(new LightContext(Event.SHOWALL_VEHICLE, vehicleList));
 				tabbedPane.update(vehicleList);
@@ -43,10 +42,7 @@ public class UIimp extends UI{
 			case SHOW_VEHICLE:
 
 				break;
-			case CREATE_SERVCE:
-			case DROP_SERVICE:
-			case UPDATE_SERVICE:
-			case SWITCH_TO_SERVICE:
+			case RELOAD_SERVICE:
 
 				break;
 			case SHOW_SERVICE_BY_LEVEL:
@@ -55,21 +51,13 @@ public class UIimp extends UI{
 			case SHOW_SERVICE:
 
 				break;
-
-			case CREATE_RENTAL:
-			case DROP_RENTAL:
-			case UPDATE_RENTAL:
-			case SWITCH_TO_RENTAL:
+			case RELOAD_RENTAL:
 
 				break;
 			case SHOW_RENTAL:
 
 				break;
-
-			case CREATE_MAIN_OFFICE:
-			case DROP_MAIN_OFFICE:
-			case UPDATE_MAIN_OFFICE:
-			case SWITCH_TO_MAIN_OFFICE:
+			case REALOAD_MAIN_OFFICE:
 
 				break;
 			case SHOW_MAIN_OFFICE:
@@ -78,11 +66,7 @@ public class UIimp extends UI{
 			case TOTAL_SALARY_MAIN_OFFICE:
 
 				break;
-
-			case CREATE_EMPLOYEE:
-			case DROP_EMPLOYEE:
-			case UPDATE_EMPLOYEE:
-			case SWITCH_TO_EMPLOYEE:
+			case RELOAD_EMPLOYEE:
 
 				break;
 			case SHOW_EMPLOYEE:
@@ -92,21 +76,13 @@ public class UIimp extends UI{
 			case SET_SALARY_EMPLOYEE:
 
 				break;
-
-			case CREATE_CONTRACT:
-			case DROP_CONTRACT:
-			case UPDATE_CONTRACT:
-			case SWITCH_TO_CONTRACT:
+			case RELOAD_CONTRACT:
 
 				break;
 			case SHOW_CONTRACT:
 
 				break;
-
-			case CREATE_CLIENT:
-			case DROP_CLIENT:
-			case UPDATE_CLIENT:
-			case SWITCH_TO_CLIENT:
+			case RELOAD_CLIENT:
 
 				break;
 			case SHOW_CLIENT:
@@ -115,11 +91,7 @@ public class UIimp extends UI{
 			case SHOW_CLIENTS_N_RENTAL_CLIENT:
 
 				break;
-
-			case CREATE_CITY:
-			case DROP_CITY:
-			case UPDATE_CITY:
-			case SWITCH_TO_CITY:
+			case RELOAD_CITY:
 
 				break;
 			case SHOW_CITY:
