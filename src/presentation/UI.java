@@ -2,7 +2,9 @@ package presentation;
 
 import presentation.controller.LightContext;
 
-public abstract class UI{
+import javax.swing.*;
+
+public abstract class UI extends JFrame{
 
 	private static UI instance = null;
 

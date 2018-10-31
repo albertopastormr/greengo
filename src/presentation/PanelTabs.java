@@ -1,8 +1,12 @@
 package presentation;
 
+import javafx.scene.effect.Light;
 import presentation.city.CityPanel;
 import presentation.client.ClientPanel;
 import presentation.contract.ContractPanel;
+import presentation.controller.AppController;
+import presentation.controller.Event;
+import presentation.controller.LightContext;
 import presentation.employee.EmployeePanel;
 import presentation.main_office.MainOfficePanel;
 import presentation.rental.RentalPanel;
@@ -14,6 +18,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 
 public class PanelTabs extends JTabbedPane {
 
@@ -91,31 +96,62 @@ public class PanelTabs extends JTabbedPane {
 			public void stateChanged(ChangeEvent changeEvent) {
 				switch (getSelectedIndex()) {
 					case 0:
-
+						AppController.getInstance().execute(new LightContext(Event.SWITCH_TO_CITY, null));
 						break;
 					case 1:
-
+						AppController.getInstance().execute(new LightContext(Event.SWITCH_TO_CLIENT, null));
 						break;
 					case 2:
-
+						AppController.getInstance().execute(new LightContext(Event.SWITCH_TO_CONTRACT, null));
 						break;
 					case 3:
-
+						AppController.getInstance().execute(new LightContext(Event.SWITCH_TO_EMPLOYEE, null));
 						break;
 					case 4:
-
+						AppController.getInstance().execute(new LightContext(Event.SWITCH_TO_MAIN_OFFICE, null));
 						break;
 					case 5:
-
+						AppController.getInstance().execute(new LightContext(Event.SWITCH_TO_RENTAL, null));
 						break;
 					case 6:
-
+						AppController.getInstance().execute(new LightContext(Event.SWITCH_TO_SERVICE, null));
 						break;
 					case 7:
-
+						AppController.getInstance().execute(new LightContext(Event.SWITCH_TO_VEHICLE, null));
 						break;
 				}
 			}
 		});
+	}
+
+	public void update(ArrayList newList){
+		switch (getSelectedIndex()){
+			case 0:
+				cityPane.getModel().setList(newList);
+				break;
+			case 1:
+				clientPane.getModel().setList(newList);
+				break;
+			case 2:
+				contractPane.getModel().setList(newList);
+				break;
+			case 3:
+				employeePane.getModel().setList(newList);
+				break;
+			case 4:
+				mainOfficePane.getModel().setList(newList);
+				break;
+			case 5:
+				rentalPane.getModel().setList(newList);
+				break;
+			case 6:
+				servicePane.getModel().setList(newList);
+				break;
+			case 7:
+				vehiclePane.getModel().setList(newList);
+				break;
+
+
+		}
 	}
 }
