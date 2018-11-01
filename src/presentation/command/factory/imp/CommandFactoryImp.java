@@ -168,7 +168,7 @@ public class CommandFactoryImp extends CommandFactory {
 			case RELOAD_EMPLOYEE:
 				ret = new ReloadEmployee();
 				break;
-			case REALOAD_MAIN_OFFICE:
+			case RELOAD_MAIN_OFFICE:
 				ret = new ReloadMainOffice();
 				break;
 			case RELOAD_RENTAL:
