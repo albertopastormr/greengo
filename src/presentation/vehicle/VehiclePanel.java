@@ -15,7 +15,7 @@ public class VehiclePanel extends JPanel {
 
 	public VehiclePanel(PanelTabs panelTabs) {
 		setLayout(new BorderLayout());
-		//add(new ToolBarCerveza(panelTabs), BorderLayout.NORTH);
+		add(new VehicleToolbar(panelTabs), BorderLayout.NORTH);
 		model = new ClientTableModel(columnId);
 		add(new TablePanel<>(model), BorderLayout.CENTER);
 	}
