@@ -1,11 +1,16 @@
 package presentation.command.city;
 
+import business.city.TCity;
+import business.city.as.ASCity;
+import business.city.factory.ASCityFactory;
 import presentation.command.Command;
+import presentation.controller.Event;
 import presentation.controller.LightContext;
 
 public class ShowCity implements Command {
 	@Override
 	public LightContext execute(LightContext in) {
-		return null;
+		TCity ret = ASCityFactory.getInstance().generateASCity().show((Integer)in.getData());
+		return new LightContext(Event.SHOW_CITY, ret);
 	}
 }

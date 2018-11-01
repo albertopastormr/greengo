@@ -1,11 +1,15 @@
 package presentation.command.employee;
 
+import business.employee.TEmployee;
+import business.employee.factory.ASEmployeeFactory;
 import presentation.command.Command;
+import presentation.controller.Event;
 import presentation.controller.LightContext;
 
 public class ShowEmployee implements Command {
 	@Override
 	public LightContext execute(LightContext in) {
-		return null;
+		TEmployee ret = ASEmployeeFactory.getInstance().generateASEmployee().show((Integer)in.getData());
+		return new LightContext(Event.SHOWALL_CONTRACT, ret);
 	}
 }
