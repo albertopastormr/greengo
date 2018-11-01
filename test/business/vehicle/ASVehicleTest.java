@@ -1,6 +1,6 @@
 package business.vehicle;
 
-/*
+
 import business.ASException;
 import business.IncorrectInputException;
 import business.city.TCity;
@@ -29,7 +29,8 @@ public class ASVehicleTest {
     private static Date dFrom = new Date(1540373530000L);
     private static Date dTo = new Date(1543051930000L);
     private static ASVehicle as = ASVehicleFactory.getInstance().generateASVehicle();
-    private static TVehicle tv = new TVehicle(null,"Audi",6000,0, false,null,false,"car");
+    private static TVehicle tv = new TVehicle(null,"Audi",6000,0,
+            false,null,false,"car");
     private static ASCity asCity = ASCityFactory.getInstance().generateASCity();
     private static TCity tCity = new TCity(null,"Madrid",false);
     private static ASClient asClient = ASClientFactory.getInstance().generateASClient();
@@ -55,49 +56,55 @@ public class ASVehicleTest {
     }
 
     @Test
-    public void createVehicleIncorrectID(){
+    public void createVehicleIncorrectInputID(){
         tv.setId(1); //id must be null
         assertThrows(IncorrectInputException.class, () -> {as.create(tv);});
     }
 
     @Test
-    public void createVehicleIncorrectEstimatedDuration1(){
+    public void createVehicleIncorrectInputEstimatedDuration1(){
         tv.setEstimatedDuration(-1); //estimated duration must be > 0
         assertThrows(IncorrectInputException.class, () -> {as.create(tv);});
     }
 
     @Test
-    public void createVehicleIncorrectEstimatedDuration2(){
+    public void createVehicleIncorrectInputEstimatedDuration2(){
         tv.setEstimatedDuration(0); //estimated duration must be > 0
         assertThrows(IncorrectInputException.class, () -> {as.create(tv);});
     }
 
     @Test
-    public void createVehicleIncorrectNumKmTravelled(){
+    public void createVehicleIncorrectInputNumKmTravelled1(){
         tv.setNumKmTravelled(-1); //numKmTravelled must be >= 0
         assertThrows(IncorrectInputException.class, () -> {as.create(tv);});
     }
 
     @Test
-    public void createVehicleIncorrectOccupied(){
+    public void createVehicleIncorrectInputNumKmTravelled2(){
+        tv.setNumKmTravelled(-1); //numKmTravelled must be < estimatedDuration
+        assertThrows(IncorrectInputException.class, () -> {as.create(tv);});
+    }
+
+    @Test
+    public void createVehicleIncorrectInputOccupied(){
         tv.setOccupied(true); //occupied must be false
         assertThrows(IncorrectInputException.class, () -> {as.create(tv);});
     }
 
     @Test
-    public void createVehicleIncorrectCity(){
+    public void createVehicleIncorrectInputCity(){
         tv.setCity(null); //city can't be null
         assertThrows(IncorrectInputException.class, () -> {as.create(tv);});
     }
 
     @Test
-    public void createVehicleIncorrectActive(){
+    public void createVehicleIncorrectInputActive(){
         tv.setActive(true); //active must be false
         assertThrows(IncorrectInputException.class, () -> {as.create(tv);});
     }
 
     @Test
-    public void createVehicleIncorrectType(){
+    public void createVehicleIncorrectInputType(){
         tv.setType("bike"); //type only can be car or bicycle on this version
         assertThrows(IncorrectInputException.class, () -> {as.create(tv);});
     }
@@ -143,6 +150,18 @@ public class ASVehicleTest {
     }
 
     @Test
+    public void dropVehicleAlreadyInactive(){
+        Integer id = as.create(tv);
+        Integer idC = asCity.create(tCity);
+
+        tv.setId(id);
+        tv.setCity(idC);
+        as.drop(id);
+
+        assertThrows(ASException.class, () -> {as.drop(id);});
+    }
+
+    @Test
     public void dropVehicleWithActiveRentals(){
         Integer idC = asClient.create(tClient);
         Integer idV = as.create(tv);
@@ -158,20 +177,14 @@ public class ASVehicleTest {
     //Show method
     @Test
     public void showVehicleSuccessful(){
-        Integer idV = as.create(tv);
         Integer idCity = asCity.create(tCity);
-
         tv.setCity(idCity);
+        Integer idV = as.create(tv);
+        tv.setId(idV);
 
         TVehicle out = as.show(idV);
 
-        assertEquals(out.getId(),idV);
-        assertEquals(out.getBrand(), tv.getBrand());
-        assertEquals(out.getCity(), tv.getCity());
-        assertEquals(out.getType(), tv.getType());
-        assertEquals(out.getEstimatedDuration(), tv.getEstimatedDuration());
-        assertEquals(out.getNumKmTravelled(), tv.getNumKmTravelled());
-        assertEquals(out.isActive(), tv.isActive());
+        assertTrue(checkTransferValues(out,tv));
     }
 
     @Test
@@ -191,25 +204,21 @@ public class ASVehicleTest {
 
     //showAll method
     @Test
-    public void showAllVechicleSuccessful() {
+    public void showAllVehicleSuccessful() {
         Integer idV = as.create(tv);
 
-        TVehicle tv2 = new TVehicle(null, "Audi", 1000, 300, false, 1, false, "car");
+        TVehicle tv2 = new TVehicle(null, "Audi", 1000, 300,
+                false, 1, false, "car");
 
         as.create(tv2);
 
         Collection<TVehicle> collec = as.showAll();
         for (TVehicle tmp : collec) {
             if (tmp.getId().equals(idV))
-                assertTrue(checkTransferValues(tmp, tv.getBrand(), tv.getEstimatedDuration(), tv.getCity(), tv.getNumKmTravelled() ,tv.getType()));
+                assertTrue(checkTransferValues(tmp,tv));
             else
-                assertTrue(checkTransferValues(tmp, tv2.getBrand(), tv2.getEstimatedDuration(), tv2.getCity(), tv2.getNumKmTravelled(), tv2.getType()));
+                assertTrue(checkTransferValues(tmp, tv2));
         }
-    }
-
-    private boolean checkTransferValues(TVehicle tv, String brand, Integer estimatedDuration, Integer city, Integer numKmTravelled, String type){
-        return  tv.getBrand().equals(brand) && tv.getEstimatedDuration().equals(estimatedDuration) && tv.getCity().equals(city)
-                && tv.getNumKmTravelled().equals(numKmTravelled) && tv.getType().equals(type) && tv.isActive();
     }
 
     @Test
@@ -219,35 +228,143 @@ public class ASVehicleTest {
     }
 
     //Update method
+
     @Test
-    public void updateVehicletSuccessful(){
+    public void updateVehicleSuccessful(){
+        Integer idC = asCity.create(tCity);
+        tv.setCity(idC);
         Integer idV = as.create(tv);
 
-        TVehicle updateVehicle = new TVehicle(idV, "Audi", 1000, 300, false, 1, false, "car");
-        Integer idOut = as.update(updateVehicle);
+        TVehicle updatedVehicle = new TVehicle(idV, "Audi", 1000, 300,
+                false, idC, false, "car");
+        Integer idOut = as.update(updatedVehicle);
 
         TVehicle out = as.show(idOut);
 
         assertEquals(out.getId(),idV);
-        assertEquals(out.getBrand(), updateVehicle.getBrand());
-        assertEquals(out.getNumKmTravelled(),updateVehicle.getNumKmTravelled());
-        assertEquals(out.getEstimatedDuration(),updateVehicle.getEstimatedDuration());
-        assertEquals(out.getType(),updateVehicle.getType();
-        assertEquals(out.getCity(),updateVehicle.getCity();
-        assertEquals(out.isActive(),updateVehicle.isActive());
+        assertTrue(checkTransferValues(out,updatedVehicle));
     }
 
     @Test
-    public void updateClientIncorrectInputID(){
+    public void updateVehicleIncorrectInputID(){
         //id can't be null and must be > 0
         tv.setId(null);
         assertThrows(IncorrectInputException.class, () -> {as.update(tv);});
     }
 
     @Test
-    public void updateClientNotExists(){
+    public void updateVehicleIncorrectInputEstimatedDuration1(){
+        tv.setId(1);
+        tv.setEstimatedDuration(-1); //estimated duration must be > 0
+        assertThrows(IncorrectInputException.class, () -> {as.update(tv);});
+    }
+
+    @Test
+    public void updateVehicleIncorrectInputEstimatedDuration2(){
+        tv.setId(1);
+        tv.setEstimatedDuration(0); //estimated duration must be > 0
+        assertThrows(IncorrectInputException.class, () -> {as.update(tv);});
+    }
+
+    @Test
+    public void updateVehicleIncorrectInputEstimatedDuration3(){
+        tv.setId(1);
+        tv.setNumKmTravelled(100);
+        tv.setEstimatedDuration(1); //estimated duration must be > num km travelled
+        assertThrows(IncorrectInputException.class, () -> {as.update(tv);});
+    }
+
+    @Test
+    public void updateVehicleIncorrectInputNumKmTravelled1(){
+        tv.setId(1);
+        tv.setNumKmTravelled(-1); //num km travelled must be > 0
+        assertThrows(IncorrectInputException.class, () -> {as.update(tv);});
+    }
+
+    @Test
+    public void updateVehicleIncorrectInputNumKmTravelled2(){
+        tv.setId(1);
+        tv.setNumKmTravelled(0); //num km travelled must be > 0
+        assertThrows(IncorrectInputException.class, () -> {as.update(tv);});
+    }
+
+    @Test
+    public void updateVehicleIncorrectInputNumKmTravelled3(){
+        tv.setId(1);
+        tv.setEstimatedDuration(1);
+        tv.setNumKmTravelled(100); //num km travelled must be < estimated duration
+        assertThrows(IncorrectInputException.class, () -> {as.update(tv);});
+    }
+
+    @Test
+    public void updateVehicleIncorrectInputCity1(){
+        tv.setId(1);
+        tv.setCity(-1); //city must be > 0
+        assertThrows(IncorrectInputException.class, () -> {as.update(tv);});
+    }
+
+    @Test
+    public void updateVehicleIncorrectInputCity2(){
+        tv.setId(1);
+        tv.setCity(0); //city must be > 0
+        assertThrows(IncorrectInputException.class, () -> {as.update(tv);});
+    }
+
+    @Test
+    public void updateVehicleIncorrectInputActive(){
+        tv.setId(1);
+        tv.setActive(false); //active must be true on update operation,
+                            // to deactivate the entity, it's necessary to use the drop operation
+        assertThrows(IncorrectInputException.class, () -> {as.update(tv);});
+    }
+
+    @Test
+    public void updateVehicleIncorrectInputType(){
+        Integer idV = as.create(tv);
+        tv.setId(idV);
+        tv.setType("bicycle"); //change the type of the vehicle it's not allowed
+        assertThrows(IncorrectInputException.class, () -> {as.update(tv);});
+    }
+
+
+    @Test
+    public void updateVehicleNotExists(){
         tv.setId(1);
         assertThrows(ASException.class, () -> {as.update(tv);});
     }
+
+    @Test
+    public void updateVehicleCurrentlyOccupied(){
+        Integer idC = asCity.create(tCity);
+        tv.setCity(idC);
+        Integer idV = as.create(tv);
+        tv.setId(idV);
+
+        tv.setOccupied(true);
+        as.update(tv);
+
+        tv.setNumKmTravelled(1);
+        assertThrows(ASException.class, () -> {as.update(tv);});
+    }
+
+    @Test
+    public void updateVehicleCityNotExists(){
+        Integer idC = asCity.create(tCity);
+        tv.setCity(idC);
+        Integer idV = as.create(tv);
+        tv.setId(idV);
+
+        tv.setCity(2);
+        assertThrows(ASException.class, () -> {as.update(tv);});
+    }
+
+    //private methods
+    private boolean checkTransferValues(TVehicle tmp, TVehicle tv){
+        return  tmp.getBrand().equals(tv.getBrand())
+                && tmp.getEstimatedDuration().equals(tv.getEstimatedDuration())
+                && tmp.getNumKmTravelled().equals(tv.getNumKmTravelled())
+                && tmp.getCity().equals(tv.getCity())
+                && tmp.getType().equals(tv.getType())
+                && tmp.isActive().equals(tv.isActive());
+    }
 }
-*/
