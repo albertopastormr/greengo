@@ -209,5 +209,4 @@ public class ASVehicleTest {
         tv.setId(1);
         assertThrows(ASException.class, () -> {as.update(tv);});
     }
-    
 }

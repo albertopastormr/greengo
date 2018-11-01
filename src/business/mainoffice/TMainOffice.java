@@ -5,11 +5,11 @@ public class TMainOffice {
 	private Integer id;
 	private String city;
 	private String address;
-	private boolean active;
+	private Boolean active;
 
 	public TMainOffice(){}
 
-	public TMainOffice(Integer id, String city, String address, boolean active) {
+	public TMainOffice(Integer id, String city, String address, Boolean active) {
 		this.id = id;
 		this.city = city;
 		this.address = address;
@@ -33,10 +33,21 @@ public class TMainOffice {
 	public void setAdress(String address) {
 		this.address = address;
 	}
-	public boolean isActive() {
+	public Boolean isActive() {
 		return active;
 	}
-	public void setActive(boolean active) {
+	public void setActive(Boolean active) {
 		this.active = active;
+	}
+
+	@Override
+	public String toString(){
+		String ret = "";
+		ret += String.format("%-13s %13s %n", "Id: ", id);
+		ret += String.format("%-13s %13s %n", "City: ", city);
+		ret += String.format("%-13s %13s %n", "Address: ", address);
+		ret += String.format("%-13s %13s %n", "Active: ", active);
+
+		return ret;
 	}
 }

@@ -6,15 +6,15 @@ public class TVehicle {
 	private String brand;
     private Integer estimatedDuration;
     private Integer numKmTravelled;
-    private boolean occupied;
+    private Boolean occupied;
     private Integer city;
-    private boolean active;
+    private Boolean active;
     private String type;
 
 	public TVehicle(){}
 
     public TVehicle(Integer id, String brand, Integer estimatedDuration,
-                    Integer numKmTravelled, boolean occupied, Integer city, boolean active, String type) {
+                    Integer numKmTravelled, Boolean occupied, Integer city, Boolean active, String type) {
         this.id = id;
         this.brand = brand;
         this.estimatedDuration = estimatedDuration;
@@ -57,11 +57,11 @@ public class TVehicle {
         this.numKmTravelled = numKmTravelled;
     }
 
-    public boolean isOccupied() {
+    public Boolean isOccupied() {
         return occupied;
     }
 
-    public void setOccupied(boolean occupied) {
+    public void setOccupied(Boolean occupied) {
         this.occupied = occupied;
     }
 
@@ -73,11 +73,11 @@ public class TVehicle {
         this.city = city;
     }
 
-    public boolean isActive() {
+    public Boolean isActive() {
         return active;
     }
 
-    public void setActive(boolean active) {
+    public void setActive(Boolean active) {
         this.active = active;
     }
 
@@ -87,5 +87,20 @@ public class TVehicle {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    @Override
+    public String toString(){
+        String ret = "";
+        ret += String.format("%-13s %13s %n", "Id: ", id);
+        ret += String.format("%-13s %13s %n", "Type: ", type);
+        ret += String.format("%-13s %13s %n", "Brand: ", brand);
+        ret += String.format("%-13s %13s %n", "Estimated duration: ", estimatedDuration);
+        ret += String.format("%-13s %13s %n", "Km travelled: ", numKmTravelled);
+        ret += String.format("%-13s %13s %n", "City id: ", city);
+        ret += String.format("%-13s %13s %n", "Occupied: ", occupied);
+        ret += String.format("%-13s %13s %n", "Active: ", active);
+
+        return ret;
     }
 }
