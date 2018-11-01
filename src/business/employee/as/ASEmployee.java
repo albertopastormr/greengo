@@ -8,7 +8,7 @@ public interface ASEmployee {
 
     Integer create(TEmployee client);
 
-    Integer drop(TEmployee client);
+    Integer drop(Integer id);
 
     Integer update(TEmployee client);
 
@@ -16,5 +16,5 @@ public interface ASEmployee {
 
     Collection<TEmployee> showAll ();
 
-    Integer setSalary (Integer idEmployee, Integer salary);
+    Integer setSalary (Integer idEmployee, Float salary);
 }

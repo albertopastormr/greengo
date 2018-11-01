@@ -1,18 +1,22 @@
 package business.mainoffice.as;
 
+import business.mainoffice.TMainOffice;
+
+import java.util.Collection;
+
 public interface  ASMain_Office {
 
     /*This is related to JPA*/
 
-   /* Integer create(TMain_Office mainoffice);
+   Integer create(TMainOffice mainoffice);
 
-    Integer drop(TMain_Office mainoffice);
+    Integer drop(Integer id);
 
-    Integer update(TMain_Office mainoffice);
+    Integer update(TMainOffice mainoffice);
 
-    TMain_Office show (Integer id);
+    TMainOffice show (Integer id);
 
-    Collection<TMain_Office> showAll ();
+    Collection<TMainOffice> showAll ();
 
-    float showSalary(Integer id);*/
+    float showSalary(Integer id);
 }

@@ -1,5 +1,6 @@
 package business.contract.as.imp;
 
+import business.contract.TContract;
 import business.contract.as.ASContract;
 
 import java.util.Collection;
@@ -8,7 +9,7 @@ public class ASContractImp implements ASContract {
 
     /*This is related to JPA*/
 
-    /* @Override
+    @Override
     public Integer create(TContract contract) {
         return null;
     }
@@ -31,5 +32,5 @@ public class ASContractImp implements ASContract {
     @Override
     public Collection<TContract> showAll() {
         return null;
-    }*/
+    }
 }

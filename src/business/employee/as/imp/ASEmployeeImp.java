@@ -13,7 +13,7 @@ public class ASEmployeeImp implements ASEmployee {
     }
 
     @Override
-    public Integer drop(TEmployee client) {
+    public Integer drop(Integer id) {
         return null;
     }
 
@@ -33,7 +33,7 @@ public class ASEmployeeImp implements ASEmployee {
     }
 
     @Override
-    public Integer setSalary(Integer idEmployee, Integer salary) {
+    public Integer setSalary(Integer idEmployee, Float salary) {
         return null;
     }
 }
