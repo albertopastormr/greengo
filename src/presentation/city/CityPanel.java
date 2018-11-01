@@ -1,5 +1,6 @@
 package presentation.city;
 
+import business.city.TCity;
 import presentation.PanelTabs;
 import presentation.client.ClientTableModel;
 import presentation.util.TableModel;
@@ -15,9 +16,9 @@ public class CityPanel extends JPanel {
 
 	public CityPanel(PanelTabs panelTabs) {
 		setLayout(new BorderLayout());
-		//add(new ToolBarCerveza(panelTabs), BorderLayout.NORTH);
+		add(new CityToolbar(panelTabs), BorderLayout.NORTH);
 		model = new ClientTableModel(columnId);
-		add(new TablePanel<>(model), BorderLayout.CENTER);
+		add(new TablePanel<TCity>(model), BorderLayout.CENTER);
 	}
 
 	public TableModel getModel() {

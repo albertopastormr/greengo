@@ -1,6 +1,6 @@
 package business.vehicle;
 
-
+/*
 import business.ASException;
 import business.IncorrectInputException;
 import business.city.TCity;
@@ -210,6 +210,6 @@ public class ASVehicleTest {
         tv.setId(1);
         assertThrows(ASException.class, () -> {as.update(tv);});
     }
-
     
 }
+*/

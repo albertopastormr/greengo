@@ -32,6 +32,7 @@ public class PanelTabs extends JTabbedPane {
 	private VehiclePanel vehiclePane;
 
 	PanelTabs() {
+
 		//vista city
 		JComponent cityTab = new JPanel(new GridLayout(1, 1));
 		addTab("City", new ImageIcon("resources/images/city.png"), cityTab, "City view");
@@ -108,7 +109,7 @@ public class PanelTabs extends JTabbedPane {
 						AppController.getInstance().execute(new LightContext(Event.RELOAD_EMPLOYEE, null));
 						break;
 					case 4:
-						AppController.getInstance().execute(new LightContext(Event.REALOAD_MAIN_OFFICE, null));
+						AppController.getInstance().execute(new LightContext(Event.RELOAD_MAIN_OFFICE, null));
 						break;
 					case 5:
 						AppController.getInstance().execute(new LightContext(Event.RELOAD_RENTAL, null));
