@@ -5,10 +5,10 @@ public class TClient {
 	private Integer id;
 	private String idCardNumber;
 	private Integer numRentals;
-	private boolean active;
+	private Boolean active;
 
 	public TClient(){}
-	public TClient(Integer id, String idCardNumber, Integer numRentals, boolean active) {
+	public TClient(Integer id, String idCardNumber, Integer numRentals, Boolean active) {
 		this.id = id;
 		this.idCardNumber = idCardNumber;
 		this.numRentals = numRentals;
@@ -39,11 +39,22 @@ public class TClient {
         this.numRentals = numRentals;
     }
 
-    public boolean isActive() {
+    public Boolean isActive() {
         return active;
     }
 
-    public void setActive(boolean active) {
+    public void setActive(Boolean active) {
         this.active = active;
     }
+
+	@Override
+	public String toString(){
+		String ret = "";
+		ret += String.format("%-13s %13s %n", "Id: ", id);
+		ret += String.format("%-13s %13s %n", "Id card number: ", idCardNumber);
+		ret += String.format("%-13s %13s %n", "Number of rentals: ", numRentals);
+		ret += String.format("%-13s %13s %n", "Active: ", active);
+
+		return ret;
+	}
 }

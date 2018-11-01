@@ -11,7 +11,7 @@ public class TEmployee {
 	public TEmployee() {
 	}
 
-	public TEmployee(Integer id, String idCardNumber, float salary, boolean active, Integer idMainOffice, String type) {
+	public TEmployee(Integer id, String idCardNumber, float salary, Boolean active, Integer idMainOffice, String type) {
 		this.id = id;
 		this.idCardNumber = idCardNumber;
 		this.salary = salary;
@@ -66,5 +66,18 @@ public class TEmployee {
 
 	public void setType(String type) {
 		this.type = type;
+	}
+
+	@Override
+	public String toString(){
+		String ret = "";
+		ret += String.format("%-13s %13s %n", "Id: ", id);
+		ret += String.format("%-13s %13s %n", "Id card number: ", idCardNumber);
+		ret += String.format("%-13s %13s %n", "Salary: ", salary);
+		ret += String.format("%-13s %13s %n", "Type: ", type);
+		ret += String.format("%-13s %13s %n", "Id main office: ", idMainOffice);
+		ret += String.format("%-13s %13s %n", "Active: ", active);
+
+		return ret;
 	}
 }

@@ -1,20 +1,22 @@
 package business.rental;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class TRental {
 
 	private Integer id;
 	private Integer idVehicle;
 	private Integer idClient;
-	private boolean active;
+	private Boolean active;
 	private Integer numKmRented;
 	private Date dateFrom;
 	private Date dateTo;
 
 	public TRental(){}
 
-	public TRental(Integer id, Integer idVehicle, boolean active, Integer numKmRented,
+	public TRental(Integer id, Integer idVehicle, Boolean active, Integer numKmRented,
                    Integer idClient, Date dateFrom, Date dateTo) {
 		this.id = id;
 		this.idVehicle = idVehicle;
@@ -41,11 +43,11 @@ public class TRental {
 		this.idVehicle = idVehicle;
 	}
 
-	public boolean isActive() {
+	public Boolean isActive() {
 		return active;
 	}
 
-	public void setActive(boolean active) {
+	public void setActive(Boolean active) {
 		this.active = active;
 	}
 
@@ -79,5 +81,32 @@ public class TRental {
 
 	public void setDateTo(Date dateTo) {
 		this.dateTo = dateTo;
+	}
+
+	@Override
+	public String toString(){
+
+		SimpleDateFormat fmt = new SimpleDateFormat("dd-MMM-yyyy");
+		GregorianCalendar dateFromCal = new GregorianCalendar();
+		dateFromCal.setTimeInMillis(dateFrom.getTime());
+		GregorianCalendar dateToCal = new GregorianCalendar();
+		dateToCal.setTimeInMillis(dateTo.getTime());
+
+		fmt.setCalendar(dateFromCal);
+		String dateFromS = fmt.format(dateFromCal.getTime());
+		fmt.setCalendar(dateToCal);
+		String dateToS = fmt.format(dateToCal.getTime());
+
+		String ret = "";
+		ret += String.format("%-13s %13s %n", "Id: ", id);
+		ret += String.format("%-13s %13s %n", "Client id: ", idClient);
+		ret += String.format("%-13s %13s %n", "Vehicle id: ", idVehicle);
+		ret += String.format("%-13s %13s %n", "Km rented: ", numKmRented);
+		ret += String.format("%-13s %13s %n", "From: ", dateFromS);
+		ret += String.format("%-13s %13s %n", "To: ", dateToS);
+		ret += String.format("%-13s %13s %n", "Active: ", active);
+
+
+		return ret;
 	}
 }

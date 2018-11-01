@@ -43,6 +43,7 @@ public class ASVehicleTest {
         dao.deleteAll();
     }
 
+    //create method
     @Test
     public void createVehicleSuccessful(){
         Integer idCity = asCity.create(tCity);
@@ -71,7 +72,47 @@ public class ASVehicleTest {
         assertThrows(IncorrectInputException.class, () -> {as.create(tv);});
     }
 
-    //Drop methods
+    @Test
+    public void createVehicleIncorrectNumKmTravelled(){
+        tv.setNumKmTravelled(-1); //numKmTravelled must be >= 0
+        assertThrows(IncorrectInputException.class, () -> {as.create(tv);});
+    }
+
+    @Test
+    public void createVehicleIncorrectOccupied(){
+        tv.setOccupied(true); //occupied must be false
+        assertThrows(IncorrectInputException.class, () -> {as.create(tv);});
+    }
+
+    @Test
+    public void createVehicleIncorrectCity(){
+        tv.setCity(null); //city can't be null
+        assertThrows(IncorrectInputException.class, () -> {as.create(tv);});
+    }
+
+    @Test
+    public void createVehicleIncorrectActive(){
+        tv.setActive(true); //active must be false
+        assertThrows(IncorrectInputException.class, () -> {as.create(tv);});
+    }
+
+    @Test
+    public void createVehicleIncorrectType(){
+        tv.setType("bike"); //type only can be car or bicycle on this version
+        assertThrows(IncorrectInputException.class, () -> {as.create(tv);});
+    }
+
+    @Test
+    public void createVehicleCityNotExists(){
+        tv.setCity(1);
+        assertThrows(ASException.class, () -> {as.create(tv);});
+    }
+
+    /*TODO vehiculo con matricula o numero de serie que ya existe
+
+    */
+
+    //Drop method
     @Test
     public void dropSuccessful(){
         Integer id = as.create(tv);
@@ -115,7 +156,6 @@ public class ASVehicleTest {
     }
 
     //Show method
-
     @Test
     public void showVehicleSuccessful(){
         Integer idV = as.create(tv);
@@ -148,7 +188,6 @@ public class ASVehicleTest {
     public void showVehicleNotExists(){
         assertThrows(ASException.class, () -> {as.show(50);});
     }
-
 
     //showAll method
     @Test
@@ -210,6 +249,5 @@ public class ASVehicleTest {
         tv.setId(1);
         assertThrows(ASException.class, () -> {as.update(tv);});
     }
-    
 }
 */
