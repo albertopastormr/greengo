@@ -6,12 +6,12 @@ public class TContract {
     private Integer serviceLevel;
     private Integer idMainOffice;
     private Integer idService;
-    private boolean active;
+    private Boolean active;
 
     public TContract() {
     }
 
-    public TContract(Integer id, Integer serviceLevel, Integer idMainOffice, Integer idService, boolean active) {
+    public TContract(Integer id, Integer serviceLevel, Integer idMainOffice, Integer idService, Boolean active) {
         this.id = id;
         this.serviceLevel = serviceLevel;
         this.idMainOffice = idMainOffice;
@@ -51,11 +51,22 @@ public class TContract {
         this.idService = idService;
     }
 
-    public boolean isActive() {
+    public Boolean isActive() {
         return active;
     }
 
-    public void setActive(boolean active) {
+    public void setActive(Boolean active) {
         this.active = active;
+    }
+
+    @Override
+    public String toString(){
+        String ret = "";
+        ret += String.format("%-13s %13s %n", "Id: ", id);
+        ret += String.format("%-13s %13s %n", "Main office id: ", idMainOffice);
+        ret += String.format("%-13s %13s %n", "Service id: ", idService);
+        ret += String.format("%-13s %13s %n", "Active: ", active);
+
+        return ret;
     }
 }

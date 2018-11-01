@@ -68,6 +68,7 @@ public class FormCreateClient extends JDialog{
 				try {
 					/*This is related to JPA*/
 					client.setIdCardNumber(Util.parseString(dniText.getText()));
+					client.setNumRentals(0);
 					client.setActive(Util.parseActive(activeComboBox.getSelectedItem().toString()));
 					dispose();
 				} catch (Exception ex) {

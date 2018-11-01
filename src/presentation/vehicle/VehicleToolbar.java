@@ -1,6 +1,9 @@
 package presentation.vehicle;
 
 import presentation.PanelTabs;
+import presentation.controller.AppController;
+import presentation.controller.Event;
+import presentation.controller.LightContext;
 import presentation.service.forms.*;
 import presentation.util.ViewHelpers;
 import presentation.vehicle.forms.*;
@@ -9,6 +12,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class VehicleToolbar extends  JToolBar {
 
@@ -17,6 +21,7 @@ public class VehicleToolbar extends  JToolBar {
 		setLayout(new FlowLayout(FlowLayout.LEFT));
 		setFloatable(false);
 		setRollover(true);
+		setBackground(new Color(240, 240, 240));
 	}
 
 	private void initGUI(PanelTabs panelTabs) {
@@ -85,8 +90,8 @@ public class VehicleToolbar extends  JToolBar {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				FormShowAllActiveVehicle formShowAllActiveVehicle = new FormShowAllActiveVehicle();
-				formShowAllActiveVehicle.setVisible(true);
+				ArrayList list = new ArrayList();
+				AppController.getInstance().execute(new LightContext(Event.SHOWALL_ACTIVE_VEHICLE, list));
 			}
 		});
 

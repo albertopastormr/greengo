@@ -16,12 +16,14 @@ public class CityToolbar extends JToolBar {
 		setLayout(new FlowLayout(FlowLayout.LEFT));
 		setFloatable(false);
 		setRollover(true);
+		setBackground(new Color(240, 240, 240));
 	}
 
 	private void initGUI(PanelTabs panelTabs) {
 		// Create city
 		JButton create = ViewHelpers.buttonsForms("Create city");
 		create.setToolTipText("Create city");
+		create.setIcon(new ImageIcon("resources/images/add.png"));
 		create.setVerticalTextPosition(SwingConstants.BOTTOM);
 		create.setHorizontalTextPosition(SwingConstants.CENTER);
 		create.addActionListener(new ActionListener() {
@@ -37,6 +39,7 @@ public class CityToolbar extends JToolBar {
 		// Drop city
 		JButton drop = ViewHelpers.buttonsForms("Drop city");
 		drop.setToolTipText("Drop city");
+		drop.setIcon(new ImageIcon("resources/images/drop.png"));
 		drop.setVerticalTextPosition(SwingConstants.BOTTOM);
 		drop.setHorizontalTextPosition(SwingConstants.CENTER);
 		drop.addActionListener(new ActionListener() {
@@ -51,6 +54,7 @@ public class CityToolbar extends JToolBar {
 		// Show city
 		JButton show = ViewHelpers.buttonsForms("Show city");
 		show.setToolTipText("Show city");
+		show.setIcon(new ImageIcon("resources/images/show.png"));
 		show.setVerticalTextPosition(SwingConstants.BOTTOM);
 		show.setHorizontalTextPosition(SwingConstants.CENTER);
 		show.addActionListener(new ActionListener() {
@@ -65,6 +69,7 @@ public class CityToolbar extends JToolBar {
 		// Update city
 		JButton update = ViewHelpers.buttonsForms("Update city");
 		update.setToolTipText("Update city");
+		update.setIcon(new ImageIcon("resources/images/update.png"));
 		update.setVerticalTextPosition(SwingConstants.BOTTOM);
 		update.setHorizontalTextPosition(SwingConstants.CENTER);
 		update.addActionListener(new ActionListener() {
@@ -79,6 +84,7 @@ public class CityToolbar extends JToolBar {
 		// Show clients from city
 		JButton showClientsFromCity = ViewHelpers.buttonsForms("Show clients from city");
 		showClientsFromCity.setToolTipText(" Show clients from city");
+		showClientsFromCity.setIcon(new ImageIcon("resources/images/showClientsFromCity.png"));
 		showClientsFromCity.setVerticalTextPosition(SwingConstants.BOTTOM);
 		showClientsFromCity.setHorizontalTextPosition(SwingConstants.CENTER);
 		showClientsFromCity.addActionListener(new ActionListener() {

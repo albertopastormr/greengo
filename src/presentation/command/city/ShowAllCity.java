@@ -6,6 +6,6 @@ import presentation.controller.LightContext;
 public class ShowAllCity implements Command {
 	@Override
 	public LightContext execute(LightContext in) {
-		return null;
+		return in;
 	}
 }

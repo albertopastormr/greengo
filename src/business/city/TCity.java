@@ -4,11 +4,11 @@ public class TCity {
 
 	private Integer id;
 	private String name;
-	private boolean active;
+	private Boolean active;
 
 	public TCity(){}
 
-	public TCity(Integer id, String name, boolean active) {
+	public TCity(Integer id, String name, Boolean active) {
 		this.id = id;
 		this.name = name;
 		this.active = active;
@@ -22,7 +22,7 @@ public class TCity {
 		return name;
 	}
 
-	public boolean isActive() {
+	public Boolean isActive() {
 		return active;
 	}
 
@@ -34,9 +34,17 @@ public class TCity {
 		this.name = name;
 	}
 
-	public void setActive(boolean active) {
+	public void setActive(Boolean active) {
 		this.active = active;
 	}
 
+	@Override
+	public String toString(){
+		String ret = "";
+		ret += String.format("%-10s %10s %n", "Id: ", id);
+		ret += String.format("%-10s %10s %n", "Name: ", name);
+		ret += String.format("%-10s %10s %n", "Active: ", active);
 
+		return ret;
+	}
 }

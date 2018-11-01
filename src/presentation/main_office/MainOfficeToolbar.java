@@ -16,6 +16,7 @@ public class MainOfficeToolbar extends JToolBar {
 		setLayout(new FlowLayout(FlowLayout.LEFT));
 		setFloatable(false);
 		setRollover(true);
+		setBackground(new Color(240, 240, 240));
 	}
 
 	private void initGUI(PanelTabs panelTabs) {

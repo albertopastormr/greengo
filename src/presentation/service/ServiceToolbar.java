@@ -1,10 +1,6 @@
 package presentation.service;
 
 import presentation.PanelTabs;
-import presentation.rental.forms.FormCreateRental;
-import presentation.rental.forms.FormDropRental;
-import presentation.rental.forms.FormShowRental;
-import presentation.rental.forms.FormUpdateRental;
 import presentation.service.forms.*;
 import presentation.util.ViewHelpers;
 
@@ -20,6 +16,7 @@ public class ServiceToolbar extends JToolBar {
 		setLayout(new FlowLayout(FlowLayout.LEFT));
 		setFloatable(false);
 		setRollover(true);
+		setBackground(new Color(240, 240, 240));
 	}
 
 	private void initGUI(PanelTabs panelTabs) {
