@@ -71,12 +71,11 @@ public class FormCreateCity extends JDialog {
 				try{
 					city.setName(Util.parseString(nameText.getText()));
 					city.setActive(Util.parseActive(activeComboBox.getSelectedItem().toString()));
-
+					dispose();
 					//Invoke the controller with the operation "Create City"
 				}
 				catch(Exception e){
-					JOptionPane.showMessageDialog(getRootPane(), e.getMessage(),
-							"ERROR IN CREATE CITY", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(getRootPane(), e.getMessage(), "ERROR IN CREATE CITY", JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});

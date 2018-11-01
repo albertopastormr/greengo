@@ -1,6 +1,5 @@
 package business.client;
 
-/*
 import business.ASException;
 import business.IncorrectInputException;
 import business.client.as.ASClient;
@@ -232,4 +231,3 @@ public class ASClientTest {
         assertThrows(ASException.class, () -> {as.update(tc);});
     }
 }
-*/

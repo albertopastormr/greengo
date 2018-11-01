@@ -1,10 +1,7 @@
 package presentation.employee;
 
 import presentation.PanelTabs;
-import presentation.employee.forms.FormCreateEmployee;
-import presentation.employee.forms.FormDropEmployee;
-import presentation.employee.forms.FormShowEmployee;
-import presentation.employee.forms.FormUpdateEmployee;
+import presentation.employee.forms.*;
 import presentation.util.ViewHelpers;
 
 import javax.swing.*;
@@ -79,6 +76,20 @@ public class EmployeeToolbar extends JToolBar {
 			}
 		});
 
+		// Set salary employee
+		JButton setSalary = ViewHelpers.buttonsForms("Set salary employee");
+		setSalary.setToolTipText("Set salary employee");
+		setSalary.setVerticalTextPosition(SwingConstants.BOTTOM);
+		setSalary.setHorizontalTextPosition(SwingConstants.CENTER);
+		setSalary.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				FormSetSalaryEmployee formSetSalaryEmployee = new FormSetSalaryEmployee();
+				formSetSalaryEmployee.setVisible(true);
+			}
+		});
+
 		add(create);
 		addSeparator();
 		add(drop);
@@ -86,5 +97,7 @@ public class EmployeeToolbar extends JToolBar {
 		add(show);
 		addSeparator();
 		add(update);
+		addSeparator();
+		add(setSalary);
 	}
 }
