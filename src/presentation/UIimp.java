@@ -41,15 +41,15 @@ public class UIimp extends UI{
 	public void update(LightContext context) {
 		switch (context.getEvent()){
 			case CREATE_VEHICLE:
-				Util.inform("Added vehicle with id " + ((TVehicle)context.getData()).getId());
+				Util.inform("Added vehicle with id " + (context.getData()));
 				AppController.getInstance().execute(new LightContext(Event.RELOAD_VEHICLE, null));
 				break;
 			case DROP_VEHICLE:
-				Util.inform("Deleted vehicle with id " + ((TVehicle)context.getData()).getId());
+				Util.inform("Deleted vehicle with id " + (context.getData()));
 				AppController.getInstance().execute(new LightContext(Event.RELOAD_VEHICLE, null));
 				break;
 			case UPDATE_VEHICLE:
-				Util.inform("Updated vehicle with id " + ((TVehicle)context.getData()).getId());
+				Util.inform("Updated vehicle with id " + (context.getData()));
 				AppController.getInstance().execute(new LightContext(Event.RELOAD_VEHICLE, null));
 				break;
 			case SHOW_VEHICLE:
@@ -65,15 +65,15 @@ public class UIimp extends UI{
 
 				break;
 			case CREATE_SERVCE:
-				Util.inform("Added service with id " + ((TService)context.getData()).getId());
+				Util.inform("Added service with id " + (context.getData()));
 				AppController.getInstance().execute(new LightContext(Event.RELOAD_SERVICE, null));
 				break;
 			case DROP_SERVICE:
-				Util.inform("Deleted vehicle with id " + ((TService)context.getData()).getId());
+				Util.inform("Deleted vehicle with id " + (context.getData()));
 				AppController.getInstance().execute(new LightContext(Event.RELOAD_SERVICE, null));
 				break;
 			case UPDATE_SERVICE:
-				Util.inform("Updated vehicle with id " + ((TService)context.getData()).getId());
+				Util.inform("Updated vehicle with id " + (context.getData()));
 				AppController.getInstance().execute(new LightContext(Event.RELOAD_SERVICE, null));
 				break;
 			case SHOW_SERVICE:
@@ -89,15 +89,15 @@ public class UIimp extends UI{
 
 				break;
 			case CREATE_RENTAL:
-				Util.inform("Added rental with id " + ((TRental)context.getData()).getId());
+				Util.inform("Added rental with id " + (context.getData()));
 				AppController.getInstance().execute(new LightContext(Event.RELOAD_RENTAL, null));
 				break;
 			case DROP_RENTAL:
-				Util.inform("Deleted rental with id " + ((TRental)context.getData()).getId());
+				Util.inform("Deleted rental with id " + (context.getData()));
 				AppController.getInstance().execute(new LightContext(Event.RELOAD_RENTAL, null));
 				break;
 			case UPDATE_RENTAL:
-				Util.inform("Updated rental with id " + ((TRental)context.getData()).getId());
+				Util.inform("Updated rental with id " + (context.getData()));
 				AppController.getInstance().execute(new LightContext(Event.RELOAD_RENTAL, null));
 				break;
 			case SHOW_RENTAL:
@@ -108,15 +108,15 @@ public class UIimp extends UI{
 				tabbedPane.update(rentalList);
 				break;
 			case CREATE_MAIN_OFFICE:
-				Util.inform("Added main office with id " + ((TMainOffice)context.getData()).getId());
+				Util.inform("Added main office with id " + (context.getData()));
 				AppController.getInstance().execute(new LightContext(Event.RELOAD_MAIN_OFFICE, null));
 				break;
 			case DROP_MAIN_OFFICE:
-				Util.inform("Deleted main office with id " + ((TMainOffice)context.getData()).getId());
+				Util.inform("Deleted main office with id " + (context.getData()));
 				AppController.getInstance().execute(new LightContext(Event.RELOAD_MAIN_OFFICE, null));
 				break;
 			case UPDATE_MAIN_OFFICE:
-				Util.inform("Updated main office with id " + ((TMainOffice)context.getData()).getId());
+				Util.inform("Updated main office with id " + (context.getData()));
 				AppController.getInstance().execute(new LightContext(Event.RELOAD_MAIN_OFFICE, null));
 				break;
 			case SHOW_MAIN_OFFICE:
@@ -132,15 +132,15 @@ public class UIimp extends UI{
 
 				break;
 			case CREATE_EMPLOYEE:
-				Util.inform("Added employee with id " + ((TEmployee)context.getData()).getId());
+				Util.inform("Added employee with id " + (context.getData()));
 				AppController.getInstance().execute(new LightContext(Event.RELOAD_EMPLOYEE, null));
 				break;
 			case DROP_EMPLOYEE:
-				Util.inform("Deleted employee with id " + ((TEmployee)context.getData()).getId());
+				Util.inform("Deleted employee with id " + (context.getData()));
 				AppController.getInstance().execute(new LightContext(Event.RELOAD_EMPLOYEE, null));
 				break;
 			case UPDATE_EMPLOYEE:
-				Util.inform("Updated employee with id " + ((TEmployee)context.getData()).getId());
+				Util.inform("Updated employee with id " + (context.getData()));
 				AppController.getInstance().execute(new LightContext(Event.RELOAD_EMPLOYEE, null));
 				break;
 			case SHOW_EMPLOYEE:
@@ -156,15 +156,15 @@ public class UIimp extends UI{
 
 				break;
 			case CREATE_CONTRACT:
-				Util.inform("Added contract with id " + ((TContract)context.getData()).getId());
+				Util.inform("Added contract with id " + (context.getData()));
 				AppController.getInstance().execute(new LightContext(Event.RELOAD_CONTRACT, null));
 				break;
 			case DROP_CONTRACT:
-				Util.inform("Deleted contract with id " + ((TContract)context.getData()).getId());
+				Util.inform("Deleted contract with id " + (context.getData()));
 				AppController.getInstance().execute(new LightContext(Event.RELOAD_CONTRACT, null));
 				break;
 			case UPDATE_CONTRACT:
-				Util.inform("Updated contract with id " + ((TContract)context.getData()).getId());
+				Util.inform("Updated contract with id " + (context.getData()));
 				AppController.getInstance().execute(new LightContext(Event.RELOAD_CONTRACT, null));
 				break;
 			case SHOW_CONTRACT:
@@ -176,15 +176,15 @@ public class UIimp extends UI{
 				tabbedPane.update(contractList);
 				break;
 			case CREATE_CLIENT:
-				Util.inform("Added client with id " + ((TClient) context.getData()).getId());
+				Util.inform("Added client with id " + (context.getData()));
 				AppController.getInstance().execute(new LightContext(Event.RELOAD_CLIENT, null));
 				break;
 			case DROP_CLIENT:
-				Util.inform("Deleted client with id " + ((TClient) context.getData()).getId());
+				Util.inform("Deleted client with id " + (context.getData()));
 				AppController.getInstance().execute(new LightContext(Event.RELOAD_CLIENT, null));
 				break;
 			case UPDATE_CLIENT:
-				Util.inform("Updated client with id " + ((TClient) context.getData()).getId());
+				Util.inform("Updated client with id " + (context.getData()));
 				AppController.getInstance().execute(new LightContext(Event.RELOAD_CLIENT, null));
 				break;
 			case SHOW_CLIENT:
@@ -200,15 +200,15 @@ public class UIimp extends UI{
 
 				break;
 			case CREATE_CITY:
-				Util.inform("Added city with id " + ((TCity) context.getData()).getId());
+				Util.inform("Added city with id " + (context.getData()));
 				AppController.getInstance().execute(new LightContext(Event.RELOAD_CITY, null));
 				break;
 			case DROP_CITY:
-				Util.inform("Deleted city with id " + ((TCity) context.getData()).getId());
+				Util.inform("Deleted city with id " + (context.getData()));
 				AppController.getInstance().execute(new LightContext(Event.RELOAD_CITY, null));
 				break;
 			case UPDATE_CITY:
-				Util.inform("Updated city with id " + ((TCity) context.getData()).getId());
+				Util.inform("Updated city with id " + (context.getData()));
 				AppController.getInstance().execute(new LightContext(Event.RELOAD_CITY, null));
 				break;
 			case SHOW_CITY:

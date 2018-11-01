@@ -1,6 +1,9 @@
 package presentation.city.forms;
 
 import business.city.TCity;
+import presentation.controller.AppController;
+import presentation.controller.Event;
+import presentation.controller.LightContext;
 import presentation.util.Util;
 import presentation.util.ViewHelpers;
 
@@ -72,7 +75,7 @@ public class FormCreateCity extends JDialog {
 					city.setName(Util.parseString(nameText.getText()));
 					city.setActive(Util.parseActive(activeComboBox.getSelectedItem().toString()));
 					dispose();
-					//Invoke the controller with the operation "Create City"
+					AppController.getInstance().execute(new LightContext(Event.CREATE_CITY, city));
 				}
 				catch(Exception e){
 					JOptionPane.showMessageDialog(getRootPane(), e.getMessage(), "ERROR IN CREATE CITY", JOptionPane.ERROR_MESSAGE);
