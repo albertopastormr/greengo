@@ -15,7 +15,7 @@ public class ASContractImp implements ASContract {
     }
 
     @Override
-    public Integer drop(TContract contract) {
+    public Integer drop(Integer id) {
         return null;
     }
 
