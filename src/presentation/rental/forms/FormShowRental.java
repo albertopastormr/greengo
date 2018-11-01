@@ -1,6 +1,9 @@
 package presentation.rental.forms;
 
 import business.rental.TRental;
+import presentation.controller.AppController;
+import presentation.controller.Event;
+import presentation.controller.LightContext;
 import presentation.util.Util;
 import presentation.util.ViewHelpers;
 
@@ -61,7 +64,7 @@ public class FormShowRental extends JDialog{
 				try{
 					rent.setId(Util.parseNoNegativeInt(idText.getText()));
 					dispose();
-					//invoke controller with the operation "Show Rental".
+					AppController.getInstance().execute(new LightContext(Event.SHOW_RENTAL, rent));
 				}
 				catch(Exception e){
 					JOptionPane.showMessageDialog(getRootPane(), e.getMessage(),

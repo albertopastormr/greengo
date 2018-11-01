@@ -1,6 +1,9 @@
 package presentation.service.forms;
 
 import presentation.client.forms.FormDropClient;
+import presentation.controller.AppController;
+import presentation.controller.Event;
+import presentation.controller.LightContext;
 import presentation.util.Util;
 import presentation.util.ViewHelpers;
 
@@ -61,8 +64,8 @@ public class FormShowServiceByLevel extends JDialog{
 			public void actionPerformed(ActionEvent e) {
 				try {
 					/*This is related to JPA*/
-
-					//Invoke the controller and execute "Set salary" operation.
+					Integer level = Util.parseNoNegativeInt(levelText.getText());
+					AppController.getInstance().execute(new LightContext(Event.SHOW_SERVICE_BY_LEVEL, level));
 
 					dispose();
 				} catch (Exception ex) {

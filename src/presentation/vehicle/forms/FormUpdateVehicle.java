@@ -2,6 +2,9 @@ package presentation.vehicle.forms;
 
 import business.vehicle.TBicycleVehicle;
 import business.vehicle.TCarVehicle;
+import presentation.controller.AppController;
+import presentation.controller.Event;
+import presentation.controller.LightContext;
 import presentation.util.Util;
 import presentation.util.ViewHelpers;
 
@@ -150,7 +153,7 @@ public class FormUpdateVehicle extends JDialog{
                         car.setPlate(Util.parseString(plateText.getText()));
                         car.setType(Util.parseString(typeComboBox.getSelectedItem().toString()));
                         dispose();
-                        //Invoke the controller and execute "Update vehicle" operation
+                        AppController.getInstance().execute(new LightContext(Event.UPDATE_VEHICLE, car));
                     } else {
                         TBicycleVehicle bicycle = new TBicycleVehicle();
                         bicycle.setId(Util.parseNoNegativeInt(idText.getText()));
@@ -163,7 +166,7 @@ public class FormUpdateVehicle extends JDialog{
                         bicycle.setSerialNumber(Util.parseString(serialNumberText.getText()));
                         bicycle.setType(Util.parseString(typeComboBox.getSelectedItem().toString()));
                         dispose();
-                        //Invoke the controller and execute "Update vehicle" operation
+                        AppController.getInstance().execute(new LightContext(Event.UPDATE_VEHICLE, bicycle));
                     }
                 }
                 catch(Exception e){

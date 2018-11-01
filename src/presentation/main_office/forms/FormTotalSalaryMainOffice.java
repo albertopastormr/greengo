@@ -1,6 +1,9 @@
 package presentation.main_office.forms;
 
 import business.mainoffice.TMainOffice;
+import presentation.controller.AppController;
+import presentation.controller.Event;
+import presentation.controller.LightContext;
 import presentation.util.Util;
 import presentation.util.ViewHelpers;
 
@@ -62,6 +65,7 @@ public class FormTotalSalaryMainOffice extends JDialog{
 					/*This is related to JPA*/
 					mainOffice.setId(Util.parseNoNegativeInt(idText.getText()));
 					dispose();
+					AppController.getInstance().execute(new LightContext(Event.TOTAL_SALARY_MAIN_OFFICE, mainOffice));
 				} catch (Exception ex) {
 					JOptionPane.showMessageDialog(getRootPane(), ex.getMessage(), "ERROR SHOW TOTAL SALARY MAIN OFFICE", JOptionPane.ERROR_MESSAGE);
 				}

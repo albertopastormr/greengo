@@ -2,6 +2,9 @@ package presentation.employee.forms;
 
 import business.employee.TPermanentEmployee;
 import business.employee.TTemporaryEmployee;
+import presentation.controller.AppController;
+import presentation.controller.Event;
+import presentation.controller.LightContext;
 import presentation.util.Util;
 import presentation.util.ViewHelpers;
 
@@ -130,7 +133,7 @@ public class FormCreateEmployee extends JDialog {
 						emp.setSalary(Util.parseNoNegativeFloat(salaryText.getText()));
 						emp.setType(Util.parseString(typeComboBox.getSelectedItem().toString()));
                         dispose();
-                        //Invoke the controller and execute "Create Employee" operation.
+						AppController.getInstance().execute(new LightContext(Event.CREATE_EMPLOYEE, emp));
 					}
 					else{
 						/*This is related to JPA*/
@@ -141,7 +144,7 @@ public class FormCreateEmployee extends JDialog {
 						emp.setSalary(Util.parseNoNegativeFloat(salaryText.getText()));
 						emp.setType(Util.parseString(typeComboBox.getSelectedItem().toString()));
                         dispose();
-                        //Invoke the controller and execute "Create Employee" operation.
+                        AppController.getInstance().execute(new LightContext(Event.CREATE_EMPLOYEE, emp));
 					}
 
 

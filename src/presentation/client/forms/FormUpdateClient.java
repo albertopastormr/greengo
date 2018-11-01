@@ -1,6 +1,9 @@
 package presentation.client.forms;
 
 import business.client.TClient;
+import presentation.controller.AppController;
+import presentation.controller.Event;
+import presentation.controller.LightContext;
 import presentation.util.Util;
 import presentation.util.ViewHelpers;
 
@@ -88,6 +91,7 @@ public class FormUpdateClient extends JDialog{
 					client.setNumRentals(Util.parseNoNegativeInt(numRentalsText.getText()));
 					client.setActive(Util.parseActive(activeComboBox.getSelectedItem().toString()));
 					dispose();
+					AppController.getInstance().execute(new LightContext(Event.UPDATE_CLIENT, client));
 				} catch (Exception ex) {
 					JOptionPane.showMessageDialog(getRootPane(), ex.getMessage(), "ERROR UPDATE CLIENT", JOptionPane.ERROR_MESSAGE);
 				}

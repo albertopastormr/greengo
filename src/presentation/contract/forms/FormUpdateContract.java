@@ -1,6 +1,9 @@
 package presentation.contract.forms;
 
 import business.contract.TContract;
+import presentation.controller.AppController;
+import presentation.controller.Event;
+import presentation.controller.LightContext;
 import presentation.util.Util;
 import presentation.util.ViewHelpers;
 
@@ -97,6 +100,7 @@ public class FormUpdateContract extends JDialog {
 					contract.setIdService(Util.parseNoNegativeInt(idMainOfficeText.getText()));
 					contract.setActive(Util.parseActive(activeComboBox.getSelectedItem().toString()));
 					dispose();
+					AppController.getInstance().execute(new LightContext(Event.UPDATE_CONTRACT, contract));
 				} catch (Exception ex) {
 					JOptionPane.showMessageDialog(getRootPane(), ex.getMessage(), "ERROR UPDATE CONTRACT", JOptionPane.ERROR_MESSAGE);
 				}

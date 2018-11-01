@@ -1,6 +1,9 @@
 package presentation.city.forms;
 
 import business.city.TCity;
+import presentation.controller.AppController;
+import presentation.controller.Event;
+import presentation.controller.LightContext;
 import presentation.util.Util;
 import presentation.util.ViewHelpers;
 
@@ -79,8 +82,8 @@ public class FormUpdateCity extends JDialog {
 					city.setId(Util.parseNoNegativeInt(idText.getText()));
 					city.setName(Util.parseString(nameText.getText()));
 					city.setActive(Util.parseActive(activeComboBox.getSelectedItem().toString()));
-
-					//Invoke the controller with the operation "Update City"
+					dispose();
+					AppController.getInstance().execute(new LightContext(Event.UPDATE_CITY, city));
 				}
 				catch(Exception e){
 					JOptionPane.showMessageDialog(getRootPane(), e.getMessage(),

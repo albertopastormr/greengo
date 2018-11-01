@@ -1,6 +1,9 @@
 package presentation.rental.forms;
 
 import business.rental.TRental;
+import presentation.controller.AppController;
+import presentation.controller.Event;
+import presentation.controller.LightContext;
 import presentation.util.Util;
 import presentation.util.ViewHelpers;
 
@@ -61,7 +64,7 @@ public class FormDropRental extends JDialog {
 				try{
 					rent.setId(Util.parseNoNegativeInt(idText.getText()));
 					dispose();
-					//Invoke the controller with the operation "Drop Rental"
+					AppController.getInstance().execute(new LightContext(Event.DROP_RENTAL, rent));
 				}
 				catch(Exception e){
 					JOptionPane.showMessageDialog(getRootPane(), e.getMessage(), "ERROR IN DROP RENTAL",

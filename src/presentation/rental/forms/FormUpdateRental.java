@@ -4,6 +4,9 @@ import business.rental.TRental;
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
+import presentation.controller.AppController;
+import presentation.controller.Event;
+import presentation.controller.LightContext;
 import presentation.util.Util;
 import presentation.util.ViewHelpers;
 
@@ -118,10 +121,9 @@ public class FormUpdateRental extends JDialog {
 
 						rent.setDateFrom(dateFromToCheck);
 						rent.setDateTo(dateToToCheck);
+						dispose();
+						AppController.getInstance().execute(new LightContext(Event.UPDATE_RENTAL, rent));
 					}
-					dispose();
-					//Controller invokes "Update Rental" operation.
-
 				}
 				catch(Exception exc){
 					JOptionPane.showMessageDialog(getRootPane(), exc.getMessage(),

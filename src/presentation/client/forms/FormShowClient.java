@@ -1,6 +1,9 @@
 package presentation.client.forms;
 
 import business.client.TClient;
+import presentation.controller.AppController;
+import presentation.controller.Event;
+import presentation.controller.LightContext;
 import presentation.util.Util;
 import presentation.util.ViewHelpers;
 
@@ -60,6 +63,7 @@ public class FormShowClient extends JDialog{
 					/*This is related to JPA*/
 					client.setId(Util.parseNoNegativeInt(idText.getText()));
 					dispose();
+					AppController.getInstance().execute(new LightContext(Event.SHOW_CLIENT, client));
 				}catch (Exception ex){
 					JOptionPane.showMessageDialog(getRootPane(), ex.getMessage(), "ERROR SHOW CLIENT", JOptionPane.ERROR_MESSAGE);
 				}

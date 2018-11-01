@@ -1,6 +1,9 @@
 package presentation.employee.forms;
 
 import business.employee.TEmployee;
+import presentation.controller.AppController;
+import presentation.controller.Event;
+import presentation.controller.LightContext;
 import presentation.util.Util;
 import presentation.util.ViewHelpers;
 
@@ -62,7 +65,7 @@ public class FormDropEmployee extends JDialog {
 					emp.setId(Util.parseNoNegativeInt(idText.getText()));
 
 					dispose();
-					//Invoke the controller with the operation "Drop Employee"
+					AppController.getInstance().execute(new LightContext(Event.DROP_EMPLOYEE, emp));
 				}
 				catch(Exception e){
 					JOptionPane.showMessageDialog(getRootPane(), e.getMessage(), "ERROR IN DROP EMPLOYEE",

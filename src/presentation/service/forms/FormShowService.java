@@ -1,6 +1,9 @@
 package presentation.service.forms;
 
 import business.service.TService;
+import presentation.controller.AppController;
+import presentation.controller.Event;
+import presentation.controller.LightContext;
 import presentation.util.Util;
 import presentation.util.ViewHelpers;
 
@@ -63,6 +66,7 @@ public class FormShowService extends JDialog{
 					/*This is related to JPA*/
 					service.setId(Util.parseNoNegativeInt(idText.getText()));
 					dispose();
+					AppController.getInstance().execute(new LightContext(Event.SHOW_SERVICE, service));
 				}catch (Exception ex){
 					JOptionPane.showMessageDialog(getRootPane(), ex.getMessage(), "ERROR SHOW SERVICE", JOptionPane.ERROR_MESSAGE);
 				}

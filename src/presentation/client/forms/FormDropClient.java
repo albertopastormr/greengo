@@ -1,6 +1,9 @@
 package presentation.client.forms;
 
 import business.client.TClient;
+import presentation.controller.AppController;
+import presentation.controller.Event;
+import presentation.controller.LightContext;
 import presentation.util.Util;
 import presentation.util.ViewHelpers;
 
@@ -61,6 +64,7 @@ public class FormDropClient extends JDialog{
 					/*This is related to JPA*/
 					client.setId(Util.parseNoNegativeInt(idText.getText()));
 					dispose();
+					AppController.getInstance().execute(new LightContext(Event.DROP_CLIENT, client));
 				} catch (Exception ex) {
 					JOptionPane.showMessageDialog(getRootPane(), ex.getMessage(), "ERROR DROP CLIENT", JOptionPane.ERROR_MESSAGE);
 				}

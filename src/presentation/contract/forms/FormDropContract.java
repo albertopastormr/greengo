@@ -1,6 +1,9 @@
 package presentation.contract.forms;
 
 import business.contract.TContract;
+import presentation.controller.AppController;
+import presentation.controller.Event;
+import presentation.controller.LightContext;
 import presentation.util.Util;
 import presentation.util.ViewHelpers;
 
@@ -61,6 +64,7 @@ public class FormDropContract extends JDialog{
 					/*This is related to JPA*/
 					contract.setId(Util.parseNoNegativeInt(idText.getText()));
 					dispose();
+					AppController.getInstance().execute(new LightContext(Event.DROP_CONTRACT, contract));
 				} catch (Exception ex) {
 					JOptionPane.showMessageDialog(getRootPane(), ex.getMessage(), "ERROR DROP CONTRACT", JOptionPane.ERROR_MESSAGE);
 				}

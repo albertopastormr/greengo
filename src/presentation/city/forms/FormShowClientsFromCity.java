@@ -1,6 +1,9 @@
 package presentation.city.forms;
 
 import business.city.TCity;
+import presentation.controller.AppController;
+import presentation.controller.Event;
+import presentation.controller.LightContext;
 import presentation.util.Util;
 import presentation.util.ViewHelpers;
 
@@ -59,8 +62,8 @@ public class FormShowClientsFromCity extends JDialog {
 				TCity city = new TCity();
 				try{
 					city.setId(Util.parseNoNegativeInt(idText.getText()));
-
-					//Invoke the controller with the operation "Show Client from City"
+					dispose();
+					AppController.getInstance().execute(new LightContext(Event.SHOW_CLIENTS_FROM_CITY, city));
 				}
 				catch(Exception e){
 					JOptionPane.showMessageDialog(getRootPane(), e.getMessage(),

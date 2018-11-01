@@ -1,6 +1,9 @@
 package presentation.main_office.forms;
 
 import business.mainoffice.TMainOffice;
+import presentation.controller.AppController;
+import presentation.controller.Event;
+import presentation.controller.LightContext;
 import presentation.util.Util;
 import presentation.util.ViewHelpers;
 
@@ -62,6 +65,7 @@ public class FormDropMainOffice extends JDialog{
 					/*This is related to JPA*/
 					mainOffice.setId(Util.parseNoNegativeInt(idText.getText()));
 					dispose();
+					AppController.getInstance().execute(new LightContext(Event.DROP_MAIN_OFFICE, mainOffice));
 				} catch (Exception ex) {
 					JOptionPane.showMessageDialog(getRootPane(), ex.getMessage(), "ERROR DROP MAIN OFFICE", JOptionPane.ERROR_MESSAGE);
 				}

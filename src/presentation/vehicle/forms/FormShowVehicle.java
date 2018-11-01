@@ -1,6 +1,9 @@
 package presentation.vehicle.forms;
 
 import business.vehicle.TVehicle;
+import presentation.controller.AppController;
+import presentation.controller.Event;
+import presentation.controller.LightContext;
 import presentation.util.Util;
 import presentation.util.ViewHelpers;
 
@@ -58,7 +61,7 @@ public class FormShowVehicle extends JDialog {
                 try{
                     v.setId(Util.parseNoNegativeInt(idText.getText()));
                     dispose();
-                    //Invoke the controller with the operation "Show Employee"
+                    AppController.getInstance().execute(new LightContext(Event.SHOW_VEHICLE, v));
                 }
                 catch(Exception e){
                     JOptionPane.showMessageDialog(getRootPane(), e.getMessage(), "ERROR IN SHOW VEHICLE",

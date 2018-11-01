@@ -1,6 +1,9 @@
 package presentation.service.forms;
 
 import business.service.TService;
+import presentation.controller.AppController;
+import presentation.controller.Event;
+import presentation.controller.LightContext;
 import presentation.util.Util;
 import presentation.util.ViewHelpers;
 
@@ -98,6 +101,7 @@ public class FormCreateService extends JDialog{
 					service.setCapacity(Util.parseNoNegativeInt(capacityText.getText()));
 					service.setNumVehiclesAttended(Util.parseNoNegativeInt(vehicles_attendedText.getText()));
 					dispose();
+					AppController.getInstance().execute(new LightContext(Event.CREATE_SERVCE, service));
 				} catch (Exception ex) {
 					JOptionPane.showMessageDialog(getRootPane(), ex.getMessage(), "ERROR CREATE SERVICE", JOptionPane.ERROR_MESSAGE);
 				}

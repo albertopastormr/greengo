@@ -1,6 +1,9 @@
 package presentation.main_office.forms;
 
 import business.mainoffice.TMainOffice;
+import presentation.controller.AppController;
+import presentation.controller.Event;
+import presentation.controller.LightContext;
 import presentation.util.Util;
 import presentation.util.ViewHelpers;
 
@@ -89,6 +92,7 @@ public class FormUpdateMainOffice extends JDialog{
 					mainOffice.setAdress(Util.parseString(addressText.getText()));
 					mainOffice.setActive(Util.parseActive(activeCombobox.getSelectedItem().toString()));
 					dispose();
+					AppController.getInstance().execute(new LightContext(Event.UPDATE_MAIN_OFFICE, mainOffice));
 				} catch (Exception ex) {
 					JOptionPane.showMessageDialog(getRootPane(), ex.getMessage(), "ERROR UPDATE MAIN OFFICE", JOptionPane.ERROR_MESSAGE);
 				}

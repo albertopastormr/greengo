@@ -1,6 +1,9 @@
 package presentation.employee.forms;
 
 import business.employee.TEmployee;
+import presentation.controller.AppController;
+import presentation.controller.Event;
+import presentation.controller.LightContext;
 import presentation.util.Util;
 import presentation.util.ViewHelpers;
 
@@ -60,9 +63,8 @@ public class FormShowEmployee extends JDialog {
 				try{
 					/*This is related to JPA*/
 					emp.setId(Util.parseNoNegativeInt(idText.getText()));
-
-					//invoke controller with the operation "Show Employee".
 					dispose();
+					AppController.getInstance().execute(new LightContext(Event.SHOW_EMPLOYEE, emp));
 				}
 				catch(Exception e){
 					JOptionPane.showMessageDialog(getRootPane(), e.getMessage(),

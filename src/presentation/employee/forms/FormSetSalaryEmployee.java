@@ -1,6 +1,9 @@
 package presentation.employee.forms;
 
 import business.employee.TEmployee;
+import presentation.controller.AppController;
+import presentation.controller.Event;
+import presentation.controller.LightContext;
 import presentation.util.Util;
 import presentation.util.ViewHelpers;
 
@@ -70,9 +73,8 @@ public class FormSetSalaryEmployee extends JDialog {
 					/*This is related to JPA*/
 					emp.setId(Util.parseNoNegativeInt(idText.getText()));
 					emp.setSalary(Util.parseNoNegativeFloat(salaryText.getText()));
-
-					//invoke controller with the operation "Set Salary Employee".
 					dispose();
+					AppController.getInstance().execute(new LightContext(Event.SET_SALARY_EMPLOYEE, emp));
 				}
 				catch(Exception e){
 					JOptionPane.showMessageDialog(getRootPane(), e.getMessage(),
