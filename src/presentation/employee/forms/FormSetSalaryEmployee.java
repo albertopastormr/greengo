@@ -16,6 +16,7 @@ public class FormSetSalaryEmployee extends JDialog {
 
 	/*Attributes*/
 	private JTextField idText;
+	private JTextField salaryText;
 
 	public FormSetSalaryEmployee(){
 		setTitle("Set salary");
@@ -46,6 +47,13 @@ public class FormSetSalaryEmployee extends JDialog {
 		idText = new JTextField(10);
 		ret.add(idText);
 
+		//Salary
+		JLabel salaryLabel = new JLabel("Salary");
+		ret.add(salaryLabel);
+
+		salaryText = new JTextField(10);
+		ret.add(salaryText);
+
 		return ret;
 	}
 
@@ -61,6 +69,7 @@ public class FormSetSalaryEmployee extends JDialog {
 				try{
 					/*This is related to JPA*/
 					emp.setId(Util.parseNoNegativeInt(idText.getText()));
+					emp.setSalary(Util.parseNoNegativeFloat(salaryText.getText()));
 
 					//invoke controller with the operation "Set Salary Employee".
 					dispose();
