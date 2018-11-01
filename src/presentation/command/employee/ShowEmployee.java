@@ -9,7 +9,7 @@ import presentation.controller.LightContext;
 public class ShowEmployee implements Command {
 	@Override
 	public LightContext execute(LightContext in) {
-		TEmployee ret = ASEmployeeFactory.getInstance().generateASEmployee().show((Integer)in.getData());
+		TEmployee ret = ASEmployeeFactory.getInstance().generateASEmployee().show(((TEmployee)in.getData()).getId());
 		return new LightContext(Event.SHOWALL_CONTRACT, ret);
 	}
 }

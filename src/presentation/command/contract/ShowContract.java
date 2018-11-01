@@ -9,7 +9,7 @@ import presentation.controller.LightContext;
 public class ShowContract implements Command {
 	@Override
 	public LightContext execute(LightContext in) {
-		TContract ret = ASContractFactory.getInstance().generateASContract().show((Integer)in.getData());
+		TContract ret = ASContractFactory.getInstance().generateASContract().show(((TContract)in.getData()).getId());
 		return new LightContext(Event.SHOW_CONTRACT, ret);
 	}
 }
