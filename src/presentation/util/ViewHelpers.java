@@ -20,7 +20,7 @@ public class ViewHelpers {
 	public static JButton buttonsForms(String tittle){
 		JButton button = new JButton(tittle);
 		button.setForeground(Color.white);
-		button.setBackground(new Color(119,171,89));
+		button.setBackground(new Color(0, 204, 102));
 
 		return button;
 	}

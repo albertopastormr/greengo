@@ -13,6 +13,7 @@ public class FormUpdateClient extends JDialog{
 
 	private JTextField idText;
 	private JTextField dniText;
+	private JTextField numRentalsText;
 	private JComboBox activeComboBox;
 
 	public FormUpdateClient() {
@@ -35,7 +36,7 @@ public class FormUpdateClient extends JDialog{
 	}
 
 	private JPanel fieldsPanel() {
-		JPanel ret = ViewHelpers.createFieldPanel(3);
+		JPanel ret = ViewHelpers.createFieldPanel(4);
 
 		//ID
 		JLabel idLabel = new JLabel("ID");
@@ -50,6 +51,13 @@ public class FormUpdateClient extends JDialog{
 
 		dniText = new JTextField(10);
 		ret.add(dniText);
+
+		//Num rentals
+		JLabel numRentals = new JLabel("Num rentals");
+		ret.add(numRentals);
+
+		numRentalsText = new JTextField(10);
+		ret.add(numRentalsText);
 
 		//Active
 		JLabel activeLabel = new JLabel("Active");
@@ -77,6 +85,7 @@ public class FormUpdateClient extends JDialog{
 					/*This is related to JPA*/
 					client.setId(Util.parseNoNegativeInt(idText.getText()));
 					client.setIdCardNumber(Util.parseString(dniText.getText()));
+					client.setNumRentals(Util.parseNoNegativeInt(numRentalsText.getText()));
 					client.setActive(Util.parseActive(activeComboBox.getSelectedItem().toString()));
 					dispose();
 				} catch (Exception ex) {

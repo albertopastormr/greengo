@@ -1,5 +1,6 @@
 package business.vehicle;
 
+/*
 import business.ASException;
 import business.IncorrectInputException;
 import business.city.TCity;
@@ -211,3 +212,4 @@ public class ASVehicleTest {
     }
     
 }
+*/
