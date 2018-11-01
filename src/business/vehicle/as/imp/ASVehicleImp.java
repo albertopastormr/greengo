@@ -12,9 +12,10 @@ public class ASVehicleImp implements ASVehicle {
     }
 
     @Override
-    public Integer drop(TVehicle vehicle) {
+    public Integer drop(Integer vehicle) {
         return null;
     }
+
 
     @Override
     public Integer update(TVehicle vehicle) {

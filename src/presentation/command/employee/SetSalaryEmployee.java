@@ -1,4 +1,11 @@
 package presentation.command.employee;
 
-public class SetSalaryEmployee {
+import presentation.command.Command;
+import presentation.controller.LightContext;
+
+public class SetSalaryEmployee implements Command {
+	@Override
+	public LightContext execute(LightContext in) {
+		return null;
+	}
 }

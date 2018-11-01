@@ -7,7 +7,7 @@ import java.util.Collection;
 public interface ASVehicle {
     Integer create(TVehicle vehicle);
 
-    Integer drop(TVehicle vehicle);
+    Integer drop(Integer vehicle);
 
     Integer update(TVehicle vehicle);
 

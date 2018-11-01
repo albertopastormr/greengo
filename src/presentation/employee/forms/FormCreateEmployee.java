@@ -115,7 +115,6 @@ public class FormCreateEmployee extends JDialog {
 	private JPanel buttonsPanel() {
 		JPanel ret = new JPanel(new FlowLayout());
 
-
 		JButton create = ViewHelpers.buttonsForms("CREATE");
 
 		create.addActionListener(new ActionListener() {
@@ -125,9 +124,9 @@ public class FormCreateEmployee extends JDialog {
 					if (typeComboBox.getSelectedItem().equals("Temporary")) {
 						/*This is related to JPA*/
 						TTemporaryEmployee emp = new TTemporaryEmployee();
-						emp.setId_card_number(Util.parseString(idCardNumberText.getText()));
+						emp.setIdCardNumber(Util.parseString(idCardNumberText.getText()));
 						emp.setActive(Util.parseActive(activeComboBox.getSelectedItem().toString()));
-						emp.setWorked_hours(Util.parseNoNegativeInt(workedHoursText.getText()));
+						emp.setNumWorkedHours(Util.parseNoNegativeInt(workedHoursText.getText()));
 						emp.setSalary(Util.parseNoNegativeFloat(salaryText.getText()));
 						emp.setType(Util.parseString(typeComboBox.getSelectedItem().toString()));
                         dispose();
@@ -136,7 +135,7 @@ public class FormCreateEmployee extends JDialog {
 					else{
 						/*This is related to JPA*/
 						TPermanentEmployee emp = new TPermanentEmployee();
-						emp.setId_card_number(Util.parseString(idCardNumberText.getText()));
+						emp.setIdCardNumber(Util.parseString(idCardNumberText.getText()));
 						emp.setActive(Util.parseActive(activeComboBox.getSelectedItem().toString()));
 						emp.setApportionment(Util.parseNoNegativeInt(appotionmentText.getText()));
 						emp.setSalary(Util.parseNoNegativeFloat(salaryText.getText()));

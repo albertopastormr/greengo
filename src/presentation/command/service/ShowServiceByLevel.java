@@ -1,4 +1,11 @@
 package presentation.command.service;
 
-public class ShowServiceByLevel {
+import presentation.command.Command;
+import presentation.controller.LightContext;
+
+public class ShowServiceByLevel implements Command {
+	@Override
+	public LightContext execute(LightContext in) {
+		return null;
+	}
 }

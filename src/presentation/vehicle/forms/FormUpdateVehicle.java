@@ -144,9 +144,9 @@ public class FormUpdateVehicle extends JDialog{
                         car.setCity(Util.parseNoNegativeInt(cityText.getText()));
                         car.setOccupied(Util.parseActive(occupiedComboBox.getSelectedItem().toString()));
                         car.setActive(Util.parseActive(activeComboBox.getSelectedItem().toString()));
-                        car.setEstimated_duration(Util.parseNoNegativeInt(estimatedDurationText.getText()));
+                        car.setEstimatedDuration(Util.parseNoNegativeInt(estimatedDurationText.getText()));
                         car.setBrand(Util.parseString(brandText.getText()));
-                        car.setKm_travelled(Util.parseNoNegativeInt(kmTravelledText.getText()));
+                        car.setNumKmTravelled(Util.parseNoNegativeInt(kmTravelledText.getText()));
                         car.setPlate(Util.parseString(plateText.getText()));
                         car.setType(Util.parseString(typeComboBox.getSelectedItem().toString()));
                         dispose();
@@ -157,9 +157,9 @@ public class FormUpdateVehicle extends JDialog{
                         bicycle.setCity(Util.parseNoNegativeInt(cityText.getText()));
                         bicycle.setOccupied(Util.parseActive(occupiedComboBox.getSelectedItem().toString()));
                         bicycle.setActive(Util.parseActive(activeComboBox.getSelectedItem().toString()));
-                        bicycle.setEstimated_duration(Util.parseNoNegativeInt(estimatedDurationText.getText()));
+                        bicycle.setEstimatedDuration(Util.parseNoNegativeInt(estimatedDurationText.getText()));
                         bicycle.setBrand(Util.parseString(brandText.getText()));
-                        bicycle.setKm_travelled(Util.parseNoNegativeInt(kmTravelledText.getText()));
+                        bicycle.setNumKmTravelled(Util.parseNoNegativeInt(kmTravelledText.getText()));
                         bicycle.setSerialNumber(Util.parseString(serialNumberText.getText()));
                         bicycle.setType(Util.parseString(typeComboBox.getSelectedItem().toString()));
                         dispose();

@@ -108,7 +108,7 @@ public class FormUpdateRental extends JDialog {
 				TRental rent = new TRental();
 				try{
 					rent.setId(Util.parseNoNegativeInt(idText.getText()));
-					rent.setKm_rented(Util.parseNoNegativeInt(kmRentedText.getText()));
+					rent.setNumKmRented(Util.parseNoNegativeInt(kmRentedText.getText()));
 					rent.setActive(Util.parseActive(activeComboBox.getSelectedItem().toString()));
 
 					Date dateFromToCheck = (Date)dateFrom.getModel().getValue();

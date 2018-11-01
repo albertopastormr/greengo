@@ -1,4 +1,11 @@
 package presentation.command.rental;
 
-public class DropRental {
+import presentation.command.Command;
+import presentation.controller.LightContext;
+
+public class DropRental implements Command {
+	@Override
+	public LightContext execute(LightContext in) {
+		return null;
+	}
 }

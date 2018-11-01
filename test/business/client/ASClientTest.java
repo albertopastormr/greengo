@@ -1,5 +1,6 @@
 package business.client;
 
+/*
 import business.ASException;
 import business.IncorrectInputException;
 import business.client.as.ASClient;
@@ -200,7 +201,7 @@ public class ASClientTest {
     @Test
     public void updateClientIncorrectInputID_card_number1(){
         //id_card_number must have 8 numbers and 1 letter at the end
-       tc.setIdCardNumber("1111X");
+        tc.setIdCardNumber("1111X");
         assertThrows(IncorrectInputException.class, () -> {as.update(tc);});
     }
 
@@ -231,3 +232,4 @@ public class ASClientTest {
         assertThrows(ASException.class, () -> {as.update(tc);});
     }
 }
+*/
