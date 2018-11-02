@@ -23,6 +23,7 @@ public class EmployeeToolbar extends JToolBar {
 		// Create employee
 		JButton create = ViewHelpers.buttonsForms("Create employee");
 		create.setToolTipText("Create employee");
+		create.setIcon(new ImageIcon("resources/images/add.png"));
 		create.setVerticalTextPosition(SwingConstants.BOTTOM);
 		create.setHorizontalTextPosition(SwingConstants.CENTER);
 		create.addActionListener(new ActionListener() {
@@ -38,6 +39,7 @@ public class EmployeeToolbar extends JToolBar {
 		// Drop employee
 		JButton drop = ViewHelpers.buttonsForms("Drop employee");
 		drop.setToolTipText("Drop employee");
+		drop.setIcon(new ImageIcon("resources/images/drop.png"));
 		drop.setVerticalTextPosition(SwingConstants.BOTTOM);
 		drop.setHorizontalTextPosition(SwingConstants.CENTER);
 		drop.addActionListener(new ActionListener() {
@@ -52,6 +54,7 @@ public class EmployeeToolbar extends JToolBar {
 		// Show employee
 		JButton show = ViewHelpers.buttonsForms("Show employee");
 		show.setToolTipText("Show employee");
+		show.setIcon(new ImageIcon("resources/images/show.png"));
 		show.setVerticalTextPosition(SwingConstants.BOTTOM);
 		show.setHorizontalTextPosition(SwingConstants.CENTER);
 		show.addActionListener(new ActionListener() {
@@ -66,6 +69,7 @@ public class EmployeeToolbar extends JToolBar {
 		// Update employee
 		JButton update = ViewHelpers.buttonsForms("Update employee");
 		update.setToolTipText("Update employee");
+		update.setIcon(new ImageIcon("resources/images/update.png"));
 		update.setVerticalTextPosition(SwingConstants.BOTTOM);
 		update.setHorizontalTextPosition(SwingConstants.CENTER);
 		update.addActionListener(new ActionListener() {
@@ -80,6 +84,7 @@ public class EmployeeToolbar extends JToolBar {
 		// Set salary employee
 		JButton setSalary = ViewHelpers.buttonsForms("Set salary employee");
 		setSalary.setToolTipText("Set salary employee");
+		setSalary.setIcon(new ImageIcon("resources/images/setSalary.png"));
 		setSalary.setVerticalTextPosition(SwingConstants.BOTTOM);
 		setSalary.setHorizontalTextPosition(SwingConstants.CENTER);
 		setSalary.addActionListener(new ActionListener() {

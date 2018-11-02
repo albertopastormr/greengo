@@ -26,6 +26,7 @@ public class ContractToolbar extends JToolBar{
 		// Create contract
 		JButton create = ViewHelpers.buttonsForms("Create contract");
 		create.setToolTipText("Create contract");
+		create.setIcon(new ImageIcon("resources/images/add.png"));
 		create.setVerticalTextPosition(SwingConstants.BOTTOM);
 		create.setHorizontalTextPosition(SwingConstants.CENTER);
 		create.addActionListener(new ActionListener() {
@@ -41,6 +42,7 @@ public class ContractToolbar extends JToolBar{
 		// Drop contract
 		JButton drop = ViewHelpers.buttonsForms("Drop contract");
 		drop.setToolTipText("Drop contract");
+		drop.setIcon(new ImageIcon("resources/images/drop.png"));
 		drop.setVerticalTextPosition(SwingConstants.BOTTOM);
 		drop.setHorizontalTextPosition(SwingConstants.CENTER);
 		drop.addActionListener(new ActionListener() {
@@ -55,6 +57,7 @@ public class ContractToolbar extends JToolBar{
 		// Show contract
 		JButton show = ViewHelpers.buttonsForms("Show contract");
 		show.setToolTipText("Show contract");
+		show.setIcon(new ImageIcon("resources/images/show.png"));
 		show.setVerticalTextPosition(SwingConstants.BOTTOM);
 		show.setHorizontalTextPosition(SwingConstants.CENTER);
 		show.addActionListener(new ActionListener() {
@@ -69,6 +72,7 @@ public class ContractToolbar extends JToolBar{
 		// Update contract
 		JButton update = ViewHelpers.buttonsForms("Update contract");
 		update.setToolTipText("Update contract");
+		update.setIcon(new ImageIcon("resources/images/update.png"));
 		update.setVerticalTextPosition(SwingConstants.BOTTOM);
 		update.setHorizontalTextPosition(SwingConstants.CENTER);
 		update.addActionListener(new ActionListener() {

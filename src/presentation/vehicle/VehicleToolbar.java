@@ -4,7 +4,6 @@ import presentation.PanelTabs;
 import presentation.controller.AppController;
 import presentation.controller.Event;
 import presentation.controller.LightContext;
-import presentation.service.forms.*;
 import presentation.util.ViewHelpers;
 import presentation.vehicle.forms.*;
 
@@ -28,6 +27,7 @@ public class VehicleToolbar extends  JToolBar {
 		// Create vehicle
 		JButton create = ViewHelpers.buttonsForms("Create vehicle");
 		create.setToolTipText("Create vehicle");
+		create.setIcon(new ImageIcon("resources/images/add.png"));
 		create.setVerticalTextPosition(SwingConstants.BOTTOM);
 		create.setHorizontalTextPosition(SwingConstants.CENTER);
 		create.addActionListener(new ActionListener() {
@@ -42,6 +42,7 @@ public class VehicleToolbar extends  JToolBar {
 		// Drop vehicle
 		JButton drop = ViewHelpers.buttonsForms("Drop vehicle");
 		drop.setToolTipText("Drop vehicle");
+		drop.setIcon(new ImageIcon("resources/images/drop.png"));
 		drop.setVerticalTextPosition(SwingConstants.BOTTOM);
 		drop.setHorizontalTextPosition(SwingConstants.CENTER);
 		drop.addActionListener(new ActionListener() {
@@ -56,6 +57,7 @@ public class VehicleToolbar extends  JToolBar {
 		// Show vehicle
 		JButton show = ViewHelpers.buttonsForms("Show vehicle");
 		show.setToolTipText("Show vehicle");
+		show.setIcon(new ImageIcon("resources/images/show.png"));
 		show.setVerticalTextPosition(SwingConstants.BOTTOM);
 		show.setHorizontalTextPosition(SwingConstants.CENTER);
 		show.addActionListener(new ActionListener() {
@@ -70,6 +72,7 @@ public class VehicleToolbar extends  JToolBar {
 		// Update vehicle
 		JButton update = ViewHelpers.buttonsForms("Update vehicle");
 		update.setToolTipText("Update vehicle");
+		update.setIcon(new ImageIcon("resources/images/update.png"));
 		update.setVerticalTextPosition(SwingConstants.BOTTOM);
 		update.setHorizontalTextPosition(SwingConstants.CENTER);
 		update.addActionListener(new ActionListener() {
@@ -84,6 +87,7 @@ public class VehicleToolbar extends  JToolBar {
 		// Show all active vehicle
 		JButton showActivesVehicles = ViewHelpers.buttonsForms("Show actives vehicles ");
 		showActivesVehicles.setToolTipText("Show actives vehicles");
+		showActivesVehicles.setIcon(new ImageIcon("resources/images/activeVehicle.png"));
 		showActivesVehicles.setVerticalTextPosition(SwingConstants.BOTTOM);
 		showActivesVehicles.setHorizontalTextPosition(SwingConstants.CENTER);
 		showActivesVehicles.addActionListener(new ActionListener() {

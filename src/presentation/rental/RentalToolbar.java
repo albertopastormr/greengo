@@ -26,6 +26,7 @@ public class RentalToolbar extends JToolBar {
 		// Create rental
 		JButton create = ViewHelpers.buttonsForms("Create rental");
 		create.setToolTipText("Create rental");
+		create.setIcon(new ImageIcon("resources/images/add.png"));
 		create.setVerticalTextPosition(SwingConstants.BOTTOM);
 		create.setHorizontalTextPosition(SwingConstants.CENTER);
 		create.addActionListener(new ActionListener() {
@@ -40,6 +41,7 @@ public class RentalToolbar extends JToolBar {
 		// Drop rental
 		JButton drop = ViewHelpers.buttonsForms("Drop rental");
 		drop.setToolTipText("Drop rental");
+		drop.setIcon(new ImageIcon("resources/images/drop.png"));
 		drop.setVerticalTextPosition(SwingConstants.BOTTOM);
 		drop.setHorizontalTextPosition(SwingConstants.CENTER);
 		drop.addActionListener(new ActionListener() {
@@ -54,6 +56,7 @@ public class RentalToolbar extends JToolBar {
 		// Show rental
 		JButton show = ViewHelpers.buttonsForms("Show rental");
 		show.setToolTipText("Show rental");
+		show.setIcon(new ImageIcon("resources/images/show.png"));
 		show.setVerticalTextPosition(SwingConstants.BOTTOM);
 		show.setHorizontalTextPosition(SwingConstants.CENTER);
 		show.addActionListener(new ActionListener() {
@@ -68,6 +71,7 @@ public class RentalToolbar extends JToolBar {
 		// Update rental
 		JButton update = ViewHelpers.buttonsForms("Update rental");
 		update.setToolTipText("Update rental");
+		update.setIcon(new ImageIcon("resources/images/update.png"));
 		update.setVerticalTextPosition(SwingConstants.BOTTOM);
 		update.setHorizontalTextPosition(SwingConstants.CENTER);
 		update.addActionListener(new ActionListener() {

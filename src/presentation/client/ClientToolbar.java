@@ -23,6 +23,7 @@ public class ClientToolbar extends JToolBar {
 		// Create client
 		JButton create = ViewHelpers.buttonsForms("Create client");
 		create.setToolTipText("Create client");
+		create.setIcon(new ImageIcon("resources/images/add.png"));
 		create.setVerticalTextPosition(SwingConstants.BOTTOM);
 		create.setHorizontalTextPosition(SwingConstants.CENTER);
 		create.addActionListener(new ActionListener() {
@@ -38,6 +39,7 @@ public class ClientToolbar extends JToolBar {
 		// Drop client
 		JButton drop = ViewHelpers.buttonsForms("Drop client");
 		drop.setToolTipText("Drop client");
+		drop.setIcon(new ImageIcon("resources/images/drop.png"));
 		drop.setVerticalTextPosition(SwingConstants.BOTTOM);
 		drop.setHorizontalTextPosition(SwingConstants.CENTER);
 		drop.addActionListener(new ActionListener() {
@@ -52,6 +54,7 @@ public class ClientToolbar extends JToolBar {
 		// Show client
 		JButton show = ViewHelpers.buttonsForms("Show client");
 		show.setToolTipText("Show client");
+		show.setIcon(new ImageIcon("resources/images/show.png"));
 		show.setVerticalTextPosition(SwingConstants.BOTTOM);
 		show.setHorizontalTextPosition(SwingConstants.CENTER);
 		show.addActionListener(new ActionListener() {
@@ -66,6 +69,7 @@ public class ClientToolbar extends JToolBar {
 		// Update client
 		JButton update = ViewHelpers.buttonsForms("Update client");
 		update.setToolTipText("Update client");
+		update.setIcon(new ImageIcon("resources/images/update.png"));
 		update.setVerticalTextPosition(SwingConstants.BOTTOM);
 		update.setHorizontalTextPosition(SwingConstants.CENTER);
 		update.addActionListener(new ActionListener() {
@@ -80,6 +84,7 @@ public class ClientToolbar extends JToolBar {
 		// Show clients N rentals
 		JButton showClientsNRentals = ViewHelpers.buttonsForms("Show clients N rentals");
 		showClientsNRentals.setToolTipText(" Show clients N rentals");
+		showClientsNRentals.setIcon(new ImageIcon("resources/images/clientNRentals.png"));
 		showClientsNRentals.setVerticalTextPosition(SwingConstants.BOTTOM);
 		showClientsNRentals.setHorizontalTextPosition(SwingConstants.CENTER);
 		showClientsNRentals.addActionListener(new ActionListener() {

@@ -135,9 +135,9 @@ public class FormUpdateVehicle extends JDialog{
     private JPanel buttonsPanel(){
         JPanel ret = new JPanel(new FlowLayout());
 
-        JButton create = new JButton("UPDATE");
+        JButton update = ViewHelpers.buttonsForms("UPDATE");
 
-        create.addActionListener(new ActionListener() {
+        update.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 try {
@@ -170,13 +170,12 @@ public class FormUpdateVehicle extends JDialog{
                     }
                 }
                 catch(Exception e){
-                    JOptionPane.showMessageDialog(getRootPane(), e.getMessage(),
-                            "ERROR IN UPDATE VEHICLE", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(getRootPane(), e.getMessage(), "ERROR IN UPDATE VEHICLE", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
 
-        JButton cancel = new JButton("CANCEL");
+        JButton cancel = ViewHelpers.buttonsForms("CANCEL");
         cancel.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -184,7 +183,7 @@ public class FormUpdateVehicle extends JDialog{
             }
         });
 
-        ret.add(create);
+        ret.add(update);
         ret.add(cancel);
 
         return ret;

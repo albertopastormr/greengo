@@ -41,7 +41,7 @@ public class FormSetSalaryEmployee extends JDialog {
 	}
 
 	private JPanel fieldsPanel(){
-		JPanel ret = ViewHelpers.createFieldPanel(1);
+		JPanel ret = ViewHelpers.createFieldPanel(2);
 
 		//ID
 		JLabel idLabel = new JLabel("Id");

@@ -127,7 +127,7 @@ public class FormCreateVehicle extends JDialog {
     private JPanel buttonsPanel(){
         JPanel ret = new JPanel(new FlowLayout());
 
-        JButton create = new JButton("CREATE");
+        JButton create = ViewHelpers.buttonsForms("CREATE");
 
         create.addActionListener(new ActionListener() {
             @Override
@@ -166,7 +166,7 @@ public class FormCreateVehicle extends JDialog {
             }
         });
 
-        JButton cancel = new JButton("CANCEL");
+        JButton cancel = ViewHelpers.buttonsForms("CANCEL");
         cancel.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

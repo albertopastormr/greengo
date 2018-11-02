@@ -23,6 +23,7 @@ public class ServiceToolbar extends JToolBar {
 		// Create service
 		JButton create = ViewHelpers.buttonsForms("Create service");
 		create.setToolTipText("Create service");
+		create.setIcon(new ImageIcon("resources/images/add.png"));
 		create.setVerticalTextPosition(SwingConstants.BOTTOM);
 		create.setHorizontalTextPosition(SwingConstants.CENTER);
 		create.addActionListener(new ActionListener() {
@@ -37,6 +38,7 @@ public class ServiceToolbar extends JToolBar {
 		// Drop service
 		JButton drop = ViewHelpers.buttonsForms("Drop service");
 		drop.setToolTipText("Drop service");
+		drop.setIcon(new ImageIcon("resources/images/drop.png"));
 		drop.setVerticalTextPosition(SwingConstants.BOTTOM);
 		drop.setHorizontalTextPosition(SwingConstants.CENTER);
 		drop.addActionListener(new ActionListener() {
@@ -51,6 +53,7 @@ public class ServiceToolbar extends JToolBar {
 		// Show service
 		JButton show = ViewHelpers.buttonsForms("Show service");
 		show.setToolTipText("Show service");
+		show.setIcon(new ImageIcon("resources/images/show.png"));
 		show.setVerticalTextPosition(SwingConstants.BOTTOM);
 		show.setHorizontalTextPosition(SwingConstants.CENTER);
 		show.addActionListener(new ActionListener() {
@@ -65,6 +68,7 @@ public class ServiceToolbar extends JToolBar {
 		// Update service
 		JButton update = ViewHelpers.buttonsForms("Update service");
 		update.setToolTipText("Update service");
+		update.setIcon(new ImageIcon("resources/images/update.png"));
 		update.setVerticalTextPosition(SwingConstants.BOTTOM);
 		update.setHorizontalTextPosition(SwingConstants.CENTER);
 		update.addActionListener(new ActionListener() {
@@ -79,6 +83,7 @@ public class ServiceToolbar extends JToolBar {
 		// Show service by level
 		JButton showByLevel = ViewHelpers.buttonsForms("Show service by level");
 		showByLevel.setToolTipText("Show service by level");
+		showByLevel.setIcon(new ImageIcon("resources/images/showByLevel.png"));
 		showByLevel.setVerticalTextPosition(SwingConstants.BOTTOM);
 		showByLevel.setHorizontalTextPosition(SwingConstants.CENTER);
 		showByLevel.addActionListener(new ActionListener() {
