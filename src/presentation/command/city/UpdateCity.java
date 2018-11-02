@@ -7,6 +7,7 @@ import presentation.controller.Event;
 import presentation.controller.LightContext;
 
 public class UpdateCity implements Command {
+
 	@Override
 	public LightContext execute(LightContext in) {
 		Integer ret = ASCityFactory.getInstance().generateASCity().update(((TCity)in.getData()));

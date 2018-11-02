@@ -1,11 +1,15 @@
 package presentation.command.vehicle;
 
+import business.vehicle.TVehicle;
+import business.vehicle.factory.ASVehicleFactory;
 import presentation.command.Command;
+import presentation.controller.Event;
 import presentation.controller.LightContext;
 
 public class UpdateVehicle implements Command {
 	@Override
 	public LightContext execute(LightContext in) {
-		return null;
+		Integer ret = ASVehicleFactory.getInstance().generateASVehicle().update((TVehicle)in.getData());
+		return new LightContext(Event.UPDATE_VEHICLE, ret);
 	}
 }

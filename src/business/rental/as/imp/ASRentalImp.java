@@ -12,7 +12,7 @@ public class ASRentalImp implements ASRental {
     }
 
     @Override
-    public Integer drop(TRental city) {
+    public Integer drop(Integer rental) {
         return null;
     }
 

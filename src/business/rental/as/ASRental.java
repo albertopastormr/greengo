@@ -7,7 +7,7 @@ import java.util.Collection;
 public interface ASRental {
     Integer create(TRental rental);
 
-    Integer drop(TRental rental);
+    Integer drop(Integer rental);
 
     Integer update(TRental rental);
 

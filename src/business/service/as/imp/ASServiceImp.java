@@ -7,19 +7,16 @@ import java.util.Collection;
 
 public class ASServiceImp implements ASService {
 
-    /*This is related to JPA*/
-
-    /*
     @Override
     public Integer create(TService service) {
         return null;
     }
 
-    @Override
-    public Integer drop(TService service) {
-        return null;
-    }
-
+	@Override
+	public Integer drop(Integer service) {
+		return null;
+	}
+	
     @Override
     public Integer update(TService service) {
         return null;
@@ -39,5 +36,4 @@ public class ASServiceImp implements ASService {
     public Collection<TService> showServicesFromLevel(Integer level) {
         return null;
     }
-    */
 }

@@ -101,7 +101,7 @@ public class FormCreateService extends JDialog{
 					service.setCapacity(Util.parseNoNegativeInt(capacityText.getText()));
 					service.setNumVehiclesAttended(Util.parseNoNegativeInt(vehicles_attendedText.getText()));
 					dispose();
-					AppController.getInstance().execute(new LightContext(Event.CREATE_SERVCE, service));
+					AppController.getInstance().execute(new LightContext(Event.CREATE_SERVICE, service));
 				} catch (Exception ex) {
 					JOptionPane.showMessageDialog(getRootPane(), ex.getMessage(), "ERROR CREATE SERVICE", JOptionPane.ERROR_MESSAGE);
 				}

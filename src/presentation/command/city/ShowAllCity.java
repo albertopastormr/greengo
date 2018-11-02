@@ -11,6 +11,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class ShowAllCity implements Command {
+
 	@Override
 	public LightContext execute(LightContext in) {
 		Collection<TCity> ret = ASCityFactory.getInstance().generateASCity().showAll();

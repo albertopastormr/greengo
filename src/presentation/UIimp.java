@@ -64,7 +64,7 @@ public class UIimp extends UI{
 				//TODO What should we do with these operations?
 
 				break;
-			case CREATE_SERVCE:
+			case CREATE_SERVICE:
 				Util.inform("Added service with id " + (context.getData()));
 				AppController.getInstance().execute(new LightContext(Event.RELOAD_SERVICE, null));
 				break;

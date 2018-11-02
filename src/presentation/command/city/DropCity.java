@@ -8,6 +8,7 @@ import presentation.controller.Event;
 import presentation.controller.LightContext;
 
 public class DropCity implements Command {
+
 	@Override
 	public LightContext execute(LightContext in) {
 		Integer ret = ASCityFactory.getInstance().generateASCity().drop(((TCity)in.getData()).getId());
