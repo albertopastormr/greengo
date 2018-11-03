@@ -38,11 +38,6 @@ public class ASCityTest {
     private static TRental tr = new TRental(null,null,false,
             10,null,null,null);
 
-
-
-
-
-
     @BeforeEach
 	private void setUp() throws Exception {
 		DAOCity dao = DAOCityFactory.getInstance().generateDAOCity();
@@ -71,7 +66,6 @@ public class ASCityTest {
 	//EN FUNCION DE SI HAY CAMBIOS O NO EN LOS CASOS DE USO QUITARLO
 	@Test
 	public void createCityAlreadyExists(){
-	    as.create(tc);
 		//city already exists
 		assertThrows(ASException.class, () -> {as.create(tc);});
 	}
@@ -83,9 +77,20 @@ public class ASCityTest {
         Integer idV = asV.create(tv);
 		Integer id = as.create(tc);
 		Integer idC = asC.create(tclient);
+
+		assertTrue(id > 0);
+		assertTrue(as.show(id).isActive());
+		assertTrue(idV > 0);
+		assertTrue(as.show(idV).isActive());
+		assertTrue(idC > 0);
+		assertTrue(as.show(idC).isActive());
+
 		tr.setIdVehicle(idV);
 		tr.setIdClient(idC);
-		asR.create(tr);
+		Integer idR = asR.create(tr);
+
+		assertTrue(idR > 0);
+		assertTrue(as.show(idR).isActive());
 
 		assertTrue(as.showAll().isEmpty());
 		assertTrue(as.showClientsByCity(id).isEmpty());
@@ -115,6 +120,10 @@ public class ASCityTest {
 	@Test
 	public void dropCityAlreadyInactive(){
 		Integer id = as.create(tc);
+
+		assertTrue(id > 0);
+		assertTrue(as.show(id).isActive());
+
 		as.drop(id);
 
 		assertThrows(ASException.class, () -> {as.drop(id);});
@@ -123,6 +132,9 @@ public class ASCityTest {
 	@Test
 	public void dropCityWithActiveVehicles(){
 		Integer id = as.create(tc);
+
+		assertTrue(id > 0);
+		assertTrue(as.show(id).isActive());
 
 		tv.setId(id);
 		asV.create(tv);
@@ -135,6 +147,9 @@ public class ASCityTest {
 	@Test
 	public void showCitySuccessful(){
 		Integer id = as.create(tc);
+
+		assertTrue(id > 0);
+		assertTrue(as.show(id).isActive());
 
 		TCity tmp = as.show(id);
 
@@ -165,10 +180,18 @@ public class ASCityTest {
 	@Test
 	public void showAllCitySuccessful1(){
 		Integer idMad = as.create(tc);
-		tc.setId(idMad);
 
+		assertTrue(idMad > 0);
+		assertTrue(as.show(idMad).isActive());
+
+		tc.setId(idMad);
 		tc.setName("Barcelona");
+
 		Integer idBcn = as.create(tc);
+
+		assertTrue(idBcn > 0);
+		assertTrue(as.show(idBcn).isActive());
+
 		tc.setId(idBcn);
 
 		Collection<TCity> c = as.showAll();
@@ -204,29 +227,49 @@ public class ASCityTest {
         //data for city 1
 		Integer idC = asC.create(tclient);
 
+		assertTrue(idC > 0);
+		assertTrue(as.show(idC).isActive());
+
         Integer idCity = as.create(tc);
+		assertTrue(idCity > 0);
+		assertTrue(as.show(idCity).isActive());
 
         tv.setCity(idCity);
+
 		Integer idV = asV.create(tv);
+		assertTrue(idV > 0);
+		assertTrue(as.show(idV).isActive());
 
 		tr.setIdClient(idC);
 		tr.setIdVehicle(idV);
-        asR.create(tr);
+        Integer idR = asR.create(tr);
+
+		assertTrue(idR > 0);
+		assertTrue(as.show(idR).isActive());
 
         //data for city 2
         tclient.setIdCardNumber("11111111X");
         Integer idCFail = asC.create(tclient);
 
+		assertTrue(idCFail > 0);
+		assertTrue(as.show(idCFail).isActive());
+
         tc.setName("Barcelona");
         Integer idCity2 = as.create(tc);
 
-       tv.setCity(idCity2);
-        Integer idVFail = asV.create(tv);
+		assertTrue(idCity2 > 0);
+		assertTrue(as.show(idCity2).isActive());
+
+       	tv.setCity(idCity2);
+       	Integer idVFail = asV.create(tv);
+		assertTrue(idVFail > 0);
+		assertTrue(as.show(idVFail).isActive());
 
         tr.setIdVehicle(idVFail);
         tr.setIdClient(idCFail);
-        asR.create(tr);
-
+        Integer idR2 = asR.create(tr);
+		assertTrue(idR2 > 0);
+		assertTrue(as.show(idR2).isActive());
 
         Collection<TClient> out = as.showClientsByCity(idCity);
 
@@ -239,11 +282,18 @@ public class ASCityTest {
 	//update method tests
 	@Test
 	public void updateCitySuccessful(){
-		as.create(tc);
+		Integer idC = as.create(tc);
+
+		assertTrue(idC > 0);
+		assertTrue(as.show(idC).isActive());
 
 		tc.setName("Barcelona");
 		tc.setActive(true);
 		Integer id = as.update(tc);
+
+		assertTrue(id > 0);
+		assertTrue(as.show(id).isActive());
+
 		assertEquals(id,tc.getId());
 
 		TCity tmp = as.show(id);

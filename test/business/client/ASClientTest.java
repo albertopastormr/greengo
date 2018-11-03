@@ -70,9 +70,18 @@ public class ASClientTest {
     public void dropSuccessful(){
         Integer idV = asV.create(tv);
         Integer id = as.create(tc);
+
+        assertTrue(idV > 0);
+        assertTrue(as.show(idV).isActive());
+        assertTrue(id > 0);
+        assertTrue(as.show(id).isActive());
+
         tr.setIdClient(id);
         tr.setIdVehicle(idV);
-        asR.create(tr);
+        Integer idR = asR.create(tr);
+
+        assertTrue(idR > 0);
+        assertTrue(as.show(idR).isActive());
 
         as.drop(id);
         assertTrue(as.showAll().isEmpty());
@@ -94,9 +103,17 @@ public class ASClientTest {
         Integer idC = as.create(tc);
         Integer idV = asV.create(tv);
 
+        assertTrue(idC > 0);
+        assertTrue(as.show(idC).isActive());
+        assertTrue(idV > 0);
+        assertTrue(as.show(idV).isActive());
+
         tr.setIdClient(idC);
         tr.setIdVehicle(idV);
-        asR.create(tr);
+        Integer idR = asR.create(tr);
+
+        assertTrue(idR > 0);
+        assertTrue(as.show(idR).isActive());
 
         assertThrows(ASException.class,()->{as.drop(idC);});
     }
@@ -107,6 +124,9 @@ public class ASClientTest {
     @Test
     public void showClientSuccessful(){
         Integer idC = as.create(tc);
+
+        assertTrue(idC > 0);
+        assertTrue(as.show(idC).isActive());
 
         TClient out = as.show(idC);
 
@@ -135,8 +155,15 @@ public class ASClientTest {
     @Test
     public void showAllClientsSuccessful() {
         Integer idC = as.create(tc);
+
+        assertTrue(idC > 0);
+        assertTrue(as.show(idC).isActive());
+
         TClient tc2 = new TClient(null, "11111111X", 0, false);
-        as.create(tc2);
+        Integer idC2 = as.create(tc2);
+
+        assertTrue(idC2 > 0);
+        assertTrue(as.show(idC2).isActive());
 
         Collection<TClient> collec = as.showAll();
         for (TClient tmp : collec) {
@@ -162,11 +189,20 @@ public class ASClientTest {
     public void showAllClientsWithMoreNrentalsSuccessful(){
         final Integer N = 2;
         tc.setNumRentals(3);
-        as.create(tc);
+        Integer idC = as.create(tc);
+
+        assertTrue(idC > 0);
+        assertTrue(as.show(idC).isActive());
+
         TClient tc2 = new TClient(null, "11111111X", 2, false);
         Integer idC2 = as.create(tc2);
+        assertTrue(idC2 > 0);
+        assertTrue(as.show(idC2).isActive());
+
         TClient tc3 = new TClient(null, "11121111Y", 0, false);
         Integer idC3 = as.create(tc3);
+        assertTrue(idC3 > 0);
+        assertTrue(as.show(idC3).isActive());
 
         Collection<TClient> collec = as.showAllWithMoreThanNRentals(N);
         for(TClient tmp : collec){
@@ -179,9 +215,14 @@ public class ASClientTest {
     @Test
     public void updateClientSuccessful(){
         Integer idC = as.create(tc);
+        assertTrue(idC > 0);
+        assertTrue(as.show(idC).isActive());
 
         TClient updtClient = new TClient(idC,"11111111X",1,true);
         Integer idOut = as.update(updtClient);
+
+        assertTrue(idOut > 0);
+        assertTrue(as.show(idOut).isActive());
 
         TClient out = as.show(idOut);
 
