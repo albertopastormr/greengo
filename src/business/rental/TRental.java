@@ -82,31 +82,4 @@ public class TRental {
 	public void setDateTo(Date dateTo) {
 		this.dateTo = dateTo;
 	}
-
-	@Override
-	public String toString(){
-
-		SimpleDateFormat fmt = new SimpleDateFormat("dd-MMM-yyyy");
-		GregorianCalendar dateFromCal = new GregorianCalendar();
-		dateFromCal.setTimeInMillis(dateFrom.getTime());
-		GregorianCalendar dateToCal = new GregorianCalendar();
-		dateToCal.setTimeInMillis(dateTo.getTime());
-
-		fmt.setCalendar(dateFromCal);
-		String dateFromS = fmt.format(dateFromCal.getTime());
-		fmt.setCalendar(dateToCal);
-		String dateToS = fmt.format(dateToCal.getTime());
-
-		String ret = "";
-		ret += String.format("%-13s %13s %n", "Id: ", id);
-		ret += String.format("%-13s %13s %n", "Client id: ", idClient);
-		ret += String.format("%-13s %13s %n", "Vehicle id: ", idVehicle);
-		ret += String.format("%-13s %13s %n", "Km rented: ", numKmRented);
-		ret += String.format("%-13s %13s %n", "From: ", dateFromS);
-		ret += String.format("%-13s %13s %n", "To: ", dateToS);
-		ret += String.format("%-13s %13s %n", "Active: ", active);
-
-
-		return ret;
-	}
 }

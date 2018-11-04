@@ -89,18 +89,4 @@ public class TVehicle {
         this.type = type;
     }
 
-    @Override
-    public String toString(){
-        String ret = "";
-        ret += String.format("%-13s %13s %n", "Id: ", id);
-        ret += String.format("%-13s %13s %n", "Type: ", type);
-        ret += String.format("%-13s %13s %n", "Brand: ", brand);
-        ret += String.format("%-13s %13s %n", "Estimated duration: ", estimatedDuration);
-        ret += String.format("%-13s %13s %n", "Km travelled: ", numKmTravelled);
-        ret += String.format("%-13s %13s %n", "City id: ", city);
-        ret += String.format("%-13s %13s %n", "Occupied: ", occupied);
-        ret += String.format("%-13s %13s %n", "Active: ", active);
-
-        return ret;
-    }
 }
