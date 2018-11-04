@@ -114,7 +114,7 @@ public class ASClientTest {
 
         tr.setIdClient(idC);
         tr.setIdVehicle(idV);
-        Integer idR = asR.create(tr);
+        asR.create(tr);
 
         assertThrows(ASException.class,()->{as.drop(idC);});
     }

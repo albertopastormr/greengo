@@ -34,9 +34,7 @@ public class ASRentalTest {
     private void setUp() throws Exception{
         DAOClient dao = DAOClientFactory.getInstance().generateDAOClient();
         dao.deleteAll();
-
     }
-
 
     //create method
     @Test
@@ -265,7 +263,7 @@ public class ASRentalTest {
         tr.setIdVehicle(idV);
         Integer idR = as.create(tr);
 
-        assertEquals(as.show(idR).isActive(), false);
+        assertEquals(as.show(idR).getRental().isActive(), false);
     }
 
     @Test

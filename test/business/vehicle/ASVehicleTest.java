@@ -56,7 +56,7 @@ public class ASVehicleTest {
         tv.setCity(idC);
         Integer idV = as.create(tv);
 
-        assertTrue(as.show(idV).isActive());
+        assertTrue(as.show(idV).getVehicle().isActive());
         assertTrue(idV > 0);
     }
 
@@ -131,7 +131,7 @@ public class ASVehicleTest {
 
         // Compruebas si existen y estan activos
         assertTrue(id > 0);
-        assertTrue(as.show(id).isActive());
+        assertTrue(as.show(id).getVehicle().isActive());
         assertTrue(idC > 0);
         assertTrue(asCity.show(idC).isActive());
 
@@ -166,7 +166,7 @@ public class ASVehicleTest {
 
         // Compruebas si existen y estan activos
         assertTrue(id > 0);
-        assertTrue(as.show(id).isActive());
+        assertTrue(as.show(id).getVehicle().isActive());
         assertTrue(idC > 0);
         assertTrue(asCity.show(idC).isActive());
 
@@ -184,7 +184,7 @@ public class ASVehicleTest {
 
         // Compruebas si existen y estan activos
         assertTrue(idV > 0);
-        assertTrue(as.show(idV).isActive());
+        assertTrue(as.show(idV).getVehicle().isActive());
         assertTrue(idC > 0);
         assertTrue(asCity.show(idC).isActive());
 
@@ -193,7 +193,7 @@ public class ASVehicleTest {
 
         Integer idR = asR.create(tr);
         assertTrue(idR > 0);
-        assertTrue(asR.show(idR).isActive());
+        assertTrue(asR.show(idR).getRental().isActive());
 
         assertThrows(ASException.class,()->{as.drop(idV);});
     }
@@ -205,13 +205,13 @@ public class ASVehicleTest {
         Integer idV = as.create(tv);
 
         assertTrue(idV > 0);
-        assertTrue(as.show(idV).isActive());
+        assertTrue(as.show(idV).getVehicle().isActive());
         assertTrue(idC > 0);
         assertTrue(asCity.show(idC).isActive());
 
         tv.setCity(idC);
         tv.setId(idV);
-        TVehicle out = as.show(idV);
+        TVehicle out = as.show(idV).getVehicle();
 
         assertTrue(checkTransferValues(out,tv));
     }
@@ -237,7 +237,7 @@ public class ASVehicleTest {
         Integer idV = as.create(tv);
 
         assertTrue(idV > 0);
-        assertTrue(as.show(idV).isActive());
+        assertTrue(as.show(idV).getVehicle().isActive());
 
         TVehicle tv2 = new TVehicle(null, "Audi", 1000, 300,
                 false, 1, false, "car");
@@ -245,20 +245,20 @@ public class ASVehicleTest {
         Integer idV2 = as.create(tv2);
 
         assertTrue(idV2 > 0);
-        assertTrue(as.show(idV2).isActive());
+        assertTrue(as.show(idV2).getVehicle().isActive());
 
-        Collection<TVehicle> collec = as.showAll();
-        for (TVehicle tmp : collec) {
-            if (tmp.getId().equals(idV))
-                assertTrue(checkTransferValues(tmp,tv));
+        Collection<TVehicleDetails> collec = as.showAll();
+        for (TVehicleDetails tmp : collec) {
+            if (tmp.getVehicle().getId().equals(idV))
+                assertTrue(checkTransferValues(tmp.getVehicle(),tv));
             else
-                assertTrue(checkTransferValues(tmp, tv2));
+                assertTrue(checkTransferValues(tmp.getVehicle(), tv2));
         }
     }
 
     @Test
     public void showAllVehicleSuccessful2(){
-        Collection<TVehicle> c = as.showAll();
+        Collection<TVehicleDetails> c = as.showAll();
         assertTrue(c.isEmpty());
     }
 
@@ -270,7 +270,7 @@ public class ASVehicleTest {
         Integer idV = as.create(tv);
 
         assertTrue(idV > 0);
-        assertTrue(as.show(idV).isActive());
+        assertTrue(as.show(idV).getVehicle().isActive());
         assertTrue(idC > 0);
         assertTrue(asCity.show(idC).isActive());
 
@@ -281,7 +281,7 @@ public class ASVehicleTest {
         assertTrue(idOut > 0);
         assertTrue(asCity.show(idOut).isActive());
 
-        TVehicle out = as.show(idOut);
+        TVehicle out = as.show(idOut).getVehicle();
 
         assertEquals(out.getId(),idV);
         assertTrue(checkTransferValues(out,updatedVehicle));
@@ -365,7 +365,7 @@ public class ASVehicleTest {
         Integer idV = as.create(tv);
 
         assertTrue(idV > 0);
-        assertTrue(as.show(idV).isActive());
+        assertTrue(as.show(idV).getVehicle().isActive());
 
         tv.setId(idV);
         tv.setType("bicycle"); //change the type of the vehicle it's not allowed
@@ -385,7 +385,7 @@ public class ASVehicleTest {
         Integer idV = as.create(tv);
 
         assertTrue(idV > 0);
-        assertTrue(as.show(idV).isActive());
+        assertTrue(as.show(idV).getVehicle().isActive());
         assertTrue(idC > 0);
         assertTrue(asCity.show(idC).isActive());
 
@@ -405,7 +405,7 @@ public class ASVehicleTest {
         Integer idV = as.create(tv);
 
         assertTrue(idV > 0);
-        assertTrue(as.show(idV).isActive());
+        assertTrue(as.show(idV).getVehicle().isActive());
         assertTrue(idC > 0);
         assertTrue(asCity.show(idC).isActive());
 
