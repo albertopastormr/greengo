@@ -6,8 +6,9 @@ import business.contract.TContract;
 import business.employee.TEmployee;
 import business.mainoffice.TMainOffice;
 import business.rental.TRental;
+import business.rental.TRentalDetails;
 import business.service.TService;
-import business.vehicle.TVehicle;
+import business.vehicle.TVehicleDetails;
 import presentation.controller.AppController;
 import presentation.controller.Event;
 import presentation.controller.LightContext;
@@ -16,6 +17,7 @@ import presentation.util.Util;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.List;
 
 public class UIimp extends UI{
 
@@ -53,12 +55,11 @@ public class UIimp extends UI{
 				AppController.getInstance().execute(new LightContext(Event.RELOAD_VEHICLE, null));
 				break;
 			case SHOW_VEHICLE:
-				Util.inform(((TVehicle)context.getData()).toString());
+				Util.inform(((TVehicleDetails)context.getData()).toString());
 				break;
 			case RELOAD_VEHICLE:
-				ArrayList vehicleList = new ArrayList();
+				List<TVehicleDetails> vehicleList = new ArrayList<>();
 				AppController.getInstance().execute(new LightContext(Event.SHOWALL_VEHICLE, vehicleList));
-				tabbedPane.update(vehicleList);
 				break;
 			case SHOWALL_ACTIVE_VEHICLE:
 				//TODO What should we do with these operations?
@@ -80,9 +81,8 @@ public class UIimp extends UI{
 				Util.inform(((TService)context.getData()).toString());
 				break;
 			case RELOAD_SERVICE:
-				ArrayList serviceList = new ArrayList();
+				List<TService> serviceList = new ArrayList<>();
 				AppController.getInstance().execute(new LightContext(Event.SHOWALL_SERVICE, serviceList));
-				tabbedPane.update(serviceList);
 				break;
 			case SHOW_SERVICE_BY_LEVEL:
 				//TODO What should we do with these operations?
@@ -101,11 +101,10 @@ public class UIimp extends UI{
 				AppController.getInstance().execute(new LightContext(Event.RELOAD_RENTAL, null));
 				break;
 			case SHOW_RENTAL:
-				Util.inform(((TRental)context.getData()).toString()); break;
+				Util.inform(((TRentalDetails)context.getData()).toString()); break;
 			case RELOAD_RENTAL:
-				ArrayList rentalList = new ArrayList();
+				List<TRental> rentalList = new ArrayList<>();
 				AppController.getInstance().execute(new LightContext(Event.SHOWALL_RENTAL, rentalList));
-				tabbedPane.update(rentalList);
 				break;
 			case CREATE_MAIN_OFFICE:
 				Util.inform("Added main office with id " + (context.getData()));
@@ -123,13 +122,11 @@ public class UIimp extends UI{
 				Util.inform(((TMainOffice)context.getData()).toString());
 				break;
 			case RELOAD_MAIN_OFFICE:
-				ArrayList mainOfficeList = new ArrayList();
+				List<TMainOffice> mainOfficeList = new ArrayList<>();
 				AppController.getInstance().execute(new LightContext(Event.SHOWALL_MAIN_OFFICE, mainOfficeList));
-				tabbedPane.update(mainOfficeList);
 				break;
 			case TOTAL_SALARY_MAIN_OFFICE:
-				//TODO What should we do with these operations?
-
+				Util.inform("Current salary of the main office is " + context.getData());
 				break;
 			case CREATE_EMPLOYEE:
 				Util.inform("Added employee with id " + (context.getData()));
@@ -147,12 +144,11 @@ public class UIimp extends UI{
 				Util.inform(((TEmployee)context.getData()).toString());
 				break;
 			case RELOAD_EMPLOYEE:
-				ArrayList employeeList = new ArrayList();
+				List<TEmployee> employeeList = new ArrayList<>();
 				AppController.getInstance().execute(new LightContext(Event.SHOWALL_EMPLOYEE, employeeList));
-				tabbedPane.update(employeeList);
 				break;
 			case SET_SALARY_EMPLOYEE:
-				//TODO What should we do with these operations?
+				Util.inform("Updated the salary to employee " + context.getData() + "successfully");
 
 				break;
 			case CREATE_CONTRACT:
@@ -171,9 +167,8 @@ public class UIimp extends UI{
 				Util.inform(((TContract) context.getData()).toString());
 				break;
 			case RELOAD_CONTRACT:
-				ArrayList contractList = new ArrayList();
+				List<TContract> contractList = new ArrayList<>();
 				AppController.getInstance().execute(new LightContext(Event.SHOWALL_CONTRACT, contractList));
-				tabbedPane.update(contractList);
 				break;
 			case CREATE_CLIENT:
 				Util.inform("Added client with id " + (context.getData()));
@@ -193,7 +188,6 @@ public class UIimp extends UI{
 			case RELOAD_CLIENT:
 				ArrayList clientList = new ArrayList();
 				AppController.getInstance().execute(new LightContext(Event.SHOWALL_CLIENT, clientList));
-				tabbedPane.update(clientList);
 				break;
 			case SHOW_CLIENTS_N_RENTAL_CLIENT:
 				//TODO What should we do with these operations?
@@ -215,13 +209,26 @@ public class UIimp extends UI{
 				Util.inform(((TCity) context.getData()).toString());
 				break;
 			case RELOAD_CITY:
-				ArrayList cityList = new ArrayList();
+				List<TCity> cityList = new ArrayList<>();
 				AppController.getInstance().execute(new LightContext(Event.SHOWALL_CITY, cityList));
-				tabbedPane.update(cityList);
 				break;
 			case SHOW_CLIENTS_FROM_CITY:
 				//TODO What should we do with these operations?
+				break;
 
+			//all these operations do the same.
+			case SHOWALL_CITY:
+			case SHOWALL_VEHICLE:
+			case SHOWALL_CLIENT:
+			case SHOWALL_CONTRACT:
+			case SHOWALL_EMPLOYEE:
+			case SHOWALL_MAIN_OFFICE:
+			case SHOWALL_RENTAL:
+			case SHOWALL_SERVICE:
+				tabbedPane.update((List) context.getData());
+				break;
+			case ERROR:
+				Util.inform((String)context.getData());
 				break;
 		}
 	}
