@@ -207,6 +207,7 @@ public class FormUpdateVehicle extends JDialog{
                 }
             }
         });
+        typeComboBox.setToolTipText("You must set the actual type of the vehicle that you want to update.");
 
     }
 

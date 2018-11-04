@@ -19,6 +19,8 @@ import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 public class PanelTabs extends JTabbedPane {
 
@@ -125,7 +127,7 @@ public class PanelTabs extends JTabbedPane {
 		});
 	}
 
-	public void update(ArrayList newList){
+	public void update(List newList){
 		switch (getSelectedIndex()){
 			case 0:
 				cityPane.getModel().setList(newList);
