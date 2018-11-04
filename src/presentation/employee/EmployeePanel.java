@@ -17,7 +17,7 @@ public class EmployeePanel extends JPanel {
 	public EmployeePanel(PanelTabs panelTabs) {
 		setLayout(new BorderLayout());
 		add(new EmployeeToolbar(panelTabs), BorderLayout.NORTH);
-		model = new ClientTableModel(columnId);
+		model = new EmployeeTableModel(columnId);
 		add(new TablePanel<>(model), BorderLayout.CENTER);
 	}
 

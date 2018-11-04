@@ -17,7 +17,7 @@ public class ContractPanel extends JPanel {
 	public ContractPanel(PanelTabs panelTabs) {
 		setLayout(new BorderLayout());
 		add(new ContractToolbar(panelTabs), BorderLayout.NORTH);
-		model = new ClientTableModel(columnId);
+		model = new ContractTableModel(columnId);
 		add(new TablePanel<>(model), BorderLayout.CENTER);
 	}
 

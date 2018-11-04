@@ -17,7 +17,7 @@ public class CityPanel extends JPanel {
 	public CityPanel(PanelTabs panelTabs) {
 		setLayout(new BorderLayout());
 		add(new CityToolbar(panelTabs), BorderLayout.NORTH);
-		model = new ClientTableModel(columnId);
+		model = new CityTableModel(columnId);
 		add(new TablePanel<TCity>(model), BorderLayout.CENTER);
 	}
 

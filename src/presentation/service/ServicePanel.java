@@ -17,7 +17,7 @@ public class ServicePanel extends JPanel {
 	public ServicePanel(PanelTabs panelTabs) {
 		setLayout(new BorderLayout());
 		add(new ServiceToolbar(panelTabs), BorderLayout.NORTH);
-		model = new ClientTableModel(columnId);
+		model = new ServiceTableModel(columnId);
 		add(new TablePanel<>(model), BorderLayout.CENTER);
 	}
 
