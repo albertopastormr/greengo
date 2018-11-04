@@ -1,6 +1,7 @@
 package business.rental.as;
 
 import business.rental.TRental;
+import business.rental.TRentalDetails;
 
 import java.util.Collection;
 
@@ -11,7 +12,7 @@ public interface ASRental {
 
     Integer update(TRental rental);
 
-    TRental show (Integer id);
+    TRentalDetails show (Integer id);
 
-    Collection<TRental> showAll ();
+    Collection<TRentalDetails> showAll ();
 }

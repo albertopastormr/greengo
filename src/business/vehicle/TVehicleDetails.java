@@ -1,4 +1,4 @@
-package business.vehicle.as.TOA;
+package business.vehicle;
 
 import business.city.TCity;
 import business.vehicle.TVehicle;
@@ -11,4 +11,6 @@ public class TVehicleDetails {
         this.vehicle = vehicle;
         this.city = city;
     }
+
+    //TODO implementar getters necesarios
 }

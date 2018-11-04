@@ -1,6 +1,7 @@
 package business.rental.as.imp;
 
 import business.rental.TRental;
+import business.rental.TRentalDetails;
 import business.rental.as.ASRental;
 
 import java.util.Collection;
@@ -22,12 +23,12 @@ public class ASRentalImp implements ASRental {
     }
 
     @Override
-    public TRental show(Integer id) {
+    public TRentalDetails show(Integer id) {
         return null;
     }
 
     @Override
-    public Collection<TRental> showAll() {
+    public Collection<TRentalDetails> showAll() {
         return null;
     }
 }

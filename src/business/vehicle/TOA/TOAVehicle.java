@@ -1,14 +1,15 @@
-package business.vehicle.as.TOA;
+package business.vehicle.TOA;
 
 import business.city.TCity;
 import business.city.factory.ASCityFactory;
 import business.vehicle.TVehicle;
+import business.vehicle.TVehicleDetails;
 import business.vehicle.factory.ASVehicleFactory;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class TOAVehicleCity {
+public class TOAVehicle {
 
     public TVehicleDetails getVehicleDetails(Integer vehicleID){
         TVehicle vehicle = ASVehicleFactory.getInstance().generateASVehicle().show(vehicleID);

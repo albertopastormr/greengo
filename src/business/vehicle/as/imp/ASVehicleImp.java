@@ -1,6 +1,7 @@
 package business.vehicle.as.imp;
 
 import business.vehicle.TVehicle;
+import business.vehicle.TVehicleDetails;
 import business.vehicle.as.ASVehicle;
 
 import java.util.Collection;
@@ -23,17 +24,17 @@ public class ASVehicleImp implements ASVehicle {
     }
 
     @Override
-    public TVehicle show(Integer id) {
+    public TVehicleDetails show(Integer id) {
         return null;
     }
 
     @Override
-    public Collection<TVehicle> showAll() {
+    public Collection<TVehicleDetails> showAll() {
         return null;
     }
 
     @Override
-    public Collection<TVehicle> showAllActiveVehicles() {
+    public Collection<TVehicleDetails> showAllActiveVehicles() {
         return null;
     }
 }

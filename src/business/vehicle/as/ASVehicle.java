@@ -1,6 +1,7 @@
 package business.vehicle.as;
 
 import business.vehicle.TVehicle;
+import business.vehicle.TVehicleDetails;
 
 import java.util.Collection;
 
@@ -11,10 +12,10 @@ public interface ASVehicle {
 
     Integer update(TVehicle vehicle);
 
-    TVehicle show (Integer id);
+    TVehicleDetails show (Integer id);
 
-    Collection<TVehicle> showAll ();
+    Collection<TVehicleDetails> showAll ();
 
-    Collection<TVehicle> showAllActiveVehicles();
+    Collection<TVehicleDetails> showAllActiveVehicles();
 
 }
