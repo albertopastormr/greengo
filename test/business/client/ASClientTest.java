@@ -6,6 +6,7 @@ import business.IncorrectInputException;
 import business.client.as.ASClient;
 import business.client.factory.ASClientFactory;
 import business.rental.TRental;
+import business.rental.TRentalDetails;
 import business.rental.as.ASRental;
 import business.rental.factory.ASRentalFactory;
 import business.vehicle.TVehicle;
@@ -71,26 +72,34 @@ public class ASClientTest {
         Integer idV = asV.create(tv);
         Integer id = as.create(tc);
 
-        assertTrue(idV > 0);
-        assertTrue(as.show(idV).isActive());
-        assertTrue(id > 0);
-        assertTrue(as.show(id).isActive());
-
         tr.setIdClient(id);
         tr.setIdVehicle(idV);
         Integer idR = asR.create(tr);
 
-        assertTrue(idR > 0);
-        assertTrue(as.show(idR).isActive());
-
         as.drop(id);
-        assertTrue(as.showAll().isEmpty());
-        assertTrue(asR.showAll().isEmpty());
+        Collection<TRentalDetails> rentals = asR.showAll();
+        for(TRentalDetails r : rentals) {
+            if (r.getClient().getId().equals(id)) {
+                assertTrue(r.getVehicle().isActive());
+                assertFalse(r.getVehicle().isOccupied());
+                assertFalse(r.getRental().isActive());
+            }
+        }
     }
 
     @Test
-    public void dropClientIncorrectInput0(){
+    public void dropClientIncorrectInput1(){
+        assertThrows(IncorrectInputException.class, () -> {as.drop(null);} ); //id must be > 0
+    }
+
+    @Test
+    public void dropClientIncorrectInput2(){
         assertThrows(IncorrectInputException.class, () -> {as.drop(0);} ); //id must be > 0
+    }
+
+    @Test
+    public void dropClientIncorrectInput3(){
+        assertThrows(IncorrectInputException.class, () -> {as.drop(-1);} ); //id must be > 0
     }
 
     @Test
@@ -103,30 +112,18 @@ public class ASClientTest {
         Integer idC = as.create(tc);
         Integer idV = asV.create(tv);
 
-        assertTrue(idC > 0);
-        assertTrue(as.show(idC).isActive());
-        assertTrue(idV > 0);
-        assertTrue(as.show(idV).isActive());
-
         tr.setIdClient(idC);
         tr.setIdVehicle(idV);
         Integer idR = asR.create(tr);
-
-        assertTrue(idR > 0);
-        assertTrue(as.show(idR).isActive());
 
         assertThrows(ASException.class,()->{as.drop(idC);});
     }
 
 
     //Show method
-
     @Test
     public void showClientSuccessful(){
         Integer idC = as.create(tc);
-
-        assertTrue(idC > 0);
-        assertTrue(as.show(idC).isActive());
 
         TClient out = as.show(idC);
 
@@ -138,11 +135,16 @@ public class ASClientTest {
 
     @Test
     public void showClientIncorrectInputID1(){
-        assertThrows(IncorrectInputException.class, () -> {as.show(0);}); //id must be > 0
+        assertThrows(IncorrectInputException.class, () -> {as.show(null);}); //id must be > 0
     }
 
     @Test
     public void showClientIncorrectInputID2(){
+        assertThrows(IncorrectInputException.class, () -> {as.show(0); }); //id must be > 0
+    }
+
+    @Test
+    public void showClientIncorrectInputID3(){
         assertThrows(IncorrectInputException.class, () -> {as.show(-1); }); //id must be > 0
     }
 
@@ -156,14 +158,8 @@ public class ASClientTest {
     public void showAllClientsSuccessful() {
         Integer idC = as.create(tc);
 
-        assertTrue(idC > 0);
-        assertTrue(as.show(idC).isActive());
-
         TClient tc2 = new TClient(null, "11111111X", 0, false);
-        Integer idC2 = as.create(tc2);
-
-        assertTrue(idC2 > 0);
-        assertTrue(as.show(idC2).isActive());
+        as.create(tc2);
 
         Collection<TClient> collec = as.showAll();
         for (TClient tmp : collec) {
@@ -183,26 +179,19 @@ public class ASClientTest {
         return  tc.getIdCardNumber().equals(id_card_number) &&
                 tc.getNumRentals().equals(rentals_number) && tc.isActive();
     }
-    //showAllWithMoreNrentals method
 
+    //showAllWithMoreNrentals method
     @Test
     public void showAllClientsWithMoreNrentalsSuccessful(){
         final Integer N = 2;
         tc.setNumRentals(3);
-        Integer idC = as.create(tc);
-
-        assertTrue(idC > 0);
-        assertTrue(as.show(idC).isActive());
+        as.create(tc);
 
         TClient tc2 = new TClient(null, "11111111X", 2, false);
         Integer idC2 = as.create(tc2);
-        assertTrue(idC2 > 0);
-        assertTrue(as.show(idC2).isActive());
 
         TClient tc3 = new TClient(null, "11121111Y", 0, false);
         Integer idC3 = as.create(tc3);
-        assertTrue(idC3 > 0);
-        assertTrue(as.show(idC3).isActive());
 
         Collection<TClient> collec = as.showAllWithMoreThanNRentals(N);
         for(TClient tmp : collec){
@@ -211,18 +200,14 @@ public class ASClientTest {
             assertNotEquals(tmp.getId(),idC3);
         }
     }
+
     //Update method
     @Test
     public void updateClientSuccessful(){
         Integer idC = as.create(tc);
-        assertTrue(idC > 0);
-        assertTrue(as.show(idC).isActive());
 
         TClient updtClient = new TClient(idC,"11111111X",1,true);
         Integer idOut = as.update(updtClient);
-
-        assertTrue(idOut > 0);
-        assertTrue(as.show(idOut).isActive());
 
         TClient out = as.show(idOut);
 
@@ -233,9 +218,23 @@ public class ASClientTest {
     }
 
     @Test
-    public void updateClientIncorrectInputID(){
+    public void updateClientIncorrectInputID1(){
         //id can't be null and must be > 0
         tc.setId(null);
+        assertThrows(IncorrectInputException.class, () -> {as.update(tc);});
+    }
+
+    @Test
+    public void updateClientIncorrectInputID2(){
+        //id can't be null and must be > 0
+        tc.setId(0);
+        assertThrows(IncorrectInputException.class, () -> {as.update(tc);});
+    }
+
+    @Test
+    public void updateClientIncorrectInputID3(){
+        //id can't be null and must be > 0
+        tc.setId(-1);
         assertThrows(IncorrectInputException.class, () -> {as.update(tc);});
     }
 
@@ -262,7 +261,8 @@ public class ASClientTest {
 
     @Test
     public void updateClientIncorrectInputActive(){
-        //active must be true
+        //active must be true on the update operation, to deactivate the entity,
+        //it's necessary to use the drop operation
         tc.setActive(false);
         assertThrows(IncorrectInputException.class, () -> {as.update(tc);});
     }
