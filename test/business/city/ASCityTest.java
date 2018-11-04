@@ -8,6 +8,7 @@ import business.client.TClient;
 import business.client.as.ASClient;
 import business.client.factory.ASClientFactory;
 import business.rental.TRental;
+import business.rental.TRentalDetails;
 import business.rental.as.ASRental;
 import business.rental.factory.ASRentalFactory;
 import business.vehicle.TVehicle;
@@ -18,6 +19,7 @@ import integration.city.factory.DAOCityFactory;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.omg.CORBA.INTERNAL;
 
 import java.util.Collection;
 import java.util.Date;
@@ -27,16 +29,18 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class ASCityTest {
 
+    private static Date initD = new Date(1540373530000L);
+    private static Date endD = new Date(1543051930000L);
     private static ASCity 	as = ASCityFactory.getInstance().generateASCity();
 	private static TCity tc = new TCity(null,"Madrid",false);
     private static ASVehicle 	asV = ASVehicleFactory.getInstance().generateASVehicle();
     private static TVehicle tv = new TVehicle(null,"Audi",6000,0,
             false,null,false,"car");
-    private static ASClient asC = ASClientFactory.getInstance().generateASClient();
+    private static ASClient asClient = ASClientFactory.getInstance().generateASClient();
     private static TClient tclient = new TClient(null,"00000000X",0,false);
     private static ASRental asR = ASRentalFactory.getInstance().generateASRental();
     private static TRental tr = new TRental(null,null,false,
-            10,null,null,null);
+            10,null,initD,endD);
 
     @BeforeEach
 	private void setUp() throws Exception {
@@ -66,6 +70,7 @@ public class ASCityTest {
 	//EN FUNCION DE SI HAY CAMBIOS O NO EN LOS CASOS DE USO QUITARLO
 	@Test
 	public void createCityAlreadyExists(){
+        as.create(tc);
 		//city already exists
 		assertThrows(ASException.class, () -> {as.create(tc);});
 	}
@@ -76,27 +81,22 @@ public class ASCityTest {
 	public void dropCitySuccessful(){
         Integer idV = asV.create(tv);
 		Integer id = as.create(tc);
-		Integer idC = asC.create(tclient);
-
-		assertTrue(id > 0);
-		assertTrue(as.show(id).isActive());
-		assertTrue(idV > 0);
-		assertTrue(as.show(idV).isActive());
-		assertTrue(idC > 0);
-		assertTrue(as.show(idC).isActive());
-
+		Integer idClient = asClient.create(tclient);
+		tv.setCity(id);
 		tr.setIdVehicle(idV);
-		tr.setIdClient(idC);
-		Integer idR = asR.create(tr);
+		tr.setIdClient(idClient);
+        asR.create(tr);
 
-		assertTrue(idR > 0);
-		assertTrue(as.show(idR).isActive());
+        Integer tmp = as.drop(id);
+        assertEquals(id,tmp);
+        Collection<TRentalDetails> allRentals = asR.showAll();
 
-		assertTrue(as.showAll().isEmpty());
-		assertTrue(as.showClientsByCity(id).isEmpty());
-		assertTrue(asV.showAll().isEmpty());
-		assertTrue(asR.showAll().isEmpty());
-	}
+        for(TRentalDetails r : allRentals){
+            assertFalse(r.getRental().isActive());
+            assertFalse(r.getClient().isActive());
+            assertFalse(r.getVehicle().isActive());
+        }
+    }
 
 
 	@Test
@@ -121,20 +121,13 @@ public class ASCityTest {
 	public void dropCityAlreadyInactive(){
 		Integer id = as.create(tc);
 
-		assertTrue(id > 0);
-		assertTrue(as.show(id).isActive());
-
 		as.drop(id);
-
 		assertThrows(ASException.class, () -> {as.drop(id);});
 	}
 
 	@Test
 	public void dropCityWithActiveVehicles(){
 		Integer id = as.create(tc);
-
-		assertTrue(id > 0);
-		assertTrue(as.show(id).isActive());
 
 		tv.setId(id);
 		asV.create(tv);
@@ -147,9 +140,6 @@ public class ASCityTest {
 	@Test
 	public void showCitySuccessful(){
 		Integer id = as.create(tc);
-
-		assertTrue(id > 0);
-		assertTrue(as.show(id).isActive());
 
 		TCity tmp = as.show(id);
 
@@ -181,16 +171,10 @@ public class ASCityTest {
 	public void showAllCitySuccessful1(){
 		Integer idMad = as.create(tc);
 
-		assertTrue(idMad > 0);
-		assertTrue(as.show(idMad).isActive());
-
 		tc.setId(idMad);
 		tc.setName("Barcelona");
 
 		Integer idBcn = as.create(tc);
-
-		assertTrue(idBcn > 0);
-		assertTrue(as.show(idBcn).isActive());
 
 		tc.setId(idBcn);
 
@@ -205,94 +189,61 @@ public class ASCityTest {
 		}
 	}
 
-    private boolean checkTransferValues(TCity out, String city) {
-	    return out.getName().equals(city) && out.isActive();
-    }
-
     @Test
 	public void showAllCitySuccessful2(){
 		Collection<TCity> c = as.showAll();
 		assertTrue(c.isEmpty());
 	}
 
+    private boolean checkTransferValues(TCity out, String city) {
+        return out.getName().equals(city) && out.isActive();
+    }
+
 	//showClientsByCity method
 	@Test
 	public void showClientsByCitySuccessful(){
-        Date initD = new Date(1540373530000L);
-        Date endD = new Date(1543051930000L);
-
-        tr.setDateFrom(initD);
-        tr.setDateTo(endD);
 
         //data for city 1
-		Integer idC = asC.create(tclient);
-
-		assertTrue(idC > 0);
-		assertTrue(as.show(idC).isActive());
-
+		Integer idClient = asClient.create(tclient);
         Integer idCity = as.create(tc);
-		assertTrue(idCity > 0);
-		assertTrue(as.show(idCity).isActive());
 
         tv.setCity(idCity);
-
 		Integer idV = asV.create(tv);
-		assertTrue(idV > 0);
-		assertTrue(as.show(idV).isActive());
 
-		tr.setIdClient(idC);
+		tr.setIdClient(idClient);
 		tr.setIdVehicle(idV);
-        Integer idR = asR.create(tr);
-
-		assertTrue(idR > 0);
-		assertTrue(as.show(idR).isActive());
+        asR.create(tr);
 
         //data for city 2
         tclient.setIdCardNumber("11111111X");
-        Integer idCFail = asC.create(tclient);
+        Integer idClientFail = asClient.create(tclient);
 
-		assertTrue(idCFail > 0);
-		assertTrue(as.show(idCFail).isActive());
-
-        tc.setName("Barcelona");
+		tc.setName("Barcelona");
         Integer idCity2 = as.create(tc);
 
-		assertTrue(idCity2 > 0);
-		assertTrue(as.show(idCity2).isActive());
-
-       	tv.setCity(idCity2);
+        tv.setCity(idCity2);
        	Integer idVFail = asV.create(tv);
-		assertTrue(idVFail > 0);
-		assertTrue(as.show(idVFail).isActive());
 
         tr.setIdVehicle(idVFail);
-        tr.setIdClient(idCFail);
-        Integer idR2 = asR.create(tr);
-		assertTrue(idR2 > 0);
-		assertTrue(as.show(idR2).isActive());
+        tr.setIdClient(idClientFail);
+        asR.create(tr);
 
         Collection<TClient> out = as.showClientsByCity(idCity);
 
         for(TClient client : out){
-            assertEquals(client.getId(), idC); //city 1
-            assertNotEquals(client.getId(),idCFail); //city 2
+            assertEquals(client.getId(), idClient); //city 1
+            assertNotEquals(client.getId(),idClientFail); //city 2
         }
 	}
 
 	//update method tests
 	@Test
 	public void updateCitySuccessful(){
-		Integer idC = as.create(tc);
-
-		assertTrue(idC > 0);
-		assertTrue(as.show(idC).isActive());
+		as.create(tc);
 
 		tc.setName("Barcelona");
 		tc.setActive(true);
 		Integer id = as.update(tc);
-
-		assertTrue(id > 0);
-		assertTrue(as.show(id).isActive());
 
 		assertEquals(id,tc.getId());
 
@@ -300,15 +251,22 @@ public class ASCityTest {
 		assertEquals(tmp.getName(),tc.getName());
 	}
 
+    @Test
+    public void updateCityIncorrectInputID1(){
+        tc.setId(null);//id must be > 0
+        tc.setActive(true);
+        assertThrows(IncorrectInputException.class, () -> {as.update(tc);});
+    }
+
 	@Test
-	public void updateCityIncorrectInput1(){
+	public void updateCityIncorrectInputID2(){
 		tc.setId(0);//id must be > 0
         tc.setActive(true);
 		assertThrows(IncorrectInputException.class, () -> {as.update(tc);});
 	}
 
 	@Test
-	public void updateCityIncorrectInput2(){
+	public void updateCityIncorrectInputID3(){
 		tc.setId(-1); //id must be > 0
         tc.setActive(true);
 		assertThrows(IncorrectInputException.class, () -> {as.update(tc);});

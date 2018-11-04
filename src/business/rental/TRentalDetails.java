@@ -19,6 +19,19 @@ public class TRentalDetails {
 
     //TODO implement all the necessary getters.
 
+
+    public TClient getClient() {
+        return client;
+    }
+
+    public TRental getRental() {
+        return rental;
+    }
+
+    public TVehicle getVehicle() {
+        return vehicle;
+    }
+
     @Override
     public String toString(){
 
