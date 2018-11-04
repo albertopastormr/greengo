@@ -13,4 +13,7 @@ public class TVehicleDetails {
     }
 
     //TODO implementar getters necesarios
+    public TVehicle getVehicle(){
+        return vehicle;
+    }
 }

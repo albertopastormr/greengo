@@ -16,7 +16,7 @@ public class TOARental {
     public TRentalDetails getRentalDetails(Integer idRental){
         TRental rental = DAORentalFactory.getInstance().generateDAORental().readById(idRental);
         TClient client = ASClientFactory.getInstance().generateASClient().show(rental.getIdClient());
-        TVehicle vehicle = ASVehicleFactory.getInstance().generateASVehicle().show(rental.getIdVehicle());
+        TVehicle vehicle = ASVehicleFactory.getInstance().generateASVehicle().show(rental.getIdVehicle()).getVehicle();
 
         return new TRentalDetails(client,rental,vehicle);
     }
@@ -27,7 +27,7 @@ public class TOARental {
 
         for(TRental rental : rentals){
             TClient client = ASClientFactory.getInstance().generateASClient().show(rental.getIdClient());
-            TVehicle vehicle = ASVehicleFactory.getInstance().generateASVehicle().show(rental.getIdVehicle());
+            TVehicle vehicle = ASVehicleFactory.getInstance().generateASVehicle().show(rental.getIdVehicle()).getVehicle();
             details.add(new TRentalDetails(client,rental,vehicle));
         }
 

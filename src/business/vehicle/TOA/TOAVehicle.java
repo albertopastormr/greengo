@@ -12,20 +12,20 @@ import java.util.Collection;
 public class TOAVehicle {
 
     public TVehicleDetails getVehicleDetails(Integer vehicleID){
-        TVehicle vehicle = ASVehicleFactory.getInstance().generateASVehicle().show(vehicleID);
+        TVehicle vehicle = ASVehicleFactory.getInstance().generateASVehicle().show(vehicleID).getVehicle();
         TCity city = ASCityFactory.getInstance().generateASCity().show(vehicle.getCity());
 
         return new TVehicleDetails(vehicle,city);
     }
 
     public Collection<TVehicleDetails> getAllVehiclesDetails(){
-        Collection<TVehicle> vehicles = ASVehicleFactory.getInstance().generateASVehicle().showAll();
+        Collection<TVehicleDetails> vehicles = ASVehicleFactory.getInstance().generateASVehicle().showAll();
         Collection<TVehicleDetails> details = new ArrayList<>();
 
-        for(TVehicle vehicle : vehicles){
-            Integer cityID = vehicle.getCity();
+        for(TVehicleDetails vehicle : vehicles){
+            Integer cityID = vehicle.getVehicle().getCity();
             TCity city = ASCityFactory.getInstance().generateASCity().show(cityID);
-            details.add(new TVehicleDetails(vehicle,city));
+            details.add(new TVehicleDetails(vehicle.getVehicle(),city));
         }
 
         return details;
