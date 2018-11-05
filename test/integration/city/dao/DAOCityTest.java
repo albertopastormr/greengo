@@ -35,7 +35,7 @@ public class DAOCityTest {
 
     //create method
     @Test
-    public void createCity(){
+    public void createCity() throws DAOException {
         Integer idM = dao.create(tc1);
         Integer idB = dao.create(tc2);
 
@@ -43,9 +43,11 @@ public class DAOCityTest {
         assertEquals((Integer)2,idB);
     }
 
+
+
     //Update method
     @Test
-    public void updateCitySuccessfulName(){
+    public void updateCitySuccessfulName() throws DAOException {
         Integer idM = dao.create(tc1);
         tc1.setId(idM);
         tc1.setName("Valencia");
@@ -59,7 +61,7 @@ public class DAOCityTest {
     }
 
     @Test
-    public void updateCitySuccessfulActive(){
+    public void updateCitySuccessfulActive() throws DAOException {
         Integer idM = dao.create(tc1);
         tc1.setId(idM);
         tc1.setActive(false);
@@ -73,7 +75,7 @@ public class DAOCityTest {
     }
 
     @Test
-    public void updateCityNotExists(){
+    public void updateCityNotExists() throws DAOException {
         Integer idM = dao.create(tc1);
         tc1.setId(2);
         tc1.setName("Valencia");
@@ -83,7 +85,7 @@ public class DAOCityTest {
 
     //ReadByID method
     @Test
-    public void readByIdSuccessful(){
+    public void readByIdSuccessful() throws DAOException {
         Integer idM = dao.create(tc1);
 
         TCity tInDB = dao.readById(idM);
@@ -91,7 +93,7 @@ public class DAOCityTest {
     }
 
     @Test
-    public void readAllSuccessful1(){
+    public void readAllSuccessful1() throws DAOException {
         Integer idM = dao.create(tc1);
         Integer idB = dao.create(tc2);
 
@@ -106,7 +108,7 @@ public class DAOCityTest {
     }
 
     @Test
-    public void readAllSuccessful2(){
+    public void readAllSuccessful2() throws DAOException {
         Collection<TCity> cities = dao.readAll();
         assertTrue(cities.isEmpty());
     }
@@ -114,7 +116,7 @@ public class DAOCityTest {
 
     //Show clients by city method
     @Test
-    public void showClientsByCity1() throws ASException {
+    public void showClientsByCity1() throws ASException, DAOException {
         Integer idM = dao.create(tc1);
         Integer idClient = asClient.create(tclient);
 
@@ -128,7 +130,7 @@ public class DAOCityTest {
     }
 
     @Test
-    public void showClientsByCity2() throws ASException {
+    public void showClientsByCity2() throws DAOException {
         Integer idM = dao.create(tc1);
 
         Collection<TClient> clients = dao.showClientsByCity(idM);

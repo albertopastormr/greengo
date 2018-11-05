@@ -2,16 +2,21 @@ package integration.city.dao;
 
 import business.city.TCity;
 import business.client.TClient;
+import integration.DAOException;
+
 import java.util.Collection;
 
 public interface DAOCity {
-    Integer create(TCity city);
 
-    Integer update(TCity city);
+    Integer create(TCity city) throws DAOException;
 
-    TCity readById(Integer id) ;
+    Integer update(TCity city) throws DAOException;
 
-    Collection<TCity> readAll();
+    TCity readById(Integer id) throws DAOException;
 
-    Collection<TClient> showClientsByCity(Integer idCity);
+    Collection<TCity> readAll() throws DAOException;
+
+    Collection<TClient> showClientsByCity(Integer idCity) throws DAOException;
+
+    public void deleteAll() throws DAOException;
 }

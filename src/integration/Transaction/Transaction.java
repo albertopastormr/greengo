@@ -11,4 +11,6 @@ public interface Transaction {
     public void rollback();
 
     public Connection getResource();
+
+    public String getConnectionChain();
 }
