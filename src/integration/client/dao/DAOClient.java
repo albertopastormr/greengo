@@ -13,6 +13,8 @@ public interface DAOClient {
 
     TClient readById(Integer id) ;
 
+    TClient readByIdCard(String idCard);
+
     Collection<TClient> readAll();
 
     Collection<TClient> readByNRentals(Integer N);

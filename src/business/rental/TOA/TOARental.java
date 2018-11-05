@@ -1,5 +1,6 @@
 package business.rental.TOA;
 
+import business.ASException;
 import business.client.TClient;
 import business.client.factory.ASClientFactory;
 import business.rental.TRental;
@@ -13,7 +14,7 @@ import java.util.Collection;
 
 public class TOARental {
 
-    public TRentalDetails getRentalDetails(Integer idRental){
+    public TRentalDetails getRentalDetails(Integer idRental) throws ASException {
         TRental rental = DAORentalFactory.getInstance().generateDAORental().readById(idRental);
         TClient client = ASClientFactory.getInstance().generateASClient().show(rental.getIdClient());
         TVehicle vehicle = ASVehicleFactory.getInstance().generateASVehicle().show(rental.getIdVehicle()).getVehicle();
@@ -21,7 +22,7 @@ public class TOARental {
         return new TRentalDetails(client,rental,vehicle);
     }
 
-    public Collection<TRentalDetails> getAllRentalsDetails(){
+    public Collection<TRentalDetails> getAllRentalsDetails() throws ASException {
         Collection<TRental> rentals = DAORentalFactory.getInstance().generateDAORental().readAll();
         Collection<TRentalDetails> details = new ArrayList<>();
 

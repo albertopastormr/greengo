@@ -23,6 +23,9 @@ public class DAOClientImp implements DAOClient {
     }
 
     @Override
+    public TClient readByIdCard(String idCard) { return null; }
+
+    @Override
     public Collection<TClient> readAll() {
         return null;
     }

@@ -78,7 +78,7 @@ public class ASCityTest {
 	//drop method tests
 
 	@Test
-	public void dropCitySuccessful(){
+	public void dropCitySuccessful() throws ASException {
         Integer idV = asV.create(tv);
 		Integer id = as.create(tc);
 		Integer idClient = asClient.create(tclient);
@@ -201,7 +201,7 @@ public class ASCityTest {
 
 	//showClientsByCity method
 	@Test
-	public void showClientsByCitySuccessful(){
+	public void showClientsByCitySuccessful() throws ASException {
 
         //data for city 1
 		Integer idClient = asClient.create(tclient);

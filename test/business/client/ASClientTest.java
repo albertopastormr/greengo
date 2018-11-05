@@ -33,16 +33,16 @@ public class ASClientTest {
     private static ASRental asR = ASRentalFactory.getInstance().generateASRental();
     private static TRental tr = new TRental(null,null,false,10,null,dFrom,dTo);
 
-    @BeforeEach
+   /* @BeforeEach
     private void setUp() throws Exception{
         DAOClient dao = DAOClientFactory.getInstance().generateDAOClient();
         dao.deleteAll();
 
-    }
+    }*/
 
     //Create method
     @Test
-    public void createClientSuccessful(){
+    public void createClientSuccessful() throws ASException {
        assertTrue(as.create(tc)>0);
     }
 
@@ -68,7 +68,7 @@ public class ASClientTest {
 
     //Drop method
     @Test
-    public void dropSuccessful(){
+    public void dropSuccessful() throws ASException {
         Integer idV = asV.create(tv);
         Integer id = as.create(tc);
 
@@ -108,7 +108,7 @@ public class ASClientTest {
     }
 
     @Test
-    public void dropClientWithActiveRentals(){
+    public void dropClientWithActiveRentals() throws ASException {
         Integer idC = as.create(tc);
         Integer idV = asV.create(tv);
 
@@ -122,7 +122,7 @@ public class ASClientTest {
 
     //Show method
     @Test
-    public void showClientSuccessful(){
+    public void showClientSuccessful() throws ASException {
         Integer idC = as.create(tc);
 
         TClient out = as.show(idC);
@@ -155,7 +155,7 @@ public class ASClientTest {
 
     //showAll method
     @Test
-    public void showAllClientsSuccessful() {
+    public void showAllClientsSuccessful() throws ASException {
         Integer idC = as.create(tc);
 
         TClient tc2 = new TClient(null, "11111111X", 0, false);
@@ -182,7 +182,7 @@ public class ASClientTest {
 
     //showAllWithMoreNrentals method
     @Test
-    public void showAllClientsWithMoreNrentalsSuccessful(){
+    public void showAllClientsWithMoreNrentalsSuccessful() throws ASException {
         final Integer N = 2;
         tc.setNumRentals(3);
         as.create(tc);
@@ -203,7 +203,7 @@ public class ASClientTest {
 
     //Update method
     @Test
-    public void updateClientSuccessful(){
+    public void updateClientSuccessful() throws ASException {
         Integer idC = as.create(tc);
 
         TClient updtClient = new TClient(idC,"11111111X",1,true);

@@ -38,7 +38,7 @@ public class ASRentalTest {
 
     //create method
     @Test
-    public void createRentalSuccessful(){
+    public void createRentalSuccessful() throws ASException {
         Integer idV = asV.create(tv);
         Integer idC = asC.create(tc);
         tr.setIdClient(idC);
@@ -50,7 +50,7 @@ public class ASRentalTest {
     }
 
     @Test
-    public void createRentalIncorrectInputID(){
+    public void createRentalIncorrectInputID() throws ASException {
         Integer idV = asV.create(tv);
         Integer idC = asC.create(tc);
         tr.setIdClient(idC);
@@ -62,7 +62,7 @@ public class ASRentalTest {
     }
 
     @Test
-    public void createRentalIncorrectInputIDVehicle1(){
+    public void createRentalIncorrectInputIDVehicle1() throws ASException {
         Integer idC = asC.create(tc);
         tr.setIdClient(idC);
 
@@ -72,7 +72,7 @@ public class ASRentalTest {
     }
 
     @Test
-    public void createRentalIncorrectInputIDVehicle2(){
+    public void createRentalIncorrectInputIDVehicle2() throws ASException {
         Integer idC = asC.create(tc);
         tr.setIdClient(idC);
 
@@ -82,7 +82,7 @@ public class ASRentalTest {
     }
 
     @Test
-    public void createRentalIncorrectInputIDVehicle3(){
+    public void createRentalIncorrectInputIDVehicle3() throws ASException {
         Integer idC = asC.create(tc);
         tr.setIdClient(idC);
 
@@ -92,7 +92,7 @@ public class ASRentalTest {
     }
 
     @Test
-    public void createRentalIncorrectInputActive(){
+    public void createRentalIncorrectInputActive() throws ASException {
         Integer idV = asV.create(tv);
         Integer idC = asC.create(tc);
         tr.setIdClient(idC);
@@ -103,7 +103,7 @@ public class ASRentalTest {
     }
 
     @Test
-    public void createRentalIncorrectInputNumKmRented1(){
+    public void createRentalIncorrectInputNumKmRented1() throws ASException {
         Integer idV = asV.create(tv);
         Integer idC = asC.create(tc);
         tr.setIdClient(idC);
@@ -114,7 +114,7 @@ public class ASRentalTest {
     }
 
      @Test
-    public void createRentalIncorrectInputNumKmRented2(){
+    public void createRentalIncorrectInputNumKmRented2() throws ASException {
         Integer idV = asV.create(tv);
         Integer idC = asC.create(tc);
         tr.setIdClient(idC);
@@ -152,7 +152,7 @@ public class ASRentalTest {
     }
 
     @Test
-    public void createRentalIncorrectInputDateFrom(){
+    public void createRentalIncorrectInputDateFrom() throws ASException {
         Integer idV = asV.create(tv);
         Integer idC = asC.create(tc);
         tr.setIdClient(idC);
@@ -163,7 +163,7 @@ public class ASRentalTest {
     }
 
     @Test
-    public void createRentalIncorrectInputDateTo(){
+    public void createRentalIncorrectInputDateTo() throws ASException {
         Integer idV = asV.create(tv);
         Integer idC = asC.create(tc);
         tr.setIdClient(idC);
@@ -174,7 +174,7 @@ public class ASRentalTest {
     }
 
     @Test
-    public void createRentalVehicleNotExists(){
+    public void createRentalVehicleNotExists() throws ASException {
         Integer idC = asC.create(tc);
         tr.setIdClient(idC);
 
@@ -183,7 +183,7 @@ public class ASRentalTest {
     }
 
     @Test
-    public void createRentalVehicleNotActive(){
+    public void createRentalVehicleNotActive() throws ASException {
         Integer idV = asV.create(tv);
         asV.drop(idV);
         Integer idC = asC.create(tc);
@@ -194,7 +194,7 @@ public class ASRentalTest {
     }
 
     @Test
-    public void createRentalDatesNotValidForVehicle(){
+    public void createRentalDatesNotValidForVehicle() throws ASException {
         Integer idV = asV.create(tv);
         Integer idC = asC.create(tc);
         tr.setIdClient(idC);
@@ -217,7 +217,7 @@ public class ASRentalTest {
     }
 
     @Test
-    public void createRentalClientNotActive(){
+    public void createRentalClientNotActive() throws ASException {
         Integer idV = asV.create(tv);
         Integer idC = asC.create(tc);
         asC.drop(idC);
@@ -228,7 +228,7 @@ public class ASRentalTest {
     }
 
     @Test
-    public void createRentalDatesNotValidForClient(){
+    public void createRentalDatesNotValidForClient() throws ASException {
         Integer idV = asV.create(tv);
         Integer idC = asC.create(tc);
         tr.setIdClient(idC);
@@ -243,7 +243,7 @@ public class ASRentalTest {
     }
 
     @Test
-    public void createRentalKmRentedExceedVehicleEstimatedDuration(){
+    public void createRentalKmRentedExceedVehicleEstimatedDuration() throws ASException {
         Integer idV = asV.create(tv);
         Integer idC = asC.create(tc);
         tr.setIdClient(idC);
@@ -256,7 +256,7 @@ public class ASRentalTest {
     //Drop method
 
     @Test
-    public void dropRentalSuccessful(){
+    public void dropRentalSuccessful() throws ASException {
         Integer idV = asV.create(tv);
         Integer idC = asC.create(tc);
         tr.setIdClient(idC);
@@ -290,7 +290,7 @@ public class ASRentalTest {
     }
 
     @Test
-    public void dropRentalAlreadyInactive(){
+    public void dropRentalAlreadyInactive() throws ASException {
         Integer idV = asV.create(tv);
         Integer idC = asC.create(tc);
         tr.setIdClient(idC);

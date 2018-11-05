@@ -178,7 +178,7 @@ public class ASVehicleTest {
     }
 
     @Test
-    public void dropVehicleWithActiveRentals(){
+    public void dropVehicleWithActiveRentals() throws ASException {
         Integer idC = asClient.create(tClient);
         Integer idV = as.create(tv);
 
