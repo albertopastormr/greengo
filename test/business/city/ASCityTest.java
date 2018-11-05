@@ -118,7 +118,7 @@ public class ASCityTest {
 	}
 
 	@Test
-	public void dropCityAlreadyInactive(){
+	public void dropCityAlreadyInactive() throws ASException{
 		Integer id = as.create(tc);
 
 		as.drop(id);
@@ -138,7 +138,7 @@ public class ASCityTest {
 
 	//show method tests
 	@Test
-	public void showCitySuccessful(){
+	public void showCitySuccessful() throws ASException{
 		Integer id = as.create(tc);
 
 		TCity tmp = as.show(id);
@@ -238,7 +238,7 @@ public class ASCityTest {
 
 	//update method tests
 	@Test
-	public void updateCitySuccessful(){
+	public void updateCitySuccessful() throws ASException{
 		as.create(tc);
 
 		tc.setName("Barcelona");
