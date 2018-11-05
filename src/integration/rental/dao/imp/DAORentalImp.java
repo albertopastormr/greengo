@@ -1,5 +1,6 @@
 package integration.rental.dao.imp;
 
+import business.client.TClient;
 import business.rental.TRental;
 import integration.rental.dao.DAORental;
 
@@ -21,6 +22,10 @@ public class DAORentalImp implements DAORental {
         return null;
     }
 
+    @Override
+    public Collection<TClient> showRentalsByClient(Integer id) {
+        return null;
+    }
     @Override
     public Collection<TRental> readAll() {
         return null;

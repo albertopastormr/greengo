@@ -5,6 +5,7 @@ import business.client.TClient;
 import business.client.as.ASClient;
 import integration.Transaction.Transaction;
 import integration.client.factory.DAOClientFactory;
+import integration.rental.factory.DAORentalFactory;
 import integration.transactionManager.TransactionManager;
 
 import java.util.Collection;
@@ -39,7 +40,9 @@ public class ASClientImp implements ASClient {
         if(tr!=null) {
             tr.start();
             TClient tl = DAOClientFactory.getInstance().generateDAOClient().readById(id);
-            if (tl != null && tl.isActive()) {//the client exists and is active
+            Collection<TClient> listClients = DAORentalFactory.getInstance().generateDAORental().showRentalsByClient(id);
+
+            if (tl != null && tl.isActive() && listClients.size()==0) {//the client exists and is active, and the client hasn't got active rentals
                 idc = DAOClientFactory.getInstance().generateDAOClient().update(tl);
                 tr.commit();
                 TransactionManager.getInstance().removeTransaction();
@@ -47,7 +50,8 @@ public class ASClientImp implements ASClient {
                 tr.rollback();
                 TransactionManager.getInstance().removeTransaction();
                 if(tl == null) throw new ASException("The client doesn't exists");
-                else if ( tl!= null && !tl.isActive()) throw new ASException("The client is already disabled");
+                else if (!tl.isActive()) throw new ASException("The client is already disabled");
+                else if (listClients.size() > 0)  throw new ASException("The client has enabled rentals");
             }
         }
         return idc;
@@ -71,7 +75,7 @@ public class ASClientImp implements ASClient {
                 tr.rollback();
                 TransactionManager.getInstance().removeTransaction();
                 if(tl == null) throw new ASException("The client doesn't exists");
-                else if ( tl!= null && tn != null ) throw new ASException("Exists other client with the same idCard");
+                else throw new ASException("Exists other client with the same idCard");
             }
         }
         return idc;
