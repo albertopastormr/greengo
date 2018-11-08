@@ -38,11 +38,11 @@ public class ASVehicleImp implements ASVehicle {
 
                 if(vehicle.getType().equals("Bicycle")) {
                     TBicycleVehicle tb = (TBicycleVehicle) vehicle;
-                    tVehicle = DAOVehicleFactory.getInstance().generateDAOVehicle().showByPlate(tb.getSerialNumber());
+                    tVehicle = DAOVehicleFactory.getInstance().generateDAOVehicle().showByPlateOrSerial(tb.getSerialNumber());
                 }
                 else{
                     TCarVehicle tv = (TCarVehicle) vehicle;
-                    tVehicle = DAOVehicleFactory.getInstance().generateDAOVehicle().showByPlate(tv.getPlate());
+                    tVehicle = DAOVehicleFactory.getInstance().generateDAOVehicle().showByPlateOrSerial(tv.getPlate());
                 }
 
                 idv = DAOVehicleFactory.getInstance().generateDAOVehicle().create(tVehicle);
@@ -89,7 +89,7 @@ public class ASVehicleImp implements ASVehicle {
                     if (tv == null) throw new ASException("The vehicle doesn't exists");
                     else if (!tv.isActive()) throw new ASException("The vehicle is already disabled");
                 }
-            }catch (ASException | TransactionException e) {
+            }catch (DAOException | ASException | TransactionException e) {
                 throw new ASException(e.getMessage());
             }
         }
@@ -121,7 +121,7 @@ public class ASVehicleImp implements ASVehicle {
                     TransactionManager.getInstance().removeTransaction();
                     throw new ASException("The vehicle doesn't exists");
                 }
-            }catch (ASException | TransactionException e) {
+            }catch (DAOException | ASException | TransactionException e) {
                 throw new ASException(e.getMessage());
             }
         }else
@@ -147,7 +147,7 @@ public class ASVehicleImp implements ASVehicle {
                 tr.commit();
                 TransactionManager.getInstance().removeTransaction();
                 if (tv == null) throw new ASException("The vehicle doesn't exists");
-            }catch (TransactionException | ASException | DAOException e) {
+            }catch (DAOException | TransactionException | ASException | DAOException e) {
                 throw new ASException(e.getMessage());
             }
         }else
@@ -185,7 +185,7 @@ public class ASVehicleImp implements ASVehicle {
     }
 
     @Override
-    public Collection<TVehicleDetails> showAllActiveVehicles() {
+    public Collection<TVehicleDetails> showAllAvaiableVehicles() {
         return null;
     }
 }

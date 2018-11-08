@@ -17,6 +17,6 @@ public interface ASVehicle {
 
     Collection<TVehicleDetails> showAll () throws ASException;
 
-    Collection<TVehicleDetails> showAllActiveVehicles();
+    Collection<TVehicleDetails> showAllAvaiableVehicles();
 
 }
