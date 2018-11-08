@@ -15,4 +15,6 @@ public interface DAOVehicle {
 
     Collection<TVehicle> showAllActiveVehicles();
 
+    void deleteAll();
+
 }

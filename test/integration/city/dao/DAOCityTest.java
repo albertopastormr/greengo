@@ -14,7 +14,7 @@ import java.util.Collection;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class DAOCityTest {
+class DAOCityTest {
 
     private static DAOCity dao = DAOCityFactory.getInstance().generateDAOCity();
     private static TCity tc1 = new TCity(null,"Madrid",false);
@@ -35,7 +35,7 @@ public class DAOCityTest {
 
     //create method
     @Test
-    public void createCity() throws DAOException {
+    void createCity() throws DAOException {
         Integer idM = dao.create(tc1);
         Integer idB = dao.create(tc2);
 
@@ -47,7 +47,7 @@ public class DAOCityTest {
 
     //Update method
     @Test
-    public void updateCitySuccessfulName() throws DAOException {
+    void updateCitySuccessfulName() throws DAOException {
         Integer idM = dao.create(tc1);
         tc1.setId(idM);
         tc1.setName("Valencia");
@@ -61,7 +61,7 @@ public class DAOCityTest {
     }
 
     @Test
-    public void updateCitySuccessfulActive() throws DAOException {
+    void updateCitySuccessfulActive() throws DAOException {
         Integer idM = dao.create(tc1);
         tc1.setId(idM);
         tc1.setActive(false);
@@ -75,7 +75,7 @@ public class DAOCityTest {
     }
 
     @Test
-    public void updateCityNotExists() throws DAOException {
+    void updateCityNotExists() throws DAOException {
         Integer idM = dao.create(tc1);
         tc1.setId(2);
         tc1.setName("Valencia");
@@ -85,7 +85,7 @@ public class DAOCityTest {
 
     //ReadByID method
     @Test
-    public void readByIdSuccessful() throws DAOException {
+    void readByIdSuccessful() throws DAOException {
         Integer idM = dao.create(tc1);
 
         TCity tInDB = dao.readById(idM);
@@ -93,7 +93,7 @@ public class DAOCityTest {
     }
 
     @Test
-    public void readAllSuccessful1() throws DAOException {
+    void readAllSuccessful1() throws DAOException {
         Integer idM = dao.create(tc1);
         Integer idB = dao.create(tc2);
 
@@ -101,14 +101,14 @@ public class DAOCityTest {
 
         for(TCity c : cities){
             if(tc1.getId().equals(c.getId()))
-                checkValues(tc1,c);
+               assertTrue(checkValues(tc1,c));
             else
-                checkValues(tc2,c);
+                assertTrue(checkValues(tc2,c));
         }
     }
 
     @Test
-    public void readAllSuccessful2() throws DAOException {
+    void readAllSuccessful2() throws DAOException {
         Collection<TCity> cities = dao.readAll();
         assertTrue(cities.isEmpty());
     }
@@ -116,7 +116,7 @@ public class DAOCityTest {
 
     //Show clients by city method
     @Test
-    public void showClientsByCity1() throws ASException, DAOException {
+    void showClientsByCity1() throws ASException, DAOException {
         Integer idM = dao.create(tc1);
         Integer idClient = asClient.create(tclient);
 
@@ -130,7 +130,7 @@ public class DAOCityTest {
     }
 
     @Test
-    public void showClientsByCity2() throws DAOException {
+    void showClientsByCity2() throws DAOException {
         Integer idM = dao.create(tc1);
 
         Collection<TClient> clients = dao.showClientsByCity(idM);

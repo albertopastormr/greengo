@@ -16,4 +16,6 @@ public interface DAORental {
 
     Collection<TRental> readAll();
 
+    void deleteAll();
+
 }

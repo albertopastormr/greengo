@@ -2,7 +2,6 @@ package integration.client.dao;
 
 
 import business.client.TClient;
-import business.rental.TRental;
 
 import java.util.Collection;
 
@@ -18,6 +17,8 @@ public interface DAOClient {
     Collection<TClient> readAll();
 
     Collection<TClient> readByNRentals(Integer N);
+
+    void deleteAll();
 
 
 }
