@@ -16,4 +16,8 @@ public interface ASRental {
     TRentalDetails show (Integer id) throws ASException;
 
     Collection<TRentalDetails> showAll () throws ASException;
+
+    TRentalDetails getRentalDetails(Integer idRental) throws ASException;
+
+    Collection<TRentalDetails> getAllRentalsDetails() throws ASException;
 }
