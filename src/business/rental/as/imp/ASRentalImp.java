@@ -62,6 +62,7 @@ public class ASRentalImp implements ASRental {
                 tr.start();
                 TRental tl = DAORentalFactory.getInstance().generateDAORental().readById(id);
                 if (tl != null && tl.isActive()) {//the rental exists and is active
+                    tl.setActive(false);
                     idr = DAORentalFactory.getInstance().generateDAORental().update(tl);
                     tr.commit();
                     TransactionManager.getInstance().removeTransaction();
