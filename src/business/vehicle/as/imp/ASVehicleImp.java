@@ -187,8 +187,33 @@ public class ASVehicleImp implements ASVehicle {
     }
 
     @Override
-    public Collection<TVehicleDetails> showAllAvailableVehicles() {
-        return null;
+    public Collection<TVehicleDetails> showAllAvailableVehicles() throws ASException {
+
+        Collection<TVehicleDetails> retList = new ArrayList<>();
+        Collection<TVehicle> vehicleList = null;
+        Transaction tr = TransactionManager.getInstance().createTransaction();
+
+        if(tr != null) {
+            try {
+                tr.start();
+                vehicleList = DAOVehicleFactory.getInstance().generateDAOVehicle().showAllActiveVehicles();
+
+                DAOCity daoCity = DAOCityFactory.getInstance().generateDAOCity();
+
+                for(TVehicle tv : vehicleList) {
+                    TCity tc = daoCity.readById(tv.getCity());
+                    retList.add(new TVehicleDetails(tv, tc));
+                }
+
+                tr.commit();
+                TransactionManager.getInstance().removeTransaction();
+            }catch (DAOException | TransactionException e) {
+                throw new ASException(e.getMessage());
+            }
+        }else
+            throw new ASException("ERROR: The vehicle doesn't create correctly.\n");
+
+        return retList;
     }
 
     public TVehicleDetails getVehicleDetails(Integer vehicleID) throws ASException {

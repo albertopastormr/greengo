@@ -17,7 +17,7 @@ public interface ASVehicle {
 
     Collection<TVehicleDetails> showAll () throws ASException;
 
-    Collection<TVehicleDetails> showAllAvailableVehicles();
+    Collection<TVehicleDetails> showAllAvailableVehicles() throws ASException;
 
     TVehicleDetails getVehicleDetails(Integer vehicleID) throws ASException;
 
