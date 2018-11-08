@@ -11,6 +11,7 @@ import integration.rental.factory.DAORentalFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Collection;
 import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -66,13 +67,49 @@ class DAORentalTest {
 
     @Test
     void readById() {
+        Integer id = dao.create(tr);
+        tr.setId(id);
+        TRental read = dao.readById(id);
+
+        assertEquals(id,tr.getId());
+        assertEquals(tr.getIdVehicle(),read.getIdVehicle());
+        assertEquals(tr.isActive(),read.isActive());
+        assertEquals(tr.getNumKmRented(),read.getNumKmRented());
+        assertEquals(tr.getIdClient(),read.getIdClient());
+        assertEquals(tr.getDateFrom(),read.getDateTo());
     }
 
     @Test
     void showRentalsByClient() {
+        Integer id = dao.create(tr);
+        tr.setId(id);
+
+        Collection<TRental> read = dao.showRentalsByClient(1);
+
+        for(TRental r : read){
+            assertEquals(tr.getId(),r.getId());
+            assertEquals(tr.getIdVehicle(),r.getIdVehicle());
+            assertEquals(tr.isActive(),r.isActive());
+            assertEquals(tr.getNumKmRented(),r.getNumKmRented());
+            assertEquals(tr.getIdClient(),r.getIdClient());
+            assertEquals(tr.getDateFrom(),r.getDateTo());
+        }
     }
 
     @Test
     void readAll() {
+        Integer id = dao.create(tr);
+        tr.setId(id);
+
+        Collection<TRental> read = dao.readAll();
+
+        for(TRental r : read){
+            assertEquals(tr.getId(),r.getId());
+            assertEquals(tr.getIdVehicle(),r.getIdVehicle());
+            assertEquals(tr.isActive(),r.isActive());
+            assertEquals(tr.getNumKmRented(),r.getNumKmRented());
+            assertEquals(tr.getIdClient(),r.getIdClient());
+            assertEquals(tr.getDateFrom(),r.getDateTo());
+        }
     }
 }

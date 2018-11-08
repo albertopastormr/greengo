@@ -12,7 +12,7 @@ public interface DAORental {
 
     TRental readById(Integer id) ;
 
-    Collection<TClient> showRentalsByClient(Integer id);
+    Collection<TRental> showRentalsByClient(Integer id);
 
     Collection<TRental> readAll();
 
