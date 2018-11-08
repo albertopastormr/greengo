@@ -50,7 +50,7 @@ public class ASCityTest {
 
 	//create method tests
 	@Test
-	public void createCitySuccessful(){
+	public void createCitySuccessful() throws ASException {
 		assertTrue(as.create(tc) > 0);
 	}
 
@@ -69,7 +69,7 @@ public class ASCityTest {
 
 	//EN FUNCION DE SI HAY CAMBIOS O NO EN LOS CASOS DE USO QUITARLO
 	@Test
-	public void createCityAlreadyExists(){
+	public void createCityAlreadyExists() throws ASException {
         as.create(tc);
 		//city already exists
 		assertThrows(ASException.class, () -> {as.create(tc);});
@@ -126,7 +126,7 @@ public class ASCityTest {
 	}
 
 	@Test
-	public void dropCityWithActiveVehicles(){
+	public void dropCityWithActiveVehicles() throws ASException {
 		Integer id = as.create(tc);
 
 		tv.setId(id);
@@ -168,7 +168,7 @@ public class ASCityTest {
 
 	//showAll method tests
 	@Test
-	public void showAllCitySuccessful1(){
+	public void showAllCitySuccessful1() throws ASException {
 		Integer idMad = as.create(tc);
 
 		tc.setId(idMad);
@@ -190,7 +190,7 @@ public class ASCityTest {
 	}
 
     @Test
-	public void showAllCitySuccessful2(){
+	public void showAllCitySuccessful2() throws ASException {
 		Collection<TCity> c = as.showAll();
 		assertTrue(c.isEmpty());
 	}

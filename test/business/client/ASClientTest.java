@@ -33,12 +33,11 @@ public class ASClientTest {
     private static ASRental asR = ASRentalFactory.getInstance().generateASRental();
     private static TRental tr = new TRental(null,null,false,10,null,dFrom,dTo);
 
-   /* @BeforeEach
+   @BeforeEach
     private void setUp() throws Exception{
         DAOClient dao = DAOClientFactory.getInstance().generateDAOClient();
         dao.deleteAll();
-
-    }*/
+    }
 
     //Create method
     @Test
@@ -171,7 +170,7 @@ public class ASClientTest {
     }
 
     @Test
-    public void showAllClientsSuccessful2(){
+    public void showAllClientsSuccessful2() throws ASException {
         Collection<TClient> c = as.showAll();
         assertTrue(c.isEmpty());
     }

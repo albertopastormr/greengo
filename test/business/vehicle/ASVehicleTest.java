@@ -46,7 +46,7 @@ public class ASVehicleTest {
 
     //create method
     @Test
-    public void createVehicleSuccessful(){
+    public void createVehicleSuccessful() throws ASException {
         Integer idC = asCity.create(tCity);
 
         // City exist and active
@@ -125,7 +125,7 @@ public class ASVehicleTest {
 
     //Drop method
     @Test
-    public void dropSuccessful(){
+    public void dropSuccessful() throws ASException {
         Integer id = as.create(tv);
         Integer idC = asCity.create(tCity);
 
@@ -160,7 +160,7 @@ public class ASVehicleTest {
     }
 
     @Test
-    public void dropVehicleAlreadyInactive(){
+    public void dropVehicleAlreadyInactive() throws ASException {
         Integer id = as.create(tv);
         Integer idC = asCity.create(tCity);
 
@@ -200,7 +200,7 @@ public class ASVehicleTest {
 
     //Show method
     @Test
-    public void showVehicleSuccessful(){
+    public void showVehicleSuccessful() throws ASException {
         Integer idC = asCity.create(tCity);
         Integer idV = as.create(tv);
 
@@ -233,7 +233,7 @@ public class ASVehicleTest {
 
     //showAll method
     @Test
-    public void showAllVehicleSuccessful() {
+    public void showAllVehicleSuccessful() throws ASException {
         Integer idV = as.create(tv);
 
         assertTrue(idV > 0);
@@ -265,7 +265,7 @@ public class ASVehicleTest {
     //Update method
 
     @Test
-    public void updateVehicleSuccessful(){
+    public void updateVehicleSuccessful() throws ASException {
         Integer idC = asCity.create(tCity);
         Integer idV = as.create(tv);
 
@@ -361,7 +361,7 @@ public class ASVehicleTest {
     }
 
     @Test
-    public void updateVehicleIncorrectInputType(){
+    public void updateVehicleIncorrectInputType() throws ASException {
         Integer idV = as.create(tv);
 
         assertTrue(idV > 0);
@@ -380,7 +380,7 @@ public class ASVehicleTest {
     }
 
     @Test
-    public void updateVehicleCurrentlyOccupied(){
+    public void updateVehicleCurrentlyOccupied() throws ASException {
         Integer idC = asCity.create(tCity);
         Integer idV = as.create(tv);
 
@@ -400,7 +400,7 @@ public class ASVehicleTest {
     }
 
     @Test
-    public void updateVehicleCityNotExists(){
+    public void updateVehicleCityNotExists() throws ASException {
         Integer idC = asCity.create(tCity);
         Integer idV = as.create(tv);
 
