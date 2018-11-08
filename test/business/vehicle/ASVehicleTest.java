@@ -257,7 +257,7 @@ public class ASVehicleTest {
     }
 
     @Test
-    public void showAllVehicleSuccessful2(){
+    public void showAllVehicleSuccessful2() throws ASException {
         Collection<TVehicleDetails> c = as.showAll();
         assertTrue(c.isEmpty());
     }

@@ -9,7 +9,9 @@ import business.rental.TRentalDetails;
 import business.rental.as.ASRental;
 import business.vehicle.TVehicle;
 import business.vehicle.factory.ASVehicleFactory;
+import integration.DAOException;
 import integration.Transaction.Transaction;
+import integration.TransactionException;
 import integration.client.factory.DAOClientFactory;
 import integration.rental.dao.DAORental;
 import integration.rental.factory.DAORentalFactory;
@@ -27,17 +29,24 @@ public class ASRentalImp implements ASRental {
 
         if(tr!=null) {
             tr.start();
-            TClient tc = DAOClientFactory.getInstance().generateDAOClient().readById(rental.getIdClient());
-            TVehicle tv = DAOVehicleFactory.getInstance().generateDAOVehicle().readById((rental.getIdVehicle()));
-            if (tc != null && tv !=null && tc.isActive() && tv.isActive()) {//the client and vehicle exists and are active
-                idr = DAORentalFactory.getInstance().generateDAORental().create(rental);
-                tr.commit();
-                TransactionManager.getInstance().removeTransaction();
-            } else {//exists
-                tr.rollback();
-                TransactionManager.getInstance().removeTransaction();
-                if(tc == null || tv == null) throw new ASException("Vehicle or Client doesn't exists");
-                if(!tc.isActive() ||  !tv.isActive()) throw new ASException("Vehicle or Client is disabled");
+            try{
+                TClient tc = DAOClientFactory.getInstance().generateDAOClient().readById(rental.getIdClient());
+                TVehicle tv = DAOVehicleFactory.getInstance().generateDAOVehicle().readById((rental.getIdVehicle()));
+
+                //TODO NO PUEDE DARSE DE ALTA UN ALQUILER CON FECHAS EN LAS QUE EL VEHICULO O EL CLIENTE TENGA OTRO
+
+                if (tc != null && tv !=null && tc.isActive() && tv.isActive()) {//the client and vehicle exists and are active
+                    idr = DAORentalFactory.getInstance().generateDAORental().create(rental);
+                    tr.commit();
+                    TransactionManager.getInstance().removeTransaction();
+                } else {//exists
+                    tr.rollback();
+                    TransactionManager.getInstance().removeTransaction();
+                    if(tc == null || tv == null) throw new ASException("Vehicle or Client doesn't exists");
+                    if(!tc.isActive() ||  !tv.isActive()) throw new ASException("Vehicle or Client is  disabled");
+                }
+            }catch (DAOException | TransactionException e) {
+                throw new ASException(e.getMessage());
             }
         }
         return idr;
@@ -49,17 +58,21 @@ public class ASRentalImp implements ASRental {
         Transaction tr = TransactionManager.getInstance().createTransaction();
 
         if(tr!=null) {
-            tr.start();
-            TRental tl = DAORentalFactory.getInstance().generateDAORental().readById(id);
-            if (tl != null && tl.isActive()) {//the rental exists and is active
-                idr = DAORentalFactory.getInstance().generateDAORental().update(tl);
-                tr.commit();
-                TransactionManager.getInstance().removeTransaction();
-            } else {
-                tr.rollback();
-                TransactionManager.getInstance().removeTransaction();
-                if(tl == null) throw new ASException("The rental doesn't exists");
-                else if (!tl.isActive()) throw new ASException("The rental is already disabled");
+            try{
+                tr.start();
+                TRental tl = DAORentalFactory.getInstance().generateDAORental().readById(id);
+                if (tl != null && tl.isActive()) {//the rental exists and is active
+                    idr = DAORentalFactory.getInstance().generateDAORental().update(tl);
+                    tr.commit();
+                    TransactionManager.getInstance().removeTransaction();
+                } else {
+                    tr.rollback();
+                    TransactionManager.getInstance().removeTransaction();
+                    if(tl == null) throw new ASException("The rental doesn't exists");
+                    else if (!tl.isActive()) throw new ASException("The rental is disabled");
+                }
+            }catch (DAOException | TransactionException e) {
+                throw new ASException(e.getMessage());
             }
         }
         return idr;
@@ -70,18 +83,28 @@ public class ASRentalImp implements ASRental {
         Integer idr =null;
         Transaction tr = TransactionManager.getInstance().createTransaction();
 
-        if(tr!=null) {
-            tr.start();
-            TRental tl = DAORentalFactory.getInstance().generateDAORental().readById(rental.getId());
+        //TODO NO PUEDE MODIFICARSE UN ALQUILER SI LAS FECHAS NUEVAS OCUPADAS YA POR ESE VEHICULO O CLIENTE
 
-            if (tl != null) {//the rental exists
-                idr = DAORentalFactory.getInstance().generateDAORental().update(tl);
-                tr.commit();
-                TransactionManager.getInstance().removeTransaction();
-            } else {
-                tr.rollback();
-                TransactionManager.getInstance().removeTransaction();
-                throw new ASException("The rental doesn't exists");
+        if(tr!=null) {
+            try{
+                tr.start();
+                TRental tl = DAORentalFactory.getInstance().generateDAORental().readById(rental.getId());
+                TVehicle tv = DAOVehicleFactory.getInstance().generateDAOVehicle().readById((rental.getIdVehicle()));
+                TClient tc = DAOClientFactory.getInstance().generateDAOClient().readById(rental.getIdClient());
+
+                if (tl != null && tv!= null && tc!=null && tv.isActive() && tc.isActive()) {//the rental exists, the client and vehicle are actived and exists
+                    idr = DAORentalFactory.getInstance().generateDAORental().update(tl);
+                    tr.commit();
+                    TransactionManager.getInstance().removeTransaction();
+                } else {
+                    tr.rollback();
+                    TransactionManager.getInstance().removeTransaction();
+                    if(tl == null) throw new ASException("The rental doesn't exists");
+                    else if(tv == null || tc == null) throw  new ASException("The client or vehicle doesn't exists");
+                    else if (!tv.isActive() || !tc.isActive())  throw  new ASException("The client or vehicle is disabled");
+                }
+            }catch (DAOException | TransactionException e) {
+                throw new ASException(e.getMessage());
             }
         }
         return idr;
@@ -92,18 +115,22 @@ public class ASRentalImp implements ASRental {
         TRental rental;
         TRentalDetails rDetails = null;
         Transaction tr = TransactionManager.getInstance().createTransaction();
+
         if(tr!=null) {
-            tr.start();
-            rental = DAORentalFactory.getInstance().generateDAORental().readById(id);
-            if(rental!=null) {//if rental exists
-                TOARental toaRental = new TOARental();
-                rDetails = toaRental.getRentalDetails(rental.getId());
-                tr.commit();
-                TransactionManager.getInstance().removeTransaction();
-            }
-            else {//doesn't exists
-                TransactionManager.getInstance().removeTransaction();
-                throw new ASException("The client doesn't exists");
+            try{
+                tr.start();
+                rental = DAORentalFactory.getInstance().generateDAORental().readById(id);
+                if(rental!=null) {//if rental exists
+                    rDetails = getRentalDetails(id);
+                    tr.commit();
+                    TransactionManager.getInstance().removeTransaction();
+                }
+                else {//doesn't exists
+                    TransactionManager.getInstance().removeTransaction();
+                    throw new ASException("The rental doesn't exists");
+                }
+            }catch (DAOException | TransactionException e) {
+                throw new ASException(e.getMessage());
             }
         }
         return rDetails;
@@ -114,11 +141,14 @@ public class ASRentalImp implements ASRental {
         Collection<TRentalDetails> rDetailsList = null;
         Transaction tr = TransactionManager.getInstance().createTransaction();
         if(tr!=null) {
-            tr.start();
-            TOARental toaRental = new TOARental();
-            rDetailsList = toaRental.getAllRentalsDetails();
-            tr.commit();
-            TransactionManager.getInstance().removeTransaction();
+            try{
+                tr.start();
+                rDetailsList = getAllRentalsDetails();
+                tr.commit();
+                TransactionManager.getInstance().removeTransaction();
+            }catch (DAOException | TransactionException e) {
+                throw new ASException(e.getMessage());
+            }
         }
         return rDetailsList;
     }

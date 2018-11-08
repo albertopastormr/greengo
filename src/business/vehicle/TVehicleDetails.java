@@ -11,8 +11,6 @@ public class TVehicleDetails {
         this.vehicle = vehicle;
         this.city = city;
     }
-
-    //TODO implementar getters necesarios
     public TVehicle getVehicle(){
         return vehicle;
     }

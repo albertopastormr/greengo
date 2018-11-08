@@ -33,9 +33,7 @@ public class DAOVehicleImp  implements DAOVehicle {
 
     @Override
     public void deleteAll() {
-
     }
-
     @Override
     public Collection<TVehicle> showVehiclesByCity(Integer id) {
         return null;
@@ -44,10 +42,6 @@ public class DAOVehicleImp  implements DAOVehicle {
     @Override
     public TVehicle showByPlateOrSerial(String plate) {
         return null;
-    }
-    @Override
-    public void deleteAll() {
-
     }
 
 }

@@ -17,9 +17,6 @@ public class TRentalDetails {
         this.vehicle = vehicle;
     }
 
-    //TODO implement all the necessary getters.
-
-
     public TClient getClient() {
         return client;
     }
