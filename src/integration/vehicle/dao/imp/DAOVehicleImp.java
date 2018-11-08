@@ -32,6 +32,11 @@ public class DAOVehicleImp  implements DAOVehicle {
     }
 
     @Override
+    public void deleteAll() {
+
+    }
+
+    @Override
     public Collection<TVehicle> showVehiclesByCity(Integer id) {
         return null;
     }

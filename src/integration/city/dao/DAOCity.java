@@ -2,6 +2,7 @@ package integration.city.dao;
 
 import business.city.TCity;
 import business.client.TClient;
+import business.vehicle.TVehicle;
 import integration.DAOException;
 
 import java.util.Collection;

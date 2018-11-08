@@ -26,8 +26,19 @@ public class DAORentalImp implements DAORental {
     public Collection<TRental> showRentalsByClient(Integer id) {
         return null;
     }
+
+    @Override
+    public Collection<TRental> showRentalsByVehicle(Integer id) {
+        return null;
+    }
+
     @Override
     public Collection<TRental> readAll() {
         return null;
+    }
+
+    @Override
+    public void deleteAll() {
+
     }
 }

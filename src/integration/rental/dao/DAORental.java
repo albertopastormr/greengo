@@ -14,6 +14,8 @@ public interface DAORental {
 
     Collection<TRental> showRentalsByClient(Integer id);
 
+    Collection<TRental> showRentalsByVehicle(Integer id);
+
     Collection<TRental> readAll();
 
     void deleteAll();

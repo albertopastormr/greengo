@@ -9,13 +9,13 @@ import java.util.Collection;
 public interface ASVehicle {
     Integer create(TVehicle vehicle) throws ASException;
 
-    Integer drop(Integer vehicle);
+    Integer drop(Integer vehicle) throws ASException;
 
-    Integer update(TVehicle vehicle);
+    Integer update(TVehicle vehicle) throws ASException;
 
-    TVehicleDetails show (Integer id);
+    TVehicleDetails show (Integer id) throws ASException;
 
-    Collection<TVehicleDetails> showAll ();
+    Collection<TVehicleDetails> showAll () throws ASException;
 
     Collection<TVehicleDetails> showAllActiveVehicles();
 

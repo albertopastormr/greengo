@@ -45,25 +45,26 @@ public class ASCityImp implements ASCity {
             if (tr != null) {
                 try {
                     tr.start();
-                    TCity tl = DAOCityFactory.getInstance().generateDAOCity().readById(id);
-                    if (tl != null && tl.isActive()) {//the city exists and is active
+                    TCity tc = DAOCityFactory.getInstance().generateDAOCity().readById(id);
+                    if (tc != null && tc.isActive()) {//the city exists and is active
 
                         Collection<TVehicle> vehiclesList = DAOVehicleFactory.getInstance().generateDAOVehicle().showVehiclesByCity(id);
-                        boolean active = false;
+                        boolean isVehicleActive = false;
                         for (TVehicle tv : vehiclesList) // If exists vehicles actives not update
                             if (tv.isActive())
-                                active = true;
+                                isVehicleActive = true;
 
-                        if (!active) {
-                            idc = DAOCityFactory.getInstance().generateDAOCity().update(tl);
+                        if (!isVehicleActive) {
+                            tc.setActive(false);
+                            idc = DAOCityFactory.getInstance().generateDAOCity().update(tc);
                             tr.commit();
                             TransactionManager.getInstance().removeTransaction();
                         }
                     } else {
                         tr.rollback();
                         TransactionManager.getInstance().removeTransaction();
-                        if (tl == null) throw new ASException("The city doesn't exists");
-                        else if (!tl.isActive()) throw new ASException("The city is already disabled");
+                        if (tc == null) throw new ASException("The city doesn't exist");
+                        else if (!tc.isActive()) throw new ASException("The city is already disabled");
                     }
                 }catch (DAOException | ASException | TransactionException e) {
                     throw new ASException(e.getMessage());
@@ -84,16 +85,16 @@ public class ASCityImp implements ASCity {
         if(tr!=null) {
             try {
                 tr.start();
-                TCity tl = DAOCityFactory.getInstance().generateDAOCity().readById(city.getId());
+                TCity tc = DAOCityFactory.getInstance().generateDAOCity().readById(city.getId());
 
-                if (tl != null) {//the city exists
-                    idc = DAOCityFactory.getInstance().generateDAOCity().update(tl);
+                if (tc != null) {//the city exists
+                    idc = DAOCityFactory.getInstance().generateDAOCity().update(tc);
                     tr.commit();
                     TransactionManager.getInstance().removeTransaction();
                 } else {
                     tr.rollback();
                     TransactionManager.getInstance().removeTransaction();
-                    throw new ASException("The client doesn't exists");
+                    throw new ASException("The city doesn't exist");
                 }
             }catch (DAOException | TransactionException e) {
                 throw new ASException(e.getMessage());
