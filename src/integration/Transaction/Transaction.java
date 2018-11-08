@@ -1,14 +1,16 @@
 package integration.Transaction;
 
+import integration.TransactionException;
+
 import java.sql.Connection;
 
 public interface Transaction {
 
     public void start();
 
-    public void commit();
+    public void commit() throws TransactionException;
 
-    public void rollback();
+    public void rollback() throws TransactionException;
 
     public Connection getResource();
 

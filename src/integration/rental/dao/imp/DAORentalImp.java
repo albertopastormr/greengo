@@ -23,7 +23,7 @@ public class DAORentalImp implements DAORental {
     }
 
     @Override
-    public Collection<TClient> showRentalsByClient(Integer id) {
+    public Collection<TRental> showRentalsByClient(Integer id) {
         return null;
     }
     @Override
