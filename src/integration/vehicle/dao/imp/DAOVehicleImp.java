@@ -30,4 +30,14 @@ public class DAOVehicleImp  implements DAOVehicle {
     public Collection<TVehicle> showAllActiveVehicles() {
         return null;
     }
+
+    @Override
+    public Collection<TVehicle> showVehiclesByCity(Integer id) {
+        return null;
+    }
+
+    @Override
+    public TVehicle showByPlate(String plate) {
+        return null;
+    }
 }
