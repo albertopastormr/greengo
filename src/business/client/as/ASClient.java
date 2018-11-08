@@ -15,8 +15,8 @@ public interface ASClient {
 
     TClient show (Integer id) throws ASException;
 
-    Collection<TClient> showAll ();
+    Collection<TClient> showAll () throws ASException;
 
-    Collection<TClient> showAllWithMoreThanNRentals (Integer N);
+    Collection<TClient> showAllWithMoreThanNRentals (Integer N) throws ASException;
 
 }
