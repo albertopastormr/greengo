@@ -1,11 +1,12 @@
 package integration.vehicle.dao;
 
 import business.vehicle.TVehicle;
+import integration.DAOException;
 
 import java.util.Collection;
 
 public interface DAOVehicle {
-    Integer create(TVehicle vehicle);
+    Integer create(TVehicle vehicle) throws DAOException;
 
     Integer update(TVehicle vehicle);
 
@@ -15,7 +16,7 @@ public interface DAOVehicle {
 
     Collection<TVehicle> showAllActiveVehicles();
 
-    void deleteAll();
+    void deleteAll() throws DAOException;
     
     Collection<TVehicle> showVehiclesByCity(Integer id);
 
