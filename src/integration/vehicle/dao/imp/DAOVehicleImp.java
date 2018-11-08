@@ -25,7 +25,7 @@ public class DAOVehicleImp  implements DAOVehicle {
                     .getConnectionChain());
         }
         catch(SQLException ex){
-            throw new DAOException("ERROR: acceso a la conexion a DB para 'create' city no logrado\n");
+            throw new DAOException("ERROR: acceso a la conexion a DB para 'create' vehicle no logrado\n");
         }
         queryTail = "";
     }
@@ -71,9 +71,68 @@ public class DAOVehicleImp  implements DAOVehicle {
     }
 
     @Override
-    public Integer update(TVehicle vehicle) {
-        return null;
+    public Integer update(TVehicle vehicle) throws DAOException{
+
+    Integer id;
+
+    String queryTail = " FOR UPDATE";
+
+    Connection connect = TransactionManager.getInstance().getTransaction().getResource();
+
+        if(connect == null){
+        try {
+            driverIdentify();
+            connect = DriverManager.getConnection(TransactionManager.getInstance().getTransaction().getConnectionChain());
+        }
+        catch(SQLException ex){
+            throw new DAOException("ERROR: acceso a la conexion a DB para 'update' vehicle no logrado\n");
+        }
+        queryTail = "";
     }
+ //brand,estimatedDuration," +
+        //                "numKmTravelled,occupied,city,active,type
+        try { // Tratamiento db
+        PreparedStatement ps = connect.prepareStatement("UPDATE vehicle SET brand = ?, estimatedDuration = ?," +
+                "numKmTravelled = ?, occupied = ?, city = ?, active = ?, type = ?" +
+                "WHERE id = ?" + queryTail);
+        ps.setString(1, vehicle.getBrand());
+        ps.setInt(2, vehicle.getEstimatedDuration());
+        ps.setInt(3,vehicle.getNumKmTravelled());
+        ps.setBoolean(4,vehicle.isOccupied());
+        ps.setInt(5, vehicle.getCity());
+        ps.setBoolean(6,vehicle.isActive());
+        ps.setString(7,vehicle.getType());
+        ResultSet rs = ps.executeQuery();
+
+        ps = connect.prepareStatement("SELECT id FROM vehicle WHERE id = ?");
+        ps.setInt(1, vehicle.getId());
+        ps.executeQuery();
+        ps.close();
+
+        if (rs.next()) {
+            id = rs.getInt("id");
+        }
+        else
+            throw new DAOException("ERROR: entidad no existente en BD en 'update' vehicle");
+        ps.close();
+    }
+        catch (SQLException e){
+        throw new DAOException("ERROR: tratamiento DB para 'update' vehicle no logrado\n");
+    }
+
+        finally {
+        if(queryTail.equals("")) {
+            try {
+                connect.close();
+            } catch (SQLException e) {
+                throw new DAOException("ERROR: cerrando conexion a DB para 'update' vehicle no logrado\n");
+            }
+        }
+    }
+
+        return id;
+
+}
 
     @Override
     public TVehicle readById(Integer id) {

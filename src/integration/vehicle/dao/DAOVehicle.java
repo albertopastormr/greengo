@@ -8,7 +8,7 @@ import java.util.Collection;
 public interface DAOVehicle {
     Integer create(TVehicle vehicle) throws DAOException;
 
-    Integer update(TVehicle vehicle);
+    Integer update(TVehicle vehicle) throws DAOException;
 
     TVehicle readById(Integer id) ;
 
