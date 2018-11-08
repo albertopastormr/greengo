@@ -171,7 +171,7 @@ public class ASClientTest {
     }
 
     @Test
-    public void showAllClientsSuccessful2(){
+    public void showAllClientsSuccessful2() throws ASException {
         Collection<TClient> c = as.showAll();
         assertTrue(c.isEmpty());
     }
