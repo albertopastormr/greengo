@@ -15,4 +15,6 @@ public interface DAOVehicle {
 
     Collection<TVehicle> showAllActiveVehicles();
 
+    Collection<TVehicle> showVehiclesByCity(Integer id);
+
 }

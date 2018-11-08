@@ -7,7 +7,7 @@ import business.client.TClient;
 import java.util.Collection;
 
 public interface ASCity {
-    Integer create(TCity city);
+    Integer create(TCity city) throws ASException;
 
     Integer drop(Integer city) throws ASException;
 
@@ -15,7 +15,7 @@ public interface ASCity {
 
     TCity show (Integer id) throws ASException;
 
-    Collection<TCity> showAll ();
+    Collection<TCity> showAll () throws ASException;
 
-    Collection<TClient> showClientsByCity (Integer idCity);
+    Collection<TClient> showClientsByCity (Integer idCity) throws ASException;
 }
