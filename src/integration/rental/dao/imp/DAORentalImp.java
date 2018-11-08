@@ -30,4 +30,9 @@ public class DAORentalImp implements DAORental {
     public Collection<TRental> readAll() {
         return null;
     }
+
+    @Override
+    public void deleteAll() {
+
+    }
 }

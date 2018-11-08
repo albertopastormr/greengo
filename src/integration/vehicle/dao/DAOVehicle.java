@@ -19,6 +19,6 @@ public interface DAOVehicle {
     
     Collection<TVehicle> showVehiclesByCity(Integer id);
 
-    TVehicle showByPlate(String plate);
+    TVehicle showByPlateOrSerial(String plate);
 
 }

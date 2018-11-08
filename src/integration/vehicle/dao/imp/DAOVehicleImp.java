@@ -37,7 +37,12 @@ public class DAOVehicleImp  implements DAOVehicle {
     }
 
     @Override
-    public TVehicle showByPlate(String plate) {
+    public TVehicle showByPlateOrSerial(String plate) {
         return null;
     }
+    @Override
+    public void deleteAll() {
+
+    }
+
 }

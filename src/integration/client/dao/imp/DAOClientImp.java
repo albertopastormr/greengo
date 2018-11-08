@@ -34,4 +34,9 @@ public class DAOClientImp implements DAOClient {
     public Collection<TClient> readByNRentals(Integer N) {
         return null;
     }
+
+    @Override
+    public void deleteAll() {
+
+    }
 }

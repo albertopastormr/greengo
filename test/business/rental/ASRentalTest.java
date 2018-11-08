@@ -12,6 +12,8 @@ import business.vehicle.as.ASVehicle;
 import business.vehicle.factory.ASVehicleFactory;
 import integration.client.dao.DAOClient;
 import integration.client.factory.DAOClientFactory;
+import integration.rental.dao.DAORental;
+import integration.rental.factory.DAORentalFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -32,7 +34,7 @@ public class ASRentalTest {
 
     @BeforeEach
     private void setUp() throws Exception{
-        DAOClient dao = DAOClientFactory.getInstance().generateDAOClient();
+        DAORental dao = DAORentalFactory.getInstance().generateDAORental();
         dao.deleteAll();
     }
 
