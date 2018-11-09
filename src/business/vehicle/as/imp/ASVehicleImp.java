@@ -29,33 +29,39 @@ public class ASVehicleImp implements ASVehicle {
     @Override
     public Integer create(TVehicle vehicle) throws ASException {
         Integer idv = null;
-        Transaction tr = TransactionManager.getInstance().createTransaction();
 
-        if(tr!=null) {
-            try {
-                tr.start();
-                TCity tc = DAOCityFactory.getInstance().generateDAOCity().readById(vehicle.getCity());
+        if(!vehicle.getBrand().equals("") && !vehicle.getBrand().equals("") && vehicle.getEstimatedDuration() != null && vehicle.getNumKmTravelled() != null &&
+                vehicle.getCity() != null && !vehicle.getType().equals("")) {
 
-                TVehicle tVehicle = null;
+            Transaction tr = TransactionManager.getInstance().createTransaction();
 
-                if(vehicle.getType().equals("Bicycle")) {
-                    TBicycleVehicle tb = (TBicycleVehicle) vehicle;
-                    tVehicle = DAOVehicleFactory.getInstance().generateDAOVehicle().showByPlateOrSerial(tb.getSerialNumber());
+            if(tr!=null) {
+                try {
+                    tr.start();
+                    TCity tc = DAOCityFactory.getInstance().generateDAOCity().readById(vehicle.getCity());
+
+                    TVehicle tVehicle = null;
+
+                    if (vehicle.getType().equals("Bicycle")) {
+                        TBicycleVehicle tb = (TBicycleVehicle) vehicle;
+                        tVehicle = DAOVehicleFactory.getInstance().generateDAOVehicle().showByPlateOrSerial(tb.getSerialNumber());
+                    } else {
+                        TCarVehicle tv = (TCarVehicle) vehicle;
+                        tVehicle = DAOVehicleFactory.getInstance().generateDAOVehicle().showByPlateOrSerial(tv.getPlate());
+                    }
+
+                    idv = DAOVehicleFactory.getInstance().generateDAOVehicle().create(tVehicle);
+
+                    tr.commit();
+                    TransactionManager.getInstance().removeTransaction();
+                } catch (DAOException | TransactionException e) {
+                    throw new ASException(e.getMessage());
                 }
-                else{
-                    TCarVehicle tv = (TCarVehicle) vehicle;
-                    tVehicle = DAOVehicleFactory.getInstance().generateDAOVehicle().showByPlateOrSerial(tv.getPlate());
-                }
 
-                idv = DAOVehicleFactory.getInstance().generateDAOVehicle().create(tVehicle);
-
-                tr.commit();
-                TransactionManager.getInstance().removeTransaction();
-            }catch (DAOException | TransactionException e) {
-                throw new ASException(e.getMessage());
-            }
+            }else
+                throw new ASException("ERROR: The vehicle doesn't create correctly.\n");
         }else
-            throw new ASException("ERROR: The vehicle doesn't create correctly.\n");
+            throw new ASException("ERROR: The data of vehicle isn't insert correctly.\n");
 
         return idv;
     }
@@ -64,40 +70,44 @@ public class ASVehicleImp implements ASVehicle {
     public Integer drop(Integer idVehicle) throws ASException {
 
         Integer idv = null;
-        Transaction tr = TransactionManager.getInstance().createTransaction();
+        if(idVehicle > 0){
 
-        if (tr != null) {
-            try {
-                tr.start();
-                TVehicle tv = DAOVehicleFactory.getInstance().generateDAOVehicle().readById(idVehicle);
+            Transaction tr = TransactionManager.getInstance().createTransaction();
 
-                if (tv != null && tv.isActive()) {//the city exists and is active
+            if (tr != null) {
+                try {
+                    tr.start();
+                    TVehicle tv = DAOVehicleFactory.getInstance().generateDAOVehicle().readById(idVehicle);
 
-                    Collection<TRental> rentalList = DAORentalFactory.getInstance().generateDAORental().showRentalsByVehicle(idVehicle);
-                    boolean isRentalActive = false;
-                    for (TRental tRental : rentalList) // If exists vehicles actives not update
-                        if (tRental.isActive())
-                            isRentalActive = true;
+                    if (tv != null && tv.isActive()) {//the city exists and is active
 
-                    if (!isRentalActive) {
-                        tv.setActive(false);
-                        idv = DAOVehicleFactory.getInstance().generateDAOVehicle().update(tv);
-                        tr.commit();
+                        Collection<TRental> rentalList = DAORentalFactory.getInstance().generateDAORental().showRentalsByVehicle(idVehicle);
+                        boolean isRentalActive = false;
+                        for (TRental tRental : rentalList) // If exists vehicles actives not update
+                            if (tRental.isActive())
+                                isRentalActive = true;
+
+                        if (!isRentalActive) {
+                            tv.setActive(false);
+                            idv = DAOVehicleFactory.getInstance().generateDAOVehicle().update(tv);
+                            tr.commit();
+                            TransactionManager.getInstance().removeTransaction();
+                        }
+                    } else {
+                        tr.rollback();
                         TransactionManager.getInstance().removeTransaction();
+                        if (tv == null) throw new ASException("The vehicle doesn't exists");
+                        else if (!tv.isActive()) throw new ASException("The vehicle is already disabled");
                     }
-                } else {
-                    tr.rollback();
-                    TransactionManager.getInstance().removeTransaction();
-                    if (tv == null) throw new ASException("The vehicle doesn't exists");
-                    else if (!tv.isActive()) throw new ASException("The vehicle is already disabled");
+                }catch (DAOException | ASException | TransactionException e) {
+                    throw new ASException(e.getMessage());
                 }
-            }catch (DAOException | ASException | TransactionException e) {
-                throw new ASException(e.getMessage());
             }
-        }
-        else
-            throw new ASException("ERROR: The vehicle doesn't delete correctly.\n");
-
+            else {
+                throw new ASException("ERROR: The vehicle doesn't delete correctly.\n");
+            }
+        }else
+            throw new ASException("ERROR: The data of vehicle isn't insert correctly.\n");
 
         return idv;
     }
@@ -107,27 +117,33 @@ public class ASVehicleImp implements ASVehicle {
     public Integer update(TVehicle tVehicle) throws ASException {
 
         Integer idv = null;
-        Transaction tr = TransactionManager.getInstance().createTransaction();
 
-        if(tr != null) {
-            try {
-                tr.start();
-                TVehicle tv = DAOVehicleFactory.getInstance().generateDAOVehicle().readById(tVehicle.getId());
+        if(tVehicle.getId() > 0 && !tVehicle.getBrand().equals("") && !tVehicle.getBrand().equals("") && tVehicle.getEstimatedDuration() != null
+                && tVehicle.getNumKmTravelled() != null && tVehicle.getCity() != null && !tVehicle.getType().equals("")) {
 
-                if (tv != null) { //the city exists
-                    idv = DAOVehicleFactory.getInstance().generateDAOVehicle().update(tv);
-                    tr.commit();
-                    TransactionManager.getInstance().removeTransaction();
-                } else {
-                    tr.rollback();
-                    TransactionManager.getInstance().removeTransaction();
-                    throw new ASException("The vehicle doesn't exists");
+            Transaction tr = TransactionManager.getInstance().createTransaction();
+
+            if (tr != null) {
+                try {
+                    tr.start();
+                    TVehicle tv = DAOVehicleFactory.getInstance().generateDAOVehicle().readById(tVehicle.getId());
+
+                    if (tv != null) { //the city exists
+                        idv = DAOVehicleFactory.getInstance().generateDAOVehicle().update(tv);
+                        tr.commit();
+                        TransactionManager.getInstance().removeTransaction();
+                    } else {
+                        tr.rollback();
+                        TransactionManager.getInstance().removeTransaction();
+                        throw new ASException("The vehicle doesn't exists");
+                    }
+                } catch (DAOException | ASException | TransactionException e) {
+                    throw new ASException(e.getMessage());
                 }
-            }catch (DAOException | ASException | TransactionException e) {
-                throw new ASException(e.getMessage());
-            }
+            } else
+                throw new ASException("ERROR: The vehicle doesn't update correctly.\n");
         }else
-            throw new ASException("ERROR: The vehicle doesn't update correctly.\n");
+            throw new ASException("ERROR: The data of vehicle isn't insert correctly.\n");
 
         return idv;
     }
@@ -136,24 +152,30 @@ public class ASVehicleImp implements ASVehicle {
     public TVehicleDetails show(Integer idVehicle) throws ASException {
 
         TVehicleDetails tvd = null;
-        Transaction tr = TransactionManager.getInstance().createTransaction();
 
-        if(tr != null) {
-            try {
-                tr.start();
-                TVehicle tv = DAOVehicleFactory.getInstance().generateDAOVehicle().readById(idVehicle);
-                TCity tc = DAOCityFactory.getInstance().generateDAOCity().readById(tv.getCity());
+        if(idVehicle > 0) {
 
-                tvd = new TVehicleDetails(tv, tc);
+            Transaction tr = TransactionManager.getInstance().createTransaction();
 
-                tr.commit();
-                TransactionManager.getInstance().removeTransaction();
-                if (tv == null) throw new ASException("The vehicle doesn't exists");
-            }catch (DAOException | TransactionException | ASException | DAOException e) {
-                throw new ASException(e.getMessage());
-            }
+            if (tr != null) {
+                try {
+                    tr.start();
+                    TVehicle tv = DAOVehicleFactory.getInstance().generateDAOVehicle().readById(idVehicle);
+                    TCity tc = DAOCityFactory.getInstance().generateDAOCity().readById(tv.getCity());
+
+                    tvd = new TVehicleDetails(tv, tc);
+
+                    tr.commit();
+                    TransactionManager.getInstance().removeTransaction();
+                    if (tv == null) throw new ASException("The vehicle doesn't exists");
+                } catch (DAOException | TransactionException | ASException | DAOException e) {
+                    throw new ASException(e.getMessage());
+                }
+            } else
+                throw new ASException("ERROR: The vehicle doesn't show correctly.\n");
         }else
-            throw new ASException("ERROR: The vehicle doesn't show correctly.\n");
+            throw new ASException("ERROR: The data of vehicle isn't insert correctly.\n");
+
         return tvd;
     }
 
@@ -181,7 +203,7 @@ public class ASVehicleImp implements ASVehicle {
                 throw new ASException(e.getMessage());
             }
         }else
-            throw new ASException("ERROR: The cities doesn't create correctly.\n");
+            throw new ASException("ERROR: The cities doesn't list correctly.\n");
 
         return retList;
     }
@@ -211,7 +233,7 @@ public class ASVehicleImp implements ASVehicle {
                 throw new ASException(e.getMessage());
             }
         }else
-            throw new ASException("ERROR: The vehicle doesn't create correctly.\n");
+            throw new ASException("ERROR: The vehicles availables doesn't list correctly.\n");
 
         return retList;
     }
