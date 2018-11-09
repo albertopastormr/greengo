@@ -64,14 +64,14 @@ public class UIimp extends UI{
 				AppController.getInstance().execute(new LightContext(Event.RELOAD_VEHICLE, null));
 				break;
 			case SHOW_VEHICLE:
-				Util.inform(((TVehicleDetails)context.getData()).toString());
+				 JDialog vehicleDialog = ViewHelpers.createShowWindow(((TVehicleDetails)context.getData()).toString(), "Show vehicle");
+				 vehicleDialog.setVisible(true);
 				break;
 			case RELOAD_VEHICLE:
 				List<TVehicleDetails> vehicleList = new ArrayList<>();
 				AppController.getInstance().execute(new LightContext(Event.SHOWALL_VEHICLE, vehicleList));
 				break;
 			case SHOWALL_ACTIVE_VEHICLE:
-				//TODO What should we do with these operations?
 				TableModel modelActive = new VehicleTableModel(VehiclePanel.getColumnId());
 				modelActive.setList((List<TVehicleDetails>) context.getData());
 				ViewHelpers.createSpecificTable(modelActive);
@@ -89,14 +89,14 @@ public class UIimp extends UI{
 				AppController.getInstance().execute(new LightContext(Event.RELOAD_SERVICE, null));
 				break;
 			case SHOW_SERVICE:
-				Util.inform(((TService)context.getData()).toString());
+                JDialog serviceDialog = ViewHelpers.createShowWindow(((TService)context.getData()).toString(), "Show service");
+                serviceDialog.setVisible(true);
 				break;
 			case RELOAD_SERVICE:
 				List<TService> serviceList = new ArrayList<>();
 				AppController.getInstance().execute(new LightContext(Event.SHOWALL_SERVICE, serviceList));
 				break;
 			case SHOW_SERVICE_BY_LEVEL:
-				//TODO What should we do with these operations?
 				TableModel modelService = new ServiceTableModel(ServicePanel.getColumnId());
 				modelService.setList((List<TService>) context.getData());
 				ViewHelpers.createSpecificTable(modelService);
@@ -114,7 +114,8 @@ public class UIimp extends UI{
 				AppController.getInstance().execute(new LightContext(Event.RELOAD_RENTAL, null));
 				break;
 			case SHOW_RENTAL:
-				Util.inform(((TRentalDetails)context.getData()).toString()); break;
+                JDialog rentalDialog = ViewHelpers.createShowWindow(((TRentalDetails)context.getData()).toString(), "Show rental");
+                rentalDialog.setVisible(true);
 			case RELOAD_RENTAL:
 				List<TRental> rentalList = new ArrayList<>();
 				AppController.getInstance().execute(new LightContext(Event.SHOWALL_RENTAL, rentalList));
@@ -132,7 +133,8 @@ public class UIimp extends UI{
 				AppController.getInstance().execute(new LightContext(Event.RELOAD_MAIN_OFFICE, null));
 				break;
 			case SHOW_MAIN_OFFICE:
-				Util.inform(((TMainOffice)context.getData()).toString());
+                JDialog mainOfficeDialog = ViewHelpers.createShowWindow(((TMainOffice)context.getData()).toString(), "Show main office");
+                mainOfficeDialog.setVisible(true);
 				break;
 			case RELOAD_MAIN_OFFICE:
 				List<TMainOffice> mainOfficeList = new ArrayList<>();
@@ -154,7 +156,8 @@ public class UIimp extends UI{
 				AppController.getInstance().execute(new LightContext(Event.RELOAD_EMPLOYEE, null));
 				break;
 			case SHOW_EMPLOYEE:
-				Util.inform(((TEmployee)context.getData()).toString());
+                JDialog employeeDialog = ViewHelpers.createShowWindow(((TEmployee)context.getData()).toString(), "Show employee");
+                employeeDialog.setVisible(true);
 				break;
 			case RELOAD_EMPLOYEE:
 				List<TEmployee> employeeList = new ArrayList<>();
@@ -176,7 +179,8 @@ public class UIimp extends UI{
 				AppController.getInstance().execute(new LightContext(Event.RELOAD_CONTRACT, null));
 				break;
 			case SHOW_CONTRACT:
-				Util.inform(((TContract) context.getData()).toString());
+                JDialog contractDialog = ViewHelpers.createShowWindow(((TContract)context.getData()).toString(), "Show contract");
+                contractDialog.setVisible(true);
 				break;
 			case RELOAD_CONTRACT:
 				List<TContract> contractList = new ArrayList<>();
@@ -195,14 +199,14 @@ public class UIimp extends UI{
 				AppController.getInstance().execute(new LightContext(Event.RELOAD_CLIENT, null));
 				break;
 			case SHOW_CLIENT:
-				Util.inform(((TClient) context.getData()).toString());
+				JDialog clientDialog = ViewHelpers.createShowWindow(((TClient)context.getData()).toString(), "Show client");
+                clientDialog.setVisible(true);
 				break;
 			case RELOAD_CLIENT:
 				ArrayList clientList = new ArrayList();
 				AppController.getInstance().execute(new LightContext(Event.SHOWALL_CLIENT, clientList));
 				break;
 			case SHOW_CLIENTS_N_RENTAL_CLIENT:
-				//TODO What should we do with these operations?
 				TableModel modelNRentals = new ClientTableModel(ClientPanel.getColumnId());
 				modelNRentals.setList((List<TClient>) context.getData());
 				ViewHelpers.createSpecificTable(modelNRentals);
@@ -220,14 +224,14 @@ public class UIimp extends UI{
 				AppController.getInstance().execute(new LightContext(Event.RELOAD_CITY, null));
 				break;
 			case SHOW_CITY:
-				Util.inform(((TCity) context.getData()).toString());
+                JDialog cityDialog = ViewHelpers.createShowWindow(((TCity)context.getData()).toString(), "Show city");
+                cityDialog.setVisible(true);
 				break;
 			case RELOAD_CITY:
 				List<TCity> cityList = new ArrayList<>();
 				AppController.getInstance().execute(new LightContext(Event.SHOWALL_CITY, cityList));
 				break;
 			case SHOW_CLIENTS_FROM_CITY:
-				//TODO What should we do with these operations?
 				TableModel modelCityClients = new ClientTableModel(ClientPanel.getColumnId());
 				modelCityClients.setList((List<TClient>) context.getData());
 				ViewHelpers.createSpecificTable(modelCityClients);

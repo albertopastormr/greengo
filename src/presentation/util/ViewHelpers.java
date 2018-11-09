@@ -6,6 +6,8 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -64,4 +66,50 @@ public class ViewHelpers {
 
 		return jDialog;
 	}
+
+    public static JDialog createShowWindow(String data, String title){
+        JDialog dialog = new JDialog();
+        dialog.setTitle(title);
+        JPanel panel = new JPanel(new BorderLayout());
+
+        String[] texts = data.split("\n");
+
+        JPanel labelPanel = new JPanel();
+        labelPanel.setLayout(new BoxLayout(labelPanel, BoxLayout.Y_AXIS));
+
+        //add the attributes to the labelPanel
+        for(int i = 0; i < texts.length; i++){
+            JLabel vel = new JLabel(texts[i]);
+            vel.setFont(new Font("Monospaced", Font.BOLD, 15));
+            labelPanel.add(vel);
+        }
+
+        //Empty border
+        labelPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
+        //Button panel
+        JPanel buttonPanel = new JPanel(new FlowLayout());
+
+        JButton closeButton = buttonsForms("Close");
+        closeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dialog.dispose();
+            }
+        });
+
+        buttonPanel.add(closeButton);
+
+        //Add the non-main panels to the main one.
+        panel.add(labelPanel, BorderLayout.CENTER);
+        panel.add(buttonPanel, BorderLayout.SOUTH);
+
+        dialog.setContentPane(panel);
+        dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+
+        dialog.pack();
+        dialog.setLocationRelativeTo(null);
+
+        return dialog;
+    }
 }
