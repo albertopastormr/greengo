@@ -11,7 +11,7 @@ import presentation.controller.LightContext;
 public class CreateService implements Command {
 
 	@Override
-	public LightContext execute(LightContext in) throws ASException, DAOException {
+	public LightContext execute(LightContext in) throws ASException {
 		Integer ret = ASServiceFactory.getInstance().generateASService().create((TService)in.getData());
 		return new LightContext(Event.CREATE_SERVICE,ret);
 	}

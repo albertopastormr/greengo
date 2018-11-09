@@ -12,7 +12,7 @@ import presentation.controller.LightContext;
 public class ShowCity implements Command {
 
 	@Override
-	public LightContext execute(LightContext in)  throws ASException, DAOException {
+	public LightContext execute(LightContext in)  throws ASException {
 		TCity ret = ASCityFactory.getInstance().generateASCity().show(((TCity)in.getData()).getId());
 		return new LightContext(Event.SHOW_CITY, ret);
 	}

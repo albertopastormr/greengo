@@ -12,7 +12,7 @@ import java.util.Collection;
 
 public class ShowAllEmployee implements Command {
 	@Override
-	public LightContext execute(LightContext in)  throws ASException, DAOException {
+	public LightContext execute(LightContext in)  throws ASException {
 		Collection<TEmployee> ret = ASEmployeeFactory.getInstance().generateASEmployee().showAll();
 		return new LightContext(Event.SHOWALL_EMPLOYEE, ret);
 

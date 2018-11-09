@@ -10,7 +10,7 @@ import presentation.controller.LightContext;
 
 public class UpdateService implements Command {
 	@Override
-	public LightContext execute(LightContext in) throws ASException, DAOException {
+	public LightContext execute(LightContext in) throws ASException {
 		Integer ret = ASServiceFactory.getInstance().generateASService().update((TService)in.getData());
 		return new LightContext(Event.UPDATE_SERVICE, ret);
 	}

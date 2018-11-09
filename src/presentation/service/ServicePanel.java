@@ -11,7 +11,7 @@ import java.awt.*;
 
 public class ServicePanel extends JPanel {
 
-	private final String[] columnId = {"Id", "Capacity", "Active", "Type", "Address", "Num Vehicles Attended"};
+	private static final String[] columnId = {"Id", "Capacity", "Active", "Type", "Address", "Num Vehicles Attended"};
 	private TableModel model;
 
 	public ServicePanel(PanelTabs panelTabs) {
@@ -24,4 +24,9 @@ public class ServicePanel extends JPanel {
 	public TableModel getModel() {
 		return model;
 	}
+
+	public static String[] getColumnId() {
+		return columnId;
+	}
+
 }

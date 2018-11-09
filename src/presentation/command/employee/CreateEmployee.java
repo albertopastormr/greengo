@@ -11,7 +11,7 @@ import presentation.controller.LightContext;
 
 public class CreateEmployee implements Command {
 	@Override
-	public LightContext execute(LightContext in) throws ASException, DAOException {
+	public LightContext execute(LightContext in) throws ASException {
 		Integer ret = ASEmployeeFactory.getInstance().generateASEmployee().create((TEmployee)in.getData());
 		return new LightContext(Event.CREATE_EMPLOYEE, ret);
 	}

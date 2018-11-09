@@ -11,7 +11,7 @@ import presentation.controller.LightContext;
 public class CreateCity implements Command {
 
 	@Override
-	public LightContext execute(LightContext in) throws ASException, DAOException {
+	public LightContext execute(LightContext in) throws ASException {
 		Integer ret = ASCityFactory.getInstance().generateASCity().create((TCity)in.getData());
 		return new LightContext(Event.CREATE_CITY, ret);
 	}

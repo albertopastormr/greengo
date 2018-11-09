@@ -12,7 +12,7 @@ import java.util.Collection;
 
 public class ShowNRentals implements Command {
 	@Override
-	public LightContext execute(LightContext in)  throws ASException, DAOException {
+	public LightContext execute(LightContext in)  throws ASException {
 		Collection<TClient> ret = ASClientFactory.getInstance().generateASClient().showAllWithMoreThanNRentals((Integer)in.getData());
 		return new LightContext(Event.SHOW_CLIENTS_N_RENTAL_CLIENT, ret);
 	}

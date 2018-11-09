@@ -10,7 +10,7 @@ import presentation.controller.LightContext;
 
 public class CreateClient implements Command {
 	@Override
-	public LightContext execute(LightContext in)  throws ASException, DAOException {
+	public LightContext execute(LightContext in)  throws ASException {
 		Integer ret = ASClientFactory.getInstance().generateASClient().create((TClient)in.getData());
 		return new LightContext(Event.CREATE_CLIENT, ret);
 	}

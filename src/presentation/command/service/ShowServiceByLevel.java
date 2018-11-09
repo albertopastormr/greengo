@@ -13,7 +13,7 @@ import java.util.Collection;
 public class ShowServiceByLevel implements Command {
 
 	@Override
-	public LightContext execute(LightContext in) throws ASException, DAOException {
+	public LightContext execute(LightContext in) throws ASException {
 		Collection<TService> ret = ASServiceFactory.getInstance().generateASService().showServicesFromLevel((Integer)in.getData());
 		return new LightContext(Event.SHOW_SERVICE_BY_LEVEL, ret);
 	}

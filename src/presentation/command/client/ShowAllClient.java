@@ -12,7 +12,7 @@ import java.util.Collection;
 
 public class ShowAllClient implements Command {
 	@Override
-	public LightContext execute(LightContext in)  throws ASException, DAOException {
+	public LightContext execute(LightContext in)  throws ASException {
 		Collection<TClient> ret = ASClientFactory.getInstance().generateASClient().showAll();
 		return new LightContext(Event.SHOWALL_CLIENT, ret);
 	}

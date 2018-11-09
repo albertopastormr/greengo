@@ -49,4 +49,19 @@ public class ViewHelpers {
 
 		return  panel;
 	}
+
+	public static JDialog createSpecificTable(TableModel model){
+
+		JPanel jPanel = new JPanel(new BorderLayout());
+		jPanel.add(new TablePanel<>(model), BorderLayout.CENTER);
+
+		JDialog jDialog = new JDialog();
+		jDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		jDialog.add(jPanel);
+		jDialog.pack();
+		jDialog.setVisible(true);
+		jDialog.setLocationRelativeTo(null);
+
+		return jDialog;
+	}
 }

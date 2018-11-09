@@ -15,7 +15,7 @@ import java.util.List;
 public class ShowAllCity implements Command {
 
 	@Override
-	public LightContext execute(LightContext in) throws ASException, DAOException {
+	public LightContext execute(LightContext in) throws ASException {
 		Collection<TCity> ret = ASCityFactory.getInstance().generateASCity().showAll();
 		return new LightContext(Event.SHOWALL_CITY, ret);
 	}

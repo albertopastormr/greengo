@@ -9,10 +9,19 @@ import business.rental.TRental;
 import business.rental.TRentalDetails;
 import business.service.TService;
 import business.vehicle.TVehicleDetails;
+import presentation.client.ClientPanel;
+import presentation.client.ClientTableModel;
 import presentation.controller.AppController;
 import presentation.controller.Event;
 import presentation.controller.LightContext;
+import presentation.service.ServicePanel;
+import presentation.service.ServiceTableModel;
+import presentation.util.TableModel;
+import presentation.util.TablePanel;
 import presentation.util.Util;
+import presentation.util.ViewHelpers;
+import presentation.vehicle.VehiclePanel;
+import presentation.vehicle.VehicleTableModel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -63,7 +72,9 @@ public class UIimp extends UI{
 				break;
 			case SHOWALL_ACTIVE_VEHICLE:
 				//TODO What should we do with these operations?
-
+				TableModel modelActive = new VehicleTableModel(VehiclePanel.getColumnId());
+				modelActive.setList((List<TVehicleDetails>) context.getData());
+				ViewHelpers.createSpecificTable(modelActive);
 				break;
 			case CREATE_SERVICE:
 				Util.inform("Added service with id " + (context.getData()));
@@ -86,7 +97,9 @@ public class UIimp extends UI{
 				break;
 			case SHOW_SERVICE_BY_LEVEL:
 				//TODO What should we do with these operations?
-
+				TableModel modelService = new ServiceTableModel(ServicePanel.getColumnId());
+				modelService.setList((List<TService>) context.getData());
+				ViewHelpers.createSpecificTable(modelService);
 				break;
 			case CREATE_RENTAL:
 				Util.inform("Added rental with id " + (context.getData()));
@@ -149,7 +162,6 @@ public class UIimp extends UI{
 				break;
 			case SET_SALARY_EMPLOYEE:
 				Util.inform("Updated the salary to employee " + context.getData() + "successfully");
-
 				break;
 			case CREATE_CONTRACT:
 				Util.inform("Added contract with id " + (context.getData()));
@@ -191,7 +203,9 @@ public class UIimp extends UI{
 				break;
 			case SHOW_CLIENTS_N_RENTAL_CLIENT:
 				//TODO What should we do with these operations?
-
+				TableModel modelNRentals = new ClientTableModel(ClientPanel.getColumnId());
+				modelNRentals.setList((List<TClient>) context.getData());
+				ViewHelpers.createSpecificTable(modelNRentals);
 				break;
 			case CREATE_CITY:
 				Util.inform("Added city with id " + (context.getData()));
@@ -214,6 +228,9 @@ public class UIimp extends UI{
 				break;
 			case SHOW_CLIENTS_FROM_CITY:
 				//TODO What should we do with these operations?
+				TableModel modelCityClients = new ClientTableModel(ClientPanel.getColumnId());
+				modelCityClients.setList((List<TClient>) context.getData());
+				ViewHelpers.createSpecificTable(modelCityClients);
 				break;
 
 			//all these operations do the same.

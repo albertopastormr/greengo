@@ -10,7 +10,7 @@ import presentation.controller.LightContext;
 
 public class ShowContract implements Command {
 	@Override
-	public LightContext execute(LightContext in) throws ASException, DAOException {
+	public LightContext execute(LightContext in) throws ASException {
 		TContract ret = ASContractFactory.getInstance().generateASContract().show(((TContract)in.getData()).getId());
 		return new LightContext(Event.SHOW_CONTRACT, ret);
 	}

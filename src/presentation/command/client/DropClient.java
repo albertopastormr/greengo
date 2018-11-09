@@ -10,7 +10,7 @@ import presentation.controller.LightContext;
 
 public class DropClient implements Command {
 	@Override
-	public LightContext execute(LightContext in) throws ASException, DAOException {
+	public LightContext execute(LightContext in) throws ASException {
 		Integer ret = ASClientFactory.getInstance().generateASClient().drop(((TClient)in.getData()).getId());
 		return new LightContext(Event.DROP_CLIENT, ret);
 	}

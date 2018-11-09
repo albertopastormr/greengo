@@ -11,7 +11,7 @@ import presentation.controller.LightContext;
 public class UpdateRental implements Command {
 
 	@Override
-	public LightContext execute(LightContext in) throws ASException, DAOException {
+	public LightContext execute(LightContext in) throws ASException {
 		Integer ret = ASRentalFactory.getInstance().generateASRental().update((TRental)in.getData());
 		return new LightContext(Event.UPDATE_RENTAL, ret);
 	}

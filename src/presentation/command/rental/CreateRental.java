@@ -10,7 +10,7 @@ import presentation.controller.LightContext;
 
 public class CreateRental implements Command {
 	@Override
-	public LightContext execute(LightContext in) throws ASException, DAOException {
+	public LightContext execute(LightContext in) throws ASException {
 		Integer ret = ASRentalFactory.getInstance().generateASRental().create((TRental)in.getData());
 		return new LightContext(Event.CREATE_RENTAL, ret);
 	}

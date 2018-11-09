@@ -10,7 +10,7 @@ import presentation.controller.LightContext;
 
 public class ShowMain_Office implements Command {
 	@Override
-	public LightContext execute(LightContext in) throws ASException, DAOException {
+	public LightContext execute(LightContext in) throws ASException {
 		TMainOffice ret = ASMain_OfficeFactory.getInstance().generateASMain_Office().show(((TMainOffice)in.getData()).getId());
 		return  new LightContext(Event.SHOW_MAIN_OFFICE, ret);
 	}

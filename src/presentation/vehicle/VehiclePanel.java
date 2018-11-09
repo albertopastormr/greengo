@@ -10,7 +10,7 @@ import java.awt.*;
 
 public class VehiclePanel extends JPanel {
 
-	private final String[] columnId = {"Id", "Brand", "Estimated Duration", "Num km Travelled", "Occupied", "City", "Active", "Type"};
+	private static final String[] columnId = {"Id", "Brand", "Estimated Duration", "Num km Travelled", "Occupied", "City", "Active", "Type"};
 	private TableModel model;
 
 	public VehiclePanel(PanelTabs panelTabs) {
@@ -22,5 +22,9 @@ public class VehiclePanel extends JPanel {
 
 	public TableModel getModel() {
 		return model;
+	}
+
+	public static String[] getColumnId() {
+		return columnId;
 	}
 }

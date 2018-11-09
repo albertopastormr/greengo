@@ -10,7 +10,7 @@ import presentation.controller.LightContext;
 
 public class ShowEmployee implements Command {
 	@Override
-	public LightContext execute(LightContext in) throws ASException, DAOException {
+	public LightContext execute(LightContext in) throws ASException {
 		TEmployee ret = ASEmployeeFactory.getInstance().generateASEmployee().show(((TEmployee)in.getData()).getId());
 		return new LightContext(Event.SHOW_EMPLOYEE, ret);
 	}

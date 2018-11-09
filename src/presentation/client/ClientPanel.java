@@ -9,7 +9,7 @@ import java.awt.*;
 
 public class ClientPanel extends JPanel {
 
-	private final String[] columnId = {"Id", "Id card number", "Rentals number", "Active"};
+	private static final String[] columnId = {"Id", "Id card number", "Rentals number", "Active"};
 	private TableModel model;
 
 	public ClientPanel(PanelTabs panelTabs) {
@@ -22,4 +22,9 @@ public class ClientPanel extends JPanel {
 	public TableModel getModel() {
 		return model;
 	}
+
+	public static String[] getColumnId() {
+		return columnId;
+	}
+
 }

@@ -12,7 +12,7 @@ import java.util.Collection;
 
 public class ShowAllContract implements Command {
 	@Override
-	public LightContext execute(LightContext in) throws ASException, DAOException {
+	public LightContext execute(LightContext in) throws ASException {
 		Collection<TContract> ret = ASContractFactory.getInstance().generateASContract().showAll();
 		return new LightContext(Event.SHOWALL_CONTRACT, ret);
 	}
