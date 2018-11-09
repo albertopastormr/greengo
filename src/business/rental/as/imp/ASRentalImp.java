@@ -113,7 +113,7 @@ public class ASRentalImp implements ASRental {
                     TRental tl = DAORentalFactory.getInstance().generateDAORental().readById(rental.getId());
                     TVehicle tv = DAOVehicleFactory.getInstance().generateDAOVehicle().readById((rental.getIdVehicle()));
                     TClient tc = DAOClientFactory.getInstance().generateDAOClient().readById(rental.getIdClient());
-                    TRental trental = DAORentalFactory.getInstance().generateDAORental().checkAvaibleDates(rental);
+                    Boolean trental = DAORentalFactory.getInstance().generateDAORental().checkAvaiableDates(rental);
 
                     if (tl != null && tv != null && tc != null && tv.isActive() && tc.isActive() && trental!= null) {//the rental exists, the client and vehicle are actived, exists and free in the dates
                         idr = DAORentalFactory.getInstance().generateDAORental().update(tl);

@@ -218,7 +218,7 @@ public class ASVehicleImp implements ASVehicle {
         if(tr != null) {
             try {
                 tr.start();
-                vehicleList = DAOVehicleFactory.getInstance().generateDAOVehicle().showAllActiveVehicles();
+                vehicleList = DAOVehicleFactory.getInstance().generateDAOVehicle() .showAllActiveVehicles();
 
                 DAOCity daoCity = DAOCityFactory.getInstance().generateDAOCity();
 
