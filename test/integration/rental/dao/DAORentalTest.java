@@ -7,6 +7,7 @@ import business.rental.TRental;
 import business.vehicle.TVehicle;
 import business.vehicle.as.ASVehicle;
 import business.vehicle.factory.ASVehicleFactory;
+import integration.DAOException;
 import integration.rental.factory.DAORentalFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -30,13 +31,13 @@ class DAORentalTest {
 
 
     @BeforeEach
-    void setUp() {
+    void setUp() throws DAOException {
         dao.deleteAll();
     }
 
     //create method
     @Test
-    void createRental() {
+    void createRental() throws DAOException {
         Integer id1 = dao.create(tr);
         tr.setIdClient(2);
         tr.setIdVehicle(2);
@@ -49,7 +50,7 @@ class DAORentalTest {
 
     //update method
     @Test
-    void update() {
+    void update() throws DAOException {
         Integer id = dao.create(tr);
         tr.setId(id);
 
@@ -66,7 +67,7 @@ class DAORentalTest {
     }
 
     @Test
-    void readById() {
+    void readById() throws DAOException {
         Integer id = dao.create(tr);
         tr.setId(id);
         TRental read = dao.readById(id);
@@ -80,7 +81,7 @@ class DAORentalTest {
     }
 
     @Test
-    void showRentalsByClient() {
+    void showRentalsByClient() throws DAOException {
         Integer id = dao.create(tr);
         tr.setId(id);
 
@@ -97,7 +98,7 @@ class DAORentalTest {
     }
 
     @Test
-    void readAll() {
+    void readAll() throws DAOException {
         Integer id = dao.create(tr);
         tr.setId(id);
 

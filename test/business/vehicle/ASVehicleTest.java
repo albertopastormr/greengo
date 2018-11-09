@@ -14,6 +14,7 @@ import business.rental.as.ASRental;
 import business.rental.factory.ASRentalFactory;
 import business.vehicle.as.ASVehicle;
 import business.vehicle.factory.ASVehicleFactory;
+import integration.DAOException;
 import integration.vehicle.dao.DAOVehicle;
 import integration.vehicle.factory.DAOVehicleFactory;
 
@@ -39,7 +40,7 @@ public class ASVehicleTest {
     private static TRental tr = new TRental(null,null,false,10,null,dFrom,dTo);
 
     @BeforeEach
-    public void setUp(){
+    public void setUp() throws DAOException {
         DAOVehicle dao = DAOVehicleFactory.getInstance().generateDAOVehicle();
         dao.deleteAll();
     }

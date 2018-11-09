@@ -1,6 +1,7 @@
 package integration.client.dao;
 
 import business.client.TClient;
+import integration.DAOException;
 import integration.client.factory.DAOClientFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -28,7 +29,7 @@ class DAOClientTest {
     }
 
     @Test
-    void create() {
+    void create() throws DAOException {
         Integer idM = dao.create(tc1);
         Integer idB = dao.create(tc2);
 
@@ -37,7 +38,7 @@ class DAOClientTest {
     }
 
     @Test
-    void update() {
+    void update() throws DAOException {
         Integer idM = dao.create(tc1);
         tc1.setId(idM);
         tc1.setIdCardNumber("idc");
@@ -51,7 +52,7 @@ class DAOClientTest {
     }
 
     @Test
-    void readByIdCard() {
+    void readByIdCard() throws DAOException {
         Integer idM = dao.create(tc1);
 
         TClient tInDB = dao.readByIdCard(tc1.getIdCardNumber());
@@ -60,7 +61,7 @@ class DAOClientTest {
 
 
     @Test
-    void readById() {
+    void readById() throws DAOException {
         Integer idM = dao.create(tc1);
 
         TClient tInDB = dao.readById(idM);
@@ -68,7 +69,7 @@ class DAOClientTest {
     }
 
     @Test
-    void readAll(){
+    void readAll() throws DAOException {
         Integer idM = dao.create(tc1);
         Integer idB = dao.create(tc2);
 
@@ -89,7 +90,7 @@ class DAOClientTest {
 
 
     @Test
-    void readByNRentals() {
+    void readByNRentals() throws DAOException {
         int Nrentals = 50;
         tc1.setNumRentals(Nrentals+1);
         tc2.setNumRentals(Nrentals+1);

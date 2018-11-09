@@ -32,14 +32,12 @@ public class ASVehicleImp implements ASVehicle {
 
         if(!vehicle.getBrand().equals("") && !vehicle.getBrand().equals("") && vehicle.getEstimatedDuration() != null && vehicle.getNumKmTravelled() != null &&
                 vehicle.getCity() != null && !vehicle.getType().equals("")) {
+            try {
+                Transaction tr = TransactionManager.getInstance().createTransaction();
 
-            Transaction tr = TransactionManager.getInstance().createTransaction();
-
-            if(tr!=null) {
-                try {
+                if(tr!=null) {
                     tr.start();
                     TCity tc = DAOCityFactory.getInstance().generateDAOCity().readById(vehicle.getCity());
-
                     TVehicle tVehicle = null;
 
                     if (vehicle.getType().equals("Bicycle")) {
@@ -49,17 +47,14 @@ public class ASVehicleImp implements ASVehicle {
                         TCarVehicle tv = (TCarVehicle) vehicle;
                         tVehicle = DAOVehicleFactory.getInstance().generateDAOVehicle().showByPlateOrSerial(tv.getPlate());
                     }
-
                     idv = DAOVehicleFactory.getInstance().generateDAOVehicle().create(tVehicle);
-
                     tr.commit();
                     TransactionManager.getInstance().removeTransaction();
-                } catch (DAOException | TransactionException e) {
-                    throw new ASException(e.getMessage());
-                }
-
-            }else
-                throw new ASException("ERROR: The vehicle doesn't create correctly.\n");
+                }else
+                    throw new ASException("ERROR: The vehicle doesn't create correctly.\n");
+            } catch (DAOException | TransactionException e) {
+                throw new ASException(e.getMessage());
+            }
         }else
             throw new ASException("ERROR: The data of vehicle isn't insert correctly.\n");
 
@@ -71,11 +66,9 @@ public class ASVehicleImp implements ASVehicle {
 
         Integer idv = null;
         if(idVehicle > 0){
-
-            Transaction tr = TransactionManager.getInstance().createTransaction();
-
-            if (tr != null) {
-                try {
+            try {
+                Transaction tr = TransactionManager.getInstance().createTransaction();
+                if (tr != null) {
                     tr.start();
                     TVehicle tv = DAOVehicleFactory.getInstance().generateDAOVehicle().readById(idVehicle);
 
@@ -99,12 +92,13 @@ public class ASVehicleImp implements ASVehicle {
                         if (tv == null) throw new ASException("The vehicle doesn't exists");
                         else if (!tv.isActive()) throw new ASException("The vehicle is already disabled");
                     }
-                }catch (DAOException | ASException | TransactionException e) {
-                    throw new ASException(e.getMessage());
                 }
-            }
-            else {
-                throw new ASException("ERROR: The vehicle doesn't delete correctly.\n");
+                else {
+                    throw new ASException("ERROR: The vehicle doesn't delete correctly.\n");
+
+                }
+            }catch (DAOException | ASException | TransactionException e) {
+                throw new ASException(e.getMessage());
             }
         }else
             throw new ASException("ERROR: The data of vehicle isn't insert correctly.\n");
@@ -121,10 +115,9 @@ public class ASVehicleImp implements ASVehicle {
         if(tVehicle.getId() > 0 && !tVehicle.getBrand().equals("") && !tVehicle.getBrand().equals("") && tVehicle.getEstimatedDuration() != null
                 && tVehicle.getNumKmTravelled() != null && tVehicle.getCity() != null && !tVehicle.getType().equals("")) {
 
-            Transaction tr = TransactionManager.getInstance().createTransaction();
-
-            if (tr != null) {
-                try {
+            try {
+                Transaction tr = TransactionManager.getInstance().createTransaction();
+                if (tr != null) {
                     tr.start();
                     TVehicle tv = DAOVehicleFactory.getInstance().generateDAOVehicle().readById(tVehicle.getId());
 
@@ -137,11 +130,11 @@ public class ASVehicleImp implements ASVehicle {
                         TransactionManager.getInstance().removeTransaction();
                         throw new ASException("The vehicle doesn't exists");
                     }
+                } else
+                    throw new ASException("ERROR: The vehicle doesn't update correctly.\n");
                 } catch (DAOException | ASException | TransactionException e) {
-                    throw new ASException(e.getMessage());
-                }
-            } else
-                throw new ASException("ERROR: The vehicle doesn't update correctly.\n");
+                throw new ASException(e.getMessage());
+            }
         }else
             throw new ASException("ERROR: The data of vehicle isn't insert correctly.\n");
 
@@ -154,25 +147,22 @@ public class ASVehicleImp implements ASVehicle {
         TVehicleDetails tvd = null;
 
         if(idVehicle > 0) {
-
-            Transaction tr = TransactionManager.getInstance().createTransaction();
-
-            if (tr != null) {
-                try {
+            try {
+                Transaction tr = TransactionManager.getInstance().createTransaction();
+                if (tr != null) {
                     tr.start();
                     TVehicle tv = DAOVehicleFactory.getInstance().generateDAOVehicle().readById(idVehicle);
                     TCity tc = DAOCityFactory.getInstance().generateDAOCity().readById(tv.getCity());
-
                     tvd = new TVehicleDetails(tv, tc);
 
                     tr.commit();
                     TransactionManager.getInstance().removeTransaction();
                     if (tv == null) throw new ASException("The vehicle doesn't exists");
-                } catch (TransactionException | ASException | DAOException e) {
-                    throw new ASException(e.getMessage());
-                }
-            } else
-                throw new ASException("ERROR: The vehicle doesn't show correctly.\n");
+                } else
+                    throw new ASException("ERROR: The vehicle doesn't show correctly.\n");
+            } catch (TransactionException | ASException | DAOException e) {
+                throw new ASException(e.getMessage());
+            }
         }else
             throw new ASException("ERROR: The data of vehicle isn't insert correctly.\n");
 
@@ -183,13 +173,12 @@ public class ASVehicleImp implements ASVehicle {
     public Collection<TVehicleDetails> showAll() throws ASException {
         Collection<TVehicleDetails> retList = new ArrayList<>();
         Collection<TVehicle> vehicleList = null;
-        Transaction tr = TransactionManager.getInstance().createTransaction();
 
-        if(tr != null) {
-            try {
+        try {
+            Transaction tr = TransactionManager.getInstance().createTransaction();
+            if(tr != null) {
                 tr.start();
                 vehicleList = DAOVehicleFactory.getInstance().generateDAOVehicle().readAll();
-
                 DAOCity daoCity = DAOCityFactory.getInstance().generateDAOCity();
 
                 for(TVehicle tv : vehicleList) {
@@ -199,12 +188,11 @@ public class ASVehicleImp implements ASVehicle {
 
                 tr.commit();
                 TransactionManager.getInstance().removeTransaction();
-            }catch (DAOException | TransactionException e) {
-                throw new ASException(e.getMessage());
-            }
-        }else
-            throw new ASException("ERROR: The cities doesn't list correctly.\n");
-
+            }else
+                throw new ASException("ERROR: The cities doesn't list correctly.\n");
+        }catch (DAOException | TransactionException e) {
+            throw new ASException(e.getMessage());
+        }
         return retList;
     }
 
@@ -213,28 +201,26 @@ public class ASVehicleImp implements ASVehicle {
 
         Collection<TVehicleDetails> retList = new ArrayList<>();
         Collection<TVehicle> vehicleList = null;
-        Transaction tr = TransactionManager.getInstance().createTransaction();
 
-        if(tr != null) {
-            try {
+        try {
+            Transaction tr = TransactionManager.getInstance().createTransaction();
+
+            if(tr != null) {
                 tr.start();
                 vehicleList = DAOVehicleFactory.getInstance().generateDAOVehicle().readAllAvailableVehicles();
-
                 DAOCity daoCity = DAOCityFactory.getInstance().generateDAOCity();
 
                 for(TVehicle tv : vehicleList) {
                     TCity tc = daoCity.readById(tv.getCity());
                     retList.add(new TVehicleDetails(tv, tc));
                 }
-
                 tr.commit();
                 TransactionManager.getInstance().removeTransaction();
-            }catch (DAOException | TransactionException e) {
-                throw new ASException(e.getMessage());
-            }
-        }else
-            throw new ASException("ERROR: The vehicles availables doesn't list correctly.\n");
-
+            }else
+                throw new ASException("ERROR: The vehicles availables doesn't list correctly.\n");
+        }catch (DAOException | TransactionException e) {
+            throw new ASException(e.getMessage());
+        }
         return retList;
     }
 

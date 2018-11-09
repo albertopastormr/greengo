@@ -14,7 +14,7 @@ public class TransactionMariaDB implements Transaction {
 
     private Connection connec;
 
-    TransactionMariaDB() throws TransactionException {
+    public TransactionMariaDB() throws TransactionException {
         try {
             connec = DriverManager.getConnection(connectionChain);
         } catch (SQLException e) {

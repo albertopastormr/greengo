@@ -2,6 +2,7 @@ package integration.transactionManager.imp;
 
 import integration.Transaction.Transaction;
 import integration.Transaction.imp.TransactionMariaDB;
+import integration.TransactionException;
 import integration.transactionManager.TransactionManager;
 import integration.transactionManager.transactionFactory.TransactionFactory;
 
@@ -15,7 +16,7 @@ public class TransactionManagerImp extends TransactionManager {
     }
 
     @Override
-    public Transaction createTransaction() {
+    public Transaction createTransaction() throws TransactionException {
         Thread currentThread = Thread.currentThread();
 
         Transaction tr = this.chm.get(currentThread);

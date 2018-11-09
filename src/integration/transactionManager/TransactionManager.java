@@ -1,6 +1,7 @@
 package integration.transactionManager;
 
 import integration.Transaction.Transaction;
+import integration.TransactionException;
 import integration.transactionManager.imp.TransactionManagerImp;
 
 public abstract class TransactionManager {
@@ -14,7 +15,7 @@ public abstract class TransactionManager {
         return instance;
     }
 
-    public abstract Transaction createTransaction();
+    public abstract Transaction createTransaction() throws TransactionException;
     public abstract void removeTransaction();
     public abstract Transaction getTransaction();
 }
