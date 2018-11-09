@@ -168,7 +168,7 @@ public class ASVehicleImp implements ASVehicle {
                     tr.commit();
                     TransactionManager.getInstance().removeTransaction();
                     if (tv == null) throw new ASException("The vehicle doesn't exists");
-                } catch (DAOException | TransactionException | ASException | DAOException e) {
+                } catch (TransactionException | ASException | DAOException e) {
                     throw new ASException(e.getMessage());
                 }
             } else
@@ -218,7 +218,7 @@ public class ASVehicleImp implements ASVehicle {
         if(tr != null) {
             try {
                 tr.start();
-                vehicleList = DAOVehicleFactory.getInstance().generateDAOVehicle().showAllActiveVehicles();
+                vehicleList = DAOVehicleFactory.getInstance().generateDAOVehicle().readAllAvailableVehicles();
 
                 DAOCity daoCity = DAOCityFactory.getInstance().generateDAOCity();
 

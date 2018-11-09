@@ -4,6 +4,7 @@ import business.client.TClient;
 import business.rental.TRental;
 
 import java.util.Collection;
+import java.util.Date;
 
 public interface DAORental {
     Integer create(TRental rental);
@@ -17,6 +18,8 @@ public interface DAORental {
     Collection<TRental> showRentalsByVehicle(Integer id);
 
     Collection<TRental> readAll();
+
+    Boolean checkAvaiableDates(TRental rental);
 
     void deleteAll();
 

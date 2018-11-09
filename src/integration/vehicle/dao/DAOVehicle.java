@@ -10,15 +10,15 @@ public interface DAOVehicle {
 
     Integer update(TVehicle vehicle) throws DAOException;
 
-    TVehicle readById(Integer id) ;
+    TVehicle readById(Integer id) throws DAOException;
 
-    Collection<TVehicle> readAll();
+    Collection<TVehicle> readAll() throws DAOException;
 
-    Collection<TVehicle> showAllActiveVehicles();
+    Collection<TVehicle> readAllAvailableVehicles() throws DAOException;
 
     void deleteAll() throws DAOException;
     
-    Collection<TVehicle> showVehiclesByCity(Integer id);
+    Collection<TVehicle> readVehiclesByCity(Integer id) throws DAOException;
 
     TVehicle showByPlateOrSerial(String plate);
 
