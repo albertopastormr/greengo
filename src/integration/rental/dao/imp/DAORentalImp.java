@@ -5,6 +5,7 @@ import business.rental.TRental;
 import integration.rental.dao.DAORental;
 
 import java.util.Collection;
+import java.util.Date;
 
 public class DAORentalImp implements DAORental {
     @Override
@@ -34,6 +35,11 @@ public class DAORentalImp implements DAORental {
 
     @Override
     public Collection<TRental> readAll() {
+        return null;
+    }
+
+    @Override
+    public Boolean checkAvaiableDates(TRental rental) {
         return null;
     }
 
