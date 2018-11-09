@@ -34,18 +34,21 @@ public class ASRentalImp implements ASRental {
                 try {
                     TClient tc = DAOClientFactory.getInstance().generateDAOClient().readById(rental.getIdClient());
                     TVehicle tv = DAOVehicleFactory.getInstance().generateDAOVehicle().readById((rental.getIdVehicle()));
+                    boolean avaiableRental = DAORentalFactory.getInstance().generateDAORental().checkAvaiableDates(rental);
 
-                    //TODO NO PUEDE DARSE DE ALTA UN ALQUILER CON FECHAS EN LAS QUE EL VEHICULO O EL CLIENTE TENGA OTRO
-
-                    if (tc != null && tv != null && tc.isActive() && tv.isActive()) {//the client and vehicle exists and are active
+                    if (tc != null && tv != null && tc.isActive() && tv.isActive() && avaiableRental) {//the client and vehicle exists and are active and free in the dates
                         idr = DAORentalFactory.getInstance().generateDAORental().create(rental);
                         tr.commit();
                         TransactionManager.getInstance().removeTransaction();
                     } else {//exists
                         tr.rollback();
                         TransactionManager.getInstance().removeTransaction();
-                        if (tc == null || tv == null) throw new ASException("Vehicle or Client doesn't exists");
-                        if (!tc.isActive() || !tv.isActive()) throw new ASException("Vehicle or Client is  disabled");
+                        if (tc == null || tv == null)
+                            throw new ASException("Vehicle or Client doesn't exists");
+                        else if (!tc.isActive() || !tv.isActive())
+                            throw new ASException("Vehicle or Client is  disabled");
+                        else if (!avaiableRental)
+                            throw new ASException("Vehicle or Client isn`t avaiable for the dates");
                     }
                 } catch (DAOException | TransactionException e) {
                     throw new ASException(e.getMessage());
@@ -78,8 +81,10 @@ public class ASRentalImp implements ASRental {
                     } else {
                         tr.rollback();
                         TransactionManager.getInstance().removeTransaction();
-                        if (tl == null) throw new ASException("The rental doesn't exists");
-                        else if (!tl.isActive()) throw new ASException("The rental is disabled");
+                        if (tl == null)
+                            throw new ASException("The rental doesn't exists");
+                        else if (!tl.isActive())
+                            throw new ASException("The rental is disabled");
                     }
                 } catch (DAOException | TransactionException e) {
                     throw new ASException(e.getMessage());
@@ -101,7 +106,6 @@ public class ASRentalImp implements ASRental {
 
             Transaction tr = TransactionManager.getInstance().createTransaction();
 
-            //TODO NO PUEDE MODIFICARSE UN ALQUILER SI LAS FECHAS NUEVAS OCUPADAS YA POR ESE VEHICULO O CLIENTE
 
             if (tr != null) {
                 try {
@@ -109,8 +113,9 @@ public class ASRentalImp implements ASRental {
                     TRental tl = DAORentalFactory.getInstance().generateDAORental().readById(rental.getId());
                     TVehicle tv = DAOVehicleFactory.getInstance().generateDAOVehicle().readById((rental.getIdVehicle()));
                     TClient tc = DAOClientFactory.getInstance().generateDAOClient().readById(rental.getIdClient());
+                    TRental trental = DAORentalFactory.getInstance().generateDAORental().checkAvaibleDates(rental);
 
-                    if (tl != null && tv != null && tc != null && tv.isActive() && tc.isActive()) {//the rental exists, the client and vehicle are actived and exists
+                    if (tl != null && tv != null && tc != null && tv.isActive() && tc.isActive() && trental!= null) {//the rental exists, the client and vehicle are actived, exists and free in the dates
                         idr = DAORentalFactory.getInstance().generateDAORental().update(tl);
                         tr.commit();
                         TransactionManager.getInstance().removeTransaction();
@@ -122,6 +127,8 @@ public class ASRentalImp implements ASRental {
                             throw new ASException("The client or vehicle doesn't exists");
                         else if (!tv.isActive() || !tc.isActive())
                             throw new ASException("The client or vehicle is disabled");
+                        else if (trental != null)
+                            throw new ASException("Vehicle or Client isn`t avaible for the dates");
                     }
                 } catch (DAOException | TransactionException e) {
                     throw new ASException(e.getMessage());
