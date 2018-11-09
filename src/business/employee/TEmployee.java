@@ -68,16 +68,22 @@ public class TEmployee {
 		this.type = type;
 	}
 
-	@Override
-	public String toString(){
-		String ret = "";
-		ret += String.format("%-13s %13s %n", "Id: ", id);
-		ret += String.format("%-13s %13s %n", "Id card number: ", idCardNumber);
-		ret += String.format("%-13s %13s %n", "Salary: ", salary);
-		ret += String.format("%-13s %13s %n", "Type: ", type);
-		ret += String.format("%-13s %13s %n", "Id main office: ", idMainOffice);
-		ret += String.format("%-13s %13s %n", "Active: ", active);
+    @Override
+    public String toString(){
+        String ret = "";
+        ret += String.format("%-16s %16s %n", "Id: ", id);
+        ret += String.format("%-16s %16s %n", "Id card number: ", idCardNumber);
+        ret += String.format("%-16s %16s %n", "Salary: ", salary);
+        ret += String.format("%-16s %16s %n", "Type: ", type);
+        if(type.equals("Permanent")){
+            ret += String.format("%-16s %16s %n", "Apportionment: ", ((TPermanentEmployee)this).getApportionment());
+        }
+        else{
+            ret += String.format("%-16s %16s %n", "Worked hours: ", ((TTemporaryEmployee)this).getNumWorkedHours());
+        }
+        ret += String.format("%-16s %16s %n", "Id main office: ", idMainOffice);
+        ret += String.format("%-16s %16s %n", "Active: ", active);
 
-		return ret;
-	}
+        return ret;
+    }
 }

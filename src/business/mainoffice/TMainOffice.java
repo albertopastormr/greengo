@@ -40,14 +40,17 @@ public class TMainOffice {
 		this.active = active;
 	}
 
-	@Override
-	public String toString(){
-		String ret = "";
-		ret += String.format("%-13s %13s %n", "Id: ", id);
-		ret += String.format("%-13s %13s %n", "City: ", city);
-		ret += String.format("%-13s %13s %n", "Address: ", address);
-		ret += String.format("%-13s %13s %n", "Active: ", active);
+    @Override
+    public String toString(){
+        String ret = "";
+        Integer addressLength = address.length();
+        if(addressLength <= 8) addressLength = 9;
+        String regex = "%-" + addressLength + "s %" + addressLength + "s %n";
+        ret += String.format(regex, "Id: ", id);
+        ret += String.format(regex, "City: ", city);
+        ret += String.format(regex, "Address: ", address);
+        ret += String.format(regex, "Active: ", active);
 
-		return ret;
-	}
+        return ret;
+    }
 }

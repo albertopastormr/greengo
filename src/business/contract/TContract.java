@@ -63,7 +63,7 @@ public class TContract {
     public String toString(){
         String ret = "";
         ret += String.format("%-13s %13s %n", "Id: ", id);
-        ret += String.format("%-13s %13s %n", "Main office id: ", idMainOffice);
+        ret += String.format("%-10s %10s %n", "Main office id: ", idMainOffice);
         ret += String.format("%-13s %13s %n", "Service id: ", idService);
         ret += String.format("%-13s %13s %n", "Active: ", active);
 

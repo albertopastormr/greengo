@@ -68,17 +68,20 @@ public class TService {
 		this.numVehiclesAttended = numVehiclesAttended;
 	}
 
-	@Override
-	public String toString(){
-		String ret = "";
-		ret += String.format("%-13s %13s %n", "Id: ", id);
-		ret += String.format("%-13s %13s %n", "Capacity: ", capacity);
-		ret += String.format("%-13s %13s %n", "Type: ", type);
-		ret += String.format("%-13s %13s %n", "Address: ", address);
-		ret += String.format("%-13s %13s %n", "Address: ", address);
-		ret += String.format("%-13s %13s %n", "Vehicles attended: ", numVehiclesAttended);
-		ret += String.format("%-13s %13s %n", "Active: ", active);
+    @Override
+    public String toString(){
+        String ret = "";
+        Integer addressLength = Math.max(address.length(), type.length());
+        if(addressLength <= 8) addressLength = 9;
+        String regex = "%-" + addressLength + "s %" + addressLength + "s %n";
 
-		return ret;
-	}
+        ret += String.format(regex, "Id: ", id);
+        ret += String.format(regex, "Capacity: ", capacity);
+        ret += String.format(regex, "Type: ", type);
+        ret += String.format(regex, "Address: ", address);
+        ret += String.format(regex, "Vehicles attended: ", numVehiclesAttended);
+        ret += String.format(regex, "Active: ", active);
+
+        return ret;
+    }
 }

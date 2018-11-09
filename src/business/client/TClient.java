@@ -47,14 +47,14 @@ public class TClient {
         this.active = active;
     }
 
-	@Override
-	public String toString(){
-		String ret = "";
-		ret += String.format("%-13s %13s %n", "Id: ", id);
-		ret += String.format("%-13s %13s %n", "Id card number: ", idCardNumber);
-		ret += String.format("%-13s %13s %n", "Number of rentals: ", numRentals);
-		ret += String.format("%-13s %13s %n", "Active: ", active);
+    @Override
+    public String toString(){
+        String ret = "";
+        ret += String.format("%-13s %13s %n", "Id: ", id);
+        ret += String.format("%-10s %10s %n", "Id card number: ", idCardNumber);
+        ret += String.format("%-7s %7s %n", "Number of rentals: ", numRentals);
+        ret += String.format("%-13s %13s %n", "Active: ", active);
 
-		return ret;
-	}
+        return ret;
+    }
 }
