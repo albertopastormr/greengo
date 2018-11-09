@@ -2,6 +2,9 @@ package business.rental;
 
 import business.ASException;
 import business.IncorrectInputException;
+import business.city.TCity;
+import business.city.as.ASCity;
+import business.city.factory.ASCityFactory;
 import business.client.TClient;
 import business.client.as.ASClient;
 import business.client.factory.ASClientFactory;
@@ -10,8 +13,6 @@ import business.rental.factory.ASRentalFactory;
 import business.vehicle.TVehicle;
 import business.vehicle.as.ASVehicle;
 import business.vehicle.factory.ASVehicleFactory;
-import integration.client.dao.DAOClient;
-import integration.client.factory.DAOClientFactory;
 import integration.rental.dao.DAORental;
 import integration.rental.factory.DAORentalFactory;
 import org.junit.jupiter.api.BeforeEach;
@@ -24,8 +25,10 @@ import static org.junit.jupiter.api.Assertions.*;
 public class ASRentalTest {
     private static Date dFrom = new Date(1540373530000L);
     private static Date dTo = new Date(1543051930000L);
-    private static ASClient asC = ASClientFactory.getInstance().generateASClient();
-    private static TClient tc = new TClient(null,"00000000X",0,false);
+    private static ASClient asClient = ASClientFactory.getInstance().generateASClient();
+    private static ASCity asCity = ASCityFactory.getInstance().generateASCity();
+    private static TCity tCity = new TCity(null,"Madrid",false);
+    private static TClient tClient = new TClient(null,"00000000X",0,false);
     private static ASVehicle asV = ASVehicleFactory.getInstance().generateASVehicle();
     private static TVehicle tv = new TVehicle(null,"Audi",6000,0,
             false,null,false,"car");
@@ -41,9 +44,11 @@ public class ASRentalTest {
     //create method
     @Test
     public void createRentalSuccessful() throws ASException {
+        Integer idCity = asCity.create(tCity);
+        tv.setCity(idCity);
         Integer idV = asV.create(tv);
-        Integer idC = asC.create(tc);
-        tr.setIdClient(idC);
+        Integer idClient = asClient.create(tClient);
+        tr.setIdClient(idClient);
         tr.setIdVehicle(idV);
 
         Integer idR = as.create(tr);
@@ -53,9 +58,11 @@ public class ASRentalTest {
 
     @Test
     public void createRentalIncorrectInputID() throws ASException {
+        Integer idCity = asCity.create(tCity);
+        tv.setCity(idCity);
         Integer idV = asV.create(tv);
-        Integer idC = asC.create(tc);
-        tr.setIdClient(idC);
+        Integer idClient = asClient.create(tClient);
+        tr.setIdClient(idClient);
         tr.setIdVehicle(idV);
 
         tr.setId(0); //id must be null
@@ -65,7 +72,7 @@ public class ASRentalTest {
 
     @Test
     public void createRentalIncorrectInputIDVehicle1() throws ASException {
-        Integer idC = asC.create(tc);
+        Integer idC = asClient.create(tClient);
         tr.setIdClient(idC);
 
         //id vehicle must be > 0
@@ -75,7 +82,7 @@ public class ASRentalTest {
 
     @Test
     public void createRentalIncorrectInputIDVehicle2() throws ASException {
-        Integer idC = asC.create(tc);
+        Integer idC = asClient.create(tClient);
         tr.setIdClient(idC);
 
         //id vehicle must be > 0
@@ -85,7 +92,7 @@ public class ASRentalTest {
 
     @Test
     public void createRentalIncorrectInputIDVehicle3() throws ASException {
-        Integer idC = asC.create(tc);
+        Integer idC = asClient.create(tClient);
         tr.setIdClient(idC);
 
         //id vehicle must be > 0
@@ -95,8 +102,10 @@ public class ASRentalTest {
 
     @Test
     public void createRentalIncorrectInputActive() throws ASException {
+        Integer idCity = asCity.create(tCity);
+        tv.setCity(idCity);
         Integer idV = asV.create(tv);
-        Integer idC = asC.create(tc);
+        Integer idC = asClient.create(tClient);
         tr.setIdClient(idC);
         tr.setIdVehicle(idV);
 
@@ -106,8 +115,10 @@ public class ASRentalTest {
 
     @Test
     public void createRentalIncorrectInputNumKmRented1() throws ASException {
+        Integer idCity = asCity.create(tCity);
+        tv.setCity(idCity);
         Integer idV = asV.create(tv);
-        Integer idC = asC.create(tc);
+        Integer idC = asClient.create(tClient);
         tr.setIdClient(idC);
         tr.setIdVehicle(idV);
 
@@ -117,8 +128,10 @@ public class ASRentalTest {
 
      @Test
     public void createRentalIncorrectInputNumKmRented2() throws ASException {
+         Integer idCity = asCity.create(tCity);
+         tv.setCity(idCity);
         Integer idV = asV.create(tv);
-        Integer idC = asC.create(tc);
+        Integer idC = asClient.create(tClient);
         tr.setIdClient(idC);
         tr.setIdVehicle(idV);
 
@@ -128,6 +141,8 @@ public class ASRentalTest {
 
     @Test
     public void createRentalIncorrectInputIDClient() throws ASException {
+        Integer idCity = asCity.create(tCity);
+        tv.setCity(idCity);
         Integer idV = asV.create(tv);
         tr.setIdVehicle(idV);
 
@@ -137,6 +152,8 @@ public class ASRentalTest {
 
     @Test
     public void createRentalIncorrectInputIDClient2() throws ASException {
+        Integer idCity = asCity.create(tCity);
+        tv.setCity(idCity);
         Integer idV = asV.create(tv);
         tr.setIdVehicle(idV);
 
@@ -146,6 +163,8 @@ public class ASRentalTest {
 
     @Test
     public void createRentalIncorrectInputIDClient3() throws ASException {
+        Integer idCity = asCity.create(tCity);
+        tv.setCity(idCity);
         Integer idV = asV.create(tv);
         tr.setIdVehicle(idV);
 
@@ -155,8 +174,10 @@ public class ASRentalTest {
 
     @Test
     public void createRentalIncorrectInputDateFrom() throws ASException {
+        Integer idCity = asCity.create(tCity);
+        tv.setCity(idCity);
         Integer idV = asV.create(tv);
-        Integer idC = asC.create(tc);
+        Integer idC = asClient.create(tClient);
         tr.setIdClient(idC);
         tr.setIdVehicle(idV);
 
@@ -166,8 +187,10 @@ public class ASRentalTest {
 
     @Test
     public void createRentalIncorrectInputDateTo() throws ASException {
+        Integer idCity = asCity.create(tCity);
+        tv.setCity(idCity);
         Integer idV = asV.create(tv);
-        Integer idC = asC.create(tc);
+        Integer idC = asClient.create(tClient);
         tr.setIdClient(idC);
         tr.setIdVehicle(idV);
 
@@ -177,7 +200,7 @@ public class ASRentalTest {
 
     @Test
     public void createRentalVehicleNotExists() throws ASException {
-        Integer idC = asC.create(tc);
+        Integer idC = asClient.create(tClient);
         tr.setIdClient(idC);
 
         tr.setIdVehicle(1);
@@ -186,9 +209,11 @@ public class ASRentalTest {
 
     @Test
     public void createRentalVehicleNotActive() throws ASException {
+        Integer idCity = asCity.create(tCity);
+        tv.setCity(idCity);
         Integer idV = asV.create(tv);
         asV.drop(idV);
-        Integer idC = asC.create(tc);
+        Integer idC = asClient.create(tClient);
         tr.setIdClient(idC);
         tr.setIdVehicle(idV);
 
@@ -197,8 +222,10 @@ public class ASRentalTest {
 
     @Test
     public void createRentalDatesNotValidForVehicle() throws ASException {
+        Integer idCity = asCity.create(tCity);
+        tv.setCity(idCity);
         Integer idV = asV.create(tv);
-        Integer idC = asC.create(tc);
+        Integer idC = asClient.create(tClient);
         tr.setIdClient(idC);
         tr.setIdVehicle(idV);
         as.create(tr);
@@ -211,6 +238,8 @@ public class ASRentalTest {
 
     @Test
     public void createRentalClientNotExists() throws ASException {
+        Integer idCity = asCity.create(tCity);
+        tv.setCity(idCity);
         Integer idV = asV.create(tv);
         tr.setIdVehicle(idV);
 
@@ -220,9 +249,11 @@ public class ASRentalTest {
 
     @Test
     public void createRentalClientNotActive() throws ASException {
+        Integer idCity = asCity.create(tCity);
+        tv.setCity(idCity);
         Integer idV = asV.create(tv);
-        Integer idC = asC.create(tc);
-        asC.drop(idC);
+        Integer idC = asClient.create(tClient);
+        asClient.drop(idC);
         tr.setIdClient(idC);
         tr.setIdVehicle(idV);
 
@@ -231,14 +262,16 @@ public class ASRentalTest {
 
     @Test
     public void createRentalDatesNotValidForClient() throws ASException {
+        Integer idCity = asCity.create(tCity);
+        tv.setCity(idCity);
         Integer idV = asV.create(tv);
-        Integer idC = asC.create(tc);
+        Integer idC = asClient.create(tClient);
         tr.setIdClient(idC);
         tr.setIdVehicle(idV);
         as.create(tr);
 
-        tc.setIdCardNumber("11111111X");
-        Integer idTMPClient = asC.create(tc);
+        tClient.setIdCardNumber("11111111X");
+        Integer idTMPClient = asClient.create(tClient);
         tr.setIdClient(idTMPClient);
 
         assertThrows(ASException.class,() -> {as.create(tr);});
@@ -246,8 +279,10 @@ public class ASRentalTest {
 
     @Test
     public void createRentalKmRentedExceedVehicleEstimatedDuration() throws ASException {
+        Integer idCity = asCity.create(tCity);
+        tv.setCity(idCity);
         Integer idV = asV.create(tv);
-        Integer idC = asC.create(tc);
+        Integer idC = asClient.create(tClient);
         tr.setIdClient(idC);
         tr.setIdVehicle(idV);
 
@@ -259,8 +294,10 @@ public class ASRentalTest {
 
     @Test
     public void dropRentalSuccessful() throws ASException {
+        Integer idCity = asCity.create(tCity);
+        tv.setCity(idCity);
         Integer idV = asV.create(tv);
-        Integer idC = asC.create(tc);
+        Integer idC = asClient.create(tClient);
         tr.setIdClient(idC);
         tr.setIdVehicle(idV);
         Integer idR = as.create(tr);
@@ -293,13 +330,55 @@ public class ASRentalTest {
 
     @Test
     public void dropRentalAlreadyInactive() throws ASException {
+        Integer idCity = asCity.create(tCity);
+        tv.setCity(idCity);
         Integer idV = asV.create(tv);
-        Integer idC = asC.create(tc);
+        Integer idC = asClient.create(tClient);
         tr.setIdClient(idC);
         tr.setIdVehicle(idV);
         Integer idR = as.create(tr);
         as.drop(idR);
 
         assertThrows(ASException.class, () -> {as.drop(idR);});
+    }
+
+    //update method
+    @Test
+    void updateRentalSuccessful() throws ASException {
+        Integer idCity = asCity.create(tCity);
+        tv.setCity(idCity);
+        Integer idVehicle = asV.create(tv);
+        Integer idClient = asClient.create(tClient);
+
+        tr.setIdVehicle(idVehicle);
+        tr.setIdClient(idClient);
+        Integer idRental = as.create(tr);
+        tr.setId(idRental);
+
+        tr.setNumKmRented(1);
+        tr.setDateFrom(new Date(1_536_624_000_000L));
+        tr.setDateTo(new Date(1_541_894_400_000L));
+        Integer tmpID = as.update(tr);
+
+        assertEquals(idRental,tmpID);
+
+        TRental updtRental = as.show(tmpID).getRental();
+
+        assertTrue(checkValues(tr,updtRental));
+    }
+
+    //TODO incorrectInput errors
+    //TODO bussiness rules errors
+
+    //TODO implement missing methods from ASRental
+
+    private boolean checkValues(TRental expected,TRental actual){
+        return expected.getId().equals(actual.getId()) &&
+                expected.getIdVehicle().equals(actual.getIdVehicle()) &&
+                expected.getNumKmRented().equals(actual.getNumKmRented()) &&
+                expected.getIdClient().equals(actual.getIdClient()) &&
+                expected.getDateFrom().equals(actual.getDateFrom()) &&
+                expected.getDateTo().equals(actual.getDateTo()) &&
+                expected.isActive().equals(expected.isActive());
     }
 }
