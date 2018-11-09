@@ -6,13 +6,16 @@ import java.sql.Connection;
 
 public interface Transaction {
 
-    public void start();
+     void start();
 
-    public void commit() throws TransactionException;
+     void commit() throws TransactionException;
 
-    public void rollback() throws TransactionException;
+     void rollback() throws TransactionException;
 
-    public Connection getResource();
+     Object getResource();
 
-    public String getConnectionChain();
+     String getConnectionChain();
+
+     void driverIdentify() throws ClassNotFoundException;
+
 }

@@ -2,23 +2,22 @@ package integration.client.dao;
 
 
 import business.client.TClient;
+import integration.DAOException;
 
 import java.util.Collection;
 
 public interface DAOClient {
-    Integer create(TClient client);
+    Integer create(TClient client) throws DAOException;
 
-    Integer update(TClient client);
+    Integer update(TClient client) throws DAOException;
 
-    TClient readById(Integer id) ;
+    TClient readById(Integer id) throws DAOException;
 
-    TClient readByIdCard(String idCard);
+    TClient readByIdCard(String idCard) throws DAOException;
 
-    Collection<TClient> readAll();
+    Collection<TClient> readAll() throws DAOException;
 
-    Collection<TClient> readByNRentals(Integer N);
+    Collection<TClient> readByNRentals(Integer N) throws DAOException;
 
-    void deleteAll();
-
-
+    void deleteAll() throws DAOException;
 }

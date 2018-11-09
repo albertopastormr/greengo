@@ -12,14 +12,13 @@ import java.util.Collection;
 
 public class DAOCityImp implements DAOCity {
 
-
     @Override
     public Integer create(TCity city) throws DAOException {
         Integer id;
 
         String queryTail = " FOR UPDATE";
 
-        Connection connec = TransactionManager.getInstance().getTransaction().getResource();
+        Connection connec = (Connection) TransactionManager.getInstance().getTransaction().getResource();
 
         if(connec == null){
             try {
@@ -27,7 +26,7 @@ public class DAOCityImp implements DAOCity {
                 connec = DriverManager.getConnection(TransactionManager.getInstance().getTransaction().getConnectionChain());
             }
             catch(SQLException ex){
-                throw new DAOException("ERROR: acceso a la conexion a DB para 'create' city no logrado\n");
+                throw new DAOException("ERROR: access to DB at operation 'create' @city unsuccessful\n");
             }
             queryTail = "";
         }
@@ -46,11 +45,11 @@ public class DAOCityImp implements DAOCity {
                 id = rs.getInt("LAST_INSERT_ID()");
             }
             else
-                throw new DAOException("ERROR: LAST_INSERT_ID() devolvio vacio");
+                throw new DAOException("ERROR: LAST_INSERT_ID() returned empty after an insert operation\n");
             ps.close();
         }
         catch (SQLException e){
-            throw new DAOException("ERROR: tratamiento DB para 'create' city no logrado\n");
+            throw new DAOException("ERROR: SQL statement execution at operation 'create' @city unsuccessful\n");
         }
 
         finally {
@@ -58,7 +57,7 @@ public class DAOCityImp implements DAOCity {
                 try {
                     connec.close();
                 } catch (SQLException e) {
-                    throw new DAOException("ERROR: cerrando conexion a DB para 'create' city no logrado\n");
+                    throw new DAOException("ERROR: closing connection to DB at operation 'create' @city unsuccessful\n");
                 }
             }
         }
@@ -73,7 +72,7 @@ public class DAOCityImp implements DAOCity {
 
         String queryTail = " FOR UPDATE";
 
-        Connection connec = TransactionManager.getInstance().getTransaction().getResource();
+        Connection connec = (Connection) TransactionManager.getInstance().getTransaction().getResource();
 
         if(connec == null){
             try {
@@ -81,7 +80,7 @@ public class DAOCityImp implements DAOCity {
                 connec = DriverManager.getConnection(TransactionManager.getInstance().getTransaction().getConnectionChain());
             }
             catch(SQLException ex){
-                throw new DAOException("ERROR: acceso a la conexion a DB para 'update' city no logrado\n");
+                throw new DAOException("ERROR: access to DB at operation 'update' @city unsuccessful\n");
             }
             queryTail = "";
         }
@@ -102,11 +101,11 @@ public class DAOCityImp implements DAOCity {
                 id = rs.getInt("id");
             }
             else
-                throw new DAOException("ERROR: entidad no existente en BD en 'update' city");
+                throw new DAOException("ERROR: trying to update a nonexistent entity at operation 'update' @city");
             ps.close();
         }
         catch (SQLException e){
-            throw new DAOException("ERROR: tratamiento DB para 'update' city no logrado\n");
+            throw new DAOException("ERROR: SQL statement execution at operation 'create' @city unsuccessful\n");
         }
 
         finally {
@@ -114,7 +113,7 @@ public class DAOCityImp implements DAOCity {
                 try {
                     connec.close();
                 } catch (SQLException e) {
-                    throw new DAOException("ERROR: cerrando conexion a DB para 'update' city no logrado\n");
+                    throw new DAOException("ERROR: closing connection to DB at operation 'update' @city unsuccessful\n");
                 }
             }
         }
@@ -129,7 +128,7 @@ public class DAOCityImp implements DAOCity {
 
         String queryTail = " FOR UPDATE";
 
-        Connection connec = TransactionManager.getInstance().getTransaction().getResource();
+        Connection connec = (Connection) TransactionManager.getInstance().getTransaction().getResource();
 
         if(connec == null){
             try {
@@ -137,7 +136,7 @@ public class DAOCityImp implements DAOCity {
                 connec = DriverManager.getConnection(TransactionManager.getInstance().getTransaction().getConnectionChain());
             }
             catch(SQLException ex){
-                throw new DAOException("ERROR: acceso a la conexion a DB para 'readById' city no logrado\n");
+                throw new DAOException("ERROR: access to DB at operation 'readById' @city unsuccessful\n");
             }
             queryTail = "";
         }
@@ -152,11 +151,11 @@ public class DAOCityImp implements DAOCity {
 
             }
             else
-                throw new DAOException("ERROR: entidad no existente en BD en 'readById' city");
+                readCity = null;
             ps.close();
         }
         catch (SQLException e){
-            throw new DAOException("ERROR: tratamiento DB para 'readById' city no logrado\n");
+            throw new DAOException("ERROR: SQL statement execution at operation 'readById' @city unsuccessful\n");
         }
 
         finally {
@@ -164,7 +163,7 @@ public class DAOCityImp implements DAOCity {
                 try {
                     connec.close();
                 } catch (SQLException e) {
-                    throw new DAOException("ERROR: cerrando conexion a DB para 'readById' city no logrado\n");
+                    throw new DAOException("ERROR: closing connection to DB at operation 'readById' @city unsuccessful\n");
                 }
             }
         }
@@ -178,7 +177,7 @@ public class DAOCityImp implements DAOCity {
 
         String queryTail = " FOR UPDATE";
 
-        Connection connec = TransactionManager.getInstance().getTransaction().getResource();
+        Connection connec = (Connection) TransactionManager.getInstance().getTransaction().getResource();
 
         if(connec == null){
             try {
@@ -186,7 +185,7 @@ public class DAOCityImp implements DAOCity {
                 connec = DriverManager.getConnection(TransactionManager.getInstance().getTransaction().getConnectionChain());
             }
             catch(SQLException ex){
-                throw new DAOException("ERROR: acceso a la conexion a DB para 'readAll' city no logrado\n");
+                throw new DAOException("ERROR: access to DB at operation 'readAll' @city unsuccessful\n");
             }
             queryTail = "";
         }
@@ -203,7 +202,7 @@ public class DAOCityImp implements DAOCity {
             ps.close();
         }
         catch (SQLException e){
-            throw new DAOException("ERROR: tratamiento DB para 'readAll' city no logrado\n");
+            throw new DAOException("ERROR: SQL statement execution at operation 'readAll' @city unsuccessful\n");
         }
 
         finally {
@@ -211,7 +210,7 @@ public class DAOCityImp implements DAOCity {
                 try {
                     connec.close();
                 } catch (SQLException e) {
-                    throw new DAOException("ERROR: cerrando conexion a DB para 'readAll' city no logrado\n");
+                    throw new DAOException("ERROR: closing connection to DB at operation 'readAll' @city unsuccessful\n");
                 }
             }
         }
@@ -225,7 +224,7 @@ public class DAOCityImp implements DAOCity {
 
         String queryTail = " FOR UPDATE";
 
-        Connection connec = TransactionManager.getInstance().getTransaction().getResource();
+        Connection connec = (Connection) TransactionManager.getInstance().getTransaction().getResource();
 
         if(connec == null){
             try {
@@ -233,7 +232,7 @@ public class DAOCityImp implements DAOCity {
                 connec = DriverManager.getConnection(TransactionManager.getInstance().getTransaction().getConnectionChain());
             }
             catch(SQLException ex){
-                throw new DAOException("ERROR: acceso a la conexion a DB para 'showClientsByCity' city no logrado\n");
+                throw new DAOException("ERROR: access to DB at operation 'showClientsByCity' @city unsuccessful\n");
             }
             queryTail = "";
         }
@@ -241,7 +240,7 @@ public class DAOCityImp implements DAOCity {
         try { // Tratamiento db
             PreparedStatement ps = connec.
                     prepareStatement("SELECT * FROM (vehicle join rental ON vehicle.id = rental.idVehicle) " +
-                            "join client ON rental.idClient = client.id  WHERE vehicle.city = ?" + queryTail);
+                            "join city ON rental.idClient = city.id  WHERE vehicle.city = ?" + queryTail);
             ps.setInt(1, idCity);
             ResultSet rs = ps.executeQuery();
 
@@ -254,7 +253,7 @@ public class DAOCityImp implements DAOCity {
             ps.close();
         }
         catch (SQLException e){
-            throw new DAOException("ERROR: tratamiento DB para 'showClientsByCity' city no logrado\n");
+            throw new DAOException("ERROR: SQL statement execution at operation 'showClientsByCity' @city unsuccessful\n");
         }
 
         finally {
@@ -262,7 +261,7 @@ public class DAOCityImp implements DAOCity {
                 try {
                     connec.close();
                 } catch (SQLException e) {
-                    throw new DAOException("ERROR: cerrando conexion a DB para 'showClientsByCity' city no logrado\n");
+                    throw new DAOException("ERROR: closing connection to DB at operation 'showClientsByCity' @city unsuccessful\n");
                 }
             }
         }
@@ -270,24 +269,13 @@ public class DAOCityImp implements DAOCity {
         return readClientCollec;
     }
 
-
-    private void driverIdentify() throws DAOException {
-        try {
-            Class.forName("org.mariadb.jdbc.Driver");
-        } catch (ClassNotFoundException ex) {
-            throw new DAOException("Error al registrar el driver de mariadb: " + ex);
-        }
-    }
-
-
     public void deleteAll() throws DAOException {
-        Collection<TCity> readCityCollec = new ArrayList<>();
-        Connection connec = null;
+        Connection connec;
         try {
             driverIdentify();
             connec = DriverManager.getConnection(TransactionManager.getInstance().getTransaction().getConnectionChain());
         } catch (SQLException ex) {
-            throw new DAOException("ERROR: acceso a la conexion a DB para 'deleteAll' city no logrado\n");
+            throw new DAOException("ERROR: access to DB at operation 'deleteAll' @city unsuccessful\n");
         }
 
         try { // Tratamiento db
@@ -302,13 +290,22 @@ public class DAOCityImp implements DAOCity {
             ps.close();
 
         } catch (SQLException e) {
-            throw new DAOException("ERROR: tratamiento DB para 'deleteAll' city no logrado\n");
+            throw new DAOException("ERROR: SQL statement execution at operation 'delete All' @city unsuccessful\n");
         } finally {
-                try {
-                    connec.close();
-                } catch (SQLException e) {
-                    throw new DAOException("ERROR: cerrando conexion a DB para 'deleteAll' city no logrado\n");
-                }
+            try {
+                connec.close();
+            } catch (SQLException e) {
+                throw new DAOException("ERROR: closing connection to DB at operation 'deleteAll' @city unsuccessful\n");
+            }
         }
     }
+
+    private void driverIdentify() throws DAOException {
+        try {
+            TransactionManager.getInstance().getTransaction().driverIdentify();
+        } catch (ClassNotFoundException ex) {
+            throw new DAOException("ERROR: couldn't register MARIADB driver: " + ex);
+        }
+    }
+
 }

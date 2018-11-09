@@ -19,5 +19,5 @@ public interface DAOCity {
 
     Collection<TClient> showClientsByCity(Integer idCity) throws DAOException;
 
-    public void deleteAll() throws DAOException;
+    void deleteAll() throws DAOException;
 }
