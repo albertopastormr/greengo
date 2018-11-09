@@ -16,6 +16,6 @@ public interface Transaction {
 
      String getConnectionChain();
 
-     void driverIdentify() throws ClassNotFoundException;
+     void driverIdentify() throws TransactionException;
 
 }

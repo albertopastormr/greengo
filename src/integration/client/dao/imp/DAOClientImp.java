@@ -2,6 +2,7 @@ package integration.client.dao.imp;
 
 import business.client.TClient;
 import integration.DAOException;
+import integration.TransactionException;
 import integration.client.dao.DAOClient;
 import integration.transactionManager.TransactionManager;
 
@@ -106,7 +107,7 @@ public class DAOClientImp implements DAOClient {
             ps.close();
         }
         catch (SQLException e){
-            throw new DAOException("ERROR: SQL statement execution at operation 'create' @client unsuccessful\n");
+            throw new DAOException("ERROR: SQL statement execution at operation 'update' @client unsuccessful\n");
         }
 
         finally {
@@ -350,7 +351,7 @@ public class DAOClientImp implements DAOClient {
     private void driverIdentify() throws DAOException {
         try {
             TransactionManager.getInstance().getTransaction().driverIdentify();
-        } catch (ClassNotFoundException ex) {
+        } catch (TransactionException ex) {
             throw new DAOException("ERROR: couldn't register MARIADB driver: " + ex);
         }
     }

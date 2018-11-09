@@ -3,6 +3,7 @@ package integration.city.dao.imp;
 import business.city.TCity;
 import business.client.TClient;
 import integration.DAOException;
+import integration.TransactionException;
 import integration.city.dao.DAOCity;
 import integration.transactionManager.TransactionManager;
 
@@ -105,7 +106,7 @@ public class DAOCityImp implements DAOCity {
             ps.close();
         }
         catch (SQLException e){
-            throw new DAOException("ERROR: SQL statement execution at operation 'create' @city unsuccessful\n");
+            throw new DAOException("ERROR: SQL statement execution at operation 'update' @city unsuccessful\n");
         }
 
         finally {
@@ -303,7 +304,7 @@ public class DAOCityImp implements DAOCity {
     private void driverIdentify() throws DAOException {
         try {
             TransactionManager.getInstance().getTransaction().driverIdentify();
-        } catch (ClassNotFoundException ex) {
+        } catch (TransactionException ex) {
             throw new DAOException("ERROR: couldn't register MARIADB driver: " + ex);
         }
     }

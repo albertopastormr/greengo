@@ -2,25 +2,26 @@ package integration.rental.dao;
 
 import business.client.TClient;
 import business.rental.TRental;
+import integration.DAOException;
 
 import java.util.Collection;
 import java.util.Date;
 
 public interface DAORental {
-    Integer create(TRental rental);
+    Integer create(TRental rental) throws DAOException;
 
-    Integer update(TRental rental);
+    Integer update(TRental rental) throws DAOException;
 
-    TRental readById(Integer id) ;
+    TRental readById(Integer id) throws DAOException;
 
-    Collection<TRental> showRentalsByClient(Integer id);
+    Collection<TRental> showRentalsByClient(Integer id) throws DAOException;
 
-    Collection<TRental> showRentalsByVehicle(Integer id);
+    Collection<TRental> showRentalsByVehicle(Integer id) throws DAOException;
 
-    Collection<TRental> readAll();
+    Collection<TRental> readAll() throws DAOException;
 
-    Boolean checkAvaiableDates(TRental rental);
+    Boolean checkAvailableDates(TRental rental);
 
-    void deleteAll();
+    void deleteAll() throws DAOException;
 
 }
