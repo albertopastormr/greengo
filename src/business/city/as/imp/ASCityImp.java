@@ -20,19 +20,24 @@ public class ASCityImp implements ASCity {
     @Override
     public Integer create(TCity city) throws ASException {
         Integer idc = null;
-        Transaction tr = TransactionManager.getInstance().createTransaction();
 
-        if(tr!=null) {
-            try {
-                tr.start();
-                idc = DAOCityFactory.getInstance().generateDAOCity().create(city);
-                tr.commit();
-                TransactionManager.getInstance().removeTransaction();
-            }catch (DAOException | TransactionException e) {
-                throw new ASException(e.getMessage());
-            }
+        if(!city.getName().equals("")) {
+
+            Transaction tr = TransactionManager.getInstance().createTransaction();
+
+            if (tr != null) {
+                try {
+                    tr.start();
+                    idc = DAOCityFactory.getInstance().generateDAOCity().create(city);
+                    tr.commit();
+                    TransactionManager.getInstance().removeTransaction();
+                } catch (DAOException | TransactionException e) {
+                    throw new ASException(e.getMessage());
+                }
+            } else
+                throw new ASException("ERROR: The city doesn't create correctly.\n");
         }else
-            throw new ASException("ERROR: The city doesn't create correctly.\n");
+            throw new ASException("ERROR: The data of city isn't insert correctly.\n");
 
         return idc;
     }
@@ -40,7 +45,10 @@ public class ASCityImp implements ASCity {
     @Override
     public Integer drop(Integer id) throws ASException {
         Integer idc =null;
-        Transaction tr = TransactionManager.getInstance().createTransaction();
+
+        if(id > 0) {
+
+            Transaction tr = TransactionManager.getInstance().createTransaction();
 
             if (tr != null) {
                 try {
@@ -66,13 +74,13 @@ public class ASCityImp implements ASCity {
                         if (tc == null) throw new ASException("The city doesn't exist");
                         else if (!tc.isActive()) throw new ASException("The city is already disabled");
                     }
-                }catch (DAOException | ASException | TransactionException e) {
+                } catch (DAOException | ASException | TransactionException e) {
                     throw new ASException(e.getMessage());
                 }
-            }
-            else
+            } else
                 throw new ASException("ERROR: The city doesn't delete correctly.\n");
-
+        }else
+            throw new ASException("ERROR: The data of city isn't insert correctly.\n");
 
         return idc;
     }
@@ -80,27 +88,32 @@ public class ASCityImp implements ASCity {
     @Override
     public Integer update(TCity city) throws ASException {
         Integer idc = null;
-        Transaction tr = TransactionManager.getInstance().createTransaction();
 
-        if(tr!=null) {
-            try {
-                tr.start();
-                TCity tc = DAOCityFactory.getInstance().generateDAOCity().readById(city.getId());
+        if(city.getId() > 0 && !city.getName().equals("")) {
 
-                if (tc != null) {//the city exists
-                    idc = DAOCityFactory.getInstance().generateDAOCity().update(tc);
-                    tr.commit();
-                    TransactionManager.getInstance().removeTransaction();
-                } else {
-                    tr.rollback();
-                    TransactionManager.getInstance().removeTransaction();
-                    throw new ASException("The city doesn't exist");
+            Transaction tr = TransactionManager.getInstance().createTransaction();
+
+            if (tr != null) {
+                try {
+                    tr.start();
+                    TCity tc = DAOCityFactory.getInstance().generateDAOCity().readById(city.getId());
+
+                    if (tc != null) {//the city exists
+                        idc = DAOCityFactory.getInstance().generateDAOCity().update(tc);
+                        tr.commit();
+                        TransactionManager.getInstance().removeTransaction();
+                    } else {
+                        tr.rollback();
+                        TransactionManager.getInstance().removeTransaction();
+                        throw new ASException("The city doesn't exist");
+                    }
+                } catch (DAOException | TransactionException e) {
+                    throw new ASException(e.getMessage());
                 }
-            }catch (DAOException | TransactionException e) {
-                throw new ASException(e.getMessage());
-            }
+            } else
+                throw new ASException("ERROR: The city doesn't update correctly.\n");
         }else
-            throw new ASException("ERROR: The city doesn't update correctly.\n");
+            throw new ASException("ERROR: The data of city isn't insert correctly.\n");
 
         return idc;
     }
@@ -108,19 +121,26 @@ public class ASCityImp implements ASCity {
     @Override
     public TCity show(Integer id) throws ASException {
         TCity city = null;
-        Transaction tr = TransactionManager.getInstance().createTransaction();
-        if(tr != null) {
-            try {
-                tr.start();
-                city = DAOCityFactory.getInstance().generateDAOCity().readById(id);
-                tr.commit();
-                TransactionManager.getInstance().removeTransaction();
-                if (city == null) throw new ASException("The city doesn't exists");
-            }catch (DAOException | TransactionException e) {
-                throw new ASException(e.getMessage());
-            }
+
+        if(id > 0) {
+
+            Transaction tr = TransactionManager.getInstance().createTransaction();
+
+            if (tr != null) {
+                try {
+                    tr.start();
+                    city = DAOCityFactory.getInstance().generateDAOCity().readById(id);
+                    tr.commit();
+                    TransactionManager.getInstance().removeTransaction();
+                    if (city == null) throw new ASException("The city doesn't exists");
+                } catch (DAOException | TransactionException e) {
+                    throw new ASException(e.getMessage());
+                }
+            } else
+                throw new ASException("ERROR: The city doesn't show correctly.\n");
         }else
-            throw new ASException("ERROR: The city doesn't show correctly.\n");
+            throw new ASException("ERROR: The number of city isn't insert correctly.\n");
+
         return city;
     }
 
@@ -138,7 +158,7 @@ public class ASCityImp implements ASCity {
                 throw new ASException(e.getMessage());
             }
         }else
-            throw new ASException("ERROR: The cities doesn't create correctly.\n");
+            throw new ASException("ERROR: The cities doesn't list correctly.\n");
 
         return cityList;
     }
@@ -146,18 +166,24 @@ public class ASCityImp implements ASCity {
     @Override
     public Collection<TClient> showClientsByCity(Integer idCity) throws ASException {
         Collection<TClient> clientList = null;
-        Transaction tr = TransactionManager.getInstance().createTransaction();
-        if(tr!=null) {
-            try {
-                tr.start();
-                clientList = DAOCityFactory.getInstance().generateDAOCity().showClientsByCity(idCity);
-                tr.commit();
-                TransactionManager.getInstance().removeTransaction();
-            }catch (DAOException | TransactionException e) {
-                throw new ASException(e.getMessage());
-            }
+
+        if(idCity > 0) {
+
+            Transaction tr = TransactionManager.getInstance().createTransaction();
+            if (tr != null) {
+                try {
+                    tr.start();
+                    clientList = DAOCityFactory.getInstance().generateDAOCity().showClientsByCity(idCity);
+                    tr.commit();
+                    TransactionManager.getInstance().removeTransaction();
+                } catch (DAOException | TransactionException e) {
+                    throw new ASException(e.getMessage());
+                }
+            } else
+                throw new ASException("ERROR: The clients by city doesn't show correctly.\n");
         }else
-            throw new ASException("ERROR: The clients by city doesn't show correctly.\n");
+            throw new ASException("ERROR: The number of city isn't insert correctly.\n");
+
         return clientList;
     }
 }
