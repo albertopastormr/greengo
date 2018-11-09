@@ -74,7 +74,7 @@ public class UIimp extends UI{
             case SHOWALL_AVAILABLE_VEHICLE:
 				TableModel modelActive = new VehicleTableModel(VehiclePanel.getColumnId());
 				modelActive.setList((List<TVehicleDetails>) context.getData());
-				ViewHelpers.createSpecificTable(modelActive);
+				ViewHelpers.createSpecificTable(modelActive, "Show all available vehicles");
 				break;
 			case CREATE_SERVICE:
 				Util.inform("Added service with id " + (context.getData()));
@@ -99,7 +99,7 @@ public class UIimp extends UI{
 			case SHOW_SERVICE_BY_LEVEL:
 				TableModel modelService = new ServiceTableModel(ServicePanel.getColumnId());
 				modelService.setList((List<TService>) context.getData());
-				ViewHelpers.createSpecificTable(modelService);
+				ViewHelpers.createSpecificTable(modelService, "Show services by lavel");
 				break;
 			case CREATE_RENTAL:
 				Util.inform("Added rental with id " + (context.getData()));
@@ -209,7 +209,7 @@ public class UIimp extends UI{
 			case SHOW_CLIENTS_N_RENTAL_CLIENT:
 				TableModel modelNRentals = new ClientTableModel(ClientPanel.getColumnId());
 				modelNRentals.setList((List<TClient>) context.getData());
-				ViewHelpers.createSpecificTable(modelNRentals);
+				ViewHelpers.createSpecificTable(modelNRentals, "Show clients with N rentals");
 				break;
 			case CREATE_CITY:
 				Util.inform("Added city with id " + (context.getData()));
@@ -234,7 +234,7 @@ public class UIimp extends UI{
 			case SHOW_CLIENTS_FROM_CITY:
 				TableModel modelCityClients = new ClientTableModel(ClientPanel.getColumnId());
 				modelCityClients.setList((List<TClient>) context.getData());
-				ViewHelpers.createSpecificTable(modelCityClients);
+				ViewHelpers.createSpecificTable(modelCityClients, "Show clients from city");
 				break;
 
 			//all these operations do the same.

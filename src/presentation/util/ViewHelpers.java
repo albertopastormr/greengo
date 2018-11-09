@@ -52,12 +52,13 @@ public class ViewHelpers {
 		return  panel;
 	}
 
-	public static JDialog createSpecificTable(TableModel model){
+	public static JDialog createSpecificTable(TableModel model, String tittle){
 
 		JPanel jPanel = new JPanel(new BorderLayout());
 		jPanel.add(new TablePanel<>(model), BorderLayout.CENTER);
 
 		JDialog jDialog = new JDialog();
+		jDialog.setTitle(tittle);
 		jDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		jDialog.add(jPanel);
 		jDialog.pack();
