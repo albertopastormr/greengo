@@ -32,7 +32,8 @@ public class DAOClientImp implements DAOClient {
         }
 
         try { // Tratamiento db
-            PreparedStatement ps = connec.prepareStatement("INSERT INTO client(idCardNumber, numRentals, active) VALUES (?,?,?)" + queryTail);
+            PreparedStatement ps = connec.prepareStatement("INSERT INTO client(idCardNumber, numRentals, active) " +
+                    "VALUES (?,?,?)" + queryTail);
             ps.setString(1, client.getIdCardNumber());
             ps.setInt(2, client.getNumRentals());
             ps.setBoolean(3, client.isActive());
@@ -58,7 +59,8 @@ public class DAOClientImp implements DAOClient {
                 try {
                     connec.close();
                 } catch (SQLException e) {
-                    throw new DAOException("ERROR: closing connection to DB at operation 'create' @client unsuccessful\n");
+                    throw new DAOException("ERROR: closing connection to DB at operation 'create' @client " +
+                            "unsuccessful\n");
                 }
             }
         }
@@ -78,7 +80,8 @@ public class DAOClientImp implements DAOClient {
         if(connec == null){
             try {
                 driverIdentify();
-                connec = DriverManager.getConnection(TransactionManager.getInstance().getTransaction().getConnectionChain());
+                connec = DriverManager.getConnection(TransactionManager.getInstance().getTransaction().
+                        getConnectionChain());
             }
             catch(SQLException ex){
                 throw new DAOException("ERROR: access to DB at operation 'update' @client unsuccessful\n");
@@ -87,7 +90,8 @@ public class DAOClientImp implements DAOClient {
         }
 
         try { // Tratamiento db
-            PreparedStatement ps = connec.prepareStatement("UPDATE client SET idCardNumber = ?, numRentals = ?, active = ?, WHERE id = ?" + queryTail);
+            PreparedStatement ps = connec.prepareStatement("UPDATE client SET idCardNumber = ?, numRentals = ?, " +
+                    "active = ? WHERE id = ?" + queryTail);
             ps.setString(1, client.getIdCardNumber());
             ps.setInt(2, client.getNumRentals());
             ps.setBoolean(3, client.isActive());
@@ -115,7 +119,8 @@ public class DAOClientImp implements DAOClient {
                 try {
                     connec.close();
                 } catch (SQLException e) {
-                    throw new DAOException("ERROR: closing connection to DB at operation 'update' @client unsuccessful\n");
+                    throw new DAOException("ERROR: closing connection to DB at operation 'update' @client " +
+                            "unsuccessful\n");
                 }
             }
         }
@@ -135,7 +140,8 @@ public class DAOClientImp implements DAOClient {
         if(connec == null){
             try {
                 driverIdentify();
-                connec = DriverManager.getConnection(TransactionManager.getInstance().getTransaction().getConnectionChain());
+                connec = DriverManager.getConnection(TransactionManager.getInstance().getTransaction().
+                        getConnectionChain());
             }
             catch(SQLException ex){
                 throw new DAOException("ERROR: access to DB at operation 'readById' @client unsuccessful\n");
@@ -149,8 +155,8 @@ public class DAOClientImp implements DAOClient {
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
-                readClient = new TClient(rs.getInt("id"), rs.getString("idCardNumber"), rs.getInt("numRentals"),
-                        rs.getBoolean("active"));
+                readClient = new TClient(rs.getInt("id"), rs.getString("idCardNumber"),
+                        rs.getInt("numRentals"), rs.getBoolean("active"));
             }
             else
                 readClient = null;
@@ -165,7 +171,8 @@ public class DAOClientImp implements DAOClient {
                 try {
                     connec.close();
                 } catch (SQLException e) {
-                    throw new DAOException("ERROR: closing connection to DB at operation 'readById' @client unsuccessful\n");
+                    throw new DAOException("ERROR: closing connection to DB at operation 'readById' @client " +
+                            "unsuccessful\n");
                 }
             }
         }
@@ -183,7 +190,8 @@ public class DAOClientImp implements DAOClient {
         if(connec == null){
             try {
                 driverIdentify();
-                connec = DriverManager.getConnection(TransactionManager.getInstance().getTransaction().getConnectionChain());
+                connec = DriverManager.getConnection(TransactionManager.getInstance().getTransaction().
+                        getConnectionChain());
             }
             catch(SQLException ex){
                 throw new DAOException("ERROR: access to DB at operation 'readByIdCard' @client unsuccessful\n");
@@ -192,13 +200,14 @@ public class DAOClientImp implements DAOClient {
         }
 
         try { // Tratamiento db
-            PreparedStatement ps = connec.prepareStatement("SELECT * FROM client WHERE idCardNumber = ?" + queryTail);
+            PreparedStatement ps = connec.prepareStatement("SELECT * FROM client WHERE idCardNumber = ?" +
+                    queryTail);
             ps.setString(1, idCard);
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
-                readClient = new TClient(rs.getInt("id"), rs.getString("idCardNumber"), rs.getInt("numRentals"),
-                        rs.getBoolean("active"));
+                readClient = new TClient(rs.getInt("id"), rs.getString("idCardNumber"),
+                        rs.getInt("numRentals"), rs.getBoolean("active"));
             }
             else
                 readClient = null;
@@ -213,7 +222,8 @@ public class DAOClientImp implements DAOClient {
                 try {
                     connec.close();
                 } catch (SQLException e) {
-                    throw new DAOException("ERROR: closing connection to DB at operation 'readByIdCard' @client unsuccessful\n");
+                    throw new DAOException("ERROR: closing connection to DB at operation 'readByIdCard' @client " +
+                            "unsuccessful\n");
                 }
             }
         }
@@ -224,7 +234,7 @@ public class DAOClientImp implements DAOClient {
 
     @Override
     public Collection<TClient> readAll() throws DAOException {
-        Collection<TClient> readClientCollec = new ArrayList<>();
+        Collection<TClient> readClients = new ArrayList<>();
 
         String queryTail = " FOR UPDATE";
 
@@ -233,7 +243,8 @@ public class DAOClientImp implements DAOClient {
         if(connec == null){
             try {
                 driverIdentify();
-                connec = DriverManager.getConnection(TransactionManager.getInstance().getTransaction().getConnectionChain());
+                connec = DriverManager.getConnection(TransactionManager.getInstance().getTransaction().
+                        getConnectionChain());
             }
             catch(SQLException ex){
                 throw new DAOException("ERROR: access to DB at operation 'readAll' @client unsuccessful\n");
@@ -246,8 +257,8 @@ public class DAOClientImp implements DAOClient {
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
-                readClientCollec.add(new TClient(rs.getInt("id"), rs.getString("idCardNumber"), rs.getInt("numRentals"),
-                        rs.getBoolean("active")));
+                readClients.add(new TClient(rs.getInt("id"), rs.getString("idCardNumber"),
+                        rs.getInt("numRentals"), rs.getBoolean("active")));
 
             }
 
@@ -262,16 +273,17 @@ public class DAOClientImp implements DAOClient {
                 try {
                     connec.close();
                 } catch (SQLException e) {
-                    throw new DAOException("ERROR: closing connection to DB at operation 'readAll' @client unsuccessful\n");
+                    throw new DAOException("ERROR: closing connection to DB at operation 'readAll' @client " +
+                            "unsuccessful\n");
                 }
             }
         }
 
-        return readClientCollec;
+        return readClients;
     }
 
     public Collection<TClient> readByNRentals(Integer N) throws DAOException {
-        Collection<TClient> readClientCollec = new ArrayList<>();
+        Collection<TClient> readClients = new ArrayList<>();
 
         String queryTail = " FOR UPDATE";
 
@@ -280,7 +292,8 @@ public class DAOClientImp implements DAOClient {
         if(connec == null){
             try {
                 driverIdentify();
-                connec = DriverManager.getConnection(TransactionManager.getInstance().getTransaction().getConnectionChain());
+                connec = DriverManager.getConnection(TransactionManager.getInstance().getTransaction().
+                        getConnectionChain());
             }
             catch(SQLException ex){
                 throw new DAOException("ERROR: access to DB at operation 'readByNRentals' @client unsuccessful\n");
@@ -289,19 +302,21 @@ public class DAOClientImp implements DAOClient {
         }
 
         try { // Tratamiento db
-            PreparedStatement ps = connec.prepareStatement("SELECT * FROM client WHERE numRentals > ?" + queryTail);
+            PreparedStatement ps = connec.prepareStatement("SELECT * FROM client WHERE numRentals > ?" +
+                    queryTail);
             ps.setInt(1, N);
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
-                readClientCollec.add(new TClient(rs.getInt("id"), rs.getString("idCardNumber"), rs.getInt("numRentals"),
-                        rs.getBoolean("active")));
+                readClients.add(new TClient(rs.getInt("id"), rs.getString("idCardNumber"),
+                        rs.getInt("numRentals"), rs.getBoolean("active")));
             }
 
             ps.close();
         }
         catch (SQLException e){
-            throw new DAOException("ERROR: SQL statement execution at operation 'readByNRentals' @client unsuccessful\n");
+            throw new DAOException("ERROR: SQL statement execution at operation 'readByNRentals' @client " +
+                    "unsuccessful\n");
         }
 
         finally {
@@ -309,19 +324,21 @@ public class DAOClientImp implements DAOClient {
                 try {
                     connec.close();
                 } catch (SQLException e) {
-                    throw new DAOException("ERROR: closing connection to DB at operation 'readByNRentals' @client unsuccessful\n");
+                    throw new DAOException("ERROR: closing connection to DB at operation 'readByNRentals' @client " +
+                            "unsuccessful\n");
                 }
             }
         }
 
-        return readClientCollec;
+        return readClients;
     }
 
     public void deleteAll() throws DAOException {
         Connection connec;
         try {
             driverIdentify();
-            connec = DriverManager.getConnection(TransactionManager.getInstance().getTransaction().getConnectionChain());
+            connec = DriverManager.getConnection(TransactionManager.getInstance().getTransaction().
+                    getConnectionChain());
         } catch (SQLException ex) {
             throw new DAOException("ERROR: access to DB at operation 'deleteAll' @client unsuccessful\n");
         }
@@ -343,7 +360,8 @@ public class DAOClientImp implements DAOClient {
             try {
                 connec.close();
             } catch (SQLException e) {
-                throw new DAOException("ERROR: closing connection to DB at operation 'deleteAll' @client unsuccessful\n");
+                throw new DAOException("ERROR: closing connection to DB at operation 'deleteAll' @client " +
+                        "unsuccessful\n");
             }
         }
     }

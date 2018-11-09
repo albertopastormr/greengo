@@ -57,7 +57,10 @@ public class TransactionMariaDB implements Transaction {
         return connectionChain;
     }
 
-    public void driverIdentify() throws ClassNotFoundException {
-        Class.forName("org.mariadb.jdbc.Driver");
+    public void driverIdentify() throws TransactionException {
+        try {Class.forName("org.mariadb.jdbc.Driver");}
+        catch (ClassNotFoundException e){
+            throw new TransactionException("org.mariadb.jdbc.Driver");
+        }
     }
 }

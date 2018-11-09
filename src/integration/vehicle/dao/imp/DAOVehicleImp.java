@@ -4,6 +4,7 @@ package integration.vehicle.dao.imp;
 import business.city.TCity;
 import business.vehicle.TVehicle;
 import integration.DAOException;
+import integration.TransactionException;
 import integration.transactionManager.TransactionManager;
 import integration.vehicle.dao.DAOVehicle;
 
@@ -17,22 +18,22 @@ public class DAOVehicleImp  implements DAOVehicle {
         Integer id;
         String queryTail = " FOR UPDATE";
 
-        Connection connect = TransactionManager.getInstance().getTransaction().getResource();
+        Connection connec = (Connection) TransactionManager.getInstance().getTransaction().getResource();
 
-        if(connect == null){
+        if(connec == null){
             try {
                 driverIdentify();
-                connect = DriverManager.getConnection(TransactionManager.getInstance().getTransaction()
+                connec = DriverManager.getConnection(TransactionManager.getInstance().getTransaction()
                         .getConnectionChain());
             }
             catch(SQLException ex){
-                throw new DAOException("ERROR: acceso a la conexion a DB para 'create' vehicle no logrado\n");
+                throw new DAOException("ERROR: access to DB at operation 'create' @vehicle unsuccessful\n");
             }
             queryTail = "";
         }
 
         try { // Tratamiento db
-            PreparedStatement ps = connect.prepareStatement("INSERT INTO vehicle(brand,estimatedDuration," +
+            PreparedStatement ps = connec.prepareStatement("INSERT INTO vehicle(brand,estimatedDuration," +
                     "numKmTravelled,occupied,city,active,type) VALUES (?,?,?,?,?,?,?)" + queryTail);
             ps.setString(1, vehicle.getBrand());
             ps.setInt(2, vehicle.getEstimatedDuration());
@@ -44,26 +45,26 @@ public class DAOVehicleImp  implements DAOVehicle {
             ps.execute();
             ps.close();
 
-            ps = connect.prepareStatement("SELECT LAST_INSERT_ID() FROM vehicle");
+            ps = connec.prepareStatement("SELECT LAST_INSERT_ID() FROM vehicle");
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
                 id = rs.getInt("LAST_INSERT_ID()");
             }
             else
-                throw new DAOException("ERROR: LAST_INSERT_ID() devolvio vacio");
+                throw new DAOException("ERROR: LAST_INSERT_ID() returned empty after an insert operation\n");
             ps.close();
         }
         catch (SQLException e){
-            throw new DAOException("ERROR: tratamiento DB para 'create' vehicle no logrado\n");
+            throw new DAOException("ERROR: SQL statement execution at operation 'create' @vehicle unsuccessful\n");
         }
 
         finally {
             if(queryTail.equals("")) {
                 try {
-                    connect.close();
+                    connec.close();
                 } catch (SQLException e) {
-                    throw new DAOException("ERROR: cerrando conexion a DB para 'create' vehicle no logrado\n");
+                    throw new DAOException("ERROR: closing connection to DB at operation 'create' @city unsuccessful\n");
                 }
             }
         }
@@ -78,22 +79,22 @@ public class DAOVehicleImp  implements DAOVehicle {
 
         String queryTail = " FOR UPDATE";
 
-        Connection connect = TransactionManager.getInstance().getTransaction().getResource();
+        Connection connec = (Connection) TransactionManager.getInstance().getTransaction().getResource();
 
-        if(connect == null){
+        if(connec == null){
             try {
                 driverIdentify();
-                connect = DriverManager.getConnection(TransactionManager.getInstance().getTransaction().getConnectionChain());
+                connec = DriverManager.getConnection(TransactionManager.getInstance().getTransaction().getConnectionChain());
             }
             catch(SQLException ex){
-                throw new DAOException("ERROR: acceso a la conexion a DB para 'update' vehicle no logrado\n");
+                throw new DAOException("ERROR: access to DB at operation 'update' @vehicle unsuccessful\n");
             }
             queryTail = "";
         }
         //brand,estimatedDuration," +
         //                "numKmTravelled,occupied,city,active,type
         try { // Tratamiento db
-            PreparedStatement ps = connect.prepareStatement("UPDATE vehicle SET brand = ?, estimatedDuration = ?," +
+            PreparedStatement ps = connec.prepareStatement("UPDATE vehicle SET brand = ?, estimatedDuration = ?," +
                     "numKmTravelled = ?, occupied = ?, city = ?, active = ?, type = ?" +
                     "WHERE id = ?" + queryTail);
             ps.setString(1, vehicle.getBrand());
@@ -105,7 +106,7 @@ public class DAOVehicleImp  implements DAOVehicle {
             ps.setString(7,vehicle.getType());
             ResultSet rs = ps.executeQuery();
 
-            ps = connect.prepareStatement("SELECT id FROM vehicle WHERE id = ?");
+            ps = connec.prepareStatement("SELECT id FROM vehicle WHERE id = ?");
             ps.setInt(1, vehicle.getId());
             ps.executeQuery();
             ps.close();
@@ -114,19 +115,20 @@ public class DAOVehicleImp  implements DAOVehicle {
                 id = rs.getInt("id");
             }
             else
-                throw new DAOException("ERROR: entidad no existente en BD en 'update' vehicle");
+                throw new DAOException("ERROR: trying to update a nonexistent entity at operation 'update' @vehicle");
             ps.close();
         }
         catch (SQLException e){
-            throw new DAOException("ERROR: tratamiento DB para 'update' vehicle no logrado\n");
+            throw new DAOException("ERROR: SQL statement execution at operation 'update' @vehicle unsuccessful\n");
         }
 
         finally {
             if(queryTail.equals("")) {
                 try {
-                    connect.close();
+                    connec.close();
                 } catch (SQLException e) {
-                    throw new DAOException("ERROR: cerrando conexion a DB para 'update' vehicle no logrado\n");
+                    throw new DAOException("ERROR: closing connection to DB at operation 'update' @vehicle" +
+                            " unsuccessful\n");
                 }
             }
         }
@@ -141,22 +143,22 @@ public class DAOVehicleImp  implements DAOVehicle {
 
         String queryTail = " FOR UPDATE";
 
-        Connection connect = TransactionManager.getInstance().getTransaction().getResource();
+        Connection connec = (Connection) TransactionManager.getInstance().getTransaction().getResource();
 
-        if(connect == null){
+        if(connec == null){
             try {
                 driverIdentify();
-                connect = DriverManager.getConnection(TransactionManager.getInstance().getTransaction().
+                connec = DriverManager.getConnection(TransactionManager.getInstance().getTransaction().
                         getConnectionChain());
             }
             catch(SQLException ex){
-                throw new DAOException("ERROR: acceso a la conexion a DB para 'readById' vehicle no logrado\n");
+                throw new DAOException("ERROR: access to DB at operation 'readById' @vehicle unsuccessful\n");
             }
             queryTail = "";
         }
 
         try { // Tratamiento db
-            PreparedStatement ps = connect.prepareStatement("SELECT * FROM vehicle WHERE id = ?" + queryTail);
+            PreparedStatement ps = connec.prepareStatement("SELECT * FROM vehicle WHERE id = ?" + queryTail);
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
 
@@ -167,19 +169,20 @@ public class DAOVehicleImp  implements DAOVehicle {
                         rs.getBoolean("active"), rs.getString("type"));
             }
             else
-                throw new DAOException("ERROR: entidad no existente en BD en 'readById' vehicle");
+                readVehicle = null;
             ps.close();
         }
         catch (SQLException e){
-            throw new DAOException("ERROR: tratamiento DB para 'readById' vehicle no logrado\n");
+            throw new DAOException("ERROR: SQL statement execution at operation 'readById' @vehicle unsuccessful\n");
         }
 
         finally {
             if(queryTail.equals("")) {
                 try {
-                    connect.close();
+                    connec.close();
                 } catch (SQLException e) {
-                    throw new DAOException("ERROR: cerrando conexion a DB para 'readById' vehicle no logrado\n");
+                    throw new DAOException("ERROR: closing connection to DB at operation 'readById' @vehicle " +
+                            "unsuccessful\n");
                 }
             }
         }
@@ -189,31 +192,31 @@ public class DAOVehicleImp  implements DAOVehicle {
 
     @Override
     public Collection<TVehicle> readAll()throws DAOException {
-        Collection<TVehicle> readVehicleCollect = new ArrayList<>();
+        Collection<TVehicle> readVehicles = new ArrayList<>();
 
         String queryTail = " FOR UPDATE";
 
-        Connection connect = TransactionManager.getInstance().getTransaction().getResource();
+        Connection connec = (Connection) TransactionManager.getInstance().getTransaction().getResource();
 
-        if(connect == null){
+        if(connec == null){
             try {
                 driverIdentify();
-                connect = DriverManager.getConnection(TransactionManager.getInstance().getTransaction().
+                connec = DriverManager.getConnection(TransactionManager.getInstance().getTransaction().
                         getConnectionChain());
             }
             catch(SQLException ex){
-                throw new DAOException("ERROR: acceso a la conexion a DB para 'readAll' vehicle no logrado\n");
+                throw new DAOException("ERROR: access to DB at operation 'readAll' @vehicle unsuccessful\n");
             }
             queryTail = "";
         }
 
         try { // Tratamiento db
-            PreparedStatement ps = connect.prepareStatement("SELECT * FROM vehicle" +
+            PreparedStatement ps = connec.prepareStatement("SELECT * FROM vehicle" +
                     queryTail);
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
-                readVehicleCollect.add(new TVehicle(rs.getInt("id"),rs.getString("brand"),
+                readVehicles.add(new TVehicle(rs.getInt("id"),rs.getString("brand"),
                         rs.getInt("estimatedDuration"),rs.getInt("numKmTravelled"),
                         rs.getBoolean("occupied"), rs.getInt("city"),
                         rs.getBoolean("active"), rs.getString("type")));
@@ -222,50 +225,51 @@ public class DAOVehicleImp  implements DAOVehicle {
             ps.close();
         }
         catch (SQLException e){
-            throw new DAOException("ERROR: tratamiento DB para 'readAll' vehicle no logrado\n");
+            throw new DAOException("ERROR: SQL statement execution at operation 'readAll' @vehicle unsuccessful\n");
         }
 
         finally {
             if(queryTail.equals("")) {
                 try {
-                    connect.close();
+                    connec.close();
                 } catch (SQLException e) {
-                    throw new DAOException("ERROR: cerrando conexion a DB para 'readAll' vehicle no logrado\n");
+                    throw new DAOException("ERROR: closing connection to DB at operation 'readAll' @vehicle " +
+                            "unsuccessful\n");
                 }
             }
         }
 
-        return readVehicleCollect;
+        return readVehicles;
     }
 
     @Override
     public Collection<TVehicle> readAllAvailableVehicles() throws DAOException{
-        Collection<TVehicle> readVehicleCollect = new ArrayList<>();
+        Collection<TVehicle> readVehicles = new ArrayList<>();
 
         String queryTail = " FOR UPDATE";
 
-        Connection connect = TransactionManager.getInstance().getTransaction().getResource();
+        Connection connec = (Connection) TransactionManager.getInstance().getTransaction().getResource();
 
-        if(connect == null){
+        if(connec == null){
             try {
                 driverIdentify();
-                connect = DriverManager.getConnection(TransactionManager.getInstance().getTransaction().
+                connec = DriverManager.getConnection(TransactionManager.getInstance().getTransaction().
                         getConnectionChain());
             }
             catch(SQLException ex){
-                throw new DAOException("ERROR: acceso a la conexion a DB para 'readAllAvailableVehicles' " +
-                        "vehicle no logrado\n");
+                throw new DAOException("ERROR: access to DB at operation 'readAllAvailableVehicles' @vehicle " +
+                        "unsuccessful\n");
             }
             queryTail = "";
         }
 
         try { // Tratamiento db
-            PreparedStatement ps = connect.prepareStatement("SELECT * FROM vehicle WHERE active = true " +
+            PreparedStatement ps = connec.prepareStatement("SELECT * FROM vehicle WHERE active = true " +
                     "AND occupied = false"  + queryTail);
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
-                readVehicleCollect.add(new TVehicle(rs.getInt("id"),rs.getString("brand"),
+                readVehicles.add(new TVehicle(rs.getInt("id"),rs.getString("brand"),
                         rs.getInt("estimatedDuration"),rs.getInt("numKmTravelled"),
                         rs.getBoolean("occupied"), rs.getInt("city"),
                         rs.getBoolean("active"), rs.getString("type")));
@@ -274,51 +278,52 @@ public class DAOVehicleImp  implements DAOVehicle {
             ps.close();
         }
         catch (SQLException e){
-            throw new DAOException("ERROR: tratamiento DB para 'readAllAvailableVehicles' vehicle no logrado\n");
+            throw new DAOException("ERROR: SQL statement execution at operation 'readAllAvailable' @vehicle " +
+                    "unsuccessful\n");
         }
 
         finally {
             if(queryTail.equals("")) {
                 try {
-                    connect.close();
+                    connec.close();
                 } catch (SQLException e) {
-                    throw new DAOException("ERROR: cerrando conexion a DB para 'readAllAvailableVehicles'" +
-                            " vehicle no logrado\n");
+                    throw new DAOException("ERROR: closing connection to DB at operation 'readAllAvailable' @vehicle " +
+                            "unsuccessful\n");
                 }
             }
         }
 
-        return readVehicleCollect;
+        return readVehicles;
     }
 
     @Override
     public Collection<TVehicle> readVehiclesByCity(Integer idCity) throws DAOException{
-        Collection<TVehicle> readVehicleCollect = new ArrayList<>();
+        Collection<TVehicle> readVehicles = new ArrayList<>();
 
         String queryTail = " FOR UPDATE";
 
-        Connection connect = TransactionManager.getInstance().getTransaction().getResource();
+        Connection connec = (Connection) TransactionManager.getInstance().getTransaction().getResource();
 
-        if(connect == null){
+        if(connec == null){
             try {
                 driverIdentify();
-                connect = DriverManager.getConnection(TransactionManager.getInstance().getTransaction().
+                connec = DriverManager.getConnection(TransactionManager.getInstance().getTransaction().
                         getConnectionChain());
             }
             catch(SQLException ex){
-                throw new DAOException("ERROR: acceso a la conexion a DB para 'readVehiclesByCity'" +
-                        " vehicle no logrado\n");
+                throw new DAOException("ERROR: access to DB at operation 'readVehiclesByCity' @vehicle " +
+                        "unsuccessful\n");
             }
             queryTail = "";
         }
 
         try { // Tratamiento db
-            PreparedStatement ps = connect.prepareStatement("SELECT * FROM vehicle WHERE city = ?" + queryTail);
+            PreparedStatement ps = connec.prepareStatement("SELECT * FROM vehicle WHERE city = ?" + queryTail);
             ps.setInt(1, idCity);
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
-                readVehicleCollect.add(new TVehicle(rs.getInt("id"),rs.getString("brand"),
+                readVehicles.add(new TVehicle(rs.getInt("id"),rs.getString("brand"),
                         rs.getInt("estimatedDuration"),rs.getInt("numKmTravelled"),
                         rs.getBoolean("occupied"), rs.getInt("city"),
                         rs.getBoolean("active"), rs.getString("type")));
@@ -327,70 +332,71 @@ public class DAOVehicleImp  implements DAOVehicle {
             ps.close();
         }
         catch (SQLException e){
-            throw new DAOException("ERROR: tratamiento DB para 'readVehiclesByCity' vehicle no logrado\n");
+            throw new DAOException("ERROR: SQL statement execution at operation 'readVehiclesByCity' @vehicle " +
+                    "unsuccessful\n");
         }
 
         finally {
             if(queryTail.equals("")) {
                 try {
-                    connect.close();
+                    connec.close();
                 } catch (SQLException e) {
-                    throw new DAOException("ERROR: cerrando conexion a DB para 'readVehiclesByCity'" +
-                            " vehicle no logrado\n");
+                    throw new DAOException("ERROR: closing connection to DB at operation 'readVehiclesByCity' @vehicle" +
+                            "unsuccessful\n");
                 }
             }
         }
 
-        return readVehicleCollect;
+        return readVehicles;
 
     }
 
+    //TODO showByPlateOrSerial
     @Override
     public TVehicle showByPlateOrSerial(String plate) {
         return null;
     }
 
-    private void driverIdentify() throws DAOException {
-        try {
-            Class.forName("org.mariadb.jdbc.Driver");
-        } catch (ClassNotFoundException ex) {
-            throw new DAOException("Error al registrar el driver de mariadb: " + ex);
-        }
-    }
-
-
     @Override
     public void deleteAll() throws DAOException {
-        Collection<TVehicle> readVehicleCollect = new ArrayList<>();
-        Connection connect;
+        Connection connec;
         try {
             driverIdentify();
-            connect = DriverManager.getConnection(TransactionManager.getInstance().getTransaction()
+            connec = DriverManager.getConnection(TransactionManager.getInstance().getTransaction()
                     .getConnectionChain());
 
         } catch (SQLException ex) {
-            throw new DAOException("ERROR: acceso a la conexion a DB para 'deleteAll' city no logrado\n");
+            throw new DAOException("ERROR: access to DB at operation 'deleteAll' @vehicle unsuccessful\n");
         }
 
         try { // Tratamiento db
-            PreparedStatement ps = connect.prepareStatement("SET FOREIGN_KEY_CHECKS = 0");
+            PreparedStatement ps = connec.prepareStatement("SET FOREIGN_KEY_CHECKS = 0");
             ps.execute();
             ps.close();
-            ps = connect.prepareStatement("TRUNCATE TABLE *");
+            ps = connec.prepareStatement("TRUNCATE TABLE *");
             ps.execute();
             ps.close();
-            ps = connect.prepareStatement("SET FOREIGN_KEY_CHECKS = 1");
+            ps = connec.prepareStatement("SET FOREIGN_KEY_CHECKS = 1");
             ps.execute();
             ps.close();
 
         } catch (SQLException e) {
-            throw new DAOException("ERROR: tratamiento DB para 'deleteAll' city no logrado\n");
+            throw new DAOException("ERROR: SQL statement execution at operation 'deleteAll' @vehicle unsuccessful\n");
         } finally {
             try {
-                connect.close();
+                connec.close();
             } catch (SQLException e) {
-                throw new DAOException("ERROR: cerrando conexion a DB para 'deleteAll' vehicle no logrado\n");
+                throw new DAOException("ERROR: closing connection to DB at operation 'deleteAll' @vehicle " +
+                        "unsuccessful\n");
             }
+        }
+    }
+
+    private void driverIdentify() throws DAOException {
+        try {
+            TransactionManager.getInstance().getTransaction().driverIdentify();
+        } catch (TransactionException ex) {
+            throw new DAOException("ERROR: couldn't register MARIADB driver: " + ex);
         }
     }
 

@@ -22,7 +22,8 @@ public class DAORentalImp implements DAORental {
         if(connec == null){
             try {
                 driverIdentify();
-                connec = DriverManager.getConnection(TransactionManager.getInstance().getTransaction().getConnectionChain());
+                connec = DriverManager.getConnection(TransactionManager.getInstance().getTransaction().
+                        getConnectionChain());
             }
             catch(SQLException ex){
                 throw new DAOException("ERROR: access to DB at operation 'create' @rental unsuccessful\n");
@@ -61,7 +62,8 @@ public class DAORentalImp implements DAORental {
                 try {
                     connec.close();
                 } catch (SQLException e) {
-                    throw new DAOException("ERROR: closing connection to DB at operation 'create' @rental unsuccessful\n");
+                    throw new DAOException("ERROR: closing connection to DB at operation 'create' @rental " +
+                            "unsuccessful\n");
                 }
             }
         }
@@ -81,7 +83,8 @@ public class DAORentalImp implements DAORental {
         if(connec == null){
             try {
                 driverIdentify();
-                connec = DriverManager.getConnection(TransactionManager.getInstance().getTransaction().getConnectionChain());
+                connec = DriverManager.getConnection(TransactionManager.getInstance().getTransaction().
+                        getConnectionChain());
             }
             catch(SQLException ex){
                 throw new DAOException("ERROR: access to DB at operation 'update' @rental unsuccessful\n");
@@ -91,7 +94,7 @@ public class DAORentalImp implements DAORental {
 
         try { // Tratamiento db
             PreparedStatement ps = connec.prepareStatement("UPDATE rental SET idVehicle = ?, idClient = ?," +
-                    " numKmRented = ?, dateFrom = ?, dateTo = ?, active = ?   WHERE id = ?" + queryTail);
+                    " numKmRented = ?, dateFrom = ?, dateTo = ?, active = ? WHERE id = ?" + queryTail);
             ps.setInt(1, rental.getIdVehicle());
             ps.setInt(2, rental.getIdClient());
             ps.setInt(3, rental.getNumKmRented());
@@ -122,7 +125,8 @@ public class DAORentalImp implements DAORental {
                 try {
                     connec.close();
                 } catch (SQLException e) {
-                    throw new DAOException("ERROR: closing connection to DB at operation 'update' @rental unsuccessful\n");
+                    throw new DAOException("ERROR: closing connection to DB at operation 'update' @rental " +
+                            "unsuccessful\n");
                 }
             }
         }
@@ -142,7 +146,8 @@ public class DAORentalImp implements DAORental {
         if(connec == null){
             try {
                 driverIdentify();
-                connec = DriverManager.getConnection(TransactionManager.getInstance().getTransaction().getConnectionChain());
+                connec = DriverManager.getConnection(TransactionManager.getInstance().getTransaction().
+                        getConnectionChain());
             }
             catch(SQLException ex){
                 throw new DAOException("ERROR: access to DB at operation 'readById' @rental unsuccessful\n");
@@ -156,8 +161,9 @@ public class DAORentalImp implements DAORental {
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
-                readRental = new TRental(rs.getInt("id"), rs.getInt("idVehicle"), rs.getBoolean("active"),
-                        rs.getInt("numKmRented"), rs.getInt("idClient"), rs.getDate("dateFrom"),
+                readRental = new TRental(rs.getInt("id"), rs.getInt("idVehicle"),
+                        rs.getBoolean("active"), rs.getInt("numKmRented"),
+                        rs.getInt("idClient"), rs.getDate("dateFrom"),
                         rs.getDate("dateTo"));
             }
             else
@@ -173,7 +179,8 @@ public class DAORentalImp implements DAORental {
                 try {
                     connec.close();
                 } catch (SQLException e) {
-                    throw new DAOException("ERROR: closing connection to DB at operation 'readById' @rental unsuccessful\n");
+                    throw new DAOException("ERROR: closing connection to DB at operation 'readById' @rental " +
+                            "unsuccessful\n");
                 }
             }
         }
@@ -183,7 +190,7 @@ public class DAORentalImp implements DAORental {
 
     @Override
     public Collection<TRental> showRentalsByClient(Integer id) throws DAOException {
-        Collection<TRental> readClientCollec = new ArrayList<>();
+        Collection<TRental> readRentals = new ArrayList<>();
 
         String queryTail = " FOR UPDATE";
 
@@ -192,29 +199,32 @@ public class DAORentalImp implements DAORental {
         if(connec == null){
             try {
                 driverIdentify();
-                connec = DriverManager.getConnection(TransactionManager.getInstance().getTransaction().getConnectionChain());
+                connec = DriverManager.getConnection(TransactionManager.getInstance().getTransaction().
+                        getConnectionChain());
             }
             catch(SQLException ex){
-                throw new DAOException("ERROR: access to DB at operation 'showRentalsByClient' @client unsuccessful\n");
+                throw new DAOException("ERROR: access to DB at operation 'showRentalsByClient' @rental unsuccessful\n");
             }
             queryTail = "";
         }
 
         try { // Tratamiento db
-            PreparedStatement ps = connec.prepareStatement("SELECT * FROM client WHERE idClient ?" + queryTail);
+            PreparedStatement ps = connec.prepareStatement("SELECT * FROM rental WHERE idClient ?" + queryTail);
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
-                readClientCollec.add(new TRental(rs.getInt("id"), rs.getInt("idVehicle"), rs.getBoolean("active"),
-                        rs.getInt("numKmRented"), rs.getInt("idClient"), rs.getDate("dateFrom"),
+                readRentals.add(new TRental(rs.getInt("id"), rs.getInt("idVehicle"),
+                        rs.getBoolean("active"), rs.getInt("numKmRented"),
+                        rs.getInt("idClient"), rs.getDate("dateFrom"),
                         rs.getDate("dateTo")));
             }
 
             ps.close();
         }
         catch (SQLException e){
-            throw new DAOException("ERROR: SQL statement execution at operation 'showRentalsByClient' @client unsuccessful\n");
+            throw new DAOException("ERROR: SQL statement execution at operation 'showRentalsByClient' @rental " +
+                    "unsuccessful\n");
         }
 
         finally {
@@ -222,16 +232,17 @@ public class DAORentalImp implements DAORental {
                 try {
                     connec.close();
                 } catch (SQLException e) {
-                    throw new DAOException("ERROR: closing connection to DB at operation 'showRentalsByClient' @client unsuccessful\n");
+                    throw new DAOException("ERROR: closing connection to DB at operation 'showRentalsByClient' " +
+                            "@rental unsuccessful\n");
                 }
             }
         }
 
-        return readClientCollec;
+        return readRentals;
     }
 
     public Collection<TRental> showRentalsByVehicle(Integer id) throws DAOException {
-        Collection<TRental> readClientCollec = new ArrayList<>();
+        Collection<TRental> readRentals = new ArrayList<>();
 
         String queryTail = " FOR UPDATE";
 
@@ -240,29 +251,33 @@ public class DAORentalImp implements DAORental {
         if(connec == null){
             try {
                 driverIdentify();
-                connec = DriverManager.getConnection(TransactionManager.getInstance().getTransaction().getConnectionChain());
+                connec = DriverManager.getConnection(TransactionManager.getInstance().getTransaction().
+                        getConnectionChain());
             }
             catch(SQLException ex){
-                throw new DAOException("ERROR: access to DB at operation 'showRentalsByVehicle' @client unsuccessful\n");
+                throw new DAOException("ERROR: access to DB at operation 'showRentalsByVehicle' @rental " +
+                        "unsuccessful\n");
             }
             queryTail = "";
         }
 
         try { // Tratamiento db
-            PreparedStatement ps = connec.prepareStatement("SELECT * FROM client WHERE idVehicle = ?" + queryTail);
+            PreparedStatement ps = connec.prepareStatement("SELECT * FROM rental WHERE idVehicle = ?" + queryTail);
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
-                readClientCollec.add(new TRental(rs.getInt("id"), rs.getInt("idVehicle"), rs.getBoolean("active"),
-                        rs.getInt("numKmRented"), rs.getInt("idClient"), rs.getDate("dateFrom"),
+                readRentals.add(new TRental(rs.getInt("id"), rs.getInt("idVehicle"),
+                        rs.getBoolean("active"), rs.getInt("numKmRented"),
+                        rs.getInt("idClient"), rs.getDate("dateFrom"),
                         rs.getDate("dateTo")));
             }
 
             ps.close();
         }
         catch (SQLException e){
-            throw new DAOException("ERROR: SQL statement execution at operation 'showRentalsByVehicle' @client unsuccessful\n");
+            throw new DAOException("ERROR: SQL statement execution at operation 'showRentalsByVehicle' @rental " +
+                    "unsuccessful\n");
         }
 
         finally {
@@ -270,12 +285,13 @@ public class DAORentalImp implements DAORental {
                 try {
                     connec.close();
                 } catch (SQLException e) {
-                    throw new DAOException("ERROR: closing connection to DB at operation 'showRentalsByVehicle' @client unsuccessful\n");
+                    throw new DAOException("ERROR: closing connection to DB at operation 'showRentalsByVehicle' " +
+                            "@rental unsuccessful\n");
                 }
             }
         }
 
-        return readClientCollec;
+        return readRentals;
     }
 
     public Boolean checkAvailableDates(TRental rental) {
@@ -283,7 +299,7 @@ public class DAORentalImp implements DAORental {
     }
 
     public Collection<TRental> readAll() throws DAOException {
-        Collection<TRental> readRentalCollec = new ArrayList<>();
+        Collection<TRental> readRentals = new ArrayList<>();
 
         String queryTail = " FOR UPDATE";
 
@@ -292,7 +308,8 @@ public class DAORentalImp implements DAORental {
         if(connec == null){
             try {
                 driverIdentify();
-                connec = DriverManager.getConnection(TransactionManager.getInstance().getTransaction().getConnectionChain());
+                connec = DriverManager.getConnection(TransactionManager.getInstance().getTransaction().
+                        getConnectionChain());
             }
             catch(SQLException ex){
                 throw new DAOException("ERROR: access to DB at operation 'readAll' @rental unsuccessful\n");
@@ -305,8 +322,9 @@ public class DAORentalImp implements DAORental {
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
-                readRentalCollec.add(new TRental(rs.getInt("id"), rs.getInt("idVehicle"), rs.getBoolean("active"),
-                        rs.getInt("numKmRented"), rs.getInt("idClient"), rs.getDate("dateFrom"),
+                readRentals.add(new TRental(rs.getInt("id"), rs.getInt("idVehicle"),
+                        rs.getBoolean("active"), rs.getInt("numKmRented"),
+                        rs.getInt("idClient"), rs.getDate("dateFrom"),
                         rs.getDate("dateTo")));
 
             }
@@ -322,12 +340,13 @@ public class DAORentalImp implements DAORental {
                 try {
                     connec.close();
                 } catch (SQLException e) {
-                    throw new DAOException("ERROR: closing connection to DB at operation 'readAll' @rental unsuccessful\n");
+                    throw new DAOException("ERROR: closing connection to DB at operation 'readAll' @rental " +
+                            "unsuccessful\n");
                 }
             }
         }
 
-        return readRentalCollec;
+        return readRentals;
     }
 
 
@@ -335,7 +354,8 @@ public class DAORentalImp implements DAORental {
         Connection connec;
         try {
             driverIdentify();
-            connec = DriverManager.getConnection(TransactionManager.getInstance().getTransaction().getConnectionChain());
+            connec = DriverManager.getConnection(TransactionManager.getInstance().getTransaction().
+                    getConnectionChain());
         } catch (SQLException ex) {
             throw new DAOException("ERROR: access to DB at operation 'deleteAll' @rental unsuccessful\n");
         }
@@ -357,7 +377,8 @@ public class DAORentalImp implements DAORental {
             try {
                 connec.close();
             } catch (SQLException e) {
-                throw new DAOException("ERROR: closing connection to DB at operation 'deleteAll' @rental unsuccessful\n");
+                throw new DAOException("ERROR: closing connection to DB at operation 'deleteAll' @rental " +
+                        "unsuccessful\n");
             }
         }
     }

@@ -1,6 +1,7 @@
 package integration.vehicle.dao;
 
 import business.vehicle.TVehicle;
+import integration.DAOException;
 import integration.vehicle.factory.DAOVehicleFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -21,7 +22,7 @@ class DAOVehicleTest {
         dao.deleteAll();
     }
 
-    private boolean checkValues(TVehicle expected,TVehicle actual){
+    private boolean checkValues(TVehicle expected,TVehicle actual) {
         return expected.getId().equals(actual.getId())
                 && expected.getBrand().equals(actual.getBrand())
                 && expected.getEstimatedDuration().equals(actual.getEstimatedDuration())
@@ -33,7 +34,7 @@ class DAOVehicleTest {
     }
 
     @Test
-    void create() {
+    void create() throws DAOException{
         Integer idM = dao.create(tv1);
         Integer idB = dao.create(tv2);
 
@@ -42,7 +43,7 @@ class DAOVehicleTest {
     }
 
     @Test
-    void update() {
+    void update() throws DAOException{
         Integer idM = dao.create(tv1);
         tv1.setId(idM);
         tv1.setBrand("seat");
@@ -60,7 +61,7 @@ class DAOVehicleTest {
 
 
     @Test
-    void readById() {
+    void readById() throws DAOException{
         Integer idM = dao.create(tv1);
 
         TVehicle tInDB = dao.readById(idM);
@@ -68,7 +69,7 @@ class DAOVehicleTest {
     }
 
     @Test
-    void readAll(){
+    void readAll() throws DAOException{
         Integer idM = dao.create(tv1);
         Integer idB = dao.create(tv2);
 
@@ -90,14 +91,14 @@ class DAOVehicleTest {
 
 
     @Test
-    void showAllActiveVehicles() {
+    void showAllActiveVehicles() throws DAOException {
         tv1.setOccupied(false);
         tv2.setOccupied(false);
 
         Integer idM = dao.create(tv1);
         Integer idB = dao.create(tv2);
 
-        Collection<TVehicle> clients = dao.showAllActiveVehicles();
+        Collection<TVehicle> clients = dao.readAllAvailableVehicles();
 
         for(TVehicle c : clients){
             if(tv1.getId().equals(c.getId()))
