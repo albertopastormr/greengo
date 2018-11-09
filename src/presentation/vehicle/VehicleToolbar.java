@@ -85,7 +85,7 @@ public class VehicleToolbar extends  JToolBar {
 		});
 
 		// Show all active vehicle
-		JButton showActivesVehicles = ViewHelpers.buttonsForms("Show actives vehicles ");
+		JButton showActivesVehicles = ViewHelpers.buttonsForms("Show available vehicles ");
 		showActivesVehicles.setToolTipText("Show actives vehicles");
 		showActivesVehicles.setIcon(new ImageIcon("resources/images/activeVehicle.png"));
 		showActivesVehicles.setVerticalTextPosition(SwingConstants.BOTTOM);
@@ -95,7 +95,7 @@ public class VehicleToolbar extends  JToolBar {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				ArrayList list = new ArrayList();
-				AppController.getInstance().execute(new LightContext(Event.SHOWALL_ACTIVE_VEHICLE, list));
+				AppController.getInstance().execute(new LightContext(Event.SHOWALL_AVAILABLE_VEHICLE, list));
 			}
 		});
 

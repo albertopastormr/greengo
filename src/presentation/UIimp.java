@@ -71,7 +71,7 @@ public class UIimp extends UI{
 				List<TVehicleDetails> vehicleList = new ArrayList<>();
 				AppController.getInstance().execute(new LightContext(Event.SHOWALL_VEHICLE, vehicleList));
 				break;
-			case SHOWALL_ACTIVE_VEHICLE:
+            case SHOWALL_AVAILABLE_VEHICLE:
 				TableModel modelActive = new VehicleTableModel(VehiclePanel.getColumnId());
 				modelActive.setList((List<TVehicleDetails>) context.getData());
 				ViewHelpers.createSpecificTable(modelActive);

@@ -33,8 +33,8 @@ public class CommandFactoryImp extends CommandFactory {
 			case SHOWALL_VEHICLE:
 				ret = new ShowAllVehicle();
 				break;
-			case SHOWALL_ACTIVE_VEHICLE:
-				ret = new ShowAllActiveVehicles();
+			case SHOWALL_AVAILABLE_VEHICLE:
+				ret = new ShowAllAvailableVehicles();
 				break;
 			case CREATE_SERVICE:
 				ret = new CreateService();
