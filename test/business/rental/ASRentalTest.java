@@ -31,7 +31,7 @@ public class ASRentalTest {
     private static TClient tClient = new TClient(null,"00000000X",0,false);
     private static ASVehicle asV = ASVehicleFactory.getInstance().generateASVehicle();
     private static TVehicle tv = new TVehicle(null,"Audi",6000,0,
-            false,null,false,"car");
+            false,null,false,"Car");
     private static ASRental as = ASRentalFactory.getInstance().generateASRental();
     private static TRental tr = new TRental(null,null,false,10,null,dFrom,dTo);
 
@@ -196,6 +196,22 @@ public class ASRentalTest {
 
         tr.setDateTo(null); //date to must be a valid date
         assertThrows(IncorrectInputException.class, () -> {as.create(tr);});
+    }
+
+    @Test
+    public void createRentalIncorrectInputDates() throws ASException{
+        Integer idCity = asCity.create(tCity);
+        tv.setCity(idCity);
+        Integer idV = asV.create(tv);
+        Integer idC = asClient.create(tClient);
+        tr.setIdClient(idC);
+        tr.setIdVehicle(idV);
+
+        //DateFrom must be < DateTo
+        tr.setDateFrom(dTo);
+        tr.setDateTo(dFrom);
+
+        assertThrows(IncorrectInputException.class, () -> as.create(tr));
     }
 
     @Test
