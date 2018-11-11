@@ -98,7 +98,23 @@ public class PanelTabs extends JTabbedPane {
 			@Override
 			public void stateChanged(ChangeEvent changeEvent) {
 				switch (getSelectedIndex()) {
-					case 0:
+				    //DAO version
+                    case 0:
+                        AppController.getInstance().execute(new LightContext(Event.RELOAD_CITY, null));
+                        break;
+                    case 1:
+                        AppController.getInstance().execute(new LightContext(Event.RELOAD_CLIENT, null));
+                        break;
+                    case 2:
+                        AppController.getInstance().execute(new LightContext(Event.RELOAD_RENTAL, null));
+                        break;
+                    case 3:
+                        AppController.getInstance().execute(new LightContext(Event.RELOAD_VEHICLE, null));
+                        break;
+
+
+				    //JPA version
+					/*case 0:
 						AppController.getInstance().execute(new LightContext(Event.RELOAD_CITY, null));
 						break;
 					case 1:
@@ -121,7 +137,7 @@ public class PanelTabs extends JTabbedPane {
 						break;
 					case 7:
 						AppController.getInstance().execute(new LightContext(Event.RELOAD_VEHICLE, null));
-						break;
+						break;*/
 				}
 			}
 		});
@@ -129,6 +145,23 @@ public class PanelTabs extends JTabbedPane {
 
 	public void update(List newList){
 		switch (getSelectedIndex()){
+		    //DAO version
+            case 0:
+                cityPane.getModel().setList(newList);
+                break;
+            case 1:
+                clientPane.getModel().setList(newList);
+                break;
+            case 2:
+                rentalPane.getModel().setList(newList);
+                break;
+            case 3:
+                vehiclePane.getModel().setList(newList);
+                break;
+
+
+		    //JPA version
+		    /*
 			case 0:
 				cityPane.getModel().setList(newList);
 				break;
@@ -152,7 +185,7 @@ public class PanelTabs extends JTabbedPane {
 				break;
 			case 7:
 				vehiclePane.getModel().setList(newList);
-				break;
+				break;*/
 		}
 
 	}

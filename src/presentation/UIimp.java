@@ -249,7 +249,7 @@ public class UIimp extends UI{
 				tabbedPane.update((List) context.getData());
 				break;
 			case ERROR:
-				Util.inform((String)context.getData());
+				Util.inform(((Exception)context.getData()).toString());
 				break;
 		}
 	}
