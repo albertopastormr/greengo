@@ -3,6 +3,7 @@ package integration.city.dao.imp;
 import business.city.TCity;
 import business.client.TClient;
 import integration.DAOException;
+import integration.Transaction.Transaction;
 import integration.TransactionException;
 import integration.city.dao.DAOCity;
 import integration.transactionManager.TransactionManager;
@@ -17,7 +18,7 @@ public class DAOCityImp implements DAOCity {
     public Integer create(TCity city) throws DAOException {
         Integer id;
 
-        String queryTail = " FOR UPDATE";
+        String queryTail = "FOR UPDATE";
 
         Connection connec = (Connection) TransactionManager.getInstance().getTransaction().getResource();
 
@@ -34,8 +35,7 @@ public class DAOCityImp implements DAOCity {
         }
 
         try { // Tratamiento db
-            PreparedStatement ps = connec.prepareStatement("INSERT INTO city(name, active) VALUES (?,?)" +
-                    queryTail);
+            PreparedStatement ps = connec.prepareStatement("INSERT INTO city(name, active) VALUES (?,?)");
             ps.setString(1, city.getName());
             ps.setBoolean(2, city.isActive());
             ps.execute();
@@ -92,7 +92,7 @@ public class DAOCityImp implements DAOCity {
 
         try { // Tratamiento db
             PreparedStatement ps = connec.prepareStatement("UPDATE city SET name = ?, active = ? " +
-                    "WHERE id = ?" + queryTail);
+                    "WHERE id = ?");
             ps.setString(1, city.getName());
             ps.setBoolean(2, city.isActive());
             ps.setInt(3, city.getId());
@@ -287,8 +287,8 @@ public class DAOCityImp implements DAOCity {
     public void deleteAll() throws DAOException {
         Connection connec;
         try {
-            driverIdentify();
-            connec = DriverManager.getConnection(TransactionManager.getInstance().getTransaction().getConnectionChain());
+            connec = DriverManager.getConnection("jdbc:mariadb://localhost:3306/greengo?user=manager" +
+                    "&password=manager_if");
         } catch (SQLException ex) {
             throw new DAOException("ERROR: access to DB at operation 'deleteAll' @city unsuccessful\n");
         }
@@ -297,7 +297,7 @@ public class DAOCityImp implements DAOCity {
             PreparedStatement ps = connec.prepareStatement("SET FOREIGN_KEY_CHECKS = 0");
             ps.execute();
             ps.close();
-            ps = connec.prepareStatement("TRUNCATE TABLE *");
+            ps = connec.prepareStatement("TRUNCATE TABLE city");
             ps.execute();
             ps.close();
             ps = connec.prepareStatement("SET FOREIGN_KEY_CHECKS = 1");
@@ -317,7 +317,8 @@ public class DAOCityImp implements DAOCity {
 
     private void driverIdentify() throws DAOException {
         try {
-            TransactionManager.getInstance().getTransaction().driverIdentify();
+            Transaction tmp =TransactionManager.getInstance().getTransaction();
+            tmp.start();
         } catch (TransactionException ex) {
             throw new DAOException("ERROR: couldn't register MARIADB driver: " + ex);
         }

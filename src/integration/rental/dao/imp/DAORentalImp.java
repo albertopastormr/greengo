@@ -354,8 +354,7 @@ public class DAORentalImp implements DAORental {
         Connection connec;
         try {
             driverIdentify();
-            connec = DriverManager.getConnection(TransactionManager.getInstance().getTransaction().
-                    getConnectionChain());
+            connec = DriverManager.getConnection("jdbc:mariadb://localhost:3306/greengo?user=manager&password=manager_if");
         } catch (SQLException ex) {
             throw new DAOException("ERROR: access to DB at operation 'deleteAll' @rental unsuccessful\n");
         }
@@ -364,7 +363,7 @@ public class DAORentalImp implements DAORental {
             PreparedStatement ps = connec.prepareStatement("SET FOREIGN_KEY_CHECKS = 0");
             ps.execute();
             ps.close();
-            ps = connec.prepareStatement("TRUNCATE TABLE *");
+            ps = connec.prepareStatement("TRUNCATE TABLE rental");
             ps.execute();
             ps.close();
             ps = connec.prepareStatement("SET FOREIGN_KEY_CHECKS = 1");
@@ -385,7 +384,7 @@ public class DAORentalImp implements DAORental {
 
     private void driverIdentify() throws DAOException {
         try {
-            TransactionManager.getInstance().getTransaction().driverIdentify();
+            TransactionManager.getInstance().getTransaction().start();
         } catch (TransactionException ex) {
             throw new DAOException("ERROR: couldn't register MARIADB driver: " + ex);
         }
