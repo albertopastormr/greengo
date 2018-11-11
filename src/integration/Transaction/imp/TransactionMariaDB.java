@@ -35,7 +35,7 @@ public class TransactionMariaDB implements Transaction {
         try {
             connec.commit();
         } catch (SQLException e) {
-            throw new TransactionException("");
+            throw new TransactionException("Error: commit couldn't be accomplished");
         }
     }
 
@@ -44,7 +44,7 @@ public class TransactionMariaDB implements Transaction {
         try {
             connec.rollback();
         } catch (SQLException e) {
-            throw new TransactionException("");
+            throw new TransactionException("Error: rollback couldn't be accomplished");
         }
 
     }
