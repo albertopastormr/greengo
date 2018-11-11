@@ -1,6 +1,7 @@
 package presentation.command.rental;
 
 import business.ASException;
+import business.IncorrectInputException;
 import business.rental.TRental;
 import business.rental.factory.ASRentalFactory;
 import integration.DAOException;
@@ -11,7 +12,7 @@ import presentation.controller.LightContext;
 public class UpdateRental implements Command {
 
 	@Override
-	public LightContext execute(LightContext in) throws ASException {
+	public LightContext execute(LightContext in) throws ASException, IncorrectInputException {
 		Integer ret = ASRentalFactory.getInstance().generateASRental().update((TRental)in.getData());
 		return new LightContext(Event.UPDATE_RENTAL, ret);
 	}

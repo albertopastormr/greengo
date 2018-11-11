@@ -1,6 +1,7 @@
 package business.client.as.imp;
 
 import business.ASException;
+import business.IncorrectInputException;
 import business.client.TClient;
 import business.client.as.ASClient;
 import business.rental.TRental;
@@ -15,7 +16,7 @@ import java.util.Collection;
 
 public class ASClientImp implements ASClient {
     @Override
-    public Integer create(TClient client) throws ASException {
+    public Integer create(TClient client) throws ASException, IncorrectInputException {
         Integer idc = null;
 
         if(!client.getIdCardNumber().equals("") && client.getNumRentals() != null) {
@@ -39,13 +40,13 @@ public class ASClientImp implements ASClient {
                 throw new ASException(e.getMessage());
             }
         } else
-            throw new ASException("ERROR: The data of client isn't insert correctly.\n");
+            throw new IncorrectInputException("ERROR:IdCardNumber can`t be empty and  numRentals must be >=0 \n");
 
         return idc;
     }
 
     @Override
-    public Integer drop(Integer id) throws ASException {
+    public Integer drop(Integer id) throws ASException, IncorrectInputException {
         Integer idc = null;
 
         if(id > 0) {
@@ -79,16 +80,17 @@ public class ASClientImp implements ASClient {
                 throw new ASException(e.getMessage());
             }
         }else
-            throw new ASException("ERROR: The data of client isn't insert correctly.\n");
+            throw new IncorrectInputException("ERROR: IdCardNumber must be positive \n");
+
 
         return idc;
     }
 
     @Override
-    public Integer update(TClient client) throws ASException {
+    public Integer update(TClient client) throws ASException, IncorrectInputException {
         Integer idc =null;
 
-        if(client.getId() > 0 && !client.getIdCardNumber().equals("") && client.getNumRentals() != null) {
+        if(client.getId() > 0 && !client.getIdCardNumber().equals("") && client.getNumRentals() >0 && !client.isActive() ) {
             try {
                 Transaction tr = TransactionManager.getInstance().createTransaction();
                 if (tr != null) {
@@ -96,7 +98,7 @@ public class ASClientImp implements ASClient {
                     TClient tl = DAOClientFactory.getInstance().generateDAOClient().readById(client.getId());
                     TClient tn = DAOClientFactory.getInstance().generateDAOClient().readByIdCard(client.getIdCardNumber());
 
-                    if (tl != null && tn == null) {//the client exists and don't exists other client with the same idCard
+                    if (tl != null && tn == null && client.isActive()) {//the client exists and don't exists other client with the same idCard
                         idc = DAOClientFactory.getInstance().generateDAOClient().update(tl);
                         tr.commit();
                         TransactionManager.getInstance().removeTransaction();
@@ -104,6 +106,7 @@ public class ASClientImp implements ASClient {
                         tr.rollback();
                         TransactionManager.getInstance().removeTransaction();
                         if (tl == null) throw new ASException("ERROR: The client doesn't exists");
+                        else if (!client.isActive()) throw new ASException("ERROR: The client field is disabled, you must use Drop operation in order to disabled it");
                         else throw new ASException("ERROR: Exists other client with the same idCard");
                     }
                 } else
@@ -111,14 +114,19 @@ public class ASClientImp implements ASClient {
             } catch (DAOException | TransactionException e) {
                 throw new ASException(e.getMessage());
             }
-        } else
-            throw new ASException("ERROR: The data of client isn't insert correctly.\n");
+        } else if (client.getId() <= 0)
+            throw new IncorrectInputException("ERROR: Id can't be null and must be > 0 and idCardNumber mustn`t be empty and  \n");
+          else if (client.getIdCardNumber().equals(""))
+            throw new IncorrectInputException("ERROR: idCardNumber mustn`t be empty  \n");
+          else if (client.getNumRentals() <0 )
+            throw new IncorrectInputException("ERROR: numRentals must be >= 0 \n");
+
 
         return idc;
     }
 
     @Override
-    public TClient show(Integer id) throws ASException {
+    public TClient show(Integer id) throws ASException, IncorrectInputException {
         TClient client = null;
 
         if(id > 0) {
@@ -136,8 +144,7 @@ public class ASClientImp implements ASClient {
                 throw new ASException(e.getMessage());
             }
         }else
-            throw new ASException("ERROR: The data of client isn't insert correctly.\n");
-
+            throw new IncorrectInputException("ERROR: IdCardNumber must be positive \n");
         return client;
     }
 
@@ -156,12 +163,11 @@ public class ASClientImp implements ASClient {
         }catch (DAOException | TransactionException e) {
             throw new ASException(e.getMessage());
         }
-
         return clientsList;
     }
 
     @Override
-    public Collection<TClient> showAllWithMoreThanNRentals(Integer N) throws ASException {
+    public Collection<TClient> showAllWithMoreThanNRentals(Integer N) throws ASException, IncorrectInputException {
         Collection<TClient> clientsList = null;
 
         if(N > 0) {
@@ -178,7 +184,7 @@ public class ASClientImp implements ASClient {
                 throw new ASException(e.getMessage());
             }
         }else
-            throw new ASException("ERROR: The number of rentals isn't insert correctly.\n");
+            throw new IncorrectInputException("ERROR: N must be positive \n");
 
         return clientsList;
     }

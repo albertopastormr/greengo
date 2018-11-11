@@ -43,7 +43,7 @@ public class ASRentalTest {
 
     //create method
     @Test
-    public void createRentalSuccessful() throws ASException {
+    public void createRentalSuccessful() throws ASException, IncorrectInputException {
         Integer idCity = asCity.create(tCity);
         tv.setCity(idCity);
         Integer idV = asV.create(tv);
@@ -57,7 +57,7 @@ public class ASRentalTest {
     }
 
     @Test
-    public void createRentalIncorrectInputID() throws ASException {
+    public void createRentalIncorrectInputID() throws ASException, IncorrectInputException {
         Integer idCity = asCity.create(tCity);
         tv.setCity(idCity);
         Integer idV = asV.create(tv);
@@ -71,7 +71,7 @@ public class ASRentalTest {
     }
 
     @Test
-    public void createRentalIncorrectInputIDVehicle1() throws ASException {
+    public void createRentalIncorrectInputIDVehicle1() throws ASException, IncorrectInputException {
         Integer idC = asClient.create(tClient);
         tr.setIdClient(idC);
 
@@ -81,7 +81,7 @@ public class ASRentalTest {
     }
 
     @Test
-    public void createRentalIncorrectInputIDVehicle2() throws ASException {
+    public void createRentalIncorrectInputIDVehicle2() throws ASException, IncorrectInputException {
         Integer idC = asClient.create(tClient);
         tr.setIdClient(idC);
 
@@ -91,7 +91,7 @@ public class ASRentalTest {
     }
 
     @Test
-    public void createRentalIncorrectInputIDVehicle3() throws ASException {
+    public void createRentalIncorrectInputIDVehicle3() throws ASException, IncorrectInputException {
         Integer idC = asClient.create(tClient);
         tr.setIdClient(idC);
 
@@ -101,7 +101,7 @@ public class ASRentalTest {
     }
 
     @Test
-    public void createRentalIncorrectInputActive() throws ASException {
+    public void createRentalIncorrectInputActive() throws ASException, IncorrectInputException {
         Integer idCity = asCity.create(tCity);
         tv.setCity(idCity);
         Integer idV = asV.create(tv);
@@ -114,7 +114,7 @@ public class ASRentalTest {
     }
 
     @Test
-    public void createRentalIncorrectInputNumKmRented1() throws ASException {
+    public void createRentalIncorrectInputNumKmRented1() throws ASException, IncorrectInputException {
         Integer idCity = asCity.create(tCity);
         tv.setCity(idCity);
         Integer idV = asV.create(tv);
@@ -127,7 +127,7 @@ public class ASRentalTest {
     }
 
      @Test
-    public void createRentalIncorrectInputNumKmRented2() throws ASException {
+    public void createRentalIncorrectInputNumKmRented2() throws ASException, IncorrectInputException {
          Integer idCity = asCity.create(tCity);
          tv.setCity(idCity);
         Integer idV = asV.create(tv);
@@ -140,7 +140,7 @@ public class ASRentalTest {
     }
 
     @Test
-    public void createRentalIncorrectInputIDClient() throws ASException {
+    public void createRentalIncorrectInputIDClient() throws ASException, IncorrectInputException {
         Integer idCity = asCity.create(tCity);
         tv.setCity(idCity);
         Integer idV = asV.create(tv);
@@ -151,7 +151,7 @@ public class ASRentalTest {
     }
 
     @Test
-    public void createRentalIncorrectInputIDClient2() throws ASException {
+    public void createRentalIncorrectInputIDClient2() throws ASException, IncorrectInputException {
         Integer idCity = asCity.create(tCity);
         tv.setCity(idCity);
         Integer idV = asV.create(tv);
@@ -162,7 +162,7 @@ public class ASRentalTest {
     }
 
     @Test
-    public void createRentalIncorrectInputIDClient3() throws ASException {
+    public void createRentalIncorrectInputIDClient3() throws ASException, IncorrectInputException {
         Integer idCity = asCity.create(tCity);
         tv.setCity(idCity);
         Integer idV = asV.create(tv);
@@ -173,7 +173,7 @@ public class ASRentalTest {
     }
 
     @Test
-    public void createRentalIncorrectInputDateFrom() throws ASException {
+    public void createRentalIncorrectInputDateFrom() throws ASException, IncorrectInputException {
         Integer idCity = asCity.create(tCity);
         tv.setCity(idCity);
         Integer idV = asV.create(tv);
@@ -186,7 +186,7 @@ public class ASRentalTest {
     }
 
     @Test
-    public void createRentalIncorrectInputDateTo() throws ASException {
+    public void createRentalIncorrectInputDateTo() throws ASException, IncorrectInputException {
         Integer idCity = asCity.create(tCity);
         tv.setCity(idCity);
         Integer idV = asV.create(tv);
@@ -199,7 +199,7 @@ public class ASRentalTest {
     }
 
     @Test
-    public void createRentalIncorrectInputDates() throws ASException{
+    public void createRentalIncorrectInputDates() throws ASException, IncorrectInputException {
         Integer idCity = asCity.create(tCity);
         tv.setCity(idCity);
         Integer idV = asV.create(tv);
@@ -215,7 +215,7 @@ public class ASRentalTest {
     }
 
     @Test
-    public void createRentalVehicleNotExists() throws ASException {
+    public void createRentalVehicleNotExists() throws ASException, IncorrectInputException {
         Integer idC = asClient.create(tClient);
         tr.setIdClient(idC);
 
@@ -224,7 +224,7 @@ public class ASRentalTest {
     }
 
     @Test
-    public void createRentalVehicleNotActive() throws ASException {
+    public void createRentalVehicleNotActive() throws ASException, IncorrectInputException {
         Integer idCity = asCity.create(tCity);
         tv.setCity(idCity);
         Integer idV = asV.create(tv);
@@ -237,7 +237,7 @@ public class ASRentalTest {
     }
 
     @Test
-    public void createRentalDatesNotValidForVehicle() throws ASException {
+    public void createRentalDatesNotValidForVehicle() throws ASException, IncorrectInputException {
         Integer idCity = asCity.create(tCity);
         tv.setCity(idCity);
         Integer idV = asV.create(tv);
@@ -253,7 +253,7 @@ public class ASRentalTest {
     }
 
     @Test
-    public void createRentalClientNotExists() throws ASException {
+    public void createRentalClientNotExists() throws ASException, IncorrectInputException {
         Integer idCity = asCity.create(tCity);
         tv.setCity(idCity);
         Integer idV = asV.create(tv);
@@ -264,7 +264,7 @@ public class ASRentalTest {
     }
 
     @Test
-    public void createRentalClientNotActive() throws ASException {
+    public void createRentalClientNotActive() throws ASException, IncorrectInputException {
         Integer idCity = asCity.create(tCity);
         tv.setCity(idCity);
         Integer idV = asV.create(tv);
@@ -277,7 +277,7 @@ public class ASRentalTest {
     }
 
     @Test
-    public void createRentalDatesNotValidForClient() throws ASException {
+    public void createRentalDatesNotValidForClient() throws ASException, IncorrectInputException {
         Integer idCity = asCity.create(tCity);
         tv.setCity(idCity);
         Integer idV = asV.create(tv);
@@ -294,7 +294,7 @@ public class ASRentalTest {
     }
 
     @Test
-    public void createRentalKmRentedExceedVehicleEstimatedDuration() throws ASException {
+    public void createRentalKmRentedExceedVehicleEstimatedDuration() throws ASException, IncorrectInputException {
         Integer idCity = asCity.create(tCity);
         tv.setCity(idCity);
         Integer idV = asV.create(tv);
@@ -309,7 +309,7 @@ public class ASRentalTest {
     //Drop method
 
     @Test
-    public void dropRentalSuccessful() throws ASException {
+    public void dropRentalSuccessful() throws ASException, IncorrectInputException {
         Integer idCity = asCity.create(tCity);
         tv.setCity(idCity);
         Integer idV = asV.create(tv);
@@ -345,7 +345,7 @@ public class ASRentalTest {
     }
 
     @Test
-    public void dropRentalAlreadyInactive() throws ASException {
+    public void dropRentalAlreadyInactive() throws ASException, IncorrectInputException {
         Integer idCity = asCity.create(tCity);
         tv.setCity(idCity);
         Integer idV = asV.create(tv);
@@ -360,7 +360,7 @@ public class ASRentalTest {
 
     //update method
     @Test
-    void updateRentalSuccessful() throws ASException {
+    void updateRentalSuccessful() throws ASException, IncorrectInputException {
         Integer idCity = asCity.create(tCity);
         tv.setCity(idCity);
         Integer idVehicle = asV.create(tv);

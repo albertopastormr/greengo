@@ -15,8 +15,6 @@ public class DAORentalImp implements DAORental {
     public Integer create(TRental rental) throws DAOException {
         Integer id;
 
-        String queryTail = " FOR UPDATE";
-
         Connection connec = (Connection) TransactionManager.getInstance().getTransaction().getResource();
 
         if(connec == null){
@@ -28,12 +26,11 @@ public class DAORentalImp implements DAORental {
             catch(SQLException ex){
                 throw new DAOException("ERROR: access to DB at operation 'create' @rental unsuccessful\n");
             }
-            queryTail = "";
         }
 
         try { // Tratamiento db
             PreparedStatement ps = connec.prepareStatement("INSERT INTO rental(idVehicle, idClient, numKmRented," +
-                    "dateFrom, dateTo, active) VALUES (?,?,?,?,?,?)" + queryTail);
+                    "dateFrom, dateTo, active) VALUES (?,?,?,?,?,?)");
             ps.setInt(1, rental.getIdVehicle());
             ps.setInt(2, rental.getIdClient());
             ps.setInt(3, rental.getNumKmRented());
@@ -58,7 +55,7 @@ public class DAORentalImp implements DAORental {
         }
 
         finally {
-            if(queryTail.equals("")) {
+            if(TransactionManager.getInstance().getTransaction().getResource() == null) {
                 try {
                     connec.close();
                 } catch (SQLException e) {
@@ -76,8 +73,6 @@ public class DAORentalImp implements DAORental {
 
         Integer id;
 
-        String queryTail = " FOR UPDATE";
-
         Connection connec = (Connection) TransactionManager.getInstance().getTransaction().getResource();
 
         if(connec == null){
@@ -89,12 +84,11 @@ public class DAORentalImp implements DAORental {
             catch(SQLException ex){
                 throw new DAOException("ERROR: access to DB at operation 'update' @rental unsuccessful\n");
             }
-            queryTail = "";
         }
 
         try { // Tratamiento db
             PreparedStatement ps = connec.prepareStatement("UPDATE rental SET idVehicle = ?, idClient = ?," +
-                    " numKmRented = ?, dateFrom = ?, dateTo = ?, active = ? WHERE id = ?" + queryTail);
+                    " numKmRented = ?, dateFrom = ?, dateTo = ?, active = ? WHERE id = ?");
             ps.setInt(1, rental.getIdVehicle());
             ps.setInt(2, rental.getIdClient());
             ps.setInt(3, rental.getNumKmRented());
@@ -121,7 +115,7 @@ public class DAORentalImp implements DAORental {
         }
 
         finally {
-            if(queryTail.equals("")) {
+            if(TransactionManager.getInstance().getTransaction().getResource() == null) {
                 try {
                     connec.close();
                 } catch (SQLException e) {

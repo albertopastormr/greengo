@@ -1,6 +1,7 @@
 package business.vehicle.as.imp;
 
 import business.ASException;
+import business.IncorrectInputException;
 import business.city.TCity;
 import business.city.factory.ASCityFactory;
 import business.rental.TRental;
@@ -27,11 +28,13 @@ import java.util.Collection;
 
 public class ASVehicleImp implements ASVehicle {
     @Override
-    public Integer create(TVehicle vehicle) throws ASException {
+    public Integer create(TVehicle vehicle) throws ASException, IncorrectInputException {
         Integer idv = null;
 
-        if(!vehicle.getBrand().equals("") && !vehicle.getBrand().equals("") && vehicle.getEstimatedDuration() != null && vehicle.getNumKmTravelled() != null &&
-                vehicle.getCity() != null && !vehicle.getType().equals("")) {
+        if(!vehicle.getBrand().equals("") && !vehicle.getBrand().equals("") && vehicle.getEstimatedDuration() != null && vehicle.getEstimatedDuration() > 0
+                && vehicle.getNumKmTravelled() != null && vehicle.getNumKmTravelled()>= 0 &&vehicle.getCity() != null && !vehicle.getType().equals("")
+                && vehicle.getNumKmTravelled() <= vehicle.getEstimatedDuration() && (vehicle.getType().equals("Bicycle") || vehicle.getType().equals("Car")))
+        {
             try {
                 Transaction tr = TransactionManager.getInstance().createTransaction();
 
@@ -40,7 +43,7 @@ public class ASVehicleImp implements ASVehicle {
                     TCity tc = DAOCityFactory.getInstance().generateDAOCity().readById(vehicle.getCity());
                     TVehicle tVehicle = null;
 
-                    if (vehicle.getType().equals("Bicycle")) {
+                    if (vehicle.getType().equals("Bicycle") && tc!=null) {
                         TBicycleVehicle tb = (TBicycleVehicle) vehicle;
                         tVehicle = DAOVehicleFactory.getInstance().generateDAOVehicle().showByPlateOrSerial(tb.getSerialNumber());
                     } else {
@@ -56,13 +59,13 @@ public class ASVehicleImp implements ASVehicle {
                 throw new ASException(e.getMessage());
             }
         }else
-            throw new ASException("ERROR: The data of vehicle isn't insert correctly.\n");
+            throw new IncorrectInputException("ERROR: The data of vehicle isn't insert correctly.\n");
 
         return idv;
     }
 
     @Override
-    public Integer drop(Integer idVehicle) throws ASException {
+    public Integer drop(Integer idVehicle) throws ASException, IncorrectInputException {
 
         Integer idv = null;
         if(idVehicle > 0){
@@ -72,7 +75,7 @@ public class ASVehicleImp implements ASVehicle {
                     tr.start();
                     TVehicle tv = DAOVehicleFactory.getInstance().generateDAOVehicle().readById(idVehicle);
 
-                    if (tv != null && tv.isActive()) {//the city exists and is active
+                    if (tv != null && tv.isActive()) {//the vehicle exists and is active
 
                         Collection<TRental> rentalList = DAORentalFactory.getInstance().generateDAORental().showRentalsByVehicle(idVehicle);
                         boolean isRentalActive = false;
@@ -101,34 +104,36 @@ public class ASVehicleImp implements ASVehicle {
                 throw new ASException(e.getMessage());
             }
         }else
-            throw new ASException("ERROR: The data of vehicle isn't insert correctly.\n");
+            throw new IncorrectInputException("ERROR: The id must be >= 0.\n");
 
         return idv;
     }
 
 
     @Override
-    public Integer update(TVehicle tVehicle) throws ASException {
+    public Integer update(TVehicle tVehicle) throws ASException, IncorrectInputException {
 
         Integer idv = null;
 
         if(tVehicle.getId() > 0 && !tVehicle.getBrand().equals("") && !tVehicle.getBrand().equals("") && tVehicle.getEstimatedDuration() != null
-                && tVehicle.getNumKmTravelled() != null && tVehicle.getCity() != null && !tVehicle.getType().equals("")) {
-
+                && tVehicle.getNumKmTravelled() != null && tVehicle.getCity() != null && !tVehicle.getType().equals("") && tVehicle.getNumKmTravelled() < tVehicle.getEstimatedDuration()
+                && tVehicle.getEstimatedDuration() > 0 && tVehicle.getNumKmTravelled() > 0)
+        {
             try {
                 Transaction tr = TransactionManager.getInstance().createTransaction();
                 if (tr != null) {
                     tr.start();
                     TVehicle tv = DAOVehicleFactory.getInstance().generateDAOVehicle().readById(tVehicle.getId());
 
-                    if (tv != null) { //the city exists
+                    if (tv != null && tVehicle.isActive()) { //the city exists
                         idv = DAOVehicleFactory.getInstance().generateDAOVehicle().update(tv);
                         tr.commit();
                         TransactionManager.getInstance().removeTransaction();
                     } else {
                         tr.rollback();
                         TransactionManager.getInstance().removeTransaction();
-                        throw new ASException("The vehicle doesn't exists");
+                        if ( tv == null ) throw new ASException("ERROR: The vehicle doesn't exists");
+                        else if ( tVehicle.isActive() ) throw new ASException("ERROR: The active field must be true");
                     }
                 } else
                     throw new ASException("ERROR: The vehicle doesn't update correctly.\n");
@@ -136,13 +141,13 @@ public class ASVehicleImp implements ASVehicle {
                 throw new ASException(e.getMessage());
             }
         }else
-            throw new ASException("ERROR: The data of vehicle isn't insert correctly.\n");
+            throw new IncorrectInputException("ERROR: The data of vehicle isn't insert correctly.\n");
 
         return idv;
     }
 
     @Override
-    public TVehicleDetails show(Integer idVehicle) throws ASException {
+    public TVehicleDetails show(Integer idVehicle) throws ASException, IncorrectInputException {
 
         TVehicleDetails tvd = null;
 
@@ -157,14 +162,14 @@ public class ASVehicleImp implements ASVehicle {
 
                     tr.commit();
                     TransactionManager.getInstance().removeTransaction();
-                    if (tv == null) throw new ASException("The vehicle doesn't exists");
+                    if (tv == null) throw new ASException("ERROR: The vehicle doesn't exists");
                 } else
                     throw new ASException("ERROR: The vehicle doesn't show correctly.\n");
             } catch (TransactionException | ASException | DAOException e) {
                 throw new ASException(e.getMessage());
             }
         }else
-            throw new ASException("ERROR: The data of vehicle isn't insert correctly.\n");
+            throw new IncorrectInputException("ERROR: The data of vehicle isn't insert correctly.\n");
 
         return tvd;
     }
@@ -224,14 +229,14 @@ public class ASVehicleImp implements ASVehicle {
         return retList;
     }
 
-    public TVehicleDetails getVehicleDetails(Integer vehicleID) throws ASException {
+    public TVehicleDetails getVehicleDetails(Integer vehicleID) throws ASException, IncorrectInputException {
         TVehicle vehicle = ASVehicleFactory.getInstance().generateASVehicle().show(vehicleID).getVehicle();
         TCity city = ASCityFactory.getInstance().generateASCity().show(vehicle.getCity());
 
         return new TVehicleDetails(vehicle,city);
     }
 
-    public Collection<TVehicleDetails> getAllVehiclesDetails() throws ASException {
+    public Collection<TVehicleDetails> getAllVehiclesDetails() throws ASException, IncorrectInputException {
         Collection<TVehicleDetails> vehicles = ASVehicleFactory.getInstance().generateASVehicle().showAll();
         Collection<TVehicleDetails> details = new ArrayList<>();
 

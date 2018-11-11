@@ -13,10 +13,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 public class DAOVehicleImp  implements DAOVehicle {
+
     @Override
     public Integer create(TVehicle vehicle) throws DAOException{
         Integer id;
-        String queryTail = " FOR UPDATE";
 
         Connection connec = (Connection) TransactionManager.getInstance().getTransaction().getResource();
 
@@ -29,12 +29,11 @@ public class DAOVehicleImp  implements DAOVehicle {
             catch(SQLException ex){
                 throw new DAOException("ERROR: access to DB at operation 'create' @vehicle unsuccessful\n");
             }
-            queryTail = "";
         }
 
         try { // Tratamiento db
             PreparedStatement ps = connec.prepareStatement("INSERT INTO vehicle(brand,estimatedDuration," +
-                    "numKmTravelled,occupied,city,active,type) VALUES (?,?,?,?,?,?,?)" + queryTail);
+                    "numKmTravelled,occupied,city,active,type) VALUES (?,?,?,?,?,?,?)");
             ps.setString(1, vehicle.getBrand());
             ps.setInt(2, vehicle.getEstimatedDuration());
             ps.setInt(3,vehicle.getNumKmTravelled());
@@ -60,7 +59,7 @@ public class DAOVehicleImp  implements DAOVehicle {
         }
 
         finally {
-            if(queryTail.equals("")) {
+            if(TransactionManager.getInstance().getTransaction().getResource() == null) {
                 try {
                     connec.close();
                 } catch (SQLException e) {
@@ -77,8 +76,6 @@ public class DAOVehicleImp  implements DAOVehicle {
 
         Integer id;
 
-        String queryTail = " FOR UPDATE";
-
         Connection connec = (Connection) TransactionManager.getInstance().getTransaction().getResource();
 
         if(connec == null){
@@ -89,14 +86,13 @@ public class DAOVehicleImp  implements DAOVehicle {
             catch(SQLException ex){
                 throw new DAOException("ERROR: access to DB at operation 'update' @vehicle unsuccessful\n");
             }
-            queryTail = "";
         }
         //brand,estimatedDuration," +
         //                "numKmTravelled,occupied,city,active,type
         try { // Tratamiento db
             PreparedStatement ps = connec.prepareStatement("UPDATE vehicle SET brand = ?, estimatedDuration = ?," +
                     "numKmTravelled = ?, occupied = ?, city = ?, active = ?, type = ?" +
-                    "WHERE id = ?" + queryTail);
+                    "WHERE id = ?");
             ps.setString(1, vehicle.getBrand());
             ps.setInt(2, vehicle.getEstimatedDuration());
             ps.setInt(3,vehicle.getNumKmTravelled());
@@ -123,7 +119,7 @@ public class DAOVehicleImp  implements DAOVehicle {
         }
 
         finally {
-            if(queryTail.equals("")) {
+            if(TransactionManager.getInstance().getTransaction().getResource() == null) {
                 try {
                     connec.close();
                 } catch (SQLException e) {
@@ -375,7 +371,7 @@ public class DAOVehicleImp  implements DAOVehicle {
             ps = connec.prepareStatement("TRUNCATE TABLE vehicle");
             ps.execute();
             ps.close();
-            ps = connec.prepareStatement("TRUNCATE TABLE bicylceVehicle");
+            ps = connec.prepareStatement("TRUNCATE TABLE bicycleVehicle");
             ps.execute();
             ps.close();
             ps = connec.prepareStatement("TRUNCATE TABLE carVehicle");

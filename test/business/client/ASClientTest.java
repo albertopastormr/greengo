@@ -41,22 +41,11 @@ public class ASClientTest {
 
     //Create method
     @Test
-    public void createClientSuccessful() throws ASException {
+    public void createClientSuccessful() throws ASException, IncorrectInputException {
        assertTrue(as.create(tc)>0);
     }
 
-    @Test
-    public void createClientIncorrectInput0(){
-        tc.setIdCardNumber("0000X");// must have 8 numbers and 1 letter at the end
-        assertThrows(IncorrectInputException.class, () -> {as.create(tc);});
-    }
 
-    @Test
-    public void createClientIncorrectInput1(){
-        tc.setIdCardNumber("00000000");
-        // must have 8 numbers and 1 letter at the end
-        assertThrows(IncorrectInputException.class, () -> {as.create(tc);});
-    }
 
     @Test
     public void createClientIncorrectInput2(){
@@ -64,10 +53,15 @@ public class ASClientTest {
         assertThrows(IncorrectInputException.class, () -> {as.create(tc);});
     }
 
+    @Test
+    public void createClientIncorrectInput3(){
+        tc.setIdCardNumber(null); //idCardNumber can`t be empty
+        assertThrows(IncorrectInputException.class, () -> {as.create(tc);});
+    }
 
     //Drop method
     @Test
-    public void dropSuccessful() throws ASException {
+    public void dropSuccessful() throws ASException, IncorrectInputException {
         Integer idV = asV.create(tv);
         Integer id = as.create(tc);
 
@@ -107,7 +101,7 @@ public class ASClientTest {
     }
 
     @Test
-    public void dropClientWithActiveRentals() throws ASException {
+    public void dropClientWithActiveRentals() throws ASException, IncorrectInputException {
         Integer idC = as.create(tc);
         Integer idV = asV.create(tv);
 
@@ -121,7 +115,7 @@ public class ASClientTest {
 
     //Show method
     @Test
-    public void showClientSuccessful() throws ASException {
+    public void showClientSuccessful() throws ASException, IncorrectInputException {
         Integer idC = as.create(tc);
 
         TClient out = as.show(idC);
@@ -154,7 +148,7 @@ public class ASClientTest {
 
     //showAll method
     @Test
-    public void showAllClientsSuccessful() throws ASException {
+    public void showAllClientsSuccessful() throws ASException, IncorrectInputException {
         Integer idC = as.create(tc);
 
         TClient tc2 = new TClient(null, "11111111X", 0, false);
@@ -181,7 +175,7 @@ public class ASClientTest {
 
     //showAllWithMoreNrentals method
     @Test
-    public void showAllClientsWithMoreNrentalsSuccessful() throws ASException {
+    public void showAllClientsWithMoreNrentalsSuccessful() throws ASException, IncorrectInputException {
         final Integer N = 2;
         tc.setNumRentals(3);
         as.create(tc);
@@ -202,7 +196,7 @@ public class ASClientTest {
 
     //Update method
     @Test
-    public void updateClientSuccessful() throws ASException {
+    public void updateClientSuccessful() throws ASException, IncorrectInputException {
         Integer idC = as.create(tc);
 
         TClient updtClient = new TClient(idC,"11111111X",1,true);
@@ -237,19 +231,6 @@ public class ASClientTest {
         assertThrows(IncorrectInputException.class, () -> {as.update(tc);});
     }
 
-    @Test
-    public void updateClientIncorrectInputID_card_number1(){
-        //id_card_number must have 8 numbers and 1 letter at the end
-        tc.setIdCardNumber("1111X");
-        assertThrows(IncorrectInputException.class, () -> {as.update(tc);});
-    }
-
-    @Test
-    public void updateClientIncorrectInputID_card_number2(){
-        //id_card_number must have 8 numbers and 1 letter at the end
-        tc.setIdCardNumber("11111111");
-        assertThrows(IncorrectInputException.class, () -> {as.update(tc);});
-    }
 
     @Test
     public void updateClientIncorrectInputRentals_number(){
@@ -270,5 +251,12 @@ public class ASClientTest {
     public void updateClientNotExists(){
         tc.setId(1);
         assertThrows(ASException.class, () -> {as.update(tc);});
+    }
+
+    @Test
+    public void showAllWithMoreThanNRentalsIncorrectInput(){
+       //N must be >=0
+        int N = -1;
+        assertThrows(ASException.class, () -> {as.showAllWithMoreThanNRentals(N);});
     }
 }
