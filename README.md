@@ -10,7 +10,7 @@ GreenGo uses [mariadb 10.3](https://downloads.mariadb.org/mariadb/10.3.10/), [Ja
 Once you've installed [mariadb 10.3](https://downloads.mariadb.org/mariadb/10.3.10/), launch MySQL client, create a user with _manager_ as username and _manager-if_ as password.
 After that, run the following command:
 
-`CREATE DATABASE GreenGo`
+`CREATE DATABASE greengo`
 
 GreenGo is the name of the database.
 
