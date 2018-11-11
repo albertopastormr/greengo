@@ -9,13 +9,13 @@ import integration.DAOException;
 import java.util.Collection;
 
 public interface ASRental {
-    Integer create(TRental rental) throws ASException;
+    Integer create(TRental rental) throws ASException, IncorrectInputException;
 
-    Integer drop(Integer rental) throws ASException;
+    Integer drop(Integer rental) throws ASException, IncorrectInputException;
 
-    Integer update(TRental rental) throws ASException;
+    Integer update(TRental rental) throws ASException, IncorrectInputException;
 
-    TRentalDetails show (Integer id) throws ASException;
+    TRentalDetails show (Integer id) throws ASException, IncorrectInputException;
 
     Collection<TRentalDetails> showAll () throws ASException;
 

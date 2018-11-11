@@ -32,7 +32,8 @@ public class ASCityTest {
     private static Date endD = new Date(1543051930000L);
     private static ASCity 	as = ASCityFactory.getInstance().generateASCity();
 	private static TCity tc = new TCity(null,"Madrid",true);
-    private static ASVehicle 	asV = ASVehicleFactory.getInstance().generateASVehicle();
+	private static TCity tc2 = new TCity(null,"Avila",false);
+	private static ASVehicle 	asV = ASVehicleFactory.getInstance().generateASVehicle();
     private static TVehicle tv = new TVehicle(null,"Audi",6000,0,
             false,null,false,"Car");
     private static ASClient asClient = ASClientFactory.getInstance().generateASClient();
@@ -105,7 +106,7 @@ public class ASCityTest {
 
 	@Test
 	public void dropCityAlreadyInactive() throws ASException, IncorrectInputException {
-		Integer id = as.create(tc);
+		Integer id = as.create(tc2);
 		as.drop(id);
 		assertThrows(ASException.class, () -> {as.drop(id);});
 	}

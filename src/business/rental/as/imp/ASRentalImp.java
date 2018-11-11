@@ -23,7 +23,7 @@ import java.util.Collection;
 
 public class ASRentalImp implements ASRental {
     @Override
-    public Integer create(TRental rental) throws ASException {
+    public Integer create(TRental rental) throws ASException, IncorrectInputException {
         Integer idr =null;
 
         if(rental.getIdVehicle() > 0 && rental.getNumKmRented() > 0 && rental.getIdClient() > 0 && rental.getDateFrom()!= null && rental.getDateTo() != null) {
@@ -55,15 +55,13 @@ public class ASRentalImp implements ASRental {
                 throw new ASException(e.getMessage());
             }
         }else
-            throw new ASException("ERROR: The data of rental isn't insert correctly.\n");
-
+            throw new IncorrectInputException("ERROR: Id's must be positive and dates not empty \n");
         return idr;
     }
 
     @Override
-    public Integer drop(Integer id) throws ASException {
+    public Integer drop(Integer id) throws ASException, IncorrectInputException {
         Integer idr =null;
-
         if(id > 0) {
             try {
                 Transaction tr = TransactionManager.getInstance().createTransaction();
@@ -90,13 +88,13 @@ public class ASRentalImp implements ASRental {
                 throw new ASException(e.getMessage());
             }
         }else
-            throw new ASException("ERROR: The id of renta; isn't insert correctly.\n");
+            throw new IncorrectInputException("ERROR: Id must be positive \n");
 
         return idr;
     }
 
     @Override
-    public Integer update(TRental rental) throws ASException {
+    public Integer update(TRental rental) throws ASException, IncorrectInputException {
         Integer idr = null;
 
         if(rental.getId() > 0 &&rental.getIdVehicle() > 0 && rental.getNumKmRented() > 0 && rental.getIdClient() > 0 && rental.getDateFrom()!= null
@@ -111,7 +109,7 @@ public class ASRentalImp implements ASRental {
                     TClient tc = DAOClientFactory.getInstance().generateDAOClient().readById(rental.getIdClient());
                     Boolean trental = DAORentalFactory.getInstance().generateDAORental().checkAvailableDates(rental);
 
-                    if (tl != null && tv != null && tc != null && tv.isActive() && tc.isActive() && trental!= null) {//the rental exists, the client and vehicle are actived, exists and free in the dates
+                    if (tl != null && tv != null && tc != null && tv.isActive() && tc.isActive() && trental!= null && rental.isActive()) {//the rental exists, the client and vehicle are actived, exists and free in the dates
                         idr = DAORentalFactory.getInstance().generateDAORental().update(tl);
                         tr.commit();
                         TransactionManager.getInstance().removeTransaction();
@@ -124,7 +122,9 @@ public class ASRentalImp implements ASRental {
                         else if (!tv.isActive() || !tc.isActive())
                             throw new ASException("ERROR: The client or vehicle is disabled");
                         else if (trental != null)
-                            throw new ASException("ERROR: Vehicle or Client isn`t avaible for the dates");
+                            throw new ASException("ERROR: Vehicle or Client isn`t avaiable for the dates");
+                        else if (rental.isActive())
+                            throw new ASException("ERROR: Active field must be true in order to update it");
                     }
                 }else
                     throw new ASException("ERROR: The rental doesn't update correctly.\n");
@@ -132,13 +132,13 @@ public class ASRentalImp implements ASRental {
                 throw new ASException(e.getMessage());
             }
         }else
-            throw new ASException("ERROR: The data of rental isn't insert correctly.\n");
+            throw new IncorrectInputException("ERROR: Id must be positive and dates not empty \n");
 
         return idr;
     }
 
     @Override
-    public TRentalDetails show(Integer id) throws ASException {
+    public TRentalDetails show(Integer id) throws ASException, IncorrectInputException {
         TRental rental;
         TRentalDetails rDetails = null;
 
@@ -162,7 +162,7 @@ public class ASRentalImp implements ASRental {
                 throw new ASException(e.getMessage());
             }
         }else
-            throw new ASException("ERROR: The number of rental isn't insert correctly.\n");
+            throw new IncorrectInputException("ERROR: Id must be positive\n");
 
         return rDetails;
     }

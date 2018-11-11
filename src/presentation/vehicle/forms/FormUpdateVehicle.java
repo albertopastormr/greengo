@@ -55,7 +55,7 @@ public class FormUpdateVehicle extends JDialog{
 
     private JPanel fieldsPanel(){
 
-        JPanel ret = ViewHelpers.createFieldPanel(10);
+        JPanel ret = ViewHelpers.createFieldPanel(8);
 
         //Id
         JLabel idLabel = new JLabel("Id");
@@ -113,7 +113,7 @@ public class FormUpdateVehicle extends JDialog{
         selectType();
         ret.add(typeComboBox);*/
 
-        //plate
+        /*//plate
         JLabel plateLabel = new JLabel("Plate");
         ret.add(plateLabel);
 
@@ -129,7 +129,7 @@ public class FormUpdateVehicle extends JDialog{
 
         plateText.setEnabled(true);
         serialNumberText.setEnabled(false);
-
+        */
         return ret;
     }
 
