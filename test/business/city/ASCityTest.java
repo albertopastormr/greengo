@@ -19,7 +19,6 @@ import integration.city.factory.DAOCityFactory;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.omg.CORBA.INTERNAL;
 
 import java.util.Collection;
 import java.util.Date;
@@ -35,7 +34,7 @@ public class ASCityTest {
 	private static TCity tc = new TCity(null,"Madrid",false);
     private static ASVehicle 	asV = ASVehicleFactory.getInstance().generateASVehicle();
     private static TVehicle tv = new TVehicle(null,"Audi",6000,0,
-            false,null,false,"car");
+            false,null,false,"Car");
     private static ASClient asClient = ASClientFactory.getInstance().generateASClient();
     private static TClient tclient = new TClient(null,"00000000X",0,false);
     private static ASRental asR = ASRentalFactory.getInstance().generateASRental();
@@ -170,14 +169,8 @@ public class ASCityTest {
 	@Test
 	public void showAllCitySuccessful1() throws ASException {
 		Integer idMad = as.create(tc);
-
-		tc.setId(idMad);
 		tc.setName("Barcelona");
-
 		Integer idBcn = as.create(tc);
-
-		tc.setId(idBcn);
-
 		Collection<TCity> c = as.showAll();
 
 		for(TCity tmp : c){

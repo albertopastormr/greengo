@@ -3,6 +3,7 @@ package business.rental.as;
 import business.ASException;
 import business.rental.TRental;
 import business.rental.TRentalDetails;
+import integration.DAOException;
 
 import java.util.Collection;
 
@@ -17,7 +18,7 @@ public interface ASRental {
 
     Collection<TRentalDetails> showAll () throws ASException;
 
-    TRentalDetails getRentalDetails(Integer idRental) throws ASException;
+    TRentalDetails getRentalDetails(Integer idRental) throws ASException, DAOException;
 
-    Collection<TRentalDetails> getAllRentalsDetails() throws ASException;
+    Collection<TRentalDetails> getAllRentalsDetails() throws ASException, DAOException;
 }

@@ -19,27 +19,25 @@ public class ASClientImp implements ASClient {
         Integer idc = null;
 
         if(!client.getIdCardNumber().equals("") && client.getNumRentals() != null) {
-
-            Transaction tr = TransactionManager.getInstance().createTransaction();
-
-            if (tr != null) {
-                try {
-                    tr.start();
-                    TClient tl = DAOClientFactory.getInstance().generateDAOClient().readByIdCard(client.getIdCardNumber());//search other client with same idCard
-                    if (tl == null) {//don't exists
-                        idc = DAOClientFactory.getInstance().generateDAOClient().create(client);
-                        tr.commit();
-                        TransactionManager.getInstance().removeTransaction();
-                    } else {//exists
-                        tr.rollback();
-                        TransactionManager.getInstance().removeTransaction();
-                        throw new ASException("Other client exists with the same idCard");
-                    }
-                } catch (DAOException | TransactionException e) {
-                    throw new ASException(e.getMessage());
-                }
-            } else
-                throw new ASException("ERROR: The client doesn't create correctly.\n");
+            try {
+                Transaction tr = TransactionManager.getInstance().createTransaction();
+                    if (tr != null) {
+                        tr.start();
+                        TClient tl = DAOClientFactory.getInstance().generateDAOClient().readByIdCard(client.getIdCardNumber());//search other client with same idCard
+                        if (tl == null) {//don't exists
+                            idc = DAOClientFactory.getInstance().generateDAOClient().create(client);
+                            tr.commit();
+                            TransactionManager.getInstance().removeTransaction();
+                        } else {//exists
+                            tr.rollback();
+                            TransactionManager.getInstance().removeTransaction();
+                            throw new ASException("Other client exists with the same idCard");
+                        }
+                    } else
+                        throw new ASException("ERROR: The client doesn't create correctly.\n");
+            } catch (DAOException | TransactionException e) {
+                throw new ASException(e.getMessage());
+            }
         } else
             throw new ASException("ERROR: The data of client isn't insert correctly.\n");
 
@@ -51,11 +49,9 @@ public class ASClientImp implements ASClient {
         Integer idc = null;
 
         if(id > 0) {
-
-            Transaction tr = TransactionManager.getInstance().createTransaction();
-
-            if (tr != null) {
-                try {
+            try {
+                Transaction tr = TransactionManager.getInstance().createTransaction();
+                if (tr != null) {
                     tr.start();
                     TClient tl = DAOClientFactory.getInstance().generateDAOClient().readById(id);
                     Collection<TRental> listRentals = DAORentalFactory.getInstance().generateDAORental().showRentalsByClient(id);
@@ -77,11 +73,11 @@ public class ASClientImp implements ASClient {
                         else if (!tl.isActive()) throw new ASException("The client is already disabled");
                         else if (!activeRentals) throw new ASException("The client has got enabled rentals");
                     }
-                } catch (DAOException | TransactionException e) {
-                    throw new ASException(e.getMessage());
-                }
-            }else
-                throw new ASException("ERROR: The client doesn't delete correctly.\n");
+                }else
+                    throw new ASException("ERROR: The client doesn't delete correctly.\n");
+            } catch (DAOException | TransactionException e) {
+                throw new ASException(e.getMessage());
+            }
         }else
             throw new ASException("ERROR: The data of client isn't insert correctly.\n");
 
@@ -93,11 +89,9 @@ public class ASClientImp implements ASClient {
         Integer idc =null;
 
         if(client.getId() > 0 && !client.getIdCardNumber().equals("") && client.getNumRentals() != null) {
-
-            Transaction tr = TransactionManager.getInstance().createTransaction();
-
-            if (tr != null) {
-                try {
+            try {
+                Transaction tr = TransactionManager.getInstance().createTransaction();
+                if (tr != null) {
                     tr.start();
                     TClient tl = DAOClientFactory.getInstance().generateDAOClient().readById(client.getId());
                     TClient tn = DAOClientFactory.getInstance().generateDAOClient().readByIdCard(client.getIdCardNumber());
@@ -112,11 +106,11 @@ public class ASClientImp implements ASClient {
                         if (tl == null) throw new ASException("The client doesn't exists");
                         else throw new ASException("Exists other client with the same idCard");
                     }
-                } catch (DAOException | TransactionException e) {
-                    throw new ASException(e.getMessage());
-                }
-            } else
-                throw new ASException("ERROR: The client doesn't update correctly.\n");
+                } else
+                    throw new ASException("ERROR: The client doesn't update correctly.\n");
+            } catch (DAOException | TransactionException e) {
+                throw new ASException(e.getMessage());
+            }
         } else
             throw new ASException("ERROR: The data of client isn't insert correctly.\n");
 
@@ -128,21 +122,19 @@ public class ASClientImp implements ASClient {
         TClient client = null;
 
         if(id > 0) {
-
-            Transaction tr = TransactionManager.getInstance().createTransaction();
-
-            if (tr != null) {
-                try {
+            try {
+                Transaction tr = TransactionManager.getInstance().createTransaction();
+                if (tr != null) {
                     tr.start();
                     client = DAOClientFactory.getInstance().generateDAOClient().readById(id);
                     tr.commit();
                     TransactionManager.getInstance().removeTransaction();
                     if (client == null) throw new ASException("The client doesn't exists");
-                } catch (DAOException | TransactionException e) {
-                    throw new ASException(e.getMessage());
-                }
-            }else
-                throw new ASException("ERROR: The client doesn't show correctly.\n");
+                }else
+                    throw new ASException("ERROR: The client doesn't show correctly.\n");
+            } catch (DAOException | TransactionException e) {
+                throw new ASException(e.getMessage());
+            }
         }else
             throw new ASException("ERROR: The data of client isn't insert correctly.\n");
 
@@ -152,18 +144,18 @@ public class ASClientImp implements ASClient {
     @Override
     public Collection<TClient> showAll() throws ASException {
         Collection<TClient> clientsList = null;
-        Transaction tr = TransactionManager.getInstance().createTransaction();
-        if(tr!=null) {
-                try{
+        try{
+            Transaction tr = TransactionManager.getInstance().createTransaction();
+            if(tr!=null) {
                 tr.start();
                 clientsList = DAOClientFactory.getInstance().generateDAOClient().readAll();
                 tr.commit();
                 TransactionManager.getInstance().removeTransaction();
-            }catch (DAOException | TransactionException e) {
-                throw new ASException(e.getMessage());
-            }
-        }else
-            throw new ASException("ERROR: The clients doesn't list correctly.\n");
+            }else
+                throw new ASException("ERROR: The clients doesn't list correctly.\n");
+        }catch (DAOException | TransactionException e) {
+            throw new ASException(e.getMessage());
+        }
 
         return clientsList;
     }
@@ -173,20 +165,18 @@ public class ASClientImp implements ASClient {
         Collection<TClient> clientsList = null;
 
         if(N > 0) {
-
-            Transaction tr = TransactionManager.getInstance().createTransaction();
-
-            if (tr != null) {
-                try {
+            try {
+                Transaction tr = TransactionManager.getInstance().createTransaction();
+                if (tr != null) {
                     tr.start();
                     clientsList = DAOClientFactory.getInstance().generateDAOClient().readByNRentals(N);
                     tr.commit();
                     TransactionManager.getInstance().removeTransaction();
-                } catch (DAOException | TransactionException e) {
-                    throw new ASException(e.getMessage());
-                }
-            }else
-                throw new ASException("ERROR: The client doesn't show correctly.\n");
+                }else
+                    throw new ASException("ERROR: The client doesn't show correctly.\n");
+            } catch (DAOException | TransactionException e) {
+                throw new ASException(e.getMessage());
+            }
         }else
             throw new ASException("ERROR: The number of rentals isn't insert correctly.\n");
 

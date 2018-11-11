@@ -10,13 +10,13 @@ import java.sql.SQLException;
 public class TransactionMariaDB implements Transaction {
 
 
-    protected static final String connectionChain = "jdbc:mariadb://localhost:3306/ifesoft?user=manager&password=manager-if";
+    protected static final String connectionChain = "jdbc:mariadb://localhost:3306/GreenGo?user=manager&password=manager_if";
 
     private Connection connec;
 
-    TransactionMariaDB() throws TransactionException {
+    public TransactionMariaDB() throws TransactionException {
         try {
-            connec = DriverManager.getConnection(connectionChain);
+            connec =DriverManager.getConnection("jdbc:mariadb://localhost:3306/GreenGo", "manager", "manager_if");
         } catch (SQLException e) {
             throw new TransactionException(e.getMessage());
         }
