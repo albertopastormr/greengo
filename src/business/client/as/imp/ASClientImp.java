@@ -19,7 +19,7 @@ public class ASClientImp implements ASClient {
     public Integer create(TClient client) throws ASException, IncorrectInputException {
         Integer idc = null;
 
-        if(!client.getIdCardNumber().equals("") && client.getNumRentals() != null) {
+        if(client.getIdCardNumber() != null && !client.getIdCardNumber().equals("") && client.getNumRentals() != null && client.getNumRentals() >=0) {
             try {
                 Transaction tr = TransactionManager.getInstance().createTransaction();
                     if (tr != null) {
@@ -40,7 +40,7 @@ public class ASClientImp implements ASClient {
                 throw new ASException(e.getMessage());
             }
         } else
-            throw new IncorrectInputException("ERROR:IdCardNumber can`t be empty and  numRentals must be >=0 \n");
+            throw new IncorrectInputException("ERROR: IdCardNumber can`t be empty and  numRentals must be >=0 \n");
 
         return idc;
     }
@@ -49,7 +49,7 @@ public class ASClientImp implements ASClient {
     public Integer drop(Integer id) throws ASException, IncorrectInputException {
         Integer idc = null;
 
-        if(id > 0) {
+        if(id!= null && id > 0) {
             try {
                 Transaction tr = TransactionManager.getInstance().createTransaction();
                 if (tr != null) {
@@ -80,7 +80,7 @@ public class ASClientImp implements ASClient {
                 throw new ASException(e.getMessage());
             }
         }else
-            throw new IncorrectInputException("ERROR: IdCardNumber must be positive \n");
+            throw new IncorrectInputException("ERROR: Id mustn't bre positive or empty \n");
 
 
         return idc;
@@ -90,7 +90,7 @@ public class ASClientImp implements ASClient {
     public Integer update(TClient client) throws ASException, IncorrectInputException {
         Integer idc =null;
 
-        if(client.getId() > 0 && !client.getIdCardNumber().equals("") && client.getNumRentals() >0 && !client.isActive() ) {
+        if(client.getId()!=null && client.getId() > 0 && !client.getIdCardNumber().equals("") && client.getNumRentals() >=0 && client.isActive() ) {
             try {
                 Transaction tr = TransactionManager.getInstance().createTransaction();
                 if (tr != null) {
@@ -99,7 +99,7 @@ public class ASClientImp implements ASClient {
                     TClient tn = DAOClientFactory.getInstance().generateDAOClient().readByIdCard(client.getIdCardNumber());
 
                     if (tl != null && tn == null && client.isActive()) {//the client exists and don't exists other client with the same idCard
-                        idc = DAOClientFactory.getInstance().generateDAOClient().update(tl);
+                        idc = DAOClientFactory.getInstance().generateDAOClient().update(client);
                         tr.commit();
                         TransactionManager.getInstance().removeTransaction();
                     } else {
@@ -114,7 +114,7 @@ public class ASClientImp implements ASClient {
             } catch (DAOException | TransactionException e) {
                 throw new ASException(e.getMessage());
             }
-        } else if (client.getId() <= 0)
+        } else if (client.getId() == null || client.getId() <= 0)
             throw new IncorrectInputException("ERROR: Id can't be null and must be > 0 and idCardNumber mustn`t be empty and  \n");
           else if (client.getIdCardNumber().equals(""))
             throw new IncorrectInputException("ERROR: idCardNumber mustn`t be empty  \n");
@@ -129,7 +129,7 @@ public class ASClientImp implements ASClient {
     public TClient show(Integer id) throws ASException, IncorrectInputException {
         TClient client = null;
 
-        if(id > 0) {
+        if(id !=null && id > 0) {
             try {
                 Transaction tr = TransactionManager.getInstance().createTransaction();
                 if (tr != null) {
@@ -144,7 +144,7 @@ public class ASClientImp implements ASClient {
                 throw new ASException(e.getMessage());
             }
         }else
-            throw new IncorrectInputException("ERROR: IdCardNumber must be positive \n");
+            throw new IncorrectInputException("ERROR: Id must be positive \n");
         return client;
     }
 

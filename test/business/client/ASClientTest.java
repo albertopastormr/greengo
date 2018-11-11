@@ -3,6 +3,9 @@ package business.client;
 
 import business.ASException;
 import business.IncorrectInputException;
+import business.city.TCity;
+import business.city.as.ASCity;
+import business.city.factory.ASCityFactory;
 import business.client.as.ASClient;
 import business.client.factory.ASClientFactory;
 import business.rental.TRental;
@@ -26,10 +29,12 @@ public class ASClientTest {
     private static Date dFrom = new Date(1540373530000L);
     private static Date dTo = new Date(1543051930000L);
     private static ASClient as = ASClientFactory.getInstance().generateASClient();
-    private static TClient tc = new TClient(null,"00000000X",0,false);
+    private static ASCity asc = ASCityFactory.getInstance().generateASCity();
+    private static TClient tc = new TClient(null,"00000000X",1,false);
     private static ASVehicle asV = ASVehicleFactory.getInstance().generateASVehicle();
     private static TVehicle tv = new TVehicle(null,"Audi",6000,0,
-            false,null,false,"car");
+            false,null,false,"Car");
+    private static TCity tcity = new TCity(null,"Avila",false);
     private static ASRental asR = ASRentalFactory.getInstance().generateASRental();
     private static TRental tr = new TRental(null,null,false,10,null,dFrom,dTo);
 
@@ -102,28 +107,35 @@ public class ASClientTest {
 
     @Test
     public void dropClientWithActiveRentals() throws ASException, IncorrectInputException {
-        Integer idC = as.create(tc);
-        Integer idV = asV.create(tv);
+       TVehicle tv2 = new TVehicle(null,"Tesla",60000,200,
+               false,null,false,"Car");
 
-        tr.setIdClient(idC);
-        tr.setIdVehicle(idV);
-        asR.create(tr);
+       Integer idC = as.create(tc);
+       Integer idCity = asc.create(tcity);
+       tv2.setCity(idCity);
+       Integer idV = asV.create(tv2);
 
-        assertThrows(ASException.class,()->{as.drop(idC);});
+       tr.setIdClient(idC);
+       tr.setIdVehicle(idV);
+       asR.create(tr);
+
+       assertThrows(ASException.class,()->{as.drop(idC);});
     }
 
 
     //Show method
     @Test
     public void showClientSuccessful() throws ASException, IncorrectInputException {
-        Integer idC = as.create(tc);
+        TClient tcNew = new TClient(null,"00000000X",1,false);
 
+        Integer idC = as.create(tcNew);
+        tcNew.setId(idC);
         TClient out = as.show(idC);
 
         assertEquals(out.getId(),idC);
-        assertEquals(out.getIdCardNumber(),tc.getIdCardNumber());
-        assertEquals(out.getNumRentals(),tc.getNumRentals());
-        assertEquals(out.isActive(),tc.isActive());
+        assertEquals(out.getIdCardNumber(),tcNew.getIdCardNumber());
+        assertEquals(out.getNumRentals(),tcNew.getNumRentals());
+        assertEquals(out.isActive(),tcNew.isActive());
     }
 
     @Test
@@ -176,9 +188,11 @@ public class ASClientTest {
     //showAllWithMoreNrentals method
     @Test
     public void showAllClientsWithMoreNrentalsSuccessful() throws ASException, IncorrectInputException {
+        TClient tc4 = new TClient(null,"00000001X",0,false);
+
         final Integer N = 2;
-        tc.setNumRentals(3);
-        as.create(tc);
+        tc4.setNumRentals(3);
+        as.create(tc4);
 
         TClient tc2 = new TClient(null, "11111111X", 2, false);
         Integer idC2 = as.create(tc2);
@@ -197,7 +211,10 @@ public class ASClientTest {
     //Update method
     @Test
     public void updateClientSuccessful() throws ASException, IncorrectInputException {
-        Integer idC = as.create(tc);
+        TClient tcNew = new TClient(null,"00000000X",0,true);
+
+        Integer idC = as.create(tcNew);
+        tcNew.setId(idC);
 
         TClient updtClient = new TClient(idC,"11111111X",1,true);
         Integer idOut = as.update(updtClient);
@@ -249,14 +266,15 @@ public class ASClientTest {
 
     @Test
     public void updateClientNotExists(){
-        tc.setId(1);
-        assertThrows(ASException.class, () -> {as.update(tc);});
+        TClient tcNew = new TClient(null,"00000000X",0,true);
+        tcNew.setId(100);
+        assertThrows(ASException.class, () -> {as.update(tcNew);});
     }
 
     @Test
     public void showAllWithMoreThanNRentalsIncorrectInput(){
        //N must be >=0
         int N = -1;
-        assertThrows(ASException.class, () -> {as.showAllWithMoreThanNRentals(N);});
+        assertThrows(IncorrectInputException.class, () -> {as.showAllWithMoreThanNRentals(N);});
     }
 }

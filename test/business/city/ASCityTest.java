@@ -34,8 +34,8 @@ public class ASCityTest {
 	private static TCity tc = new TCity(null,"Madrid",true);
 	private static TCity tc2 = new TCity(null,"Avila",false);
 	private static ASVehicle 	asV = ASVehicleFactory.getInstance().generateASVehicle();
-    private static TVehicle tv = new TVehicle(null,"Audi",6000,0,
-            false,null,false,"Car");
+    private static TVehicle tv = new TVehicle(null,"Audi",6000,1,
+            false,1,false,"Car");
     private static ASClient asClient = ASClientFactory.getInstance().generateASClient();
     private static TClient tclient = new TClient(null,"00000000X",0,false);
     private static ASRental asR = ASRentalFactory.getInstance().generateASRental();
@@ -51,7 +51,8 @@ public class ASCityTest {
 	//create method tests
 	@Test
 	public void createCitySuccessful() throws ASException, IncorrectInputException {
-		assertTrue(as.create(tc) > 0);
+		TCity tc3 = new TCity(null,"Madrid",true);
+		assertTrue(  as.create(tc3) > 0);
 	}
 
 	@Test
@@ -113,9 +114,10 @@ public class ASCityTest {
 
 	@Test
 	public void dropCityWithActiveVehicles() throws ASException, IncorrectInputException {
-		Integer id = as.create(tc);
+		TCity tc3 = new TCity(null,"Madrid",true);
+		Integer id = as.create(tc3);
 
-		tv.setId(id);
+		tv.setCity(id);
 		asV.create(tv);
 
 		assertThrows(ASException.class, () -> {as.drop(id);});
@@ -181,10 +183,11 @@ public class ASCityTest {
 	//showClientsByCity method
 	@Test
 	public void showClientsByCitySuccessful() throws ASException, IncorrectInputException {
+		TCity tc3 = new TCity(null,"Madrid",true);
 
         //data for city 1
 		Integer idClient = asClient.create(tclient);
-        Integer idCity = as.create(tc);
+        Integer idCity = as.create(tc3);
 
         tv.setCity(idCity);
 		Integer idV = asV.create(tv);
@@ -197,8 +200,8 @@ public class ASCityTest {
         tclient.setIdCardNumber("11111111X");
         Integer idClientFail = asClient.create(tclient);
 
-		tc.setName("Barcelona");
-        Integer idCity2 = as.create(tc);
+		tc3.setName("Barcelona");
+        Integer idCity2 = as.create(tc3);
 
         tv.setCity(idCity2);
        	Integer idVFail = asV.create(tv);
@@ -218,20 +221,21 @@ public class ASCityTest {
 	//update method tests
 	@Test
 	public void updateCitySuccessful() throws ASException, IncorrectInputException {
-		as.create(tc);
+		TCity tc3 = new TCity(null,"Madrid",true);
+		tc3.setId(as.create(tc3));
 
-		tc.setName("Barcelona");
-		tc.setActive(true);
-		Integer id = as.update(tc);
+		tc3.setName("Barcelona");
+		tc3.setActive(true);
+		Integer id = as.update(tc3);
 
-		assertEquals(id,tc.getId());
+		assertEquals(id,tc3.getId());
 
 		TCity tmp = as.show(id);
-		assertEquals(tmp.getName(),tc.getName());
+		assertEquals(tmp.getName(),tc3.getName());
 	}
 
     @Test
-    public void updateCityIncorrectInputID1(){
+    public void updateCityIncorrectInputID1() throws ASException, IncorrectInputException {
         tc.setId(null);//id must be > 0
         tc.setActive(true);
         assertThrows(IncorrectInputException.class, () -> {as.update(tc);});
@@ -245,7 +249,7 @@ public class ASCityTest {
 	}
 
 	@Test
-	public void updateCityIncorrectInputID3(){
+	public void updateCityIncorrectInputID3() throws ASException, IncorrectInputException {
 		tc.setId(-1); //id must be > 0
         tc.setActive(true);
 		assertThrows(IncorrectInputException.class, () -> {as.update(tc);});
