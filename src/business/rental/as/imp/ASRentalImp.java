@@ -42,11 +42,11 @@ public class ASRentalImp implements ASRental {
                         tr.rollback();
                         TransactionManager.getInstance().removeTransaction();
                         if (tc == null || tv == null)
-                            throw new ASException("Vehicle or Client doesn't exists");
+                            throw new ASException("ERROR: Vehicle or Client doesn't exists");
                         else if (!tc.isActive() || !tv.isActive())
-                            throw new ASException("Vehicle or Client is  disabled");
+                            throw new ASException("ERROR: Vehicle or Client is  disabled");
                         else if (!avaiableRental)
-                            throw new ASException("Vehicle or Client isn`t avaiable for the dates");
+                            throw new ASException("ERROR: Vehicle or Client isn`t avaiable for the dates");
                     }
                 }else
                     throw new ASException("ERROR: The rental doesn't create correctly.\n");
@@ -78,9 +78,9 @@ public class ASRentalImp implements ASRental {
                         tr.rollback();
                         TransactionManager.getInstance().removeTransaction();
                         if (tl == null)
-                            throw new ASException("The rental doesn't exists");
+                            throw new ASException("ERROR: The rental doesn't exists");
                         else if (!tl.isActive())
-                            throw new ASException("The rental is disabled");
+                            throw new ASException("ERROR: The rental is disabled");
                     }
 
                 } else
@@ -119,11 +119,11 @@ public class ASRentalImp implements ASRental {
                         TransactionManager.getInstance().removeTransaction();
                         if (tl == null) throw new ASException("The rental doesn't exists");
                         else if (tv == null || tc == null)
-                            throw new ASException("The client or vehicle doesn't exists");
+                            throw new ASException("ERROR: The client or vehicle doesn't exists");
                         else if (!tv.isActive() || !tc.isActive())
-                            throw new ASException("The client or vehicle is disabled");
+                            throw new ASException("ERROR: The client or vehicle is disabled");
                         else if (trental != null)
-                            throw new ASException("Vehicle or Client isn`t avaible for the dates");
+                            throw new ASException("ERROR: Vehicle or Client isn`t avaible for the dates");
                     }
                 }else
                     throw new ASException("ERROR: The rental doesn't update correctly.\n");
@@ -153,7 +153,7 @@ public class ASRentalImp implements ASRental {
                         TransactionManager.getInstance().removeTransaction();
                     } else {//doesn't exists
                         TransactionManager.getInstance().removeTransaction();
-                        throw new ASException("The rental doesn't exists");
+                        throw new ASException("ERROR: The rental doesn't exists");
                     }
                 }else
                     throw new ASException("ERROR: The rental doesn't show correctly.\n");

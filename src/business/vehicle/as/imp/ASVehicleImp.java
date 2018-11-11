@@ -89,8 +89,8 @@ public class ASVehicleImp implements ASVehicle {
                     } else {
                         tr.rollback();
                         TransactionManager.getInstance().removeTransaction();
-                        if (tv == null) throw new ASException("The vehicle doesn't exists");
-                        else if (!tv.isActive()) throw new ASException("The vehicle is already disabled");
+                        if (tv == null) throw new ASException("ERROR: The vehicle doesn't exists");
+                        else if (!tv.isActive()) throw new ASException("ERROR: The vehicle is already disabled");
                     }
                 }
                 else {
