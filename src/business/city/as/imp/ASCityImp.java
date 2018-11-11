@@ -103,7 +103,7 @@ public class ASCityImp implements ASCity {
                         tr.rollback();
                         TransactionManager.getInstance().removeTransaction();
                         if ( tc == null )throw new ASException("ERROR: The city doesn't exist");
-                        else throw new ASException("ERROR: The city is disabled, you must use Drop operation in order to disabled it");
+                        else throw new ASException("ERROR: The city active field is disabled, you must use Drop operation in order to disabled it");
                     }
                 } else
                     throw new ASException("ERROR: The city doesn't update correctly.\n");
