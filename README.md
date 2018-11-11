@@ -22,6 +22,8 @@ Set privileges for the user created:
 
 `GRANT ALL PRIVILEGES ON * . * TO 'manager'@'localhost';`
 
+`FLUSH PRIVILEGES;`
+
 Go to /bin directory:
 
 `{INSTALLATION PATH}/bin`
