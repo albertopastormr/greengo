@@ -45,12 +45,12 @@ public class Util {
             ps.close();
 
         } catch (SQLException e) {
-            throw new DAOException("ERROR: SQL statement execution at operation 'deleteAll' @city unsuccessful\n");
+            throw new DAOException("ERROR: SQL statement execution at operation 'deleteAll' unsuccessful\n");
         } finally {
             try {
                 connec.close();
             } catch (SQLException e) {
-                throw new DAOException("ERROR: closing connection to DB at operation 'deleteAll' @city unsuccessful\n");
+                throw new DAOException("ERROR: closing connection to DB at operation 'deleteAll' unsuccessful\n");
             }
         }
     }

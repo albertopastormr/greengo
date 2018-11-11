@@ -17,7 +17,7 @@ public class AppControllerImp extends AppController {
             ViewDispatcher.getInstance().execute(response);
         }
         catch(Exception e){
-            ViewDispatcher.getInstance().execute(new LightContext(Event.ERROR, e.getMessage()));
+            ViewDispatcher.getInstance().execute(new LightContext(Event.ERROR, e));
         }
     }
 
