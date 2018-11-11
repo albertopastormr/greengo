@@ -41,9 +41,12 @@ public class TCity {
 	@Override
 	public String toString(){
 		String ret = "";
-		ret += String.format("%-10s %10s %n", "Id: ", id);
-		ret += String.format("%-10s %10s %n", "Name: ", name);
-		ret += String.format("%-10s %10s %n", "Active: ", active);
+        Integer addressLength = name.length();
+        if(addressLength <= 8) addressLength = 9;
+        String regex = "%-" + addressLength + "s %" + addressLength + "s %n";
+		ret += String.format(regex, "Id: ", id);
+		ret += String.format(regex, "Name: ", name);
+		ret += String.format(regex, "Active: ", active);
 
 		return ret;
 	}
