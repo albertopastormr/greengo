@@ -1,6 +1,7 @@
 package business.vehicle.as.imp;
 
 import business.ASException;
+import business.IncorrectInputException;
 import business.city.TCity;
 import business.city.factory.ASCityFactory;
 import business.rental.TRental;
@@ -224,14 +225,14 @@ public class ASVehicleImp implements ASVehicle {
         return retList;
     }
 
-    public TVehicleDetails getVehicleDetails(Integer vehicleID) throws ASException {
+    public TVehicleDetails getVehicleDetails(Integer vehicleID) throws ASException, IncorrectInputException {
         TVehicle vehicle = ASVehicleFactory.getInstance().generateASVehicle().show(vehicleID).getVehicle();
         TCity city = ASCityFactory.getInstance().generateASCity().show(vehicle.getCity());
 
         return new TVehicleDetails(vehicle,city);
     }
 
-    public Collection<TVehicleDetails> getAllVehiclesDetails() throws ASException {
+    public Collection<TVehicleDetails> getAllVehiclesDetails() throws ASException, IncorrectInputException {
         Collection<TVehicleDetails> vehicles = ASVehicleFactory.getInstance().generateASVehicle().showAll();
         Collection<TVehicleDetails> details = new ArrayList<>();
 

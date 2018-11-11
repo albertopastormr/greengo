@@ -47,7 +47,7 @@ public class ASVehicleTest {
 
     //create method
     @Test
-    public void createVehicleSuccessful() throws ASException {
+    public void createVehicleSuccessful() throws ASException, IncorrectInputException {
         Integer idC = asCity.create(tCity);
 
         // City exist and active
@@ -126,7 +126,7 @@ public class ASVehicleTest {
 
     //Drop method
     @Test
-    public void dropSuccessful() throws ASException {
+    public void dropSuccessful() throws ASException, IncorrectInputException {
         Integer id = as.create(tv);
         Integer idC = asCity.create(tCity);
 
@@ -161,7 +161,7 @@ public class ASVehicleTest {
     }
 
     @Test
-    public void dropVehicleAlreadyInactive() throws ASException {
+    public void dropVehicleAlreadyInactive() throws ASException, IncorrectInputException {
         Integer id = as.create(tv);
         Integer idC = asCity.create(tCity);
 
@@ -179,7 +179,7 @@ public class ASVehicleTest {
     }
 
     @Test
-    public void dropVehicleWithActiveRentals() throws ASException {
+    public void dropVehicleWithActiveRentals() throws ASException, IncorrectInputException {
         Integer idC = asClient.create(tClient);
         Integer idV = as.create(tv);
 
@@ -201,7 +201,7 @@ public class ASVehicleTest {
 
     //Show method
     @Test
-    public void showVehicleSuccessful() throws ASException {
+    public void showVehicleSuccessful() throws ASException, IncorrectInputException {
         Integer idC = asCity.create(tCity);
         Integer idV = as.create(tv);
 
@@ -266,7 +266,7 @@ public class ASVehicleTest {
     //Update method
 
     @Test
-    public void updateVehicleSuccessful() throws ASException {
+    public void updateVehicleSuccessful() throws ASException, IncorrectInputException {
         Integer idC = asCity.create(tCity);
         Integer idV = as.create(tv);
 
@@ -381,7 +381,7 @@ public class ASVehicleTest {
     }
 
     @Test
-    public void updateVehicleCurrentlyOccupied() throws ASException {
+    public void updateVehicleCurrentlyOccupied() throws ASException, IncorrectInputException {
         Integer idC = asCity.create(tCity);
         Integer idV = as.create(tv);
 
@@ -401,7 +401,7 @@ public class ASVehicleTest {
     }
 
     @Test
-    public void updateVehicleCityNotExists() throws ASException {
+    public void updateVehicleCityNotExists() throws ASException, IncorrectInputException {
         Integer idC = asCity.create(tCity);
         Integer idV = as.create(tv);
 

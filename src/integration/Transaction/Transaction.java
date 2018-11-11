@@ -6,7 +6,7 @@ import java.sql.Connection;
 
 public interface Transaction {
 
-     void start();
+     void start() throws TransactionException;
 
      void commit() throws TransactionException;
 

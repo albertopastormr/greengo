@@ -1,6 +1,7 @@
 package presentation.command.city;
 
 import business.ASException;
+import business.IncorrectInputException;
 import business.city.TCity;
 import business.city.as.ASCity;
 import business.city.factory.ASCityFactory;
@@ -12,7 +13,7 @@ import presentation.controller.LightContext;
 public class ShowCity implements Command {
 
 	@Override
-	public LightContext execute(LightContext in)  throws ASException {
+	public LightContext execute(LightContext in) throws ASException, IncorrectInputException {
 		TCity ret = ASCityFactory.getInstance().generateASCity().show(((TCity)in.getData()).getId());
 		return new LightContext(Event.SHOW_CITY, ret);
 	}

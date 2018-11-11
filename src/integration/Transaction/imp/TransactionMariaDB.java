@@ -10,13 +10,13 @@ import java.sql.SQLException;
 public class TransactionMariaDB implements Transaction {
 
 
-    protected static final String connectionChain = "jdbc:mariadb://localhost:3306/GreenGo?user=manager&password=manager_if";
+    protected static final String connectionChain = "jdbc:mariadb://localhost:3306/greengo?user=manager&password=manager_if";
 
     private Connection connec;
 
     public TransactionMariaDB() throws TransactionException {
         try {
-            connec =DriverManager.getConnection("jdbc:mariadb://localhost:3306/GreenGo", "manager", "manager_if");
+            connec =DriverManager.getConnection(connectionChain);
         } catch (SQLException e) {
             throw new TransactionException(e.getMessage());
         }
@@ -24,8 +24,11 @@ public class TransactionMariaDB implements Transaction {
 
 
     @Override
-    public void start() {
-
+    public void start() throws TransactionException {
+        try {Class.forName("org.mariadb.jdbc.Driver");}
+        catch (ClassNotFoundException e){
+            throw new TransactionException("org.mariadb.jdbc.Driver");
+        }
     }
 
     @Override

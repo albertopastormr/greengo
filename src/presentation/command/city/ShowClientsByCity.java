@@ -1,6 +1,7 @@
 package presentation.command.city;
 
 import business.ASException;
+import business.IncorrectInputException;
 import business.city.TCity;
 import business.city.factory.ASCityFactory;
 import business.client.TClient;
@@ -13,7 +14,7 @@ import java.util.Collection;
 
 public class ShowClientsByCity implements Command {
 	@Override
-	public LightContext execute(LightContext in)  throws ASException {
+	public LightContext execute(LightContext in) throws ASException, IncorrectInputException {
 		Collection<TClient> ret = ASCityFactory.getInstance().generateASCity().showClientsByCity(((TCity)in.getData()).getId());
 		return new LightContext(Event.SHOW_CLIENTS_FROM_CITY, ret);
 	}

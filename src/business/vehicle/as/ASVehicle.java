@@ -1,6 +1,7 @@
 package business.vehicle.as;
 
 import business.ASException;
+import business.IncorrectInputException;
 import business.vehicle.TVehicle;
 import business.vehicle.TVehicleDetails;
 
@@ -19,7 +20,7 @@ public interface ASVehicle {
 
     Collection<TVehicleDetails> showAllAvailableVehicles() throws ASException;
 
-    TVehicleDetails getVehicleDetails(Integer vehicleID) throws ASException;
+    TVehicleDetails getVehicleDetails(Integer vehicleID) throws ASException, IncorrectInputException;
 
-    Collection<TVehicleDetails> getAllVehiclesDetails() throws ASException;
+    Collection<TVehicleDetails> getAllVehiclesDetails() throws ASException, IncorrectInputException;
 }

@@ -49,7 +49,7 @@ public class ASCityTest {
 
 	//create method tests
 	@Test
-	public void createCitySuccessful() throws ASException {
+	public void createCitySuccessful() throws ASException, IncorrectInputException {
 		assertTrue(as.create(tc) > 0);
 	}
 
@@ -60,24 +60,11 @@ public class ASCityTest {
 		assertThrows(IncorrectInputException.class, () -> {as.create(tc);});
 	}
 
-	@Test
-	public void createCityIncorrectInput2(){
-		tc.setActive(true); //active must be false as input
-		assertThrows(IncorrectInputException.class, () -> {as.create(tc);});
-	}
-
-	//EN FUNCION DE SI HAY CAMBIOS O NO EN LOS CASOS DE USO QUITARLO
-	@Test
-	public void createCityAlreadyExists() throws ASException {
-        as.create(tc);
-		//city already exists
-		assertThrows(ASException.class, () -> {as.create(tc);});
-	}
 
 	//drop method tests
 
 	@Test
-	public void dropCitySuccessful() throws ASException {
+	public void dropCitySuccessful() throws ASException, IncorrectInputException {
         Integer idV = asV.create(tv);
 		Integer id = as.create(tc);
 		Integer idClient = asClient.create(tclient);
@@ -117,15 +104,14 @@ public class ASCityTest {
 	}
 
 	@Test
-	public void dropCityAlreadyInactive() throws ASException{
+	public void dropCityAlreadyInactive() throws ASException, IncorrectInputException {
 		Integer id = as.create(tc);
-
 		as.drop(id);
 		assertThrows(ASException.class, () -> {as.drop(id);});
 	}
 
 	@Test
-	public void dropCityWithActiveVehicles() throws ASException {
+	public void dropCityWithActiveVehicles() throws ASException, IncorrectInputException {
 		Integer id = as.create(tc);
 
 		tv.setId(id);
@@ -137,7 +123,7 @@ public class ASCityTest {
 
 	//show method tests
 	@Test
-	public void showCitySuccessful() throws ASException{
+	public void showCitySuccessful() throws ASException, IncorrectInputException {
 		Integer id = as.create(tc);
 
 		TCity tmp = as.show(id);
@@ -167,7 +153,7 @@ public class ASCityTest {
 
 	//showAll method tests
 	@Test
-	public void showAllCitySuccessful1() throws ASException {
+	public void showAllCitySuccessful1() throws ASException, IncorrectInputException {
 		Integer idMad = as.create(tc);
 		tc.setName("Barcelona");
 		Integer idBcn = as.create(tc);
@@ -194,7 +180,7 @@ public class ASCityTest {
 
 	//showClientsByCity method
 	@Test
-	public void showClientsByCitySuccessful() throws ASException {
+	public void showClientsByCitySuccessful() throws ASException, IncorrectInputException {
 
         //data for city 1
 		Integer idClient = asClient.create(tclient);
@@ -231,7 +217,7 @@ public class ASCityTest {
 
 	//update method tests
 	@Test
-	public void updateCitySuccessful() throws ASException{
+	public void updateCitySuccessful() throws ASException, IncorrectInputException {
 		as.create(tc);
 
 		tc.setName("Barcelona");
