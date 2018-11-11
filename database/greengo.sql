@@ -19,6 +19,8 @@
 -- Table structure for table `bicyclevehicle`
 --
 
+
+
 DROP TABLE IF EXISTS `bicyclevehicle`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -84,12 +86,12 @@ DROP TABLE IF EXISTS `rental`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `rental` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `idVehicle` int(11) DEFAULT NULL,
   `active` tinyint(1) DEFAULT NULL,
   `numKmRented` int(11) DEFAULT NULL,
   `idClient` int(11) DEFAULT NULL,
-  `datFrom` date DEFAULT NULL,
+  `dateFrom` date DEFAULT NULL,
   `dateTo` date DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `idVehicle` (`idVehicle`),

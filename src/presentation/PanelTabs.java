@@ -1,6 +1,5 @@
 package presentation;
 
-import javafx.scene.effect.Light;
 import presentation.city.CityPanel;
 import presentation.client.ClientPanel;
 import presentation.contract.ContractPanel;

@@ -13,8 +13,8 @@ import static org.junit.jupiter.api.Assertions.*;
 class DAOClientTest {
 
     private static DAOClient dao = DAOClientFactory.getInstance().generateDAOClient();
-    private static TClient tc1 = new TClient(null,"idcard1",0,false);
-    private static TClient tc2 = new TClient(null,"idcard2",0,false);
+    private static TClient tc1 = new TClient(1,"idcard1",0,false);
+    private static TClient tc2 = new TClient(2,"idcard2",0,false);
 
     @BeforeEach
     private void setUp() throws Exception {
@@ -112,8 +112,8 @@ class DAOClientTest {
         tc1.setNumRentals(Nrentals - 1);
         tc2.setNumRentals(Nrentals - 1);
 
-        Integer foo = dao.update(tc1);
-        foo = dao.update(tc2);
+        Integer idM2 = dao.create(tc1);
+        Integer idB2 = dao.create(tc2);
 
         clients = dao.readByNRentals(Nrentals);
         assertTrue(clients.isEmpty());

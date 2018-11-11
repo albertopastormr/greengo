@@ -2,7 +2,7 @@ package integration.rental.dao.imp;
 
 import business.rental.TRental;
 import integration.DAOException;
-import integration.TransactionException;
+import integration.Transaction.Transaction;
 import integration.Util;
 import integration.rental.dao.DAORental;
 import integration.transactionManager.TransactionManager;
@@ -16,18 +16,19 @@ public class DAORentalImp implements DAORental {
     public Integer create(TRental rental) throws DAOException {
         Integer id;
 
-        Connection connec = (Connection) TransactionManager.getInstance().getTransaction().getResource();
-
-        if(connec == null){
+        driverIdentify();
+        Transaction transaction = TransactionManager.getInstance().getTransaction();
+        Connection connec;
+        if(transaction == null){
             try {
-                driverIdentify();
-                connec = DriverManager.getConnection(TransactionManager.getInstance().getTransaction().
-                        getConnectionChain());
+                connec = DriverManager.getConnection(Util.getConnectionChain());
             }
             catch(SQLException ex){
                 throw new DAOException("ERROR: access to DB at operation 'create' @rental unsuccessful\n");
             }
         }
+        else
+            connec = (Connection) transaction.getResource();
 
         try { // Tratamiento db
             PreparedStatement ps = connec.prepareStatement("INSERT INTO rental(idVehicle, idClient, numKmRented," +
@@ -35,8 +36,8 @@ public class DAORentalImp implements DAORental {
             ps.setInt(1, rental.getIdVehicle());
             ps.setInt(2, rental.getIdClient());
             ps.setInt(3, rental.getNumKmRented());
-            ps.setDate(4, (java.sql.Date) rental.getDateFrom());
-            ps.setDate(5, (java.sql.Date) rental.getDateTo());
+            ps.setDate(4, new java.sql.Date(rental.getDateFrom().getTime()));
+            ps.setDate(5, new java.sql.Date(rental.getDateTo().getTime()));
             ps.setBoolean(6, rental.isActive());
             ps.execute();
             ps.close();
@@ -56,7 +57,7 @@ public class DAORentalImp implements DAORental {
         }
 
         finally {
-            if(TransactionManager.getInstance().getTransaction().getResource() == null) {
+            if(TransactionManager.getInstance().getTransaction() == null) {
                 try {
                     connec.close();
                 } catch (SQLException e) {
@@ -74,18 +75,19 @@ public class DAORentalImp implements DAORental {
 
         Integer id;
 
-        Connection connec = (Connection) TransactionManager.getInstance().getTransaction().getResource();
-
-        if(connec == null){
+        driverIdentify();
+        Transaction transaction = TransactionManager.getInstance().getTransaction();
+        Connection connec;
+        if(transaction == null){
             try {
-                driverIdentify();
-                connec = DriverManager.getConnection(TransactionManager.getInstance().getTransaction().
-                        getConnectionChain());
+                connec = DriverManager.getConnection(Util.getConnectionChain());
             }
             catch(SQLException ex){
                 throw new DAOException("ERROR: access to DB at operation 'update' @rental unsuccessful\n");
             }
         }
+        else
+            connec = (Connection) transaction.getResource();
 
         try { // Tratamiento db
             PreparedStatement ps = connec.prepareStatement("UPDATE rental SET idVehicle = ?, idClient = ?," +
@@ -93,15 +95,15 @@ public class DAORentalImp implements DAORental {
             ps.setInt(1, rental.getIdVehicle());
             ps.setInt(2, rental.getIdClient());
             ps.setInt(3, rental.getNumKmRented());
-            ps.setDate(4, (java.sql.Date) rental.getDateFrom());
-            ps.setDate(5, (java.sql.Date) rental.getDateTo());
+            ps.setDate(4, new java.sql.Date(rental.getDateFrom().getTime()));
+            ps.setDate(5, new java.sql.Date(rental.getDateTo().getTime()));
             ps.setBoolean(6, rental.isActive());
             ps.setInt(7, rental.getId());
-            ResultSet rs = ps.executeQuery();
+            ps.executeQuery();
 
             ps = connec.prepareStatement("SELECT id FROM rental WHERE id = ?");
             ps.setInt(1, rental.getId());
-            ps.executeQuery();
+            ResultSet rs = ps.executeQuery();
             ps.close();
 
             if (rs.next()) {
@@ -116,7 +118,7 @@ public class DAORentalImp implements DAORental {
         }
 
         finally {
-            if(TransactionManager.getInstance().getTransaction().getResource() == null) {
+            if(TransactionManager.getInstance().getTransaction() == null) {
                 try {
                     connec.close();
                 } catch (SQLException e) {
@@ -136,19 +138,20 @@ public class DAORentalImp implements DAORental {
 
         String queryTail = " FOR UPDATE";
 
-        Connection connec = (Connection) TransactionManager.getInstance().getTransaction().getResource();
-
-        if(connec == null){
+        driverIdentify();
+        Transaction transaction = TransactionManager.getInstance().getTransaction();
+        Connection connec;
+        if(transaction == null){
             try {
-                driverIdentify();
-                connec = DriverManager.getConnection(TransactionManager.getInstance().getTransaction().
-                        getConnectionChain());
+                connec = DriverManager.getConnection(Util.getConnectionChain());
             }
             catch(SQLException ex){
                 throw new DAOException("ERROR: access to DB at operation 'readById' @rental unsuccessful\n");
             }
             queryTail = "";
         }
+        else
+            connec = (Connection) transaction.getResource();
 
         try { // Tratamiento db
             PreparedStatement ps = connec.prepareStatement("SELECT * FROM rental WHERE id = ?" + queryTail);
@@ -189,22 +192,23 @@ public class DAORentalImp implements DAORental {
 
         String queryTail = " FOR UPDATE";
 
-        Connection connec = (Connection) TransactionManager.getInstance().getTransaction().getResource();
-
-        if(connec == null){
+        driverIdentify();
+        Transaction transaction = TransactionManager.getInstance().getTransaction();
+        Connection connec;
+        if(transaction == null){
             try {
-                driverIdentify();
-                connec = DriverManager.getConnection(TransactionManager.getInstance().getTransaction().
-                        getConnectionChain());
+                connec = DriverManager.getConnection(Util.getConnectionChain());
             }
             catch(SQLException ex){
                 throw new DAOException("ERROR: access to DB at operation 'showRentalsByClient' @rental unsuccessful\n");
             }
             queryTail = "";
         }
+        else
+            connec = (Connection) transaction.getResource();
 
         try { // Tratamiento db
-            PreparedStatement ps = connec.prepareStatement("SELECT * FROM rental WHERE idClient ?" + queryTail);
+            PreparedStatement ps = connec.prepareStatement("SELECT * FROM rental WHERE idClient = ?" + queryTail);
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
 
@@ -241,20 +245,20 @@ public class DAORentalImp implements DAORental {
 
         String queryTail = " FOR UPDATE";
 
-        Connection connec = (Connection) TransactionManager.getInstance().getTransaction().getResource();
-
-        if(connec == null){
+        driverIdentify();
+        Transaction transaction = TransactionManager.getInstance().getTransaction();
+        Connection connec;
+        if(transaction == null){
             try {
-                driverIdentify();
-                connec = DriverManager.getConnection(TransactionManager.getInstance().getTransaction().
-                        getConnectionChain());
+                connec = DriverManager.getConnection(Util.getConnectionChain());
             }
             catch(SQLException ex){
-                throw new DAOException("ERROR: access to DB at operation 'showRentalsByVehicle' @rental " +
-                        "unsuccessful\n");
+                throw new DAOException("ERROR: access to DB at operation 'showRentalsByVehicle' @rental unsuccessful\n");
             }
             queryTail = "";
         }
+        else
+            connec = (Connection) transaction.getResource();
 
         try { // Tratamiento db
             PreparedStatement ps = connec.prepareStatement("SELECT * FROM rental WHERE idVehicle = ?" + queryTail);
@@ -298,19 +302,20 @@ public class DAORentalImp implements DAORental {
 
         String queryTail = " FOR UPDATE";
 
-        Connection connec = (Connection) TransactionManager.getInstance().getTransaction().getResource();
-
-        if(connec == null){
+        driverIdentify();
+        Transaction transaction = TransactionManager.getInstance().getTransaction();
+        Connection connec;
+        if(transaction == null){
             try {
-                driverIdentify();
-                connec = DriverManager.getConnection(TransactionManager.getInstance().getTransaction().
-                        getConnectionChain());
+                connec = DriverManager.getConnection(Util.getConnectionChain());
             }
             catch(SQLException ex){
-                throw new DAOException("ERROR: access to DB at operation 'readAll' @rental unsuccessful\n");
+                throw new DAOException("ERROR: access to DB at operation 'checkAvailableDates' @rental unsuccessful\n");
             }
             queryTail = "";
         }
+        else
+            connec = (Connection) transaction.getResource();
 
         try { // Tratamiento db
             PreparedStatement ps = connec.prepareStatement("SELECT * FROM rental WHERE active = true" + queryTail);
@@ -346,16 +351,11 @@ public class DAORentalImp implements DAORental {
 
 
     public void deleteAll() throws DAOException {
-        Util util = new Util();
-        util.deleteAll();
+        Util.deleteAll();
     }
 
     private void driverIdentify() throws DAOException {
-        try {
-            TransactionManager.getInstance().getTransaction().start();
-        } catch (TransactionException ex) {
-            throw new DAOException("ERROR: couldn't register MARIADB driver: " + ex);
-        }
+        Util.driverIdentify();
     }
 
 }

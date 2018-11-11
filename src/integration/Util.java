@@ -1,5 +1,8 @@
 package integration;
 
+import integration.Transaction.Transaction;
+import integration.transactionManager.TransactionManager;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -8,18 +11,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Util {
-    private List<String> tables = new ArrayList<>();
+    private static List<String> tables = new ArrayList<String>(){{
+        add("city");
+        add("vehicle");
+        add("bicyclevehicle");
+        add("carvehicle");
+        add("rental");
+        add("client");
+    }};
     private static String connectionChain = "jdbc:mariadb://localhost:3306/greengo?user=manager" +
             "&password=manager_if";
 
-    public Util() {
-        String tableNames[] = {"city", "vehicle", "bicycleVehicle", "carVehicle", "rental", "client"};
-        for(int i = 0; i < tableNames.length; ++i){
-            tables.add(tableNames[i]);
-        }
-    }
-
-    public void deleteAll() throws DAOException {
+    public static void deleteAll() throws DAOException {
         Connection connec;
         try {
             connec = DriverManager.getConnection(connectionChain);
@@ -50,5 +53,17 @@ public class Util {
                 throw new DAOException("ERROR: closing connection to DB at operation 'deleteAll' @city unsuccessful\n");
             }
         }
+    }
+
+    public static void driverIdentify() throws DAOException {
+        try {
+            Class.forName("org.mariadb.jdbc.Driver");
+        } catch (ClassNotFoundException ex) {
+            throw new DAOException("ERROR: couldn't register MARIADB driver: " + ex);
+        }
+    }
+
+    public static String getConnectionChain(){
+        return connectionChain;
     }
 }

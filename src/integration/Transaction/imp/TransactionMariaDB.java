@@ -1,7 +1,9 @@
 package integration.Transaction.imp;
 
+import integration.DAOException;
 import integration.Transaction.Transaction;
 import integration.TransactionException;
+import integration.Util;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -10,13 +12,13 @@ import java.sql.SQLException;
 public class TransactionMariaDB implements Transaction {
 
 
-    protected static final String connectionChain = "jdbc:mariadb://localhost:3306/GreenGo?user=manager&password=manager_if";
+    protected static final String connectionChain = Util.getConnectionChain();
 
     private Connection connec;
 
     public TransactionMariaDB() throws TransactionException {
         try {
-            connec =DriverManager.getConnection("jdbc:mariadb://localhost:3306/GreenGo", "manager", "manager_if");
+            connec =DriverManager.getConnection("jdbc:mariadb://localhost:3306/greengo", "manager", "manager_if");
         } catch (SQLException e) {
             throw new TransactionException(e.getMessage());
         }
@@ -24,8 +26,8 @@ public class TransactionMariaDB implements Transaction {
 
 
     @Override
-    public void start() {
-
+    public void start() throws DAOException {
+        Util.driverIdentify();
     }
 
     @Override
@@ -57,10 +59,4 @@ public class TransactionMariaDB implements Transaction {
         return connectionChain;
     }
 
-    public void driverIdentify() throws TransactionException {
-        try {Class.forName("org.mariadb.jdbc.Driver");}
-        catch (ClassNotFoundException e){
-            throw new TransactionException("org.mariadb.jdbc.Driver");
-        }
-    }
 }

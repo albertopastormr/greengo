@@ -4,7 +4,7 @@ package integration.vehicle.dao.imp;
 import business.city.TCity;
 import business.vehicle.TVehicle;
 import integration.DAOException;
-import integration.TransactionException;
+import integration.Transaction.Transaction;
 import integration.Util;
 import integration.transactionManager.TransactionManager;
 import integration.vehicle.dao.DAOVehicle;
@@ -19,18 +19,19 @@ public class DAOVehicleImp  implements DAOVehicle {
     public Integer create(TVehicle vehicle) throws DAOException{
         Integer id;
 
-        Connection connec = (Connection) TransactionManager.getInstance().getTransaction().getResource();
-
-        if(connec == null){
+        driverIdentify();
+        Transaction transaction = TransactionManager.getInstance().getTransaction();
+        Connection connec;
+        if(transaction == null){
             try {
-                driverIdentify();
-                connec = DriverManager.getConnection(TransactionManager.getInstance().getTransaction()
-                        .getConnectionChain());
+                connec = DriverManager.getConnection(Util.getConnectionChain());
             }
             catch(SQLException ex){
                 throw new DAOException("ERROR: access to DB at operation 'create' @vehicle unsuccessful\n");
             }
         }
+        else
+            connec = (Connection) transaction.getResource();
 
         try { // Tratamiento db
             PreparedStatement ps = connec.prepareStatement("INSERT INTO vehicle(brand,estimatedDuration," +
@@ -60,7 +61,7 @@ public class DAOVehicleImp  implements DAOVehicle {
         }
 
         finally {
-            if(TransactionManager.getInstance().getTransaction().getResource() == null) {
+            if(TransactionManager.getInstance().getTransaction() == null) {
                 try {
                     connec.close();
                 } catch (SQLException e) {
@@ -77,17 +78,19 @@ public class DAOVehicleImp  implements DAOVehicle {
 
         Integer id;
 
-        Connection connec = (Connection) TransactionManager.getInstance().getTransaction().getResource();
-
-        if(connec == null){
+        driverIdentify();
+        Transaction transaction = TransactionManager.getInstance().getTransaction();
+        Connection connec;
+        if(transaction == null){
             try {
-                driverIdentify();
-                connec = DriverManager.getConnection(TransactionManager.getInstance().getTransaction().getConnectionChain());
+                connec = DriverManager.getConnection(Util.getConnectionChain());
             }
             catch(SQLException ex){
                 throw new DAOException("ERROR: access to DB at operation 'update' @vehicle unsuccessful\n");
             }
         }
+        else
+            connec = (Connection) transaction.getResource();
         //brand,estimatedDuration," +
         //                "numKmTravelled,occupied,city,active,type
         try { // Tratamiento db
@@ -101,11 +104,12 @@ public class DAOVehicleImp  implements DAOVehicle {
             ps.setInt(5, vehicle.getCity());
             ps.setBoolean(6,vehicle.isActive());
             ps.setString(7,vehicle.getType());
-            ResultSet rs = ps.executeQuery();
+            ps.setInt(8, vehicle.getId());
+            ps.execute();
 
             ps = connec.prepareStatement("SELECT id FROM vehicle WHERE id = ?");
             ps.setInt(1, vehicle.getId());
-            ps.executeQuery();
+            ResultSet rs = ps.executeQuery();
             ps.close();
 
             if (rs.next()) {
@@ -120,7 +124,7 @@ public class DAOVehicleImp  implements DAOVehicle {
         }
 
         finally {
-            if(TransactionManager.getInstance().getTransaction().getResource() == null) {
+            if(TransactionManager.getInstance().getTransaction() == null) {
                 try {
                     connec.close();
                 } catch (SQLException e) {
@@ -140,19 +144,20 @@ public class DAOVehicleImp  implements DAOVehicle {
 
         String queryTail = " FOR UPDATE";
 
-        Connection connec = (Connection) TransactionManager.getInstance().getTransaction().getResource();
-
-        if(connec == null){
+        driverIdentify();
+        Transaction transaction = TransactionManager.getInstance().getTransaction();
+        Connection connec;
+        if(transaction == null){
             try {
-                driverIdentify();
-                connec = DriverManager.getConnection(TransactionManager.getInstance().getTransaction().
-                        getConnectionChain());
+                connec = DriverManager.getConnection(Util.getConnectionChain());
             }
             catch(SQLException ex){
                 throw new DAOException("ERROR: access to DB at operation 'readById' @vehicle unsuccessful\n");
             }
             queryTail = "";
         }
+        else
+            connec = (Connection) transaction.getResource();
 
         try { // Tratamiento db
             PreparedStatement ps = connec.prepareStatement("SELECT * FROM vehicle WHERE id = ?" + queryTail);
@@ -193,19 +198,20 @@ public class DAOVehicleImp  implements DAOVehicle {
 
         String queryTail = " FOR UPDATE";
 
-        Connection connec = (Connection) TransactionManager.getInstance().getTransaction().getResource();
-
-        if(connec == null){
+        driverIdentify();
+        Transaction transaction = TransactionManager.getInstance().getTransaction();
+        Connection connec;
+        if(transaction == null){
             try {
-                driverIdentify();
-                connec = DriverManager.getConnection(TransactionManager.getInstance().getTransaction().
-                        getConnectionChain());
+                connec = DriverManager.getConnection(Util.getConnectionChain());
             }
             catch(SQLException ex){
                 throw new DAOException("ERROR: access to DB at operation 'readAll' @vehicle unsuccessful\n");
             }
             queryTail = "";
         }
+        else
+            connec = (Connection) transaction.getResource();
 
         try { // Tratamiento db
             PreparedStatement ps = connec.prepareStatement("SELECT * FROM vehicle" +
@@ -245,24 +251,24 @@ public class DAOVehicleImp  implements DAOVehicle {
 
         String queryTail = " FOR UPDATE";
 
-        Connection connec = (Connection) TransactionManager.getInstance().getTransaction().getResource();
-
-        if(connec == null){
+        driverIdentify();
+        Transaction transaction = TransactionManager.getInstance().getTransaction();
+        Connection connec;
+        if(transaction == null){
             try {
-                driverIdentify();
-                connec = DriverManager.getConnection(TransactionManager.getInstance().getTransaction().
-                        getConnectionChain());
+                connec = DriverManager.getConnection(Util.getConnectionChain());
             }
             catch(SQLException ex){
-                throw new DAOException("ERROR: access to DB at operation 'readAllAvailableVehicles' @vehicle " +
-                        "unsuccessful\n");
+                throw new DAOException("ERROR: access to DB at operation 'readAllAvailableVehicles' @vehicle unsuccessful\n");
             }
             queryTail = "";
         }
+        else
+            connec = (Connection) transaction.getResource();
 
         try { // Tratamiento db
-            PreparedStatement ps = connec.prepareStatement("SELECT * FROM vehicle WHERE active = true " +
-                    "AND occupied = false"  + queryTail);
+            PreparedStatement ps = connec.prepareStatement("SELECT * FROM vehicle WHERE (active = true " +
+                    "AND occupied = false)"  + queryTail);
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
@@ -299,20 +305,20 @@ public class DAOVehicleImp  implements DAOVehicle {
 
         String queryTail = " FOR UPDATE";
 
-        Connection connec = (Connection) TransactionManager.getInstance().getTransaction().getResource();
-
-        if(connec == null){
+        driverIdentify();
+        Transaction transaction = TransactionManager.getInstance().getTransaction();
+        Connection connec;
+        if(transaction == null){
             try {
-                driverIdentify();
-                connec = DriverManager.getConnection(TransactionManager.getInstance().getTransaction().
-                        getConnectionChain());
+                connec = DriverManager.getConnection(Util.getConnectionChain());
             }
             catch(SQLException ex){
-                throw new DAOException("ERROR: access to DB at operation 'readVehiclesByCity' @vehicle " +
-                        "unsuccessful\n");
+                throw new DAOException("ERROR: access to DB at operation 'readVehiclesByCity' @vehicle unsuccessful\n");
             }
             queryTail = "";
         }
+        else
+            connec = (Connection) transaction.getResource();
 
         try { // Tratamiento db
             PreparedStatement ps = connec.prepareStatement("SELECT * FROM vehicle WHERE city = ?" + queryTail);
@@ -356,16 +362,11 @@ public class DAOVehicleImp  implements DAOVehicle {
 
     @Override
     public void deleteAll() throws DAOException {
-        Util util = new Util();
-        util.deleteAll();
+        Util.deleteAll();
     }
 
     private void driverIdentify() throws DAOException {
-        try {
-            TransactionManager.getInstance().getTransaction().start();
-        } catch (TransactionException ex) {
-            throw new DAOException("ERROR: couldn't register MARIADB driver: " + ex);
-        }
+        Util.driverIdentify();
     }
 
 }

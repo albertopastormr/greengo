@@ -2,6 +2,7 @@ package integration.client.dao.imp;
 
 import business.client.TClient;
 import integration.DAOException;
+import integration.Transaction.Transaction;
 import integration.TransactionException;
 import integration.Util;
 import integration.client.dao.DAOClient;
@@ -18,17 +19,19 @@ public class DAOClientImp implements DAOClient {
         Integer id;
 
 
-        Connection connec = (Connection) TransactionManager.getInstance().getTransaction().getResource();
-
-        if(connec == null){
+        driverIdentify();
+        Transaction transaction = TransactionManager.getInstance().getTransaction();
+        Connection connec;
+        if(transaction == null){
             try {
-                driverIdentify();
-                connec = DriverManager.getConnection(TransactionManager.getInstance().getTransaction().getConnectionChain());
+                connec = DriverManager.getConnection(Util.getConnectionChain());
             }
             catch(SQLException ex){
                 throw new DAOException("ERROR: access to DB at operation 'create' @client unsuccessful\n");
             }
         }
+        else
+            connec = (Connection) transaction.getResource();
 
         try { // Tratamiento db
             PreparedStatement ps = connec.prepareStatement("INSERT INTO client(idCardNumber, numRentals, active) " +
@@ -54,7 +57,7 @@ public class DAOClientImp implements DAOClient {
         }
 
         finally {
-            if(TransactionManager.getInstance().getTransaction().getResource() == null) {
+            if(TransactionManager.getInstance().getTransaction() == null) {
                 try {
                     connec.close();
                 } catch (SQLException e) {
@@ -72,18 +75,19 @@ public class DAOClientImp implements DAOClient {
 
         Integer id;
 
-        Connection connec = (Connection) TransactionManager.getInstance().getTransaction().getResource();
-
-        if(connec == null){
+        driverIdentify();
+        Transaction transaction = TransactionManager.getInstance().getTransaction();
+        Connection connec;
+        if(transaction == null){
             try {
-                driverIdentify();
-                connec = DriverManager.getConnection(TransactionManager.getInstance().getTransaction().
-                        getConnectionChain());
+                connec = DriverManager.getConnection(Util.getConnectionChain());
             }
             catch(SQLException ex){
                 throw new DAOException("ERROR: access to DB at operation 'update' @client unsuccessful\n");
             }
         }
+        else
+            connec = (Connection) transaction.getResource();
 
         try { // Tratamiento db
             PreparedStatement ps = connec.prepareStatement("UPDATE client SET idCardNumber = ?, numRentals = ?, " +
@@ -92,11 +96,11 @@ public class DAOClientImp implements DAOClient {
             ps.setInt(2, client.getNumRentals());
             ps.setBoolean(3, client.isActive());
             ps.setInt(4, client.getId());
-            ResultSet rs = ps.executeQuery();
+            ps.executeQuery();
 
             ps = connec.prepareStatement("SELECT id FROM client WHERE id = ?");
             ps.setInt(1, client.getId());
-            ps.executeQuery();
+            ResultSet rs = ps.executeQuery();
             ps.close();
 
             if (rs.next()) {
@@ -111,7 +115,7 @@ public class DAOClientImp implements DAOClient {
         }
 
         finally {
-            if(TransactionManager.getInstance().getTransaction().getResource() == null) {
+            if(TransactionManager.getInstance().getTransaction() == null) {
                 try {
                     connec.close();
                 } catch (SQLException e) {
@@ -131,19 +135,20 @@ public class DAOClientImp implements DAOClient {
 
         String queryTail = " FOR UPDATE";
 
-        Connection connec = (Connection) TransactionManager.getInstance().getTransaction().getResource();
-
-        if(connec == null){
+        driverIdentify();
+        Transaction transaction = TransactionManager.getInstance().getTransaction();
+        Connection connec;
+        if(transaction == null){
             try {
-                driverIdentify();
-                connec = DriverManager.getConnection(TransactionManager.getInstance().getTransaction().
-                        getConnectionChain());
+                connec = DriverManager.getConnection(Util.getConnectionChain());
             }
             catch(SQLException ex){
                 throw new DAOException("ERROR: access to DB at operation 'readById' @client unsuccessful\n");
             }
             queryTail = "";
         }
+        else
+            connec = (Connection) transaction.getResource();
 
         try { // Tratamiento db
             PreparedStatement ps = connec.prepareStatement("SELECT * FROM client WHERE id = ?" + queryTail);
@@ -181,19 +186,20 @@ public class DAOClientImp implements DAOClient {
 
         String queryTail = " FOR UPDATE";
 
-        Connection connec = (Connection) TransactionManager.getInstance().getTransaction().getResource();
-
-        if(connec == null){
+        driverIdentify();
+        Transaction transaction = TransactionManager.getInstance().getTransaction();
+        Connection connec;
+        if(transaction == null){
             try {
-                driverIdentify();
-                connec = DriverManager.getConnection(TransactionManager.getInstance().getTransaction().
-                        getConnectionChain());
+                connec = DriverManager.getConnection(Util.getConnectionChain());
             }
             catch(SQLException ex){
                 throw new DAOException("ERROR: access to DB at operation 'readByIdCard' @client unsuccessful\n");
             }
             queryTail = "";
         }
+        else
+            connec = (Connection) transaction.getResource();
 
         try { // Tratamiento db
             PreparedStatement ps = connec.prepareStatement("SELECT * FROM client WHERE idCardNumber = ?" +
@@ -234,19 +240,20 @@ public class DAOClientImp implements DAOClient {
 
         String queryTail = " FOR UPDATE";
 
-        Connection connec = (Connection) TransactionManager.getInstance().getTransaction().getResource();
-
-        if(connec == null){
+        driverIdentify();
+        Transaction transaction = TransactionManager.getInstance().getTransaction();
+        Connection connec;
+        if(transaction == null){
             try {
-                driverIdentify();
-                connec = DriverManager.getConnection(TransactionManager.getInstance().getTransaction().
-                        getConnectionChain());
+                connec = DriverManager.getConnection(Util.getConnectionChain());
             }
             catch(SQLException ex){
                 throw new DAOException("ERROR: access to DB at operation 'readAll' @client unsuccessful\n");
             }
             queryTail = "";
         }
+        else
+            connec = (Connection) transaction.getResource();
 
         try { // Tratamiento db
             PreparedStatement ps = connec.prepareStatement("SELECT * FROM client WHERE active = true" + queryTail);
@@ -283,19 +290,20 @@ public class DAOClientImp implements DAOClient {
 
         String queryTail = " FOR UPDATE";
 
-        Connection connec = (Connection) TransactionManager.getInstance().getTransaction().getResource();
-
-        if(connec == null){
+        driverIdentify();
+        Transaction transaction = TransactionManager.getInstance().getTransaction();
+        Connection connec;
+        if(transaction == null){
             try {
-                driverIdentify();
-                connec = DriverManager.getConnection(TransactionManager.getInstance().getTransaction().
-                        getConnectionChain());
+                connec = DriverManager.getConnection(Util.getConnectionChain());
             }
             catch(SQLException ex){
                 throw new DAOException("ERROR: access to DB at operation 'readByNRentals' @client unsuccessful\n");
             }
             queryTail = "";
         }
+        else
+            connec = (Connection) transaction.getResource();
 
         try { // Tratamiento db
             PreparedStatement ps = connec.prepareStatement("SELECT * FROM client WHERE numRentals > ?" +
@@ -330,16 +338,11 @@ public class DAOClientImp implements DAOClient {
     }
 
     public void deleteAll() throws DAOException {
-        Util util = new Util();
-        util.deleteAll();
+        Util.deleteAll();
     }
 
     private void driverIdentify() throws DAOException {
-        try {
-            TransactionManager.getInstance().getTransaction().start();
-        } catch (TransactionException ex) {
-            throw new DAOException("ERROR: couldn't register MARIADB driver: " + ex);
-        }
+        Util.driverIdentify();
     }
 
 }

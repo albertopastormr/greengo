@@ -4,7 +4,6 @@ import business.city.TCity;
 import business.client.TClient;
 import integration.DAOException;
 import integration.Transaction.Transaction;
-import integration.TransactionException;
 import integration.city.dao.DAOCity;
 import integration.transactionManager.TransactionManager;
 import integration.Util;
@@ -19,18 +18,19 @@ public class DAOCityImp implements DAOCity {
     public Integer create(TCity city) throws DAOException {
         Integer id;
 
-        Connection connec = (Connection) TransactionManager.getInstance().getTransaction().getResource();
-
-        if(connec == null){
+        driverIdentify();
+        Transaction transaction = TransactionManager.getInstance().getTransaction();
+        Connection connec;
+        if(transaction == null){
             try {
-                driverIdentify();
-                connec = DriverManager.getConnection(TransactionManager.getInstance().getTransaction().
-                        getConnectionChain());
+                connec = DriverManager.getConnection(Util.getConnectionChain());
             }
             catch(SQLException ex){
                 throw new DAOException("ERROR: access to DB at operation 'create' @city unsuccessful\n");
             }
         }
+        else
+            connec = (Connection) transaction.getResource();
 
         try { // Tratamiento db
             PreparedStatement ps = connec.prepareStatement("INSERT INTO city(name, active) VALUES (?,?)");
@@ -54,7 +54,7 @@ public class DAOCityImp implements DAOCity {
         }
 
         finally {
-            if(TransactionManager.getInstance().getTransaction().getResource() == null) {
+            if(TransactionManager.getInstance().getTransaction() == null) {
                 try {
                     connec.close();
                 } catch (SQLException e) {
@@ -72,18 +72,19 @@ public class DAOCityImp implements DAOCity {
 
         Integer id;
 
-        Connection connec = (Connection) TransactionManager.getInstance().getTransaction().getResource();
-
-        if(connec == null){
+        driverIdentify();
+        Transaction transaction = TransactionManager.getInstance().getTransaction();
+        Connection connec;
+        if(transaction == null){
             try {
-                driverIdentify();
-                connec = DriverManager.getConnection(TransactionManager.getInstance().getTransaction().
-                        getConnectionChain());
+                connec = DriverManager.getConnection(Util.getConnectionChain());
             }
             catch(SQLException ex){
                 throw new DAOException("ERROR: access to DB at operation 'update' @city unsuccessful\n");
             }
         }
+        else
+            connec = (Connection) transaction.getResource();
 
         try { // Tratamiento db
             PreparedStatement ps = connec.prepareStatement("UPDATE city SET name = ?, active = ? " +
@@ -91,11 +92,11 @@ public class DAOCityImp implements DAOCity {
             ps.setString(1, city.getName());
             ps.setBoolean(2, city.isActive());
             ps.setInt(3, city.getId());
-            ResultSet rs = ps.executeQuery();
+            ps.execute();
 
             ps = connec.prepareStatement("SELECT id FROM city WHERE id = ?");
             ps.setInt(1, city.getId());
-            ps.executeQuery();
+            ResultSet rs = ps.executeQuery();
             ps.close();
 
             if (rs.next()) {
@@ -110,11 +111,12 @@ public class DAOCityImp implements DAOCity {
         }
 
         finally {
-            if(TransactionManager.getInstance().getTransaction().getResource() == null) {
+            if(TransactionManager.getInstance().getTransaction() == null) {
                 try {
                     connec.close();
                 } catch (SQLException e) {
-                    throw new DAOException("ERROR: closing connection to DB at operation 'update' @city unsuccessful\n");
+                    throw new DAOException("ERROR: closing connection to DB at operation 'create' @city " +
+                            "unsuccessful\n");
                 }
             }
         }
@@ -129,18 +131,20 @@ public class DAOCityImp implements DAOCity {
 
         String queryTail = " FOR UPDATE";
 
-        Connection connec = (Connection) TransactionManager.getInstance().getTransaction().getResource();
-
-        if(connec == null){
+        driverIdentify();
+        Transaction transaction = TransactionManager.getInstance().getTransaction();
+        Connection connec;
+        if(transaction == null){
             try {
-                driverIdentify();
-                connec = DriverManager.getConnection(TransactionManager.getInstance().getTransaction().getConnectionChain());
+                connec = DriverManager.getConnection(Util.getConnectionChain());
             }
             catch(SQLException ex){
                 throw new DAOException("ERROR: access to DB at operation 'readById' @city unsuccessful\n");
             }
             queryTail = "";
         }
+        else
+            connec = (Connection) transaction.getResource();
 
         try { // Tratamiento db
             PreparedStatement ps = connec.prepareStatement("SELECT * FROM city WHERE id = ?" + queryTail);
@@ -180,22 +184,23 @@ public class DAOCityImp implements DAOCity {
 
         String queryTail = " FOR UPDATE";
 
-        Connection connect = (Connection) TransactionManager.getInstance().getTransaction().getResource();
-
-        if(connect == null){
+        driverIdentify();
+        Transaction transaction = TransactionManager.getInstance().getTransaction();
+        Connection connec;
+        if(transaction == null){
             try {
-                driverIdentify();
-                connect = DriverManager.getConnection(TransactionManager.getInstance().getTransaction().
-                        getConnectionChain());
+                connec = DriverManager.getConnection(Util.getConnectionChain());
             }
             catch(SQLException ex){
                 throw new DAOException("ERROR: access to DB at operation 'readAll' @city unsuccessful\n");
             }
             queryTail = "";
         }
+        else
+            connec = (Connection) transaction.getResource();
 
         try { // Tratamiento db
-            PreparedStatement ps = connect.prepareStatement("SELECT * FROM city WHERE active = true" +
+            PreparedStatement ps = connec.prepareStatement("SELECT * FROM city WHERE active = true" +
                     queryTail);
             ResultSet rs = ps.executeQuery();
 
@@ -214,7 +219,7 @@ public class DAOCityImp implements DAOCity {
         finally {
             if(queryTail.equals("")) {
                 try {
-                    connect.close();
+                    connec.close();
                 } catch (SQLException e) {
                     throw new DAOException("ERROR: closing connection to DB at operation 'readAll' @city " +
                             "unsuccessful\n");
@@ -231,19 +236,20 @@ public class DAOCityImp implements DAOCity {
 
         String queryTail = " FOR UPDATE";
 
-        Connection connec = (Connection) TransactionManager.getInstance().getTransaction().getResource();
-
-        if(connec == null){
+        driverIdentify();
+        Transaction transaction = TransactionManager.getInstance().getTransaction();
+        Connection connec;
+        if(transaction == null){
             try {
-                driverIdentify();
-                connec = DriverManager.getConnection(TransactionManager.getInstance().getTransaction().
-                        getConnectionChain());
+                connec = DriverManager.getConnection(Util.getConnectionChain());
             }
             catch(SQLException ex){
                 throw new DAOException("ERROR: access to DB at operation 'showClientsByCity' @city unsuccessful\n");
             }
             queryTail = "";
         }
+        else
+            connec = (Connection) transaction.getResource();
 
         try { // Tratamiento db
             PreparedStatement ps = connec.
@@ -280,17 +286,11 @@ public class DAOCityImp implements DAOCity {
     }
 
     public void deleteAll() throws DAOException {
-        Util util = new Util();
-        util.deleteAll();
+        Util.deleteAll();
     }
 
     private void driverIdentify() throws DAOException {
-        try {
-            Transaction tmp =TransactionManager.getInstance().getTransaction();
-            tmp.start();
-        } catch (TransactionException ex) {
-            throw new DAOException("ERROR: couldn't register MARIADB driver: " + ex);
-        }
+        Util.driverIdentify();
     }
 
 }
