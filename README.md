@@ -30,7 +30,7 @@ If you are in MariaDb terminal: (keys) Ctrl + C
 
 `mysql -u manager -p greengo < {PATH}/greengo-create-db.sql`
 
-Insert the password `manager-if`.
+Insert the password `manager_if`.
 
 this imports an existing database with a valid structure for greengo.
 
