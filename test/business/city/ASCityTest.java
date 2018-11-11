@@ -106,7 +106,7 @@ public class ASCityTest {
 
 	@Test
 	public void dropCityAlreadyInactive() throws ASException, IncorrectInputException {
-		Integer id = as.create(tc2);
+		Integer id = as.create(tc);
 		as.drop(id);
 		assertThrows(ASException.class, () -> {as.drop(id);});
 	}

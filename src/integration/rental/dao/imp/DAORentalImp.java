@@ -3,6 +3,7 @@ package integration.rental.dao.imp;
 import business.rental.TRental;
 import integration.DAOException;
 import integration.TransactionException;
+import integration.Util;
 import integration.rental.dao.DAORental;
 import integration.transactionManager.TransactionManager;
 
@@ -345,35 +346,8 @@ public class DAORentalImp implements DAORental {
 
 
     public void deleteAll() throws DAOException {
-        Connection connec;
-        try {
-            driverIdentify();
-            connec = DriverManager.getConnection("jdbc:mariadb://localhost:3306/greengo?user=manager&password=manager_if");
-        } catch (SQLException ex) {
-            throw new DAOException("ERROR: access to DB at operation 'deleteAll' @rental unsuccessful\n");
-        }
-
-        try { // Tratamiento db
-            PreparedStatement ps = connec.prepareStatement("SET FOREIGN_KEY_CHECKS = 0");
-            ps.execute();
-            ps.close();
-            ps = connec.prepareStatement("TRUNCATE TABLE rental");
-            ps.execute();
-            ps.close();
-            ps = connec.prepareStatement("SET FOREIGN_KEY_CHECKS = 1");
-            ps.execute();
-            ps.close();
-
-        } catch (SQLException e) {
-            throw new DAOException("ERROR: SQL statement execution at operation 'delete All' @rental unsuccessful\n");
-        } finally {
-            try {
-                connec.close();
-            } catch (SQLException e) {
-                throw new DAOException("ERROR: closing connection to DB at operation 'deleteAll' @rental " +
-                        "unsuccessful\n");
-            }
-        }
+        Util util = new Util();
+        util.deleteAll();
     }
 
     private void driverIdentify() throws DAOException {
