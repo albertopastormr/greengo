@@ -1,6 +1,7 @@
 package business.rental.as.imp;
 
 import business.ASException;
+import business.IncorrectInputException;
 import business.client.TClient;
 import business.client.factory.ASClientFactory;
 import business.rental.TRental;
@@ -157,7 +158,7 @@ public class ASRentalImp implements ASRental {
                     }
                 }else
                     throw new ASException("ERROR: The rental doesn't show correctly.\n");
-            } catch (DAOException | TransactionException e) {
+            } catch (IncorrectInputException | DAOException | TransactionException e) {
                 throw new ASException(e.getMessage());
             }
         }else
@@ -180,11 +181,13 @@ public class ASRentalImp implements ASRental {
                 throw new ASException("ERROR: The rentals doesn't list correctly.\n");
         }catch (DAOException | TransactionException e) {
             throw new ASException(e.getMessage());
+        } catch (IncorrectInputException e) {
+            e.printStackTrace();
         }
         return rDetailsList;
     }
 
-    public TRentalDetails getRentalDetails(Integer idRental) throws ASException, DAOException {
+    public TRentalDetails getRentalDetails(Integer idRental) throws ASException, DAOException, IncorrectInputException {
         TRental rental = DAORentalFactory.getInstance().generateDAORental().readById(idRental);
         TClient client = ASClientFactory.getInstance().generateASClient().show(rental.getIdClient());
         TVehicle vehicle = ASVehicleFactory.getInstance().generateASVehicle().show(rental.getIdVehicle()).getVehicle();
@@ -192,7 +195,7 @@ public class ASRentalImp implements ASRental {
         return new TRentalDetails(client,rental,vehicle);
     }
 
-    public Collection<TRentalDetails> getAllRentalsDetails() throws ASException, DAOException {
+    public Collection<TRentalDetails> getAllRentalsDetails() throws ASException, DAOException, IncorrectInputException {
         Collection<TRental> rentals = DAORentalFactory.getInstance().generateDAORental().readAll();
         Collection<TRentalDetails> details = new ArrayList<>();
 

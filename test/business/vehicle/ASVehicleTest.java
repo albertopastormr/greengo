@@ -92,20 +92,8 @@ public class ASVehicleTest {
     }
 
     @Test
-    public void createVehicleIncorrectInputOccupied(){
-        tv.setOccupied(true); //occupied must be false
-        assertThrows(IncorrectInputException.class, () -> {as.create(tv);});
-    }
-
-    @Test
     public void createVehicleIncorrectInputCity(){
         tv.setCity(null); //city can't be null
-        assertThrows(IncorrectInputException.class, () -> {as.create(tv);});
-    }
-
-    @Test
-    public void createVehicleIncorrectInputActive(){
-        tv.setActive(true); //active must be false
         assertThrows(IncorrectInputException.class, () -> {as.create(tv);});
     }
 
@@ -234,7 +222,7 @@ public class ASVehicleTest {
 
     //showAll method
     @Test
-    public void showAllVehicleSuccessful() throws ASException {
+    public void showAllVehicleSuccessful() throws ASException, IncorrectInputException {
         Integer idV = as.create(tv);
 
         assertTrue(idV > 0);
@@ -362,7 +350,7 @@ public class ASVehicleTest {
     }
 
     @Test
-    public void updateVehicleIncorrectInputType() throws ASException {
+    public void updateVehicleIncorrectInputType() throws ASException, IncorrectInputException {
         Integer idV = as.create(tv);
 
         assertTrue(idV > 0);

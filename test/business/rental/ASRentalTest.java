@@ -71,7 +71,7 @@ public class ASRentalTest {
     }
 
     @Test
-    public void createRentalIncorrectInputIDVehicle1() throws ASException {
+    public void createRentalIncorrectInputIDVehicle1() throws ASException, IncorrectInputException {
         Integer idC = asClient.create(tClient);
         tr.setIdClient(idC);
 
@@ -81,7 +81,7 @@ public class ASRentalTest {
     }
 
     @Test
-    public void createRentalIncorrectInputIDVehicle2() throws ASException {
+    public void createRentalIncorrectInputIDVehicle2() throws ASException, IncorrectInputException {
         Integer idC = asClient.create(tClient);
         tr.setIdClient(idC);
 
@@ -91,7 +91,7 @@ public class ASRentalTest {
     }
 
     @Test
-    public void createRentalIncorrectInputIDVehicle3() throws ASException {
+    public void createRentalIncorrectInputIDVehicle3() throws ASException, IncorrectInputException {
         Integer idC = asClient.create(tClient);
         tr.setIdClient(idC);
 
@@ -215,7 +215,7 @@ public class ASRentalTest {
     }
 
     @Test
-    public void createRentalVehicleNotExists() throws ASException {
+    public void createRentalVehicleNotExists() throws ASException, IncorrectInputException {
         Integer idC = asClient.create(tClient);
         tr.setIdClient(idC);
 

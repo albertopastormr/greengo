@@ -2,6 +2,7 @@ package presentation.vehicle.forms;
 
 import business.vehicle.TBicycleVehicle;
 import business.vehicle.TCarVehicle;
+import business.vehicle.TVehicle;
 import presentation.controller.AppController;
 import presentation.controller.Event;
 import presentation.controller.LightContext;
@@ -106,11 +107,11 @@ public class FormUpdateVehicle extends JDialog{
         ret.add(activeComboBox);
 
         //Type
-        JLabel typeLabel = new JLabel("Type");
+        /*JLabel typeLabel = new JLabel("Type");
         ret.add(typeLabel);
 
         selectType();
-        ret.add(typeComboBox);
+        ret.add(typeComboBox);*/
 
         //plate
         JLabel plateLabel = new JLabel("Plate");
@@ -141,6 +142,7 @@ public class FormUpdateVehicle extends JDialog{
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 try {
+                    /*
                     if (typeComboBox.getSelectedItem().equals("Car")) {
                         TCarVehicle car = new TCarVehicle();
                         car.setId(Util.parseNoNegativeInt(idText.getText()));
@@ -151,7 +153,7 @@ public class FormUpdateVehicle extends JDialog{
                         car.setBrand(Util.parseString(brandText.getText()));
                         car.setNumKmTravelled(Util.parseNoNegativeInt(kmTravelledText.getText()));
                         car.setPlate(Util.parseString(plateText.getText()));
-                        car.setType(Util.parseString(typeComboBox.getSelectedItem().toString()));
+                       //car.setType(Util.parseString(typeComboBox.getSelectedItem().toString()));
                         dispose();
                         AppController.getInstance().execute(new LightContext(Event.UPDATE_VEHICLE, car));
                     } else {
@@ -164,10 +166,19 @@ public class FormUpdateVehicle extends JDialog{
                         bicycle.setBrand(Util.parseString(brandText.getText()));
                         bicycle.setNumKmTravelled(Util.parseNoNegativeInt(kmTravelledText.getText()));
                         bicycle.setSerialNumber(Util.parseString(serialNumberText.getText()));
-                        bicycle.setType(Util.parseString(typeComboBox.getSelectedItem().toString()));
+                        //bicycle.setType(Util.parseString(typeComboBox.getSelectedItem().toString()));
                         dispose();
-                        AppController.getInstance().execute(new LightContext(Event.UPDATE_VEHICLE, bicycle));
-                    }
+
+                } */
+                    TVehicle vehicle = new TVehicle();
+                    vehicle.setId(Util.parseNoNegativeInt(idText.getText()));
+                    vehicle.setCity(Util.parseNoNegativeInt(cityText.getText()));
+                    vehicle.setOccupied(Util.parseActive(occupiedComboBox.getSelectedItem().toString()));
+                    vehicle.setActive(Util.parseActive(activeComboBox.getSelectedItem().toString()));
+                    vehicle.setEstimatedDuration(Util.parseNoNegativeInt(estimatedDurationText.getText()));
+                    vehicle.setBrand(Util.parseString(brandText.getText()));
+                    vehicle.setNumKmTravelled(Util.parseNoNegativeInt(kmTravelledText.getText()));
+                    AppController.getInstance().execute(new LightContext(Event.UPDATE_VEHICLE, vehicle));
                 }
                 catch(Exception e){
                     JOptionPane.showMessageDialog(getRootPane(), e.getMessage(), "ERROR IN UPDATE VEHICLE", JOptionPane.ERROR_MESSAGE);

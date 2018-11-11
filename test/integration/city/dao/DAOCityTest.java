@@ -1,6 +1,7 @@
 package integration.city.dao;
 
 import business.ASException;
+import business.IncorrectInputException;
 import business.city.TCity;
 import business.client.TClient;
 import business.client.as.ASClient;
@@ -116,7 +117,7 @@ class DAOCityTest {
 
     //Show clients by city method
     @Test
-    void showClientsByCity1() throws ASException, DAOException {
+    void showClientsByCity1() throws ASException, DAOException, IncorrectInputException {
         Integer idM = dao.create(tc1);
         Integer idClient = asClient.create(tclient);
 

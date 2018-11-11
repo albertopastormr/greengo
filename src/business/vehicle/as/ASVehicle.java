@@ -8,13 +8,13 @@ import business.vehicle.TVehicleDetails;
 import java.util.Collection;
 
 public interface ASVehicle {
-    Integer create(TVehicle vehicle) throws ASException;
+    Integer create(TVehicle vehicle) throws ASException, IncorrectInputException;
 
-    Integer drop(Integer vehicle) throws ASException;
+    Integer drop(Integer vehicle) throws ASException, IncorrectInputException;
 
-    Integer update(TVehicle vehicle) throws ASException;
+    Integer update(TVehicle vehicle) throws ASException, IncorrectInputException;
 
-    TVehicleDetails show (Integer id) throws ASException;
+    TVehicleDetails show (Integer id) throws ASException, IncorrectInputException;
 
     Collection<TVehicleDetails> showAll () throws ASException;
 
