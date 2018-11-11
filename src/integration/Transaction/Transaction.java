@@ -16,6 +16,4 @@ public interface Transaction {
 
      String getConnectionChain();
 
-     void driverIdentify() throws TransactionException;
-
 }

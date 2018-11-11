@@ -8,7 +8,6 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" exported="" name="junit-jupiter-api-5.3.1" level="project" />
     <orderEntry type="library" exported="" name="jdatepicker-1.3.4" level="project" />
     <orderEntry type="module-library" exported="" scope="TEST">
       <library name="JUnit4">
@@ -33,5 +32,6 @@
       </library>
     </orderEntry>
     <orderEntry type="library" name="org.junit.jupiter:junit-jupiter-api:5.3.1" level="project" />
+>>>>>>> 554e88938447c5567adfe966ae4a2231db004952
   </component>
 </module>

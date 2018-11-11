@@ -31,7 +31,7 @@ public class ASCityTest {
     private static Date initD = new Date(1540373530000L);
     private static Date endD = new Date(1543051930000L);
     private static ASCity 	as = ASCityFactory.getInstance().generateASCity();
-	private static TCity tc = new TCity(null,"Madrid",false);
+	private static TCity tc = new TCity(null,"Madrid",true);
     private static ASVehicle 	asV = ASVehicleFactory.getInstance().generateASVehicle();
     private static TVehicle tv = new TVehicle(null,"Audi",6000,0,
             false,null,false,"Car");
@@ -130,7 +130,6 @@ public class ASCityTest {
 
 		assertEquals(tmp.getId(),id);
 		assertEquals(tmp.getName(),tc.getName());
-		assertTrue(tmp.isActive());
 	}
 
 	@Test
