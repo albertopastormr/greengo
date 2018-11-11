@@ -5,9 +5,9 @@
 GreenGo is an manage car rentals desktop java organizer made for the subject Software Modeling of Software Engineer Bachelor's Degree at Universidad Complutense Madrid.
 The documentation has been written in spanish because of a language constraint in the assignment for the subject as some classes at the code.
 ## How to use it
-GreenGo uses [mariadb 10.2](https://downloads.mariadb.org/mariadb/10.2.14/), [Java 7](http://www.oracle.com/technetwork/java/javase/downloads/java-archive-downloads-javase7-521261.html) and [JUnit 4](https://junit.org/junit4/); these tools are necessary to run the application.
+GreenGo uses [mariadb 10.3](https://downloads.mariadb.org/mariadb/10.3.10/), [Java 8](https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) and [JUnit 5](https://junit.org/junit5/); these tools are necessary to run the application.
 ### Running mariadb
-Once you've installed [mariadb 10.2](https://downloads.mariadb.org/mariadb/10.2.14/), launch MySQL client, create a user with _manager_ as username and _manager-if_ as password.
+Once you've installed [mariadb 10.3](https://downloads.mariadb.org/mariadb/10.3.10/), launch MySQL client, create a user with _manager_ as username and _manager-if_ as password.
 After that, run the following command:
 
 `CREATE DATABASE GreenGo`

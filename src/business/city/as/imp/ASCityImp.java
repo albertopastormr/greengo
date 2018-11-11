@@ -68,8 +68,8 @@ public class ASCityImp implements ASCity {
                     } else {
                         tr.rollback();
                         TransactionManager.getInstance().removeTransaction();
-                        if (tc == null) throw new ASException("The city doesn't exist");
-                        else if (!tc.isActive()) throw new ASException("The city is already disabled");
+                        if (tc == null) throw new ASException("ERROR: The city doesn't exist");
+                        else if (!tc.isActive()) throw new ASException("ERROR: The city is already disabled");
                     }
                 } else
                     throw new ASException("ERROR: The city doesn't delete correctly.\n");
@@ -100,7 +100,7 @@ public class ASCityImp implements ASCity {
                     } else {
                         tr.rollback();
                         TransactionManager.getInstance().removeTransaction();
-                        throw new ASException("The city doesn't exist");
+                        throw new ASException("ERROR: The city doesn't exist");
                     }
                 } else
                     throw new ASException("ERROR: The city doesn't update correctly.\n");
@@ -125,7 +125,7 @@ public class ASCityImp implements ASCity {
                         city = DAOCityFactory.getInstance().generateDAOCity().readById(id);
                         tr.commit();
                         TransactionManager.getInstance().removeTransaction();
-                        if (city == null) throw new ASException("The city doesn't exists");
+                        if (city == null) throw new ASException("ERROR: The city doesn't exists");
                 } else
                     throw new ASException("ERROR: The city doesn't show correctly.\n");
             } catch (DAOException | TransactionException e) {

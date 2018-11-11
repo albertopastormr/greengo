@@ -31,7 +31,7 @@ public class ASClientImp implements ASClient {
                         } else {//exists
                             tr.rollback();
                             TransactionManager.getInstance().removeTransaction();
-                            throw new ASException("Other client exists with the same idCard");
+                            throw new ASException("ERROR: Other client exists with the same idCard");
                         }
                     } else
                         throw new ASException("ERROR: The client doesn't create correctly.\n");
@@ -69,9 +69,9 @@ public class ASClientImp implements ASClient {
                     } else {
                         tr.rollback();
                         TransactionManager.getInstance().removeTransaction();
-                        if (tl == null) throw new ASException("The client doesn't exists");
-                        else if (!tl.isActive()) throw new ASException("The client is already disabled");
-                        else if (!activeRentals) throw new ASException("The client has got enabled rentals");
+                        if (tl == null) throw new ASException("ERROR: The client doesn't exists");
+                        else if (!tl.isActive()) throw new ASException("ERROR: The client is already disabled");
+                        else if (!activeRentals) throw new ASException("ERROR: The client has got enabled rentals");
                     }
                 }else
                     throw new ASException("ERROR: The client doesn't delete correctly.\n");
@@ -103,8 +103,8 @@ public class ASClientImp implements ASClient {
                     } else {
                         tr.rollback();
                         TransactionManager.getInstance().removeTransaction();
-                        if (tl == null) throw new ASException("The client doesn't exists");
-                        else throw new ASException("Exists other client with the same idCard");
+                        if (tl == null) throw new ASException("ERROR: The client doesn't exists");
+                        else throw new ASException("ERROR: Exists other client with the same idCard");
                     }
                 } else
                     throw new ASException("ERROR: The client doesn't update correctly.\n");
@@ -129,7 +129,7 @@ public class ASClientImp implements ASClient {
                     client = DAOClientFactory.getInstance().generateDAOClient().readById(id);
                     tr.commit();
                     TransactionManager.getInstance().removeTransaction();
-                    if (client == null) throw new ASException("The client doesn't exists");
+                    if (client == null) throw new ASException("ERROR: The client doesn't exists");
                 }else
                     throw new ASException("ERROR: The client doesn't show correctly.\n");
             } catch (DAOException | TransactionException e) {

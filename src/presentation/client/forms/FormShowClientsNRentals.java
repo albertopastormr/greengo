@@ -63,9 +63,7 @@ public class FormShowClientsNRentals extends JDialog{
 					Integer rentals = Util.parseNoNegativeInt(nrentalsText.getText());
 					dispose();
 					AppController.getInstance().execute(new LightContext(Event.SHOW_CLIENTS_N_RENTAL_CLIENT, rentals));
-
-					dispose();
-				} catch (Exception ex) {
+					} catch (Exception ex) {
 					JOptionPane.showMessageDialog(getRootPane(), ex.getMessage(), "ERROR SHOW CLIENTS WITH MORE THAN N RENTALS", JOptionPane.ERROR_MESSAGE);
 				}
 			}
