@@ -16,7 +16,6 @@ public class DAOClientImp implements DAOClient {
     public Integer create(TClient client) throws DAOException {
         Integer id;
 
-        String queryTail = " FOR UPDATE";
 
         Connection connec = (Connection) TransactionManager.getInstance().getTransaction().getResource();
 
@@ -28,12 +27,11 @@ public class DAOClientImp implements DAOClient {
             catch(SQLException ex){
                 throw new DAOException("ERROR: access to DB at operation 'create' @client unsuccessful\n");
             }
-            queryTail = "";
         }
 
         try { // Tratamiento db
             PreparedStatement ps = connec.prepareStatement("INSERT INTO client(idCardNumber, numRentals, active) " +
-                    "VALUES (?,?,?)" + queryTail);
+                    "VALUES (?,?,?)");
             ps.setString(1, client.getIdCardNumber());
             ps.setInt(2, client.getNumRentals());
             ps.setBoolean(3, client.isActive());
@@ -55,7 +53,7 @@ public class DAOClientImp implements DAOClient {
         }
 
         finally {
-            if(queryTail.equals("")) {
+            if(TransactionManager.getInstance().getTransaction().getResource() == null) {
                 try {
                     connec.close();
                 } catch (SQLException e) {
@@ -73,8 +71,6 @@ public class DAOClientImp implements DAOClient {
 
         Integer id;
 
-        String queryTail = " FOR UPDATE";
-
         Connection connec = (Connection) TransactionManager.getInstance().getTransaction().getResource();
 
         if(connec == null){
@@ -86,12 +82,11 @@ public class DAOClientImp implements DAOClient {
             catch(SQLException ex){
                 throw new DAOException("ERROR: access to DB at operation 'update' @client unsuccessful\n");
             }
-            queryTail = "";
         }
 
         try { // Tratamiento db
             PreparedStatement ps = connec.prepareStatement("UPDATE client SET idCardNumber = ?, numRentals = ?, " +
-                    "active = ? WHERE id = ?" + queryTail);
+                    "active = ? WHERE id = ?");
             ps.setString(1, client.getIdCardNumber());
             ps.setInt(2, client.getNumRentals());
             ps.setBoolean(3, client.isActive());
@@ -115,7 +110,7 @@ public class DAOClientImp implements DAOClient {
         }
 
         finally {
-            if(queryTail.equals("")) {
+            if(TransactionManager.getInstance().getTransaction().getResource() == null) {
                 try {
                     connec.close();
                 } catch (SQLException e) {

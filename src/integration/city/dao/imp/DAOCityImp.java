@@ -18,8 +18,6 @@ public class DAOCityImp implements DAOCity {
     public Integer create(TCity city) throws DAOException {
         Integer id;
 
-        String queryTail = "FOR UPDATE";
-
         Connection connec = (Connection) TransactionManager.getInstance().getTransaction().getResource();
 
         if(connec == null){
@@ -31,7 +29,6 @@ public class DAOCityImp implements DAOCity {
             catch(SQLException ex){
                 throw new DAOException("ERROR: access to DB at operation 'create' @city unsuccessful\n");
             }
-            queryTail = "";
         }
 
         try { // Tratamiento db
@@ -56,7 +53,7 @@ public class DAOCityImp implements DAOCity {
         }
 
         finally {
-            if(queryTail.equals("")) {
+            if(TransactionManager.getInstance().getTransaction().getResource() == null) {
                 try {
                     connec.close();
                 } catch (SQLException e) {
@@ -74,8 +71,6 @@ public class DAOCityImp implements DAOCity {
 
         Integer id;
 
-        String queryTail = " FOR UPDATE";
-
         Connection connec = (Connection) TransactionManager.getInstance().getTransaction().getResource();
 
         if(connec == null){
@@ -87,7 +82,6 @@ public class DAOCityImp implements DAOCity {
             catch(SQLException ex){
                 throw new DAOException("ERROR: access to DB at operation 'update' @city unsuccessful\n");
             }
-            queryTail = "";
         }
 
         try { // Tratamiento db
@@ -115,7 +109,7 @@ public class DAOCityImp implements DAOCity {
         }
 
         finally {
-            if(queryTail.equals("")) {
+            if(TransactionManager.getInstance().getTransaction().getResource() == null) {
                 try {
                     connec.close();
                 } catch (SQLException e) {
