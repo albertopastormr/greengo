@@ -32,15 +32,15 @@ public class ASClientImp implements ASClient {
                         } else {//exists
                             tr.rollback();
                             TransactionManager.getInstance().removeTransaction();
-                            throw new ASException("ERROR: Other client exists with the same idCard");
+                            throw new ASException("ERROR: There is a client with the parameter 'idCard'=="+client.getIdCardNumber()+" (duplication)\n");
                         }
                     } else
-                        throw new ASException("ERROR: The client doesn't create correctly.\n");
+                        throw new ASException("ERROR: Transaction creation failed\n");
             } catch (DAOException | TransactionException e) {
                 throw new ASException(e.getMessage());
             }
         } else
-            throw new IncorrectInputException("ERROR: IdCardNumber can`t be empty and  numRentals must be >=0 \n");
+            throw new IncorrectInputException("ERROR: Parameter 'IdCardNumber' must be !=null and parameter 'numRentals' must be >=0\n");
 
         return idc;
     }
@@ -57,9 +57,9 @@ public class ASClientImp implements ASClient {
                     TClient tl = DAOClientFactory.getInstance().generateDAOClient().readById(id);
                     Collection<TRental> listRentals = DAORentalFactory.getInstance().generateDAORental().showRentalsByClient(id);
 
-                    for (TRental rental : listRentals) // If exists rentals actived couldn't drop client
+                    for (TRental rental : listRentals) // Cannot drop client if there are connected rentals with parameter active==true
                         if (rental.isActive())
-                            throw new ASException("ERROR: Exists rentals active");
+                            throw new ASException("ERROR: There are active @rental entities that have the parameter 'idClient'=="+id+"\n");
 
                     if (tl != null && tl.isActive() ) {//the client exists and is active, and the client hasn't got active rentals
                         tl.setActive(false);
@@ -69,16 +69,16 @@ public class ASClientImp implements ASClient {
                     } else {
                         tr.rollback();
                         TransactionManager.getInstance().removeTransaction();
-                        if (tl == null) throw new ASException("ERROR: The client doesn't exists");
-                        else if (!tl.isActive()) throw new ASException("ERROR: The client is already disabled");
+                        if (tl == null) throw new ASException("ERROR: There is not an existing client with parameter 'id'=="+id+"\n");
+                        else if (!tl.isActive()) throw new ASException("ERROR: The client has parameter 'active'==false");
                     }
                 }else
-                    throw new ASException("ERROR: The client doesn't delete correctly.\n");
+                    throw new ASException("ERROR: Transaction creation failed\n");
             } catch (DAOException | TransactionException e) {
                 throw new ASException(e.getMessage());
             }
         }else
-            throw new IncorrectInputException("ERROR: Id mustn't bre positive or empty \n");
+            throw new IncorrectInputException("ERROR: Id must be >0\n");
 
 
         return idc;
@@ -103,12 +103,12 @@ public class ASClientImp implements ASClient {
                     } else {
                         tr.rollback();
                         TransactionManager.getInstance().removeTransaction();
-                        if (tl == null) throw new ASException("ERROR: The client doesn't exists");
-                        else if (!client.isActive()) throw new ASException("ERROR: The client field is disabled, you must use Drop operation in order to disabled it");
-                        else throw new ASException("ERROR: Exists other client with the same idCard");
+                        if (tl == null) throw new ASException("ERROR: There is not an existing client with parameter 'id'=="+client.getId()+"\n");
+                        else if (!client.isActive()) throw new ASException("ERROR: The client introduced has parameter 'active'==false, you must use 'Drop' operation in order to disable it");
+                        else throw new ASException("ERROR: There is a client with the parameter 'idCard'=="+client.getIdCardNumber()+" (duplication)\n");
                     }
                 } else
-                    throw new ASException("ERROR: The client doesn't update correctly.\n");
+                    throw new ASException("ERROR: Transaction creation failed\n");
             } catch (DAOException | TransactionException e) {
                 throw new ASException(e.getMessage());
             }
@@ -135,14 +135,14 @@ public class ASClientImp implements ASClient {
                     client = DAOClientFactory.getInstance().generateDAOClient().readById(id);
                     tr.commit();
                     TransactionManager.getInstance().removeTransaction();
-                    if (client == null) throw new ASException("ERROR: The client doesn't exists");
+                    if (client == null) throw new ASException("ERROR: There is not an existing client with id=="+id+"\n");
                 }else
-                    throw new ASException("ERROR: The client doesn't show correctly.\n");
+                    throw new ASException("ERROR: Transaction creation failed\n");
             } catch (DAOException | TransactionException e) {
                 throw new ASException(e.getMessage());
             }
         }else
-            throw new IncorrectInputException("ERROR: Id must be positive \n");
+            throw new IncorrectInputException("ERROR: Id must be >0\n");
         return client;
     }
 
@@ -157,7 +157,7 @@ public class ASClientImp implements ASClient {
                 tr.commit();
                 TransactionManager.getInstance().removeTransaction();
             }else
-                throw new ASException("ERROR: The clients doesn't list correctly.\n");
+                throw new ASException("ERROR: Transaction creation failed\n");
         }catch (DAOException | TransactionException e) {
             throw new ASException(e.getMessage());
         }
@@ -177,12 +177,12 @@ public class ASClientImp implements ASClient {
                     tr.commit();
                     TransactionManager.getInstance().removeTransaction();
                 }else
-                    throw new ASException("ERROR: The client doesn't show correctly.\n");
+                    throw new ASException("ERROR: Transaction creation failed\n");
             } catch (DAOException | TransactionException e) {
                 throw new ASException(e.getMessage());
             }
         }else
-            throw new IncorrectInputException("ERROR: N must be positive \n");
+            throw new IncorrectInputException("ERROR: N must be >0\n");
 
         return clientsList;
     }
