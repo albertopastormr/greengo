@@ -11,6 +11,7 @@ import business.rental.TRental;
 import business.rental.TRentalDetails;
 import business.rental.as.ASRental;
 import business.rental.factory.ASRentalFactory;
+import business.vehicle.TCarVehicle;
 import business.vehicle.TVehicle;
 import business.vehicle.as.ASVehicle;
 import business.vehicle.factory.ASVehicleFactory;
@@ -32,7 +33,6 @@ public class ASCityTest {
     private static Date endD = new Date(1543051930000L);
     private static ASCity 	as = ASCityFactory.getInstance().generateASCity();
 	private static TCity tc = new TCity(null,"Madrid",true);
-	private static TCity tc2 = new TCity(null,"Avila",false);
 	private static ASVehicle 	asV = ASVehicleFactory.getInstance().generateASVehicle();
     private static TVehicle tv = new TVehicle(null,"Audi",6000,1,
             false,1,false,"Car");
@@ -67,13 +67,25 @@ public class ASCityTest {
 
 	@Test
 	public void dropCitySuccessful() throws ASException, IncorrectInputException {
-        Integer idV = asV.create(tv);
-		Integer id = as.create(tc);
-		Integer idClient = asClient.create(tclient);
+		TCity tc2 = new TCity(null,"Avila",true);
+		TClient tclient2 = new TClient(null,"00000000X",0,true);
+
+		TCarVehicle tcar = new TCarVehicle(null,"Tesla",6000,0,
+				true,null,true,"7687Y");
+
+		Integer id = as.create(tc2);
+		tv = tcar;
 		tv.setCity(id);
+		Integer idV = asV.create(tv);
+		Integer idClient = asClient.create(tclient2);
+
+		TRental tr = new TRental(null,null,false,
+				10,null,initD,endD);
+
 		tr.setIdVehicle(idV);
 		tr.setIdClient(idClient);
         asR.create(tr);
+		asV.drop(idV);
 
         Integer tmp = as.drop(id);
         assertEquals(id,tmp);
@@ -115,11 +127,12 @@ public class ASCityTest {
 	@Test
 	public void dropCityWithActiveVehicles() throws ASException, IncorrectInputException {
 		TCity tc3 = new TCity(null,"Madrid",true);
+		TCarVehicle tcar = new TCarVehicle(null,"Tesla",6000,0,
+				true,null,true,"7687Y");
 		Integer id = as.create(tc3);
-
+		tv = tcar;
 		tv.setCity(id);
 		asV.create(tv);
-
 		assertThrows(ASException.class, () -> {as.drop(id);});
 	}
 
@@ -184,10 +197,16 @@ public class ASCityTest {
 	@Test
 	public void showClientsByCitySuccessful() throws ASException, IncorrectInputException {
 		TCity tc3 = new TCity(null,"Madrid",true);
+		TCity tc2 = new TCity(null,"Cobena",true);
+		tclient = new TClient(null,"00000000X",0,true);
+		TCarVehicle tcar = new TCarVehicle(null,"Tesla",6000,0,
+				true,null,true,"7687Y");
 
         //data for city 1
 		Integer idClient = asClient.create(tclient);
         Integer idCity = as.create(tc3);
+
+        tv = tcar;
 
         tv.setCity(idCity);
 		Integer idV = asV.create(tv);

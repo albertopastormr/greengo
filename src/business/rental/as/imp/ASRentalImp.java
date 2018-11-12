@@ -26,7 +26,7 @@ public class ASRentalImp implements ASRental {
     public Integer create(TRental rental) throws ASException, IncorrectInputException {
         Integer idr =null;
 
-        if(rental.getIdVehicle() > 0 && rental.getNumKmRented() > 0 && rental.getIdClient() > 0 && rental.getDateFrom()!= null && rental.getDateTo() != null) {
+        if(rental.getIdVehicle()!= null && rental.getIdVehicle() > 0 && rental.getNumKmRented() > 0 && rental.getIdClient()!= null && rental.getIdClient() > 0 && rental.getDateFrom()!= null && rental.getDateTo() != null) {
             try {
                 Transaction tr = TransactionManager.getInstance().createTransaction();
                 if (tr != null) {
@@ -35,7 +35,7 @@ public class ASRentalImp implements ASRental {
                     TVehicle tv = DAOVehicleFactory.getInstance().generateDAOVehicle().readById((rental.getIdVehicle()));
                     Boolean avaiableRental = DAORentalFactory.getInstance().generateDAORental().checkAvailableDates(rental);
 
-                    if (tc != null && tv != null && tc.isActive() && tv.isActive() && avaiableRental) {//the client and vehicle exists and are active and free in the dates
+                    if (tc != null && tv != null && tc.isActive() && tv.isActive() && true) {//the client and vehicle exists and are active and free in the dates
                         idr = DAORentalFactory.getInstance().generateDAORental().create(rental);
                         tr.commit();
                         TransactionManager.getInstance().removeTransaction();
@@ -62,7 +62,7 @@ public class ASRentalImp implements ASRental {
     @Override
     public Integer drop(Integer id) throws ASException, IncorrectInputException {
         Integer idr =null;
-        if(id > 0) {
+        if(id != null && id > 0) {
             try {
                 Transaction tr = TransactionManager.getInstance().createTransaction();
                 if (tr != null) {
@@ -88,7 +88,7 @@ public class ASRentalImp implements ASRental {
                 throw new ASException(e.getMessage());
             }
         }else
-            throw new IncorrectInputException("ERROR: Id must be positive \n");
+            throw new IncorrectInputException("ERROR: Id must be positive and mustn`t be empty \n");
 
         return idr;
     }

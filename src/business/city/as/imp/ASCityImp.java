@@ -14,6 +14,7 @@ import integration.transactionManager.TransactionManager;
 import integration.vehicle.dao.DAOVehicle;
 import integration.vehicle.factory.DAOVehicleFactory;
 
+import java.lang.invoke.MethodHandles;
 import java.util.Collection;
 
 public class ASCityImp implements ASCity {
@@ -47,7 +48,7 @@ public class ASCityImp implements ASCity {
     public Integer drop(Integer id) throws ASException, IncorrectInputException {
         Integer idc =null;
 
-        if(id > 0) {
+        if(id != null && id > 0) {
             try {
                 Transaction tr = TransactionManager.getInstance().createTransaction();
                 if (tr != null) {
@@ -55,18 +56,15 @@ public class ASCityImp implements ASCity {
                     TCity tc = DAOCityFactory.getInstance().generateDAOCity().readById(id);
                     if (tc != null && tc.isActive()) {//the city exists and is active
                         Collection<TVehicle> vehiclesList = DAOVehicleFactory.getInstance().generateDAOVehicle().readVehiclesByCity(id);
-                        boolean isVehicleActive = false;
-
                         for (TVehicle tv : vehiclesList) // If exists vehicles actives not update
-                            if (tv.isActive())
-                                isVehicleActive = true;
-
-                        if (!isVehicleActive) {
+                            if (tv.isActive()) {
+                                throw  new ASException("ERROR: There are vehicles actived");
+                            }
                             tc.setActive(false);
                             idc = DAOCityFactory.getInstance().generateDAOCity().update(tc);
                             tr.commit();
                             TransactionManager.getInstance().removeTransaction();
-                        }
+
                     } else {
                         tr.rollback();
                         TransactionManager.getInstance().removeTransaction();
@@ -166,7 +164,7 @@ public class ASCityImp implements ASCity {
     public Collection<TClient> showClientsByCity(Integer idCity) throws ASException, IncorrectInputException {
         Collection<TClient> clientList = null;
 
-        if(idCity > 0) {
+        if(idCity!= null && idCity > 0) {
             try {
                 Transaction tr = TransactionManager.getInstance().createTransaction();
                 if (tr != null) {
