@@ -1,9 +1,10 @@
 package presentation.vehicle;
 
 import business.vehicle.TVehicle;
+import business.vehicle.TVehicleDetails;
 import presentation.util.TableModel;
 
-public class VehicleTableModel extends TableModel<TVehicle> {
+public class VehicleTableModel extends TableModel<TVehicleDetails> {
 
 	public VehicleTableModel(String[] columnIds) {
 		super(columnIds);
@@ -14,28 +15,28 @@ public class VehicleTableModel extends TableModel<TVehicle> {
 		Object s = null;
 		switch (indiceCol) {
 			case 0:
-				s = list.get(indiceFil).getId();
+				s = (((TVehicle)list.get(indiceFil).getVehicle()).getId());
 				break;
 			case 1:
-				s = list.get(indiceFil).getBrand();
+				s = (((TVehicle)list.get(indiceFil).getVehicle()).getBrand());
 				break;
 			case 2:
-				s = list.get(indiceFil).getEstimatedDuration();
+				s = (((TVehicle)list.get(indiceFil).getVehicle()).getEstimatedDuration());
 				break;
 			case 3:
-				s = list.get(indiceFil).getNumKmTravelled();
+				s = (((TVehicle)list.get(indiceFil).getVehicle()).getNumKmTravelled());
 				break;
 			case 4:
-				s = list.get(indiceFil).isOccupied();
+				s = (((TVehicle)list.get(indiceFil).getVehicle()).isOccupied());
 				break;
 			case 5:
-				s = list.get(indiceFil).getCity();
+				s = (((TVehicle)list.get(indiceFil).getVehicle()).getCity());
 				break;
 			case 6:
-				s = list.get(indiceFil).isActive();
+				s = (((TVehicle)list.get(indiceFil).getVehicle()).isActive());
 				break;
 			case 7:
-				s = list.get(indiceFil).getType();
+				s = (((TVehicle)list.get(indiceFil).getVehicle()).getType());
 				break;
 			default:
 				assert (false);

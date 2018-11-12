@@ -143,8 +143,8 @@ public class FormCreateVehicle extends JDialog {
                         car.setNumKmTravelled(Util.parseNoNegativeInt(kmTravelledText.getText()));
                         car.setPlate(Util.parseString(plateText.getText()));
                         car.setType(Util.parseString(typeComboBox.getSelectedItem().toString()));
-                        dispose();
                         AppController.getInstance().execute(new LightContext(Event.CREATE_VEHICLE, car));
+                        dispose();
                     } else {
                         TBicycleVehicle bicycle = new TBicycleVehicle();
                         bicycle.setCity(Util.parseNoNegativeInt(cityText.getText()));
@@ -155,13 +155,12 @@ public class FormCreateVehicle extends JDialog {
                         bicycle.setNumKmTravelled(Util.parseNoNegativeInt(kmTravelledText.getText()));
                         bicycle.setSerialNumber(Util.parseString(serialNumberText.getText()));
                         bicycle.setType(Util.parseString(typeComboBox.getSelectedItem().toString()));
-                        dispose();
                         AppController.getInstance().execute(new LightContext(Event.CREATE_VEHICLE, bicycle));
+                        dispose();
                     }
                 }
                 catch(Exception e){
-                    JOptionPane.showMessageDialog(getRootPane(), e.getMessage(),
-                            "ERROR IN CREATE VEHICLE", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(getRootPane(), e.getMessage(),"ERROR IN CREATE VEHICLE", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });

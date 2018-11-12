@@ -46,11 +46,20 @@ public class ASVehicleImp implements ASVehicle {
                     if (vehicle.getType().equals("Bicycle") && tc!=null) {
                         TBicycleVehicle tb = (TBicycleVehicle) vehicle;
                         tVehicle = DAOVehicleFactory.getInstance().generateDAOVehicle().showByPlateOrSerial(tb.getSerialNumber());
+                        if(tVehicle == null){
+                            idv = DAOVehicleFactory.getInstance().generateDAOVehicle().create(tb);
+                        }else{
+                            throw  new ASException("ERROR: Exists other bicycle with this plate.");
+                        }
                     } else {
                         TCarVehicle tv = (TCarVehicle) vehicle;
                         tVehicle = DAOVehicleFactory.getInstance().generateDAOVehicle().showByPlateOrSerial(tv.getPlate());
+                       if(tVehicle == null){
+                           idv = DAOVehicleFactory.getInstance().generateDAOVehicle().create(tv);
+                       }else{
+                           throw  new ASException("ERROR: Exists other car with this plate.");
+                       }
                     }
-                    idv = DAOVehicleFactory.getInstance().generateDAOVehicle().create(tVehicle);
                     tr.commit();
                     TransactionManager.getInstance().removeTransaction();
                 }else
