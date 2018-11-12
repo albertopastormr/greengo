@@ -126,7 +126,7 @@ public class ASVehicleImp implements ASVehicle {
         Integer idv = null;
 
         if(tVehicle.getId() != null && tVehicle.getId() > 0 && !tVehicle.getBrand().equals("") && tVehicle.getEstimatedDuration() != null
-                && tVehicle.getNumKmTravelled() != null && tVehicle.getCity() != null && !tVehicle.getType().equals("") && tVehicle.getNumKmTravelled() < tVehicle.getEstimatedDuration()
+                && tVehicle.getNumKmTravelled() != null && tVehicle.getCity() != null && tVehicle.getNumKmTravelled() < tVehicle.getEstimatedDuration()
                 && tVehicle.getEstimatedDuration() > 0 && tVehicle.getNumKmTravelled() >= 0)
         {
             try {

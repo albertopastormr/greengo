@@ -95,7 +95,7 @@ public class DAOVehicleImp  implements DAOVehicle {
         //                "numKmTravelled,occupied,city,active,type
         try { // Tratamiento db
             PreparedStatement ps = connec.prepareStatement("UPDATE vehicle SET brand = ?, estimatedDuration = ?," +
-                    "numKmTravelled = ?, occupied = ?, city = ?, active = ?, type = ?" +
+                    "numKmTravelled = ?, occupied = ?, city = ?, active = ? " +
                     "WHERE id = ?");
             ps.setString(1, vehicle.getBrand());
             ps.setInt(2, vehicle.getEstimatedDuration());
@@ -103,8 +103,7 @@ public class DAOVehicleImp  implements DAOVehicle {
             ps.setBoolean(4,vehicle.isOccupied());
             ps.setInt(5, vehicle.getCity());
             ps.setBoolean(6,vehicle.isActive());
-            ps.setString(7,vehicle.getType());
-            ps.setInt(8, vehicle.getId());
+            ps.setInt(7, vehicle.getId());
             ps.execute();
 
             ps = connec.prepareStatement("SELECT id FROM vehicle WHERE id = ?");
