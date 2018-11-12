@@ -2,6 +2,8 @@
 package integration.vehicle.dao.imp;
 
 import business.city.TCity;
+import business.vehicle.TBicycleVehicle;
+import business.vehicle.TCarVehicle;
 import business.vehicle.TVehicle;
 import integration.DAOException;
 import integration.Transaction.Transaction;
@@ -48,13 +50,29 @@ public class DAOVehicleImp  implements DAOVehicle {
 
             ps = connec.prepareStatement("SELECT LAST_INSERT_ID() FROM vehicle");
             ResultSet rs = ps.executeQuery();
+            ps.close();
 
             if (rs.next()) {
                 id = rs.getInt("LAST_INSERT_ID()");
             }
             else
                 throw new DAOException("ERROR: LAST_INSERT_ID() returned empty after an insert operation\n");
+
+            if(vehicle.getType().equals("car")){
+                ps = connec.prepareStatement("INSERT INTO carvehicle(id,plate) VALUES (?,?)");
+                ps.setInt(1,id);
+                ps.setString(2,((TCarVehicle) vehicle).getPlate());
+            }
+
+            else {
+                ps = connec.prepareStatement("INSERT INTO bicyclevehicle(id,serialNumber) VALUES (?,?)");
+                ps.setInt(1,id);
+                ps.setInt(2,((TBicycleVehicle) vehicle).getSerialNumber());
+             }
+
+            ps.execute();
             ps.close();
+
         }
         catch (SQLException e){
             throw new DAOException("ERROR: SQL statement execution at operation 'create' @vehicle unsuccessful\n");
@@ -65,7 +83,8 @@ public class DAOVehicleImp  implements DAOVehicle {
                 try {
                     connec.close();
                 } catch (SQLException e) {
-                    throw new DAOException("ERROR: closing connection to DB at operation 'create' @city unsuccessful\n");
+                    throw new DAOException("ERROR: closing connection to DB at operation 'create'" +
+                            " @city unsuccessful\n");
                 }
             }
         }
@@ -139,7 +158,7 @@ public class DAOVehicleImp  implements DAOVehicle {
 
     @Override
     public TVehicle readById(Integer id) throws DAOException{
-        TVehicle readVehicle;
+        TVehicle readVehicle = null;
 
         String queryTail = " FOR UPDATE";
 
@@ -164,13 +183,44 @@ public class DAOVehicleImp  implements DAOVehicle {
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
-                readVehicle = new TVehicle(rs.getInt("id"),rs.getString("brand"),
-                        rs.getInt("estimatedDuration"),rs.getInt("numKmTravelled"),
-                        rs.getBoolean("occupied"), rs.getInt("city"),
-                        rs.getBoolean("active"), rs.getString("type"));
+                ResultSet rsIdentifier;
+                switch (rs.getString("type")) {
+                    case "car" :
+                        ps = connec.prepareStatement("SELECT plate FROM carvehicle WHERE id = ?" + queryTail);
+                        ps.setInt(1, id);
+                        rsIdentifier = ps.executeQuery();
+                        readVehicle = new TCarVehicle(
+                                rs.getInt("id"),
+                                rs.getString("brand"),
+                                rs.getInt("estimatedDuration"),
+                                rs.getInt("numKmTravelled"),
+                                rs.getBoolean("occupied"),
+                                rs.getInt("city"),
+                                rs.getBoolean("active"),
+                                rsIdentifier.getString("plate")
+                        );
+                        break;
+                    case "bicycle":
+                        ps = connec.prepareStatement("SELECT serialNumber FROM bicyclevehicle WHERE id = ?" +
+                                queryTail);
+                        ps.setInt(1, id);
+                        rsIdentifier = ps.executeQuery();
+                        readVehicle = new TBicycleVehicle(
+                                rs.getInt("id"),
+                                rs.getString("brand"),
+                                rs.getInt("estimatedDuration"),
+                                rs.getInt("numKmTravelled"),
+                                rs.getBoolean("occupied"),
+                                rs.getInt("city"),
+                                rs.getBoolean("active"),
+                                rsIdentifier.getInt("serialNumber")
+                        );
+                        break;
+                }
             }
             else
                 readVehicle = null;
+
             ps.close();
         }
         catch (SQLException e){
@@ -218,10 +268,43 @@ public class DAOVehicleImp  implements DAOVehicle {
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
-                readVehicles.add(new TVehicle(rs.getInt("id"),rs.getString("brand"),
-                        rs.getInt("estimatedDuration"),rs.getInt("numKmTravelled"),
-                        rs.getBoolean("occupied"), rs.getInt("city"),
-                        rs.getBoolean("active"), rs.getString("type")));
+                ResultSet rsIdentifier;
+                switch (rs.getString("type")) {
+                    case "car" :
+                        ps = connec.prepareStatement("SELECT plate FROM carvehicle WHERE id = ?" + queryTail);
+                        ps.setInt(1, rs.getInt("id"));
+                        rsIdentifier = ps.executeQuery();
+                        readVehicles.add(
+                                new TCarVehicle(
+                                rs.getInt("id"),
+                                rs.getString("brand"),
+                                rs.getInt("estimatedDuration"),
+                                rs.getInt("numKmTravelled"),
+                                rs.getBoolean("occupied"),
+                                rs.getInt("city"),
+                                rs.getBoolean("active"),
+                                rsIdentifier.getString("plate")
+                        ));
+                        break;
+
+                    case "bicycle":
+                        ps = connec.prepareStatement("SELECT serialNumber FROM bicyclevehicle WHERE id = ?" +
+                                queryTail);
+                        ps.setInt(1, rs.getInt("id"));
+                        rsIdentifier = ps.executeQuery();
+                        readVehicles.add(
+                                new TBicycleVehicle(
+                                rs.getInt("id"),
+                                rs.getString("brand"),
+                                rs.getInt("estimatedDuration"),
+                                rs.getInt("numKmTravelled"),
+                                rs.getBoolean("occupied"),
+                                rs.getInt("city"),
+                                rs.getBoolean("active"),
+                                rsIdentifier.getInt("serialNumber")
+                        ));
+                        break;
+                }
             }
 
             ps.close();
@@ -271,10 +354,43 @@ public class DAOVehicleImp  implements DAOVehicle {
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
-                readVehicles.add(new TVehicle(rs.getInt("id"),rs.getString("brand"),
-                        rs.getInt("estimatedDuration"),rs.getInt("numKmTravelled"),
-                        rs.getBoolean("occupied"), rs.getInt("city"),
-                        rs.getBoolean("active"), rs.getString("type")));
+                ResultSet rsIdentifier;
+                switch (rs.getString("type")) {
+                    case "car" :
+                        ps = connec.prepareStatement("SELECT plate FROM carvehicle WHERE id = ?" + queryTail);
+                        ps.setInt(1, rs.getInt("id"));
+                        rsIdentifier = ps.executeQuery();
+                        readVehicles.add(
+                                new TCarVehicle(
+                                        rs.getInt("id"),
+                                        rs.getString("brand"),
+                                        rs.getInt("estimatedDuration"),
+                                        rs.getInt("numKmTravelled"),
+                                        rs.getBoolean("occupied"),
+                                        rs.getInt("city"),
+                                        rs.getBoolean("active"),
+                                        rsIdentifier.getString("plate")
+                                ));
+                        break;
+
+                    case "bicycle":
+                        ps = connec.prepareStatement("SELECT serialNumber FROM bicyclevehicle WHERE id = ?" +
+                                queryTail);
+                        ps.setInt(1, rs.getInt("id"));
+                        rsIdentifier = ps.executeQuery();
+                        readVehicles.add(
+                                new TBicycleVehicle(
+                                        rs.getInt("id"),
+                                        rs.getString("brand"),
+                                        rs.getInt("estimatedDuration"),
+                                        rs.getInt("numKmTravelled"),
+                                        rs.getBoolean("occupied"),
+                                        rs.getInt("city"),
+                                        rs.getBoolean("active"),
+                                        rsIdentifier.getInt("serialNumber")
+                                ));
+                        break;
+                }
             }
 
             ps.close();
@@ -325,10 +441,43 @@ public class DAOVehicleImp  implements DAOVehicle {
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
-                readVehicles.add(new TVehicle(rs.getInt("id"),rs.getString("brand"),
-                        rs.getInt("estimatedDuration"),rs.getInt("numKmTravelled"),
-                        rs.getBoolean("occupied"), rs.getInt("city"),
-                        rs.getBoolean("active"), rs.getString("type")));
+                ResultSet rsIdentifier;
+                switch (rs.getString("type")) {
+                    case "car" :
+                        ps = connec.prepareStatement("SELECT plate FROM carvehicle WHERE id = ?" + queryTail);
+                        ps.setInt(1, rs.getInt("id"));
+                        rsIdentifier = ps.executeQuery();
+                        readVehicles.add(
+                                new TCarVehicle(
+                                        rs.getInt("id"),
+                                        rs.getString("brand"),
+                                        rs.getInt("estimatedDuration"),
+                                        rs.getInt("numKmTravelled"),
+                                        rs.getBoolean("occupied"),
+                                        rs.getInt("city"),
+                                        rs.getBoolean("active"),
+                                        rsIdentifier.getString("plate")
+                                ));
+                        break;
+
+                    case "bicycle":
+                        ps = connec.prepareStatement("SELECT serialNumber FROM bicyclevehicle WHERE id = ?" +
+                                queryTail);
+                        ps.setInt(1, rs.getInt("id"));
+                        rsIdentifier = ps.executeQuery();
+                        readVehicles.add(
+                                new TBicycleVehicle(
+                                        rs.getInt("id"),
+                                        rs.getString("brand"),
+                                        rs.getInt("estimatedDuration"),
+                                        rs.getInt("numKmTravelled"),
+                                        rs.getBoolean("occupied"),
+                                        rs.getInt("city"),
+                                        rs.getBoolean("active"),
+                                        rsIdentifier.getInt("serialNumber")
+                                ));
+                        break;
+                }
             }
 
             ps.close();
@@ -353,10 +502,67 @@ public class DAOVehicleImp  implements DAOVehicle {
 
     }
 
-    //TODO showByPlateOrSerial
     @Override
-    public TVehicle showByPlateOrSerial(String plate) {
-        return null;
+    public Integer readByPlateOrSerialNumber(TVehicle vehicle) throws DAOException{
+        Integer id;
+
+        String queryTail = " FOR UPDATE";
+
+        driverIdentify();
+        Transaction transaction = TransactionManager.getInstance().getTransaction();
+        Connection connec;
+        if(transaction == null){
+            try {
+                connec = DriverManager.getConnection(Util.getConnectionChain());
+            }
+            catch(SQLException ex){
+                throw new DAOException("ERROR: access to DB at operation 'readByPlateOrSerialNumber' " +
+                        "@vehicle unsuccessful\n");
+            }
+            queryTail = "";
+        }
+        else
+            connec = (Connection) transaction.getResource();
+
+        try { // Tratamiento db
+            PreparedStatement ps;
+            ResultSet rs;
+
+            if(vehicle.getType().equals("bicycle")) {
+                ps = connec.prepareStatement("SELECT id FROM bicyclevehicle " +
+                                                                    "WHERE serialNumber = ?" + queryTail);
+                ps.setInt(1, ((TBicycleVehicle)vehicle).getSerialNumber());
+            }
+            else {
+                ps = connec.prepareStatement("SELECT id FROM carvehicle " +
+                        "WHERE brand = ?" + queryTail);
+                ps.setString(1, ((TCarVehicle)vehicle).getPlate());
+            }
+            rs = ps.executeQuery();
+            ps.close();
+
+            if(rs.next()){
+                id = rs.getInt("id");
+            }
+            else
+                id = null;
+        }
+        catch (SQLException e){
+            throw new DAOException("ERROR: SQL statement execution at operation 'readByPlateOrSerialNumber' @vehicle unsuccessful\n");
+        }
+
+        finally {
+            if(queryTail.equals("")) {
+                try {
+                    connec.close();
+                } catch (SQLException e) {
+                    throw new DAOException("ERROR: closing connection to DB at operation 'readByPlateOrSerialNumber'" +
+                            " @vehicle unsuccessful\n");
+                }
+            }
+        }
+
+        return id;
     }
 
     @Override

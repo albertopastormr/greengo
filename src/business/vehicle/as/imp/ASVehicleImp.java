@@ -26,6 +26,8 @@ import integration.vehicle.factory.DAOVehicleFactory;
 import java.util.ArrayList;
 import java.util.Collection;
 
+//TODO separar las excepciones tanto AS como InputError para que aporten informacion relevante, corregir mensajes
+// de las excepciones
 public class ASVehicleImp implements ASVehicle {
     @Override
     public Integer create(TVehicle vehicle) throws ASException, IncorrectInputException {
@@ -41,35 +43,33 @@ public class ASVehicleImp implements ASVehicle {
                 if(tr!=null) {
                     tr.start();
                     TCity tc = DAOCityFactory.getInstance().generateDAOCity().readById(vehicle.getCity());
-                    if(tc == null) throw  new ASException("ERROR: The city doesn`t exists");
-                    TVehicle tVehicle = null;
+                    if(tc == null) throw  new ASException("ERROR: The city doesn`t exist");
 
-                    if (vehicle.getType().equals("Bicycle") && tc!=null) {
-                        TBicycleVehicle tb = (TBicycleVehicle) vehicle;
-                        tVehicle = DAOVehicleFactory.getInstance().generateDAOVehicle().showByPlateOrSerial(tb.getSerialNumber());
-                        if(tVehicle == null){
-                            idv = DAOVehicleFactory.getInstance().generateDAOVehicle().create(tb);
-                        }else{
-                            throw  new ASException("ERROR: Exists other bicycle with this serial_number.");
+                    if (vehicle.getType().equals("Bicycle")) {
+                        if(!verifyNotRepeatedIdentifier(vehicle)){
+                            idv = DAOVehicleFactory.getInstance().generateDAOVehicle().create(vehicle);
                         }
-                    } else {
-                        TCarVehicle tv = (TCarVehicle) vehicle;
-                        tVehicle = DAOVehicleFactory.getInstance().generateDAOVehicle().showByPlateOrSerial(tv.getPlate());
-                        if(tVehicle == null){
-                            idv = DAOVehicleFactory.getInstance().generateDAOVehicle().create(tv);
-                        }else{
-                            throw  new ASException("ERROR: Exists other car with this plate.");
+                        else{
+                            throw  new ASException("ERROR: Exists another bicycle with the same serial number.");
+                        }
+                    }
+                    else {
+                        if(!verifyNotRepeatedIdentifier(vehicle)){
+                            idv = DAOVehicleFactory.getInstance().generateDAOVehicle().create(vehicle);
+                        }
+                        else{
+                            throw  new ASException("ERROR: Exists another car with the same plate.");
                         }
                     }
                     tr.commit();
                     TransactionManager.getInstance().removeTransaction();
                 }else
-                    throw new ASException("ERROR: The vehicle doesn't create correctly.\n");
+                    throw new ASException("ERROR: The vehicle wasn't created correctly.\n");
             } catch (DAOException | TransactionException e) {
                 throw new ASException(e.getMessage());
             }
         }else
-            throw new IncorrectInputException("ERROR: The data of vehicle isn't insert correctly.\n");
+            throw new IncorrectInputException("ERROR: The data of the vehicle wasn't inserted correctly.\n");
 
         return idv;
     }
@@ -258,5 +258,13 @@ public class ASVehicleImp implements ASVehicle {
         }
 
         return details;
+    }
+
+    private boolean verifyNotRepeatedIdentifier(TVehicle vehicle) throws DAOException{
+        //already exists a vehicle with vehicle's brand or serial number
+        if (DAOVehicleFactory.getInstance().generateDAOVehicle().readByPlateOrSerialNumber(vehicle) != null)
+            return false;
+
+        return true;
     }
 }

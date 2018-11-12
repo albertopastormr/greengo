@@ -20,6 +20,6 @@ public interface DAOVehicle {
     
     Collection<TVehicle> readVehiclesByCity(Integer id) throws DAOException;
 
-    TVehicle showByPlateOrSerial(String plate);
+    Integer readByPlateOrSerialNumber(TVehicle vehicle) throws DAOException;
 
 }
