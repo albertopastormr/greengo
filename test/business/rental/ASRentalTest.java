@@ -47,6 +47,10 @@ public class ASRentalTest {
     public void createRentalSuccessful() throws ASException, IncorrectInputException {
         tv = new TBicycleVehicle(null,"Tesla",6000,0,
                 false,null,true,"12345");
+        tCity = new TCity(null,"Madrid",false);
+        tClient = new TClient(null,"00000000X",0,true);
+        tr = new TRental(null,null,true,10,null,dFrom,dTo);
+
         Integer idCity = asCity.create(tCity);
         tv.setCity(idCity);
         Integer idV = asV.create(tv);
@@ -61,6 +65,12 @@ public class ASRentalTest {
 
     @Test
     public void createRentalIncorrectInputID() throws ASException, IncorrectInputException {
+        tv = new TBicycleVehicle(null,"Tesla",6000,0,
+                false,null,true,"12345");
+        tCity = new TCity(null,"Madrid",false);
+        tClient = new TClient(null,"00000000X",0,true);
+        tr = new TRental(null,null,true,10,null,dFrom,dTo);
+
         Integer idCity = asCity.create(tCity);
         tv.setCity(idCity);
         Integer idV = asV.create(tv);
@@ -100,19 +110,6 @@ public class ASRentalTest {
 
         //id vehicle must be > 0
         tr.setIdVehicle(-1);
-        assertThrows(IncorrectInputException.class, () -> {as.create(tr);});
-    }
-
-    @Test
-    public void createRentalIncorrectInputActive() throws ASException, IncorrectInputException {
-        Integer idCity = asCity.create(tCity);
-        tv.setCity(idCity);
-        Integer idV = asV.create(tv);
-        Integer idC = asClient.create(tClient);
-        tr.setIdClient(idC);
-        tr.setIdVehicle(idV);
-
-        tr.setActive(true); //active must be false
         assertThrows(IncorrectInputException.class, () -> {as.create(tr);});
     }
 
@@ -318,13 +315,18 @@ public class ASRentalTest {
         tr.setIdVehicle(idV);
 
         // num km rented must be <= estimated Duration of the vehicle
-        as.create(tr);
         assertThrows(ASException.class,() -> {as.create(tr);});
     }
     //Drop method
 
     @Test
     public void dropRentalSuccessful() throws ASException, IncorrectInputException {
+        tv = new TBicycleVehicle(null,"Tesla",6000,0,
+                false,null,true,"12345");
+        tCity = new TCity(null,"Madrid",false);
+        tClient = new TClient(null,"00000000X",0,true);
+        tr = new TRental(null,null,true,10,null,dFrom,dTo);
+
         Integer idCity = asCity.create(tCity);
         tv.setCity(idCity);
         Integer idV = asV.create(tv);
@@ -332,6 +334,7 @@ public class ASRentalTest {
         tr.setIdClient(idC);
         tr.setIdVehicle(idV);
         Integer idR = as.create(tr);
+        as.drop(idR);
 
         assertEquals(as.show(idR).getRental().isActive(), false);
     }
@@ -361,6 +364,12 @@ public class ASRentalTest {
 
     @Test
     public void dropRentalAlreadyInactive() throws ASException, IncorrectInputException {
+        tv = new TBicycleVehicle(null,"Tesla",6000,0,
+                false,null,true,"12345");
+        tCity = new TCity(null,"Madrid",false);
+        tClient = new TClient(null,"00000000X",0,true);
+        tr = new TRental(null,null,true,10,null,dFrom,dTo);
+
         Integer idCity = asCity.create(tCity);
         tv.setCity(idCity);
         Integer idV = asV.create(tv);
@@ -376,6 +385,12 @@ public class ASRentalTest {
     //update method
     @Test
     void updateRentalSuccessful() throws ASException, IncorrectInputException {
+        tv = new TBicycleVehicle(null,"Tesla",6000,0,
+                false,null,true,"12345");
+        tCity = new TCity(null,"Madrid",false);
+        tClient = new TClient(null,"00000000X",0,true);
+        tr = new TRental(null,null,true,10,null,dFrom,dTo);
+
         Integer idCity = asCity.create(tCity);
         tv.setCity(idCity);
         Integer idVehicle = asV.create(tv);
@@ -387,8 +402,8 @@ public class ASRentalTest {
         tr.setId(idRental);
 
         tr.setNumKmRented(1);
-        tr.setDateFrom(new Date(1_536_624_000_000L));
-        tr.setDateTo(new Date(1_541_894_400_000L));
+        tr.setDateFrom(new Date(1540373530000L));
+        tr.setDateTo(new Date(1543051930000L));
         Integer tmpID = as.update(tr);
 
         assertEquals(idRental,tmpID);
