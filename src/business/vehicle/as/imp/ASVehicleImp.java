@@ -33,7 +33,7 @@ public class ASVehicleImp implements ASVehicle {
 
         if(!vehicle.getBrand().equals("") && !vehicle.getBrand().equals("") && vehicle.getEstimatedDuration() != null && vehicle.getEstimatedDuration() > 0
                 && vehicle.getNumKmTravelled() != null && vehicle.getNumKmTravelled()>= 0 &&vehicle.getCity() != null && !vehicle.getType().equals("")
-                && vehicle.getNumKmTravelled() <= vehicle.getEstimatedDuration() && (vehicle.getType().equals("Bicycle") || vehicle.getType().equals("Car")))
+                && vehicle.getNumKmTravelled() <= vehicle.getEstimatedDuration() && (vehicle.getType().equals("bicycle") || vehicle.getType().equals("car")))
         {
             try {
                 Transaction tr = TransactionManager.getInstance().createTransaction();

@@ -33,7 +33,7 @@ public class ASVehicleTest {
     private static TVehicle tv = new TVehicle(null,"Audi",6000,0,
             false,null,false,"car");
     private static ASCity asCity = ASCityFactory.getInstance().generateASCity();
-    private static TCity tCity = new TCity(null,"Madrid",false);
+    private static TCity tCity = new TCity(null,"Madrid",true);
     private static ASClient asClient = ASClientFactory.getInstance().generateASClient();
     private static TClient tClient = new TClient(null,"00000000X",0,false);
     private static ASRental asR = ASRentalFactory.getInstance().generateASRental();
@@ -351,6 +351,7 @@ public class ASVehicleTest {
 
     @Test
     public void updateVehicleIncorrectInputType() throws ASException, IncorrectInputException {
+        tv.setCity(1);
         Integer idV = as.create(tv);
 
         assertTrue(idV > 0);
