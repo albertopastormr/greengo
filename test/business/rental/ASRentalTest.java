@@ -10,6 +10,7 @@ import business.client.as.ASClient;
 import business.client.factory.ASClientFactory;
 import business.rental.as.ASRental;
 import business.rental.factory.ASRentalFactory;
+import business.vehicle.TBicycleVehicle;
 import business.vehicle.TVehicle;
 import business.vehicle.as.ASVehicle;
 import business.vehicle.factory.ASVehicleFactory;
@@ -28,7 +29,7 @@ public class ASRentalTest {
     private static ASClient asClient = ASClientFactory.getInstance().generateASClient();
     private static ASCity asCity = ASCityFactory.getInstance().generateASCity();
     private static TCity tCity = new TCity(null,"Madrid",false);
-    private static TClient tClient = new TClient(null,"00000000X",0,false);
+    private static TClient tClient = new TClient(null,"00000000X",0,true);
     private static ASVehicle asV = ASVehicleFactory.getInstance().generateASVehicle();
     private static TVehicle tv = new TVehicle(null,"Audi",6000,0,
             false,null,false,"Car");
@@ -44,6 +45,8 @@ public class ASRentalTest {
     //create method
     @Test
     public void createRentalSuccessful() throws ASException, IncorrectInputException {
+        tv = new TBicycleVehicle(null,"Tesla",6000,0,
+                false,null,true,"12345");
         Integer idCity = asCity.create(tCity);
         tv.setCity(idCity);
         Integer idV = asV.create(tv);
@@ -200,6 +203,9 @@ public class ASRentalTest {
 
     @Test
     public void createRentalIncorrectInputDates() throws ASException, IncorrectInputException {
+        tv = new TBicycleVehicle(null,"Tesla",6000,0,
+                false,null,true,"12345");
+        tr = new TRental(null,null,false,10,null,dFrom,dTo);
         Integer idCity = asCity.create(tCity);
         tv.setCity(idCity);
         Integer idV = asV.create(tv);
@@ -210,7 +216,6 @@ public class ASRentalTest {
         //DateFrom must be < DateTo
         tr.setDateFrom(dTo);
         tr.setDateTo(dFrom);
-
         assertThrows(IncorrectInputException.class, () -> as.create(tr));
     }
 
@@ -225,6 +230,12 @@ public class ASRentalTest {
 
     @Test
     public void createRentalVehicleNotActive() throws ASException, IncorrectInputException {
+        tv = new TBicycleVehicle(null,"Tesla",6000,0,
+                false,null,true,"12345");
+        tCity = new TCity(null,"Avila",true);
+        tClient = new TClient(null,"00000000X",0,true);
+        tr = new TRental(null,null,false,10,null,dFrom,dTo);
+
         Integer idCity = asCity.create(tCity);
         tv.setCity(idCity);
         Integer idV = asV.create(tv);
@@ -232,7 +243,6 @@ public class ASRentalTest {
         Integer idC = asClient.create(tClient);
         tr.setIdClient(idC);
         tr.setIdVehicle(idV);
-
         assertThrows(ASException.class, () -> {as.create(tr);});
     }
 
@@ -295,6 +305,11 @@ public class ASRentalTest {
 
     @Test
     public void createRentalKmRentedExceedVehicleEstimatedDuration() throws ASException, IncorrectInputException {
+        tv = new TBicycleVehicle(null,"Tesla",6000,0,
+                false,null,true,"12345");
+        tCity = new TCity(null,"Madrid",true);
+        tr = new TRental(null,null,false,10000,null,dFrom,dTo);
+
         Integer idCity = asCity.create(tCity);
         tv.setCity(idCity);
         Integer idV = asV.create(tv);
@@ -303,7 +318,7 @@ public class ASRentalTest {
         tr.setIdVehicle(idV);
 
         // num km rented must be <= estimated Duration of the vehicle
-        tr.setNumKmRented(tv.getEstimatedDuration());
+        as.create(tr);
         assertThrows(ASException.class,() -> {as.create(tr);});
     }
     //Drop method

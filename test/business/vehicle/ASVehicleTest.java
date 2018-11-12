@@ -185,6 +185,7 @@ public class ASVehicleTest {
                 false,null,true,"ALBARICOQUE");
         TCity tCity1 = new TCity(null,"Madrid",true);
         TClient tClientAux = new TClient(null,"00000000X",0,true);
+        tr = new TRental(null,null,true,10,null,dFrom,dTo);
 
         Integer idcity = asCity.create(tCity1);
         tcarAux.setCity(idcity);

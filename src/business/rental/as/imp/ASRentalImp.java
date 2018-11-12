@@ -26,7 +26,8 @@ public class ASRentalImp implements ASRental {
     public Integer create(TRental rental) throws ASException, IncorrectInputException {
         Integer idr =null;
 
-        if(rental.getIdVehicle()!= null && rental.getIdVehicle() > 0 && rental.getNumKmRented() > 0 && rental.getIdClient()!= null && rental.getIdClient() > 0 && rental.getDateFrom()!= null && rental.getDateTo() != null) {
+        if(rental.getIdVehicle()!= null && rental.getIdVehicle() > 0 && rental.getNumKmRented() > 0 && rental.getIdClient()!= null && rental.getIdClient() > 0 && rental.getDateFrom()!= null && rental.getDateTo() != null &&
+        rental.getDateFrom().before(rental.getDateTo())) {
             try {
                 Transaction tr = TransactionManager.getInstance().createTransaction();
                 if (tr != null) {
@@ -35,7 +36,7 @@ public class ASRentalImp implements ASRental {
                     TVehicle tv = DAOVehicleFactory.getInstance().generateDAOVehicle().readById((rental.getIdVehicle()));
                     Boolean avaiableRental = DAORentalFactory.getInstance().generateDAORental().checkAvailableDates(rental);
 
-                    if (tc != null && tv != null && tc.isActive() && tv.isActive() && true) {//the client and vehicle exists and are active and free in the dates
+                    if (tc != null && tv != null && tc.isActive() && tv.isActive() && true && tv.getEstimatedDuration() >= tv.getNumKmTravelled() +rental.getNumKmRented()) {//the client and vehicle exists and are active and free in the dates
                         idr = DAORentalFactory.getInstance().generateDAORental().create(rental);
                         tr.commit();
                         TransactionManager.getInstance().removeTransaction();
@@ -48,6 +49,8 @@ public class ASRentalImp implements ASRental {
                             throw new ASException("ERROR: Vehicle or Client is  disabled");
                         else if (!avaiableRental)
                             throw new ASException("ERROR: Vehicle or Client isn`t avaiable for the dates");
+                        else
+                            throw new ASException("ERROR: NumKmRentes must be less than EstimatedDuration from vehicle");
                     }
                 }else
                     throw new ASException("ERROR: The rental doesn't create correctly.\n");
@@ -55,7 +58,7 @@ public class ASRentalImp implements ASRental {
                 throw new ASException(e.getMessage());
             }
         }else
-            throw new IncorrectInputException("ERROR: Id's must be positive and dates not empty \n");
+            throw new IncorrectInputException("ERROR: Id's must be positive and dates not empty and correct \n");
         return idr;
     }
 

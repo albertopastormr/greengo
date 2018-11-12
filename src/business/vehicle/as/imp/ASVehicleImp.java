@@ -88,17 +88,16 @@ public class ASVehicleImp implements ASVehicle {
                     if (tv != null && tv.isActive()) {//the vehicle exists and is active
 
                         Collection<TRental> rentalList = DAORentalFactory.getInstance().generateDAORental().showRentalsByVehicle(idVehicle);
-                        boolean isRentalActive = false;
+
                         for (TRental tRental : rentalList) // If exists vehicles actives not update
                             if (tRental.isActive())
-                                isRentalActive = true;
+                                throw new ASException("ERROR: Exists active rentals belonged to this vehicle ");
 
-                        if (!isRentalActive) {
                             tv.setActive(false);
                             idv = DAOVehicleFactory.getInstance().generateDAOVehicle().update(tv);
                             tr.commit();
                             TransactionManager.getInstance().removeTransaction();
-                        }
+
                     } else {
                         tr.rollback();
                         TransactionManager.getInstance().removeTransaction();

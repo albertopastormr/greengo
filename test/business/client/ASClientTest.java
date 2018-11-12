@@ -68,6 +68,10 @@ public class ASClientTest {
     //Drop method
     @Test
     public void dropSuccessful() throws ASException, IncorrectInputException {
+        tc = new TClient(null,"00000000X",1,true);
+        tv= new TCarVehicle(null,"Tesla",6000,0,
+                true,null,true,"7687Y");
+        tr = new TRental(null,null,false,10,null,dFrom,dTo);
         Integer idCity = asc.create(tcity);
         tv.setCity(idCity);
         Integer idV = asV.create(tv);
@@ -75,6 +79,7 @@ public class ASClientTest {
 
         tr.setIdClient(id);
         tr.setIdVehicle(idV);
+
         Integer idR = asR.create(tr);
 
         as.drop(id);
