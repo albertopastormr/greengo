@@ -56,13 +56,12 @@ public class ASClientImp implements ASClient {
                     tr.start();
                     TClient tl = DAOClientFactory.getInstance().generateDAOClient().readById(id);
                     Collection<TRental> listRentals = DAORentalFactory.getInstance().generateDAORental().showRentalsByClient(id);
-                    boolean activeRentals = false;
 
                     for (TRental rental : listRentals) // If exists rentals actived couldn't drop client
                         if (rental.isActive())
-                            activeRentals = true;
+                            throw new ASException("ERROR: Exists rentals active");
 
-                    if (tl != null && tl.isActive() && !activeRentals) {//the client exists and is active, and the client hasn't got active rentals
+                    if (tl != null && tl.isActive() ) {//the client exists and is active, and the client hasn't got active rentals
                         tl.setActive(false);
                         idc = DAOClientFactory.getInstance().generateDAOClient().update(tl);
                         tr.commit();
@@ -72,7 +71,6 @@ public class ASClientImp implements ASClient {
                         TransactionManager.getInstance().removeTransaction();
                         if (tl == null) throw new ASException("ERROR: The client doesn't exists");
                         else if (!tl.isActive()) throw new ASException("ERROR: The client is already disabled");
-                        else if (!activeRentals) throw new ASException("ERROR: The client has got enabled rentals");
                     }
                 }else
                     throw new ASException("ERROR: The client doesn't delete correctly.\n");

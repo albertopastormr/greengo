@@ -12,6 +12,7 @@ import business.rental.TRental;
 import business.rental.TRentalDetails;
 import business.rental.as.ASRental;
 import business.rental.factory.ASRentalFactory;
+import business.vehicle.TCarVehicle;
 import business.vehicle.TVehicle;
 import business.vehicle.as.ASVehicle;
 import business.vehicle.factory.ASVehicleFactory;
@@ -109,13 +110,16 @@ public class ASClientTest {
 
     @Test
     public void dropClientWithActiveRentals() throws ASException, IncorrectInputException {
-       TVehicle tv2 = new TVehicle(null,"Tesla",60000,200,
-               false,null,false,"Car");
+
+       tv= new TCarVehicle(null,"Tesla",6000,0,
+        true,null,true,"7687Y");
+       tc = new TClient(null,"00000000X",1,true);
+       tr = new TRental(null,null,true,10,null,dFrom,dTo);
 
        Integer idC = as.create(tc);
        Integer idCity = asc.create(tcity);
-       tv2.setCity(idCity);
-       Integer idV = asV.create(tv2);
+       tv.setCity(idCity);
+       Integer idV = asV.create(tv);
 
        tr.setIdClient(idC);
        tr.setIdVehicle(idV);
