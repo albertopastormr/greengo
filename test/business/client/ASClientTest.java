@@ -67,6 +67,8 @@ public class ASClientTest {
     //Drop method
     @Test
     public void dropSuccessful() throws ASException, IncorrectInputException {
+        Integer idCity = asc.create(tcity);
+        tv.setCity(idCity);
         Integer idV = asV.create(tv);
         Integer id = as.create(tc);
 
@@ -161,9 +163,10 @@ public class ASClientTest {
     //showAll method
     @Test
     public void showAllClientsSuccessful() throws ASException, IncorrectInputException {
+        tc = new TClient(null,"00000000X",1,false);
         Integer idC = as.create(tc);
 
-        TClient tc2 = new TClient(null, "11111111X", 0, false);
+        TClient tc2 = new TClient(null, "11111111X", 0, true);
         as.create(tc2);
 
         Collection<TClient> collec = as.showAll();
