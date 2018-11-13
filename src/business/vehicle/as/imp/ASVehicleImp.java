@@ -199,7 +199,8 @@ public class ASVehicleImp implements ASVehicle {
 
                 for(TVehicle tv : vehicleList) {
                     TCity tc = daoCity.readById(tv.getCity());
-                    retList.add(new TVehicleDetails(tv, tc));
+                    if(tv.isActive())
+                        retList.add(new TVehicleDetails(tv, tc));
                 }
 
                 tr.commit();

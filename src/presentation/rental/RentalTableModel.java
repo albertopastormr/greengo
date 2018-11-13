@@ -15,25 +15,25 @@ public class RentalTableModel extends TableModel<TRentalDetails> {
 		Object s = null;
 		switch (indiceCol) {
 			case 0:
-				s = ((TRental)list.get(indiceFil).getRental()).getId();
+				s = list.get(indiceFil).getRental().getId();
 				break;
 			case 1:
-				s = ((TRental)list.get(indiceFil).getRental()).getIdVehicle();
+				s = list.get(indiceFil).getRental().getIdVehicle();
 				break;
 			case 2:
-				s = ((TRental)list.get(indiceFil).getRental()).getIdClient();
+				s = list.get(indiceFil).getRental().getIdClient();
 				break;
 			case 3:
-				s = ((TRental)list.get(indiceFil).getRental()).isActive();
+				s = list.get(indiceFil).getRental().isActive();
 				break;
 			case 4:
-				s = ((TRental)list.get(indiceFil).getRental()).getNumKmRented();
+				s = list.get(indiceFil).getRental().getNumKmRented();
 				break;
 			case 5:
-				s = ((TRental)list.get(indiceFil).getRental()).getDateFrom();
+				s = list.get(indiceFil).getRental().getDateFrom();
 			break;
 			case 6:
-				s = ((TRental)list.get(indiceFil).getRental()).getDateTo();
+				s = list.get(indiceFil).getRental().getDateTo();
 				break;
 			default:
 				assert (false);
