@@ -189,6 +189,7 @@ public class DAOVehicleImp  implements DAOVehicle {
                         ps = connec.prepareStatement("SELECT plate FROM carvehicle WHERE id = ?" + queryTail);
                         ps.setInt(1, id);
                         rsIdentifier = ps.executeQuery();
+                        rsIdentifier.next();
                         readVehicle = new TCarVehicle(
                                 rs.getInt("id"),
                                 rs.getString("brand"),
@@ -205,6 +206,7 @@ public class DAOVehicleImp  implements DAOVehicle {
                                 queryTail);
                         ps.setInt(1, id);
                         rsIdentifier = ps.executeQuery();
+                        rsIdentifier.next();
                         readVehicle = new TBicycleVehicle(
                                 rs.getInt("id"),
                                 rs.getString("brand"),
