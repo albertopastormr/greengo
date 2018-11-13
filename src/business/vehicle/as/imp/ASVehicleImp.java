@@ -142,7 +142,7 @@ public class ASVehicleImp implements ASVehicle {
                         tr.rollback();
                         TransactionManager.getInstance().removeTransaction();
                         if ( tv == null ) throw new ASException("ERROR: The vehicle doesn't exists");
-                        else if ( tVehicle.isActive() ) throw new ASException("ERROR: The active field must be true");
+                        else if ( tVehicle.isOccupied() ) throw new ASException("ERROR: The occupied field must be true");
                         else if ( tv.isOccupied()) throw new ASException("ERROR: The vehicle is occupied");
                     }
                 } else

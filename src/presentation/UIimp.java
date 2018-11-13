@@ -209,7 +209,7 @@ public class UIimp extends UI{
 			case SHOW_CLIENTS_N_RENTAL_CLIENT:
 				TableModel modelNRentals = new ClientTableModel(ClientPanel.getColumnId());
 				modelNRentals.setList((List<TClient>) context.getData());
-				ViewHelpers.createSpecificTable(modelNRentals, "Show clients with N rentals");
+				ViewHelpers.createSpecificTable(modelNRentals, "Show clients with more than N rentals");
 				break;
 			case CREATE_CITY:
 				Util.inform("Added city with id " + (context.getData()));
