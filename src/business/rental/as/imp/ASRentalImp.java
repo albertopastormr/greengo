@@ -53,7 +53,7 @@ public class ASRentalImp implements ASRental {
                             throw new ASException("ERROR: NumKmRentes must be less than EstimatedDuration from vehicle");
                     }
                 }else
-                    throw new ASException("ERROR: The rental doesn't create correctly.\n");
+                    throw new ASException("ERROR: Transaction creation failed\n");
             } catch (DAOException | TransactionException e) {
                 throw new ASException(e.getMessage());
             }
@@ -86,7 +86,7 @@ public class ASRentalImp implements ASRental {
                     }
 
                 } else
-                    throw new ASException("ERROR: The rental doesn't create correctly.\n");
+                    throw new ASException("ERROR: Transaction drop failed\n");
             } catch (DAOException | TransactionException e) {
                 throw new ASException(e.getMessage());
             }
@@ -130,7 +130,7 @@ public class ASRentalImp implements ASRental {
                             throw new ASException("ERROR: Active field must be true in order to update it");
                     }
                 }else
-                    throw new ASException("ERROR: The rental doesn't update correctly.\n");
+                    throw new ASException("ERROR: Transaction update failed\n");
             } catch (DAOException | TransactionException e) {
                 throw new ASException(e.getMessage());
             }
@@ -160,7 +160,7 @@ public class ASRentalImp implements ASRental {
                         throw new ASException("ERROR: The rental doesn't exists");
                     }
                 }else
-                    throw new ASException("ERROR: The rental doesn't show correctly.\n");
+                    throw new ASException("ERROR: Transaction show failed\n");
             } catch (IncorrectInputException | DAOException | TransactionException e) {
                 throw new ASException(e.getMessage());
             }
@@ -181,7 +181,7 @@ public class ASRentalImp implements ASRental {
                 tr.commit();
                 TransactionManager.getInstance().removeTransaction();
             }else
-                throw new ASException("ERROR: The rentals doesn't list correctly.\n");
+                throw new ASException("ERROR: Transaction showALL failed\n");
         }catch (DAOException | TransactionException e) {
             throw new ASException(e.getMessage());
         } catch (IncorrectInputException e) {

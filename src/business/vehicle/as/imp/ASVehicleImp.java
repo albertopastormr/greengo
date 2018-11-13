@@ -46,7 +46,7 @@ public class ASVehicleImp implements ASVehicle {
                     if(tc == null) throw  new ASException("ERROR: The city doesn`t exist");
 
                     if (vehicle.getType().equals("Bicycle")) {
-                        if(!verifyNotRepeatedIdentifier(vehicle)){
+                        if(verifyNotRepeatedIdentifier(vehicle)){
                             idv = DAOVehicleFactory.getInstance().generateDAOVehicle().create(vehicle);
                         }
                         else{
@@ -64,7 +64,7 @@ public class ASVehicleImp implements ASVehicle {
                     tr.commit();
                     TransactionManager.getInstance().removeTransaction();
                 }else
-                    throw new ASException("ERROR: The vehicle wasn't created correctly.\n");
+                    throw new ASException("ERROR: Transaction creation failed\n");
             } catch (DAOException | TransactionException e) {
                 throw new ASException(e.getMessage());
             }
@@ -106,7 +106,7 @@ public class ASVehicleImp implements ASVehicle {
                     }
                 }
                 else {
-                    throw new ASException("ERROR: The vehicle doesn't delete correctly.\n");
+                    throw new ASException("ERROR: Transaction drop failed\n");
 
                 }
             }catch (DAOException | ASException | TransactionException e) {
@@ -146,7 +146,7 @@ public class ASVehicleImp implements ASVehicle {
                         else if ( tv.isOccupied()) throw new ASException("ERROR: The vehicle is occupied");
                     }
                 } else
-                    throw new ASException("ERROR: The vehicle doesn't update correctly.\n");
+                    throw new ASException("ERROR: Transaction update failed\n");
                 } catch (DAOException | ASException | TransactionException e) {
                 throw new ASException(e.getMessage());
             }
@@ -175,7 +175,7 @@ public class ASVehicleImp implements ASVehicle {
                     TransactionManager.getInstance().removeTransaction();
 
                 } else
-                    throw new ASException("ERROR: The vehicle doesn't show correctly.\n");
+                    throw new ASException("ERROR: Transaction show failed\n");
             } catch (TransactionException | ASException | DAOException e) {
                 throw new ASException(e.getMessage());
             }
@@ -233,7 +233,7 @@ public class ASVehicleImp implements ASVehicle {
                 tr.commit();
                 TransactionManager.getInstance().removeTransaction();
             }else
-                throw new ASException("ERROR: The vehicles availables doesn't list correctly.\n");
+                throw new ASException("ERROR: Transaction showAllAvailableVehicles failed\n");
         }catch (DAOException | TransactionException e) {
             throw new ASException(e.getMessage());
         }
