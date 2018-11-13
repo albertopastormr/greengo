@@ -293,8 +293,126 @@ public class DAORentalImp implements DAORental {
         return readRentals;
     }
 
-    public Boolean checkAvailableDates(TRental rental) {
-        return null; // TODO whole method
+    @Override
+    public Collection<TRental> readByIdVehicleAndDateRange(Integer id, java.util.Date dateFrom, java.util.Date dateTo) throws DAOException {
+        Collection<TRental> readRentals = new ArrayList<>();
+
+        String queryTail = " FOR UPDATE";
+
+        driverIdentify();
+        Transaction transaction = TransactionManager.getInstance().getTransaction();
+        Connection connec;
+        if(transaction == null){
+            try {
+                connec = DriverManager.getConnection(Util.getConnectionChain());
+            }
+            catch(SQLException ex){
+                throw new DAOException("ERROR: access to DB at operation 'readByIdVehicleAndDateRange' @rental unsuccessful\n");
+            }
+            queryTail = "";
+        }
+        else
+            connec = (Connection) transaction.getResource();
+
+        try { // Tratamiento db
+            PreparedStatement ps = connec.prepareStatement("SELECT * FROM rental WHERE idVehicle = ? AND " +
+                    "((dateFrom >= ? AND dateFrom <= ?) OR (dateTo >= ? AND dateTo <= ?))" + queryTail);
+            ps.setInt(1, id);
+            ps.setDate(2, new java.sql.Date(dateFrom.getTime()));
+            ps.setDate(3, new java.sql.Date(dateTo.getTime()));
+            ps.setDate(4, new java.sql.Date(dateFrom.getTime()));
+            ps.setDate(5, new java.sql.Date(dateTo.getTime()));
+
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                readRentals.add(new TRental(rs.getInt("id"), rs.getInt("idVehicle"),
+                        rs.getBoolean("active"), rs.getInt("numKmRented"),
+                        rs.getInt("idClient"), rs.getDate("dateFrom"),
+                        rs.getDate("dateTo")));
+            }
+
+            ps.close();
+        }
+        catch (SQLException e){
+            throw new DAOException("ERROR: SQL statement execution at operation 'readByIdVehicleAndDateRange' @rental " +
+                    "unsuccessful\n");
+        }
+
+        finally {
+            if(queryTail.equals("")) {
+                try {
+                    connec.close();
+                } catch (SQLException e) {
+                    throw new DAOException("ERROR: closing connection to DB at operation 'readByIdVehicleAndDateRange' " +
+                            "@rental unsuccessful\n");
+                }
+            }
+        }
+
+        return readRentals;
+    }
+
+    public Collection<TRental> readByIdClientAndDateRange(Integer id, java.util.Date dateFrom, java.util.Date dateTo) throws DAOException {
+        Collection<TRental> readRentals = new ArrayList<>();
+
+        String queryTail = " FOR UPDATE";
+
+        driverIdentify();
+        Transaction transaction = TransactionManager.getInstance().getTransaction();
+        Connection connec;
+        if(transaction == null){
+            try {
+                connec = DriverManager.getConnection(Util.getConnectionChain());
+            }
+            catch(SQLException ex){
+                throw new DAOException("ERROR: access to DB at operation 'readByIdClientAndDateRange' @rental unsuccessful\n");
+            }
+            queryTail = "";
+        }
+        else
+            connec = (Connection) transaction.getResource();
+
+        try { // Tratamiento db
+            PreparedStatement ps = connec.prepareStatement("SELECT * FROM rental WHERE idClient = ? AND " +
+                    "((dateFrom >= ? AND dateFrom <= ?) OR (dateTo >= ? AND dateTo <= ?) " +
+                    " OR (dateFrom <= ? AND dateTo >= ?))" + queryTail);
+            ps.setInt(1, id);
+            ps.setDate(2, new java.sql.Date(dateFrom.getTime()));
+            ps.setDate(3, new java.sql.Date(dateTo.getTime()));
+            ps.setDate(4, new java.sql.Date(dateFrom.getTime()));
+            ps.setDate(5, new java.sql.Date(dateTo.getTime()));
+            ps.setDate(6, new java.sql.Date(dateFrom.getTime()));
+            ps.setDate(7, new java.sql.Date(dateTo.getTime()));
+
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                readRentals.add(new TRental(rs.getInt("id"), rs.getInt("idVehicle"),
+                        rs.getBoolean("active"), rs.getInt("numKmRented"),
+                        rs.getInt("idClient"), rs.getDate("dateFrom"),
+                        rs.getDate("dateTo")));
+            }
+
+            ps.close();
+        }
+        catch (SQLException e){
+            throw new DAOException("ERROR: SQL statement execution at operation 'readByIdClientAndDateRange' @rental " +
+                    "unsuccessful\n");
+        }
+
+        finally {
+            if(queryTail.equals("")) {
+                try {
+                    connec.close();
+                } catch (SQLException e) {
+                    throw new DAOException("ERROR: closing connection to DB at operation 'readByIdClientAndDateRange' " +
+                            "@rental unsuccessful\n");
+                }
+            }
+        }
+
+        return readRentals;
     }
 
     public Collection<TRental> readAll() throws DAOException {
