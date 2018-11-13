@@ -1,5 +1,7 @@
 package integration.rental.dao;
 
+import business.ASException;
+import business.IncorrectInputException;
 import business.city.TCity;
 import business.client.TClient;
 import business.client.as.ASClient;
@@ -113,6 +115,33 @@ class DAORentalTest {
         Collection<TRental> read = dao.readAll();
 
         assertTrue(checkValues(tr, (TRental) read.toArray()[0]));
+    }
+
+    @Test
+    void readByIdClientAndDateRange() throws DAOException {
+        Integer idCity = daoCity.create(tc1);
+        Integer idClient = daoClient.create(tc);
+        tv.setCity(idCity);
+        Integer idVehicle1 = daoVehicle.create(tv);
+        Integer rental1 = dao.create(tr);
+        tr.setDateFrom(new Date(116,10,4));
+        tr.setDateTo(new Date(117,10,5));
+        Integer rental2 = dao.create(tr); //init < dFrom && end > dFrom && end < dTo
+        tr.setDateFrom(new Date(177,10,5));
+        tr.setDateTo(new Date(117,11,3));
+        Integer rental3 = dao.create(tr); //init > dFrom && end < dTo
+        tr.setDateFrom(new Date(117,11,3));
+        tr.setDateTo(new Date(117,12,1));
+        Integer rental4 = dao.create(tr); //init > dFrom && init < dTo && end > dTo
+        tr.setDateFrom(new Date(116,12,1));
+        tr.setDateTo(new Date(118,1,1));
+        Integer rental5 = dao.create(tr); // init < dFrom && end > dFrom
+
+        Collection<TRental> rentalsInRange = dao.readByIdClientAndDateRange(idClient,dFrom,dTo);
+        Integer i = 1;
+        for(TRental r : rentalsInRange){
+            assertEquals(i,r.getId());
+        }
     }
 
     private boolean checkValues(TRental expected, TRental actual) {
