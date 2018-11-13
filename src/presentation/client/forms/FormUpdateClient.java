@@ -39,7 +39,7 @@ public class FormUpdateClient extends JDialog{
 	}
 
 	private JPanel fieldsPanel() {
-		JPanel ret = ViewHelpers.createFieldPanel(4);
+		JPanel ret = ViewHelpers.createFieldPanel(3);
 
 		//ID
 		JLabel idLabel = new JLabel("ID");
