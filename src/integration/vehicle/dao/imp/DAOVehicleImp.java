@@ -396,41 +396,21 @@ public class DAOVehicleImp  implements DAOVehicle {
 
             while (rs.next()) {
                 ResultSet rsIdentifier;
-                switch (rs.getString("type")) {
-                    case "Car" :
-                        ps = connec.prepareStatement("SELECT plate FROM carvehicle WHERE id = ?" + queryTail);
-                        ps.setInt(1, rs.getInt("id"));
-                        rsIdentifier = ps.executeQuery();
-                        readVehicles.add(
-                                new TCarVehicle(
-                                        rs.getInt("id"),
-                                        rs.getString("brand"),
-                                        rs.getInt("estimatedDuration"),
-                                        rs.getInt("numKmTravelled"),
-                                        rs.getBoolean("occupied"),
-                                        rs.getInt("city"),
-                                        rs.getBoolean("active"),
-                                        rsIdentifier.getString("plate")
-                                ));
-                        break;
+                ps = connec.prepareStatement("SELECT * FROM vehicle " + queryTail);
+                rs = ps.executeQuery();
 
-                    case "Bicycle":
-                        ps = connec.prepareStatement("SELECT serialNumber FROM bicyclevehicle WHERE id = ?" +
-                                queryTail);
-                        ps.setInt(1, rs.getInt("id"));
-                        rsIdentifier = ps.executeQuery();
-                        readVehicles.add(
-                                new TBicycleVehicle(
-                                        rs.getInt("id"),
-                                        rs.getString("brand"),
-                                        rs.getInt("estimatedDuration"),
-                                        rs.getInt("numKmTravelled"),
-                                        rs.getBoolean("occupied"),
-                                        rs.getInt("city"),
-                                        rs.getBoolean("active"),
-                                        rsIdentifier.getInt("serialNumber")
-                                ));
-                        break;
+                while(rs.next()) {
+                    readVehicles.add(
+                            new TVehicle(
+                                    rs.getInt("id"),
+                                    rs.getString("brand"),
+                                    rs.getInt("estimatedDuration"),
+                                    rs.getInt("numKmTravelled"),
+                                    rs.getBoolean("occupied"),
+                                    rs.getInt("city"),
+                                    rs.getBoolean("active"),
+                                    rs.getString("type")
+                            ));
                 }
             }
 

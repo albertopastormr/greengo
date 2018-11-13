@@ -223,6 +223,8 @@ public class ASCityTest {
         Integer idCity2 = as.create(tc3);
 
         tv.setCity(idCity2);
+		tcar.setPlate("YYYYY6");
+		tv = tcar;
        	Integer idVFail = asV.create(tv);
 
         tr.setIdVehicle(idVFail);
