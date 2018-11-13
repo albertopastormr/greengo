@@ -271,50 +271,27 @@ public class DAOVehicleImp  implements DAOVehicle {
 
             while (rs.next()) {
                 ResultSet rsIdentifier;
-                switch (rs.getString("type")) {
-                    case "car" :
-                        ps = connec.prepareStatement("SELECT plate FROM carvehicle WHERE id = ?" + queryTail);
-                        ps.setInt(1, rs.getInt("id"));
-                        rsIdentifier = ps.executeQuery();
-                        readVehicles.add(
-                                new TCarVehicle(
-                                rs.getInt("id"),
-                                rs.getString("brand"),
-                                rs.getInt("estimatedDuration"),
-                                rs.getInt("numKmTravelled"),
-                                rs.getBoolean("occupied"),
-                                rs.getInt("city"),
-                                rs.getBoolean("active"),
-                                rsIdentifier.getString("plate")
-                        ));
-                        break;
-
-                    case "bicycle":
-                        ps = connec.prepareStatement("SELECT serialNumber FROM bicyclevehicle WHERE id = ?" +
-                                queryTail);
-                        ps.setInt(1, rs.getInt("id"));
-                        rsIdentifier = ps.executeQuery();
-                        readVehicles.add(
-                                new TBicycleVehicle(
-                                rs.getInt("id"),
-                                rs.getString("brand"),
-                                rs.getInt("estimatedDuration"),
-                                rs.getInt("numKmTravelled"),
-                                rs.getBoolean("occupied"),
-                                rs.getInt("city"),
-                                rs.getBoolean("active"),
-                                rsIdentifier.getInt("serialNumber")
-                        ));
-                        break;
+                ps = connec.prepareStatement("SELECT * FROM vehicle " + queryTail);
+                rs = ps.executeQuery();
+                while(rs.next()) {
+                    readVehicles.add(
+                            new TVehicle(
+                                    rs.getInt("id"),
+                                    rs.getString("brand"),
+                                    rs.getInt("estimatedDuration"),
+                                    rs.getInt("numKmTravelled"),
+                                    rs.getBoolean("occupied"),
+                                    rs.getInt("city"),
+                                    rs.getBoolean("active"),
+                                    rs.getString("type")
+                            ));
                 }
             }
-
             ps.close();
         }
         catch (SQLException e){
             throw new DAOException("ERROR: SQL statement execution at operation 'readAll' @vehicle unsuccessful\n");
         }
-
         finally {
             if(queryTail.equals("")) {
                 try {
@@ -358,7 +335,7 @@ public class DAOVehicleImp  implements DAOVehicle {
             while (rs.next()) {
                 ResultSet rsIdentifier;
                 switch (rs.getString("type")) {
-                    case "car" :
+                    case "Car" :
                         ps = connec.prepareStatement("SELECT plate FROM carvehicle WHERE id = ?" + queryTail);
                         ps.setInt(1, rs.getInt("id"));
                         rsIdentifier = ps.executeQuery();
@@ -375,7 +352,7 @@ public class DAOVehicleImp  implements DAOVehicle {
                                 ));
                         break;
 
-                    case "bicycle":
+                    case "Bicycle":
                         ps = connec.prepareStatement("SELECT serialNumber FROM bicyclevehicle WHERE id = ?" +
                                 queryTail);
                         ps.setInt(1, rs.getInt("id"));
@@ -445,7 +422,7 @@ public class DAOVehicleImp  implements DAOVehicle {
             while (rs.next()) {
                 ResultSet rsIdentifier;
                 switch (rs.getString("type")) {
-                    case "car" :
+                    case "Car" :
                         ps = connec.prepareStatement("SELECT plate FROM carvehicle WHERE id = ?" + queryTail);
                         ps.setInt(1, rs.getInt("id"));
                         rsIdentifier = ps.executeQuery();
@@ -462,7 +439,7 @@ public class DAOVehicleImp  implements DAOVehicle {
                                 ));
                         break;
 
-                    case "bicycle":
+                    case "Bicycle":
                         ps = connec.prepareStatement("SELECT serialNumber FROM bicyclevehicle WHERE id = ?" +
                                 queryTail);
                         ps.setInt(1, rs.getInt("id"));
@@ -530,14 +507,14 @@ public class DAOVehicleImp  implements DAOVehicle {
             PreparedStatement ps;
             ResultSet rs;
 
-            if(vehicle.getType().equals("bicycle")) {
+            if(vehicle.getType().equals("Bicycle")) {
                 ps = connec.prepareStatement("SELECT id FROM bicyclevehicle " +
                                                                     "WHERE serialNumber = ?" + queryTail);
                 ps.setInt(1, ((TBicycleVehicle)vehicle).getSerialNumber());
             }
             else {
                 ps = connec.prepareStatement("SELECT id FROM carvehicle " +
-                        "WHERE brand = ?" + queryTail);
+                        "WHERE plate = ?" + queryTail);
                 ps.setString(1, ((TCarVehicle)vehicle).getPlate());
             }
             rs = ps.executeQuery();
