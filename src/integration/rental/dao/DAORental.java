@@ -20,7 +20,9 @@ public interface DAORental {
 
     Collection<TRental> readAll() throws DAOException;
 
-    Boolean checkAvailableDates(TRental rental);
+    Collection<TRental> readByIdClientAndDateRange(Integer id, Date dateFrom, Date dateTo) throws DAOException;
+
+    Collection<TRental> readByIdVehicleAndDateRange(Integer id, Date dateFrom, Date dateTo) throws DAOException;
 
     void deleteAll() throws DAOException;
 

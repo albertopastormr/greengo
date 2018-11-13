@@ -19,6 +19,9 @@ class DAOClientTest {
     @BeforeEach
     private void setUp() throws Exception {
         dao.deleteAll();
+
+        tc1 = new TClient(1,"idcard1",0,false);
+        tc2 = new TClient(2,"idcard2",0,false);
     }
 
     private boolean checkValues(TClient expected,TClient actual){
