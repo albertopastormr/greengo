@@ -136,7 +136,7 @@ public class CommandFactoryImp extends CommandFactory {
 				ret = new ShowAllClient();
 				break;
 			case SHOW_CLIENTS_N_RENTAL_CLIENT:
-				ret = new ShowClientsByCity();
+				ret = new ShowNRentals();
 				break;
 			case CREATE_CITY:
 				ret = new CreateCity();
