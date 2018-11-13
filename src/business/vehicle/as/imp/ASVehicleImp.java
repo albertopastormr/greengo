@@ -124,7 +124,7 @@ public class ASVehicleImp implements ASVehicle {
 
         Integer idv = null;
 
-        if(tVehicle.getId() != null && tVehicle.getId() > 0 && !tVehicle.getBrand().equals("") && tVehicle.getEstimatedDuration() != null
+        if(tVehicle.getId() != null && tVehicle.isActive() && tVehicle.getId() > 0 && tVehicle.getCity()> 0 && !tVehicle.getBrand().equals("") && tVehicle.getEstimatedDuration() != null
                 && tVehicle.getNumKmTravelled() != null && tVehicle.getCity() != null && tVehicle.getNumKmTravelled() < tVehicle.getEstimatedDuration()
                 && tVehicle.getEstimatedDuration() > 0 && tVehicle.getNumKmTravelled() >= 0)
         {
@@ -134,7 +134,7 @@ public class ASVehicleImp implements ASVehicle {
                     tr.start();
                     TVehicle tv = DAOVehicleFactory.getInstance().generateDAOVehicle().readById(tVehicle.getId());
 
-                    if (tv != null && tv.isActive() && !tv.isOccupied() && verifyNotRepeatedIdentifier(tVehicle)) { //the vehicle exists, is active and ins`t occupied
+                    if (tv != null  &&  tv.isActive() && !tv.isOccupied() && verifyNotRepeatedIdentifier(tVehicle)) { //the vehicle exists, is active and ins`t occupied
                         idv = DAOVehicleFactory.getInstance().generateDAOVehicle().update(tVehicle);
                         tr.commit();
                         TransactionManager.getInstance().removeTransaction();

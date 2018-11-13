@@ -33,7 +33,7 @@ public class ASVehicleTest {
     private static TVehicle tv = new TVehicle(null,"Audi",6000,0,
             false,null,true,"Car");
     private static TCarVehicle tcar = new TCarVehicle(null,"Tesla",6000,0,
-            false,null,true,"ALBARICOQUE");
+            false,null,true,"YYYYY");
     private static TBicycleVehicle tb = new TBicycleVehicle(null,"Tesla",6000,0,
             false,null,true,12345);
     private static ASCity asCity = ASCityFactory.getInstance().generateASCity();
@@ -53,7 +53,8 @@ public class ASVehicleTest {
     @Test
     public void createVehicleSuccessful() throws ASException, IncorrectInputException {
         Integer idC = asCity.create(tCity);
-        tv = tcar;
+        tv = new TCarVehicle(null,"Tesla",6000,0,
+                false,null,true,"YYYYY");
         // City exist and active
         assertTrue(idC > 0);
         assertTrue(asCity.show(idC).isActive());
@@ -68,6 +69,8 @@ public class ASVehicleTest {
 
     @Test
     public void createVehicleIncorrectInputID(){
+        tv = new TCarVehicle(null,"Tesla",6000,0,
+                false,null,true,"YYYYY");
         tv.setId(1); //id must be null
         assertThrows(IncorrectInputException.class, () -> {as.create(tv);});
     }
@@ -121,21 +124,21 @@ public class ASVehicleTest {
     //Drop method
     @Test
     public void dropSuccessful() throws ASException, IncorrectInputException {
-        TCarVehicle tcarAux = new TCarVehicle(null,"Tesla",6000,0,
-                false,null,true,"ALBARICOQUE");
-        TCity tCity1 = new TCity(null,"Madrid",true);
+        tv= new TCarVehicle(null,"Tesla",6000,0,
+                false,null,true,"YYYY");
+        tCity = new TCity(null,"Madrid",true);
 
-        Integer idC = asCity.create(tCity1);
-        tcarAux.setCity(idC);
-        Integer id = as.create(tcarAux);
+        Integer idC = asCity.create(tCity);
+        tv.setCity(idC);
+        Integer id = as.create(tv);
         // Compruebas si existen y estan activos
         assertTrue(id > 0);
         assertTrue(as.show(id).getVehicle().isActive());
         assertTrue(idC > 0);
         assertTrue(asCity.show(idC).isActive());
 
-        tcarAux.setId(id);
-        tcarAux.setCity(idC);
+        tv.setId(id);
+        tv.setCity(idC);
 
         as.drop(id);
         assertTrue(!as.show(id).getVehicle().isActive());
@@ -159,12 +162,12 @@ public class ASVehicleTest {
 
     @Test
     public void dropVehicleAlreadyInactive() throws ASException, IncorrectInputException {
-        TCarVehicle tcarAux = new TCarVehicle(null,"Tesla",6000,0,
-                false,null,true,"ALBARICOQUE");
+        tv= new TCarVehicle(null,"Tesla",6000,0,
+                false,null,true,"XXXX");
         TCity tCity1 = new TCity(null,"Madrid",true);
         Integer idC = asCity.create(tCity1);
-        tcarAux.setCity(idC);
-        Integer id = as.create(tcarAux);
+        tv.setCity(idC);
+        Integer id = as.create(tv);
 
         // Compruebas si existen y estan activos
         assertTrue(id > 0);
@@ -172,8 +175,8 @@ public class ASVehicleTest {
         assertTrue(idC > 0);
         assertTrue(asCity.show(idC).isActive());
 
-        tcarAux.setId(id);
-        tcarAux.setCity(idC);
+        tv.setId(id);
+        tv.setCity(idC);
         as.drop(id);
 
         assertThrows(ASException.class, () -> {as.drop(id);});
@@ -181,15 +184,15 @@ public class ASVehicleTest {
 
     @Test
     public void dropVehicleWithActiveRentals() throws ASException, IncorrectInputException {
-        TCarVehicle tcarAux = new TCarVehicle(null,"Tesla",6000,0,
-                false,null,true,"ALBARICOQUE");
-        TCity tCity1 = new TCity(null,"Madrid",true);
+        tv = new TCarVehicle(null,"Tesla",6000,0,
+                false,null,true,"YYYY");
+        tCity = new TCity(null,"Madrid",true);
         TClient tClientAux = new TClient(null,"00000000X",0,true);
         tr = new TRental(null,null,true,10,null,dFrom,dTo);
 
-        Integer idcity = asCity.create(tCity1);
-        tcarAux.setCity(idcity);
-        Integer idV = as.create(tcarAux);
+        Integer idcity = asCity.create(tCity);
+        tv.setCity(idcity);
+        Integer idV = as.create(tv);
 
         Integer idC = asClient.create(tClientAux);
 
@@ -212,7 +215,11 @@ public class ASVehicleTest {
     //Show method
     @Test
     public void showVehicleSuccessful() throws ASException, IncorrectInputException {
+        tv = new TCarVehicle(null,"Tesla",6000,0,
+                false,null,true,"XXXX");
+
         Integer idC = asCity.create(tCity);
+        tv.setCity(idC);
         Integer idV = as.create(tv);
 
         assertTrue(idV > 0);
@@ -245,14 +252,21 @@ public class ASVehicleTest {
     //showAll method
     @Test
     public void showAllVehicleSuccessful() throws ASException, IncorrectInputException {
+        tv = new TCarVehicle(null,"Tesla",6000,0,
+                false,null,true,"XXXX");
+        tCity = new TCity(null,"Madrid",true);
+        tClient = new TClient(null,"00000000X",0,true);
+        tr = new TRental(null,null,true,10,null,dFrom,dTo);
 
+        Integer idC = asCity.create(tCity);
+        tv.setCity(idC);
         Integer idV = as.create(tv);
 
         assertTrue(idV > 0);
         assertTrue(as.show(idV).getVehicle().isActive());
 
-        TVehicle tv2 = new TVehicle(null, "Audi", 1000, 300,
-                false, 1, false, "Car");
+        TVehicle tv2 = new TCarVehicle(null, "Audi", 1000, 300,
+                false, 1, true, "YYYY");
 
         Integer idV2 = as.create(tv2);
 
@@ -278,20 +292,21 @@ public class ASVehicleTest {
 
     @Test
     public void updateVehicleSuccessful() throws ASException, IncorrectInputException {
-        TCarVehicle tcarAux = new TCarVehicle(null,"Tesla",6000,0,
-                false,null,true,"ALBARICOQUE");
-        TCity tCity1 = new TCity(null,"Madrid",true);
-        Integer idC = asCity.create(tCity1);
-        tcarAux.setCity(idC);
-        Integer idV = as.create(tcarAux);
+        tv = new TCarVehicle(null,"Tesla",6000,0,
+                false,null,true,"YYYY");
+        tCity = new TCity(null,"Madrid",true);
+        Integer idC = asCity.create(tCity);
+        tv.setCity(idC);
+        Integer idV = as.create(tv);
 
         assertTrue(idV > 0);
         assertTrue(as.show(idV).getVehicle().isActive());
         assertTrue(idC > 0);
         assertTrue(asCity.show(idC).isActive());
 
-        tcarAux.setCity(idC);
-        TVehicle updatedVehicle = new TVehicle(idV, "Audi", 1000, 300, false, idC, false, "Car");
+        tv.setCity(idC);
+        TVehicle updatedVehicle = new TCarVehicle(idV,"Test",6000,0,
+                false,idC,true,"TTTTT");
         Integer idOut = as.update(updatedVehicle);
 
         assertTrue(idOut > 0);
@@ -349,6 +364,8 @@ public class ASVehicleTest {
 
     @Test
     public void updateVehicleIncorrectInputCity1(){
+        tv = new TCarVehicle(null,"Tesla",6000,0,
+                false,null,true,"XXXX");
         tv.setId(1);
         tv.setCity(-1); //city must be > 0
         assertThrows(IncorrectInputException.class, () -> {as.update(tv);});
@@ -356,6 +373,8 @@ public class ASVehicleTest {
 
     @Test
     public void updateVehicleIncorrectInputCity2(){
+        tv = new TCarVehicle(null,"Tesla",6000,0,
+                false,null,true,"XXXX");
         tv.setId(1);
         tv.setCity(0); //city must be > 0
         assertThrows(IncorrectInputException.class, () -> {as.update(tv);});
@@ -363,6 +382,8 @@ public class ASVehicleTest {
 
     @Test
     public void updateVehicleIncorrectInputActive(){
+        tv = new TCarVehicle(null,"Tesla",6000,0,
+                false,null,true,"YYYYY");
         tv.setId(1);
         tv.setActive(false); //active must be true on update operation,
                             // to deactivate the entity, it's necessary to use the drop operation
@@ -373,7 +394,7 @@ public class ASVehicleTest {
     public void updateVehicleNotExists() throws ASException, IncorrectInputException {
         TCity tc2 = new TCity(null,"Madrid",true);
         TCarVehicle tcar = new TCarVehicle(null,"Tesla",6000,0,
-                false,null,true,"ALBARICOQUE");
+                false,null,true,"XXXXX");
         tv = tcar;
         Integer idtCity = asCity.create(tc2);
         tv.setCity(idtCity);
@@ -385,45 +406,35 @@ public class ASVehicleTest {
     public void updateVehicleCurrentlyOccupied() throws ASException, IncorrectInputException {
         TCity tc2 = new TCity(null,"Madrid",true);
         TCarVehicle tcar = new TCarVehicle(null,"Tesla",6000,0,
-                true,null,true,"ALBARICOQUE");
-        TVehicle tvAux = tcar;
+                true,null,true,"XXXX");
         Integer idC = asCity.create(tc2);
         tcar.setCity(idC);
-        Integer idV = as.create(tvAux);
-
-        assertTrue(idV > 0);
-        assertTrue(as.show(idV).getVehicle().isActive());
-        assertTrue(idC > 0);
-        assertTrue(asCity.show(idC).isActive());
-
-        tvAux.setCity(idC);
-        tvAux.setId(idV);
-        tvAux.setOccupied(true);
-
-        tvAux.setNumKmTravelled(1);
-        assertThrows(ASException.class, () -> {as.update(tvAux);});
+        Integer idv = as.create(tcar);
+        tcar.setId(idv);
+        assertThrows(ASException.class, () -> {as.update(tcar);});
     }
 
     @Test
     public void updateVehicleCityNotExists() throws ASException, IncorrectInputException {
+        tv = new TCarVehicle(null,"Tesla",6000,0,
+                false,null,true,"XXXX");
         TCity tc2 = new TCity(null,"Madrid",true);
-        TCarVehicle tcar = new TCarVehicle(null,"Tesla",6000,0,
-                true,null,true,"ALBARICOQUE");
+
 
         Integer idC = asCity.create(tc2);
-        tcar.setCity(idC);
-        Integer idV = as.create(tcar);
+        tv.setCity(idC);
+        Integer idV = as.create(tv);
 
         assertTrue(idV > 0);
         assertTrue(as.show(idV).getVehicle().isActive());
         assertTrue(idC > 0);
         assertTrue(asCity.show(idC).isActive());
 
-        tcar.setCity(idC);
-        tcar.setId(idV);
+        tv.setCity(idC);
+        tv.setId(idV);
 
-        tcar.setCity(2);
-        assertThrows(ASException.class, () -> {as.update(tcar);});
+        tv.setCity(2);
+        assertThrows(ASException.class, () -> {as.update(tv);});
     }
 
     //private methods
