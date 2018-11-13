@@ -62,8 +62,8 @@ public class FormShowClient extends JDialog{
 				try {
 					/*This is related to JPA*/
 					client.setId(Util.parseNoNegativeInt(idText.getText()));
-					dispose();
 					AppController.getInstance().execute(new LightContext(Event.SHOW_CLIENT, client));
+					dispose();
 				}catch (Exception ex){
 					JOptionPane.showMessageDialog(getRootPane(), ex.getMessage(), "ERROR SHOW CLIENT", JOptionPane.ERROR_MESSAGE);
 				}

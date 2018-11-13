@@ -60,8 +60,8 @@ public class FormShowVehicle extends JDialog {
                 TVehicle v = new TVehicle();
                 try{
                     v.setId(Util.parseNoNegativeInt(idText.getText()));
-                    dispose();
                     AppController.getInstance().execute(new LightContext(Event.SHOW_VEHICLE, v));
+                    dispose();
                 }
                 catch(Exception e){
                     JOptionPane.showMessageDialog(getRootPane(), e.getMessage(), "ERROR IN SHOW VEHICLE",

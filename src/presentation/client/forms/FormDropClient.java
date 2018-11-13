@@ -64,8 +64,8 @@ public class FormDropClient extends JDialog{
 					/*This is related to JPA*/
 					client.setId(Util.parseNoNegativeInt(idText.getText()));
 					client.setActive(false);
-					dispose();
 					AppController.getInstance().execute(new LightContext(Event.DROP_CLIENT, client));
+					dispose();
 				} catch (Exception ex) {
 					JOptionPane.showMessageDialog(getRootPane(), ex.getMessage(), "ERROR DROP CLIENT", JOptionPane.ERROR_MESSAGE);
 				}

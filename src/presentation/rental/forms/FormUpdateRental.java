@@ -106,6 +106,7 @@ public class FormUpdateRental extends JDialog {
 					rent.setId(Util.parseNoNegativeInt(idText.getText()));
 					rent.setNumKmRented(Util.parseNoNegativeInt(kmRentedText.getText()));
 					rent.setActive(true);
+
 					Date dateFromToCheck = (Date)dateFrom.getModel().getValue();
 					Date dateToToCheck = (Date)dateTo.getModel().getValue();
 					if(Util.parseDateNull(dateFromToCheck) && Util.parseDateNull(dateToToCheck)
@@ -113,8 +114,8 @@ public class FormUpdateRental extends JDialog {
 
 						rent.setDateFrom(dateFromToCheck);
 						rent.setDateTo(dateToToCheck);
-						dispose();
 						AppController.getInstance().execute(new LightContext(Event.UPDATE_RENTAL, rent));
+						dispose();
 					}
 				}
 				catch(Exception exc){

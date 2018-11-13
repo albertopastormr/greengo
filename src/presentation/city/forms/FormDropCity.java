@@ -63,8 +63,8 @@ public class FormDropCity extends JDialog {
 				TCity city = new TCity();
 				try{
 					city.setId(Util.parseNoNegativeInt(idText.getText()));
-					dispose();
 					AppController.getInstance().execute(new LightContext(Event.DROP_CITY, city));
+					dispose();
 				}
 				catch(Exception e){
 					JOptionPane.showMessageDialog(getRootPane(), e.getMessage(),

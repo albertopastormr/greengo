@@ -83,8 +83,8 @@ public class FormUpdateClient extends JDialog{
 					client.setIdCardNumber(Util.parseString(dniText.getText()));
 					client.setNumRentals(Util.parseNoNegativeInt(numRentalsText.getText()));
 					client.setActive(true);
-					dispose();
 					AppController.getInstance().execute(new LightContext(Event.UPDATE_CLIENT, client));
+					dispose();
 				} catch (Exception ex) {
 					JOptionPane.showMessageDialog(getRootPane(), ex.getMessage(), "ERROR UPDATE CLIENT", JOptionPane.ERROR_MESSAGE);
 				}

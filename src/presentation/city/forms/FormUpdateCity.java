@@ -75,8 +75,8 @@ public class FormUpdateCity extends JDialog {
 					city.setId(Util.parseNoNegativeInt(idText.getText()));
 					city.setName(Util.parseString(nameText.getText()));
 					city.setActive(true);
-					dispose();
 					AppController.getInstance().execute(new LightContext(Event.UPDATE_CITY, city));
+					dispose();
 				}
 				catch(Exception e){
 					JOptionPane.showMessageDialog(getRootPane(), e.getMessage(),
