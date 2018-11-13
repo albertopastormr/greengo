@@ -60,13 +60,6 @@ public class FormUpdateCity extends JDialog {
 		nameText = new JTextField(10);
 		ret.add(nameText);
 
-		//Active
-		JLabel activeLabel = new JLabel("Active");
-		ret.add(activeLabel);
-
-		activeComboBox = ViewHelpers.selectActive();
-		ret.add(activeComboBox);
-
 		return ret;
 	}
 
@@ -81,7 +74,7 @@ public class FormUpdateCity extends JDialog {
 				try{
 					city.setId(Util.parseNoNegativeInt(idText.getText()));
 					city.setName(Util.parseString(nameText.getText()));
-					city.setActive(Util.parseActive(activeComboBox.getSelectedItem().toString()));
+					city.setActive(true);
 					dispose();
 					AppController.getInstance().execute(new LightContext(Event.UPDATE_CITY, city));
 				}

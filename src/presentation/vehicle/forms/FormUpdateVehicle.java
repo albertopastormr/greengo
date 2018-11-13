@@ -55,7 +55,7 @@ public class FormUpdateVehicle extends JDialog{
 
     private JPanel fieldsPanel(){
 
-        JPanel ret = ViewHelpers.createFieldPanel(8);
+        JPanel ret = ViewHelpers.createFieldPanel(6);
 
         //Id
         JLabel idLabel = new JLabel("Id");
@@ -99,13 +99,6 @@ public class FormUpdateVehicle extends JDialog{
         occupiedComboBox = ViewHelpers.selectActive();
         ret.add(occupiedComboBox);
 
-        //active
-        JLabel activeLabel = new JLabel("Active");
-        ret.add(activeLabel);
-
-        activeComboBox = ViewHelpers.selectActive();
-        ret.add(activeComboBox);
-
         //Type
         /*JLabel typeLabel = new JLabel("Type");
         ret.add(typeLabel);
@@ -142,43 +135,16 @@ public class FormUpdateVehicle extends JDialog{
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 try {
-                    /*
-                    if (typeComboBox.getSelectedItem().equals("Car")) {
-                        TCarVehicle car = new TCarVehicle();
-                        car.setId(Util.parseNoNegativeInt(idText.getText()));
-                        car.setCity(Util.parseNoNegativeInt(cityText.getText()));
-                        car.setOccupied(Util.parseActive(occupiedComboBox.getSelectedItem().toString()));
-                        car.setActive(Util.parseActive(activeComboBox.getSelectedItem().toString()));
-                        car.setEstimatedDuration(Util.parseNoNegativeInt(estimatedDurationText.getText()));
-                        car.setBrand(Util.parseString(brandText.getText()));
-                        car.setNumKmTravelled(Util.parseNoNegativeInt(kmTravelledText.getText()));
-                        car.setPlate(Util.parseString(plateText.getText()));
-                       //car.setType(Util.parseString(typeComboBox.getSelectedItem().toString()));
-                        dispose();
-                        AppController.getInstance().execute(new LightContext(Event.UPDATE_VEHICLE, car));
-                    } else {
-                        TBicycleVehicle bicycle = new TBicycleVehicle();
-                        bicycle.setId(Util.parseNoNegativeInt(idText.getText()));
-                        bicycle.setCity(Util.parseNoNegativeInt(cityText.getText()));
-                        bicycle.setOccupied(Util.parseActive(occupiedComboBox.getSelectedItem().toString()));
-                        bicycle.setActive(Util.parseActive(activeComboBox.getSelectedItem().toString()));
-                        bicycle.setEstimatedDuration(Util.parseNoNegativeInt(estimatedDurationText.getText()));
-                        bicycle.setBrand(Util.parseString(brandText.getText()));
-                        bicycle.setNumKmTravelled(Util.parseNoNegativeInt(kmTravelledText.getText()));
-                        bicycle.setSerialNumber(Util.parseString(serialNumberText.getText()));
-                        //bicycle.setType(Util.parseString(typeComboBox.getSelectedItem().toString()));
-                        dispose();
-
-                } */
                     TVehicle vehicle = new TVehicle();
                     vehicle.setId(Util.parseNoNegativeInt(idText.getText()));
                     vehicle.setCity(Util.parseNoNegativeInt(cityText.getText()));
                     vehicle.setOccupied(Util.parseActive(occupiedComboBox.getSelectedItem().toString()));
-                    vehicle.setActive(Util.parseActive(activeComboBox.getSelectedItem().toString()));
                     vehicle.setEstimatedDuration(Util.parseNoNegativeInt(estimatedDurationText.getText()));
                     vehicle.setBrand(Util.parseString(brandText.getText()));
+                    vehicle.setActive(true);
                     vehicle.setNumKmTravelled(Util.parseNoNegativeInt(kmTravelledText.getText()));
                     AppController.getInstance().execute(new LightContext(Event.UPDATE_VEHICLE, vehicle));
+                    dispose();
                 }
                 catch(Exception e){
                     JOptionPane.showMessageDialog(getRootPane(), e.getMessage(), "ERROR IN UPDATE VEHICLE", JOptionPane.ERROR_MESSAGE);

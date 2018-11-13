@@ -56,7 +56,7 @@ public class FormUpdateRental extends JDialog {
 	}
 
 	private JPanel fieldsPanel(){
-		JPanel ret = ViewHelpers.createFieldPanel(5);
+		JPanel ret = ViewHelpers.createFieldPanel(4);
 
 		//Id
 		JLabel idLabel = new JLabel("Id");
@@ -71,13 +71,6 @@ public class FormUpdateRental extends JDialog {
 
 		kmRentedText = new JTextField(10);
 		ret.add(kmRentedText);
-
-		//Active
-		JLabel activeLabel = new JLabel("Active");
-		ret.add(activeLabel);
-
-		activeComboBox = ViewHelpers.selectActive();
-		ret.add(activeComboBox);
 
 		//Date from
 		JLabel dateFromLabel = new JLabel("From");
@@ -112,8 +105,7 @@ public class FormUpdateRental extends JDialog {
 				try{
 					rent.setId(Util.parseNoNegativeInt(idText.getText()));
 					rent.setNumKmRented(Util.parseNoNegativeInt(kmRentedText.getText()));
-					rent.setActive(Util.parseActive(activeComboBox.getSelectedItem().toString()));
-
+					rent.setActive(true);
 					Date dateFromToCheck = (Date)dateFrom.getModel().getValue();
 					Date dateToToCheck = (Date)dateTo.getModel().getValue();
 					if(Util.parseDateNull(dateFromToCheck) && Util.parseDateNull(dateToToCheck)

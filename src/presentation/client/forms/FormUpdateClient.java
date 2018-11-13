@@ -62,14 +62,7 @@ public class FormUpdateClient extends JDialog{
 		numRentalsText = new JTextField(10);
 		ret.add(numRentalsText);
 
-		//Active
-		JLabel activeLabel = new JLabel("Active");
-		ret.add(activeLabel);
-
-		activeComboBox = ViewHelpers.selectActive();
-		ret.add(activeComboBox);
-
-		return  ret;
+		return ret;
 	}
 
 	private JPanel buttonsPanel(){
@@ -89,7 +82,7 @@ public class FormUpdateClient extends JDialog{
 					client.setId(Util.parseNoNegativeInt(idText.getText()));
 					client.setIdCardNumber(Util.parseString(dniText.getText()));
 					client.setNumRentals(Util.parseNoNegativeInt(numRentalsText.getText()));
-					client.setActive(Util.parseActive(activeComboBox.getSelectedItem().toString()));
+					client.setActive(true);
 					dispose();
 					AppController.getInstance().execute(new LightContext(Event.UPDATE_CLIENT, client));
 				} catch (Exception ex) {

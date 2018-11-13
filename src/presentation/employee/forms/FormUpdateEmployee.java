@@ -52,7 +52,7 @@ public class FormUpdateEmployee extends JDialog {
 	}
 
 	private JPanel fieldsPanel(){
-		JPanel ret = ViewHelpers.createFieldPanel(8);
+		JPanel ret = ViewHelpers.createFieldPanel(7);
 
 		//ID
 		JLabel idLabel = new JLabel("Id");
@@ -81,13 +81,6 @@ public class FormUpdateEmployee extends JDialog {
 
 		idMainOfficeText = new JTextField(10);
 		ret.add(idMainOfficeText);
-
-		//Active
-		JLabel activeLabel = new JLabel("Active");
-		ret.add(activeLabel);
-
-		activeComboBox = ViewHelpers.selectActive();
-		ret.add(activeComboBox);
 
 		//Type
 		JLabel typeLabel = new JLabel("Type");
@@ -133,7 +126,6 @@ public class FormUpdateEmployee extends JDialog {
 						TTemporaryEmployee emp = new TTemporaryEmployee();
 						emp.setId(Util.parseNoNegativeInt(idText.getText()));
 						emp.setIdCardNumber(Util.parseString(idCardNumberText.getText()));
-						emp.setActive(Util.parseActive(activeComboBox.getSelectedItem().toString()));
 						emp.setNumWorkedHours(Util.parseNoNegativeInt(workedHoursText.getText()));
 						emp.setSalary(Util.parseNoNegativeFloat(salaryText.getText()));
 						emp.setType(Util.parseString(typeComboBox.getSelectedItem().toString()));
@@ -146,7 +138,6 @@ public class FormUpdateEmployee extends JDialog {
 						TPermanentEmployee emp = new TPermanentEmployee();
 						emp.setId(Util.parseNoNegativeInt(idText.getText()));
 						emp.setIdCardNumber(Util.parseString(idCardNumberText.getText()));
-						emp.setActive(Util.parseActive(activeComboBox.getSelectedItem().toString()));
 						emp.setApportionment(Util.parseNoNegativeInt(appotionmentText.getText()));
 						emp.setSalary(Util.parseNoNegativeFloat(salaryText.getText()));
 						emp.setType(Util.parseString(typeComboBox.getSelectedItem().toString()));

@@ -44,7 +44,7 @@ public class FormUpdateService extends  JDialog{
 	}
 
 	private JPanel fieldsPanel(){
-		JPanel ret = ViewHelpers.createFieldPanel(6);
+		JPanel ret = ViewHelpers.createFieldPanel(5);
 
 		//ID
 		JLabel idLabel = new JLabel("ID");
@@ -80,13 +80,6 @@ public class FormUpdateService extends  JDialog{
 
 		vehicles_attendedText = new JTextField(10);
 		ret.add(vehicles_attendedText);
-
-		//Active
-		JLabel activeLabel = new JLabel("Active");
-		ret.add(activeLabel);
-
-		activeComboBox = ViewHelpers.selectActive();
-		ret.add(activeComboBox);
 
 		return ret;
 	}

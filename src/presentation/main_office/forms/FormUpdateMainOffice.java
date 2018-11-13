@@ -40,7 +40,7 @@ public class FormUpdateMainOffice extends JDialog{
 
 	private JPanel fieldsPanel(){
 
-		JPanel ret = ViewHelpers.createFieldPanel(4);
+		JPanel ret = ViewHelpers.createFieldPanel(3);
 
 		//ID
 		JLabel idLabel = new JLabel("ID");
@@ -63,13 +63,6 @@ public class FormUpdateMainOffice extends JDialog{
 		addressText = new JTextField(10);
 		ret.add(addressText);
 
-		//Active
-		JLabel activeLabel = new JLabel("Active");
-		ret.add(activeLabel);
-
-		activeCombobox = ViewHelpers.selectActive();
-		ret.add(activeCombobox);
-
 		return ret;
 	}
 
@@ -90,7 +83,6 @@ public class FormUpdateMainOffice extends JDialog{
 					mainOffice.setId(Util.parseNoNegativeInt(idText.getText()));
 					mainOffice.setCity(Util.parseString(cityText.getText()));
 					mainOffice.setAdress(Util.parseString(addressText.getText()));
-					mainOffice.setActive(Util.parseActive(activeCombobox.getSelectedItem().toString()));
 					dispose();
 					AppController.getInstance().execute(new LightContext(Event.UPDATE_MAIN_OFFICE, mainOffice));
 				} catch (Exception ex) {

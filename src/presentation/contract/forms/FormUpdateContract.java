@@ -40,7 +40,7 @@ public class FormUpdateContract extends JDialog {
 	}
 
 	private JPanel fieldsPanel() {
-		JPanel ret = ViewHelpers.createFieldPanel(5);
+		JPanel ret = ViewHelpers.createFieldPanel(4);
 
 		//ID
 		JLabel idLabel = new JLabel("ID");
@@ -69,13 +69,6 @@ public class FormUpdateContract extends JDialog {
 
 		idServiceText = new JTextField(10);
 		ret.add(idServiceText);
-
-		//Active
-		JLabel activeLabel = new JLabel("Active");
-		ret.add(activeLabel);
-
-		activeComboBox = ViewHelpers.selectActive();
-		ret.add(activeComboBox);
 
 		return ret;
 	}
