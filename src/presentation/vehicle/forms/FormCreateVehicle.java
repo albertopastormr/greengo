@@ -153,7 +153,7 @@ public class FormCreateVehicle extends JDialog {
                         bicycle.setEstimatedDuration(Util.parseNoNegativeInt(estimatedDurationText.getText()));
                         bicycle.setBrand(Util.parseString(brandText.getText()));
                         bicycle.setNumKmTravelled(Util.parseNoNegativeInt(kmTravelledText.getText()));
-                        bicycle.setSerialNumber(Util.parseString(serialNumberText.getText()));
+                        bicycle.setSerialNumber(Util.parseNoNegativeInt(serialNumberText.getText()));
                         bicycle.setType(Util.parseString(typeComboBox.getSelectedItem().toString()));
                         AppController.getInstance().execute(new LightContext(Event.CREATE_VEHICLE, bicycle));
                         dispose();

@@ -46,7 +46,7 @@ public class ASRentalTest {
     @Test
     public void createRentalSuccessful() throws ASException, IncorrectInputException {
         tv = new TBicycleVehicle(null,"Tesla",6000,0,
-                false,null,true,"12345");
+                false,null,true,12345);
         tCity = new TCity(null,"Madrid",false);
         tClient = new TClient(null,"00000000X",0,true);
         tr = new TRental(null,null,true,10,null,dFrom,dTo);
@@ -66,7 +66,7 @@ public class ASRentalTest {
     @Test
     public void createRentalIncorrectInputID() throws ASException, IncorrectInputException {
         tv = new TBicycleVehicle(null,"Tesla",6000,0,
-                false,null,true,"12345");
+                false,null,true,12345);
         tCity = new TCity(null,"Madrid",false);
         tClient = new TClient(null,"00000000X",0,true);
         tr = new TRental(null,null,true,10,null,dFrom,dTo);
@@ -201,7 +201,7 @@ public class ASRentalTest {
     @Test
     public void createRentalIncorrectInputDates() throws ASException, IncorrectInputException {
         tv = new TBicycleVehicle(null,"Tesla",6000,0,
-                false,null,true,"12345");
+                false,null,true,12345);
         tr = new TRental(null,null,false,10,null,dFrom,dTo);
         Integer idCity = asCity.create(tCity);
         tv.setCity(idCity);
@@ -228,7 +228,7 @@ public class ASRentalTest {
     @Test
     public void createRentalVehicleNotActive() throws ASException, IncorrectInputException {
         tv = new TBicycleVehicle(null,"Tesla",6000,0,
-                false,null,true,"12345");
+                false,null,true,12345);
         tCity = new TCity(null,"Avila",true);
         tClient = new TClient(null,"00000000X",0,true);
         tr = new TRental(null,null,false,10,null,dFrom,dTo);
@@ -303,7 +303,7 @@ public class ASRentalTest {
     @Test
     public void createRentalKmRentedExceedVehicleEstimatedDuration() throws ASException, IncorrectInputException {
         tv = new TBicycleVehicle(null,"Tesla",6000,0,
-                false,null,true,"12345");
+                false,null,true,12345);
         tCity = new TCity(null,"Madrid",true);
         tr = new TRental(null,null,false,10000,null,dFrom,dTo);
 
@@ -322,7 +322,7 @@ public class ASRentalTest {
     @Test
     public void dropRentalSuccessful() throws ASException, IncorrectInputException {
         tv = new TBicycleVehicle(null,"Tesla",6000,0,
-                false,null,true,"12345");
+                false,null,true,12345);
         tCity = new TCity(null,"Madrid",false);
         tClient = new TClient(null,"00000000X",0,true);
         tr = new TRental(null,null,true,10,null,dFrom,dTo);
@@ -365,7 +365,7 @@ public class ASRentalTest {
     @Test
     public void dropRentalAlreadyInactive() throws ASException, IncorrectInputException {
         tv = new TBicycleVehicle(null,"Tesla",6000,0,
-                false,null,true,"12345");
+                false,null,true,12345);
         tCity = new TCity(null,"Madrid",false);
         tClient = new TClient(null,"00000000X",0,true);
         tr = new TRental(null,null,true,10,null,dFrom,dTo);
@@ -386,7 +386,7 @@ public class ASRentalTest {
     @Test
     void updateRentalSuccessful() throws ASException, IncorrectInputException {
         tv = new TBicycleVehicle(null,"Tesla",6000,0,
-                false,null,true,"12345");
+                false,null,true,12345);
         tCity = new TCity(null,"Madrid",false);
         tClient = new TClient(null,"00000000X",0,true);
         tr = new TRental(null,null,true,10,null,dFrom,dTo);

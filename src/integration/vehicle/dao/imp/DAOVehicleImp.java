@@ -58,7 +58,7 @@ public class DAOVehicleImp  implements DAOVehicle {
             else
                 throw new DAOException("ERROR: LAST_INSERT_ID() returned empty after an insert operation\n");
 
-            if(vehicle.getType().equals("car")){
+            if(vehicle.getType().equals("Car")){
                 ps = connec.prepareStatement("INSERT INTO carvehicle(id,plate) VALUES (?,?)");
                 ps.setInt(1,id);
                 ps.setString(2,((TCarVehicle) vehicle).getPlate());
@@ -185,7 +185,7 @@ public class DAOVehicleImp  implements DAOVehicle {
             if (rs.next()) {
                 ResultSet rsIdentifier;
                 switch (rs.getString("type")) {
-                    case "car" :
+                    case "Car" :
                         ps = connec.prepareStatement("SELECT plate FROM carvehicle WHERE id = ?" + queryTail);
                         ps.setInt(1, id);
                         rsIdentifier = ps.executeQuery();
@@ -200,7 +200,7 @@ public class DAOVehicleImp  implements DAOVehicle {
                                 rsIdentifier.getString("plate")
                         );
                         break;
-                    case "bicycle":
+                    case "Bicycle":
                         ps = connec.prepareStatement("SELECT serialNumber FROM bicyclevehicle WHERE id = ?" +
                                 queryTail);
                         ps.setInt(1, id);

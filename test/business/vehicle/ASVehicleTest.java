@@ -35,7 +35,7 @@ public class ASVehicleTest {
     private static TCarVehicle tcar = new TCarVehicle(null,"Tesla",6000,0,
             false,null,true,"ALBARICOQUE");
     private static TBicycleVehicle tb = new TBicycleVehicle(null,"Tesla",6000,0,
-            false,null,true,"12345");
+            false,null,true,12345);
     private static ASCity asCity = ASCityFactory.getInstance().generateASCity();
     private static TCity tCity = new TCity(null,"Madrid",true);
     private static ASClient asClient = ASClientFactory.getInstance().generateASClient();

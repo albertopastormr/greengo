@@ -1,6 +1,8 @@
 package integration.vehicle.dao;
 
 import business.city.TCity;
+import business.vehicle.TBicycleVehicle;
+import business.vehicle.TCarVehicle;
 import business.vehicle.TVehicle;
 import integration.DAOException;
 import integration.city.dao.DAOCity;
@@ -18,8 +20,10 @@ class DAOVehicleTest {
 
     private static DAOVehicle dao = DAOVehicleFactory.getInstance().generateDAOVehicle();
     private static DAOCity daoCity = DAOCityFactory.getInstance().generateDAOCity();
-    private static TVehicle tv1 = new TVehicle(1,"bmw",0,0,false,1,true,"bicycle");
-    private static TVehicle tv2 = new TVehicle(2,"audi",0,0,false,1,true,"car");
+    private static TVehicle tv1 = new TBicycleVehicle(1,"orbea",500,
+            0,false,1,true,12345);
+    private static TVehicle tv2 = new TCarVehicle(2,"audi",1000,
+            0,false,1,true,"0000 XXX");
     private static TCity tc1 = new TCity(1,"Madrid",false);
 
     @BeforeEach
@@ -39,6 +43,7 @@ class DAOVehicleTest {
                 && expected.getType().equals(actual.getType());
     }
 
+    //TODO mejorar este test mediante read??
     @Test
     void create() throws DAOException{
         Integer idM = dao.create(tv1);

@@ -19,8 +19,7 @@ public class Util {
         add("rental");
         add("client");
     }};
-    private static String connectionChain = "jdbc:mariadb://localhost:3306/greengo?user=manager" +
-            "&password=manager_if";
+    private static String connectionChain = "jdbc:mariadb://localhost:3306/greengo?user=manager&password=manager_if";
 
     public static void deleteAll() throws DAOException {
         Connection connec;
