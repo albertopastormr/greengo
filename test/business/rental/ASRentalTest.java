@@ -245,14 +245,22 @@ public class ASRentalTest {
 
     @Test
     public void createRentalDatesNotValidForVehicle() throws ASException, IncorrectInputException {
+        tv = new TBicycleVehicle(null,"Tesla",6000,0,
+                false,null,true,12345);
+        tCity = new TCity(null,"Avila",true);
+        tClient = new TClient(null,"00000000X",0,true);
+        tr = new TRental(null,null,false,10,null,dFrom,dTo);
         Integer idCity = asCity.create(tCity);
         tv.setCity(idCity);
         Integer idV = asV.create(tv);
+
         Integer idC = asClient.create(tClient);
         tr.setIdClient(idC);
         tr.setIdVehicle(idV);
         as.create(tr);
 
+        tv = new TBicycleVehicle(null,"Tesla",6000,0,
+                false,idC,true,123455);
         Integer idTMPvehicle = asV.create(tv);
         tr.setIdVehicle(idTMPvehicle);
 
