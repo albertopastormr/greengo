@@ -134,7 +134,7 @@ public class ASVehicleImp implements ASVehicle {
                     tr.start();
                     TVehicle tv = DAOVehicleFactory.getInstance().generateDAOVehicle().readById(tVehicle.getId());
 
-                    if (tv != null  &&  tv.isActive() && !tv.isOccupied() && verifyNotRepeatedIdentifier(tVehicle)) { //the vehicle exists, is active and ins`t occupied
+                    if (tv != null  &&  tv.isActive() && !tv.isOccupied() ) { //the vehicle exists, is active and ins`t occupied
                         idv = DAOVehicleFactory.getInstance().generateDAOVehicle().update(tVehicle);
                         tr.commit();
                         TransactionManager.getInstance().removeTransaction();

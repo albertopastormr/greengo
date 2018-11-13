@@ -169,6 +169,8 @@ public class ASCityImp implements ASCity {
                 Transaction tr = TransactionManager.getInstance().createTransaction();
                 if (tr != null) {
                     tr.start();
+                    TCity city = DAOCityFactory.getInstance().generateDAOCity().readById(idCity);
+                    if(city==null) throw new ASException("ERROR: The city doesn`t exist");
                     clientList = DAOCityFactory.getInstance().generateDAOCity().showClientsByCity(idCity);
                     tr.commit();
                     TransactionManager.getInstance().removeTransaction();
