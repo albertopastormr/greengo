@@ -6,7 +6,8 @@ public class TCarVehicle extends TVehicle {
 
     public TCarVehicle() {}
 
-    public TCarVehicle(Integer id, String brand, Integer estimated_duration, Integer km_travelled, boolean occupied, Integer city, boolean active, String plate){
+    public TCarVehicle(Integer id, String brand, Integer estimated_duration,
+                       Integer km_travelled, boolean occupied, Integer city, boolean active, String plate){
         super(id, brand, estimated_duration, km_travelled, occupied, city, active, "Car");
         this.plate = plate;
     }

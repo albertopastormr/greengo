@@ -5,6 +5,7 @@ import business.client.TClient;
 import business.client.as.ASClient;
 import business.client.factory.ASClientFactory;
 import business.rental.TRental;
+import business.vehicle.TCarVehicle;
 import business.vehicle.TVehicle;
 import business.vehicle.as.ASVehicle;
 import business.vehicle.factory.ASVehicleFactory;
@@ -36,8 +37,8 @@ class DAORentalTest {
     private static ASClient asC = ASClientFactory.getInstance().generateASClient();
     private static TClient tc = new TClient(1,"00000000X",0,false);
     private static ASVehicle asV = ASVehicleFactory.getInstance().generateASVehicle();
-    private static TVehicle tv = new TVehicle(1,"Audi",6000,0,
-            false,1,false,"car");
+    private static TVehicle tv = new TCarVehicle(1,"Audi",6000,0,
+            false,1,false,"0000 XXX");
     private static TCity tc1 = new TCity(1,"Madrid",false);
     private static TRental tr = new TRental(1,1,true,10,1,dFrom,dTo);
 
@@ -48,6 +49,15 @@ class DAORentalTest {
         daoCity.create(tc1);
         daoVehicle.create(tv);
         daoClient.create(tc);
+
+        asC = ASClientFactory.getInstance().generateASClient();
+        tc = new TClient(1,"00000000X",0,false);
+        asV = ASVehicleFactory.getInstance().generateASVehicle();
+        tv = new TCarVehicle(1,"Audi",6000,0,
+                false,1,false,"0000 XXX");
+        tc1 = new TCity(1,"Madrid",false);
+        tr = new TRental(1,1,true,10,1,dFrom,dTo);
+
     }
 
     //create method

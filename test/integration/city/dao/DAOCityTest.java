@@ -17,15 +17,19 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class DAOCityTest {
 
+    private static ASClient asClient = ASClientFactory.getInstance().generateASClient();
     private static DAOCity dao = DAOCityFactory.getInstance().generateDAOCity();
     private static TCity tc1 = new TCity(1,"Madrid",false);
     private static TCity tc2 = new TCity(2,"Barcelona",false);
-    private static ASClient asClient = ASClientFactory.getInstance().generateASClient();
     private static TClient tclient = new TClient(null,"00000000X",0,false);
 
     @BeforeEach
     private void setUp() throws Exception {
         dao.deleteAll();
+
+        tc1 = new TCity(1,"Madrid",false);
+        tc2 = new TCity(2,"Barcelona",false);
+        tclient = new TClient(null,"00000000X",0,false);
     }
 
     private boolean checkValues(TCity expected,TCity actual){

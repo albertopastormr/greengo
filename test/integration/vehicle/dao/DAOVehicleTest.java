@@ -30,6 +30,12 @@ class DAOVehicleTest {
     private void setUp() throws Exception {
         dao.deleteAll();
         daoCity.create(tc1);
+
+        tv1 = new TBicycleVehicle(1,"orbea",500,
+                0,false,1,true,12345);
+        tv2 = new TCarVehicle(2,"audi",1000,
+                0,false,1,true,"0000 XXX");
+        tc1 = new TCity(1,"Madrid",false);
     }
 
     private boolean checkValues(TVehicle expected,TVehicle actual) {
