@@ -63,8 +63,8 @@ public class FormDropRental extends JDialog {
 				TRental rent = new TRental();
 				try{
 					rent.setId(Util.parseNoNegativeInt(idText.getText()));
-					dispose();
 					AppController.getInstance().execute(new LightContext(Event.DROP_RENTAL, rent));
+					dispose();
 				}
 				catch(Exception e){
 					JOptionPane.showMessageDialog(getRootPane(), e.getMessage(), "ERROR IN DROP RENTAL",

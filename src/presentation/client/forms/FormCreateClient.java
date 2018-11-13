@@ -73,8 +73,8 @@ public class FormCreateClient extends JDialog{
 					client.setIdCardNumber(Util.parseString(dniText.getText()));
 					client.setNumRentals(0);
 					client.setActive(Util.parseActive(activeComboBox.getSelectedItem().toString()));
-					dispose();
 					AppController.getInstance().execute(new LightContext(Event.CREATE_CLIENT, client));
+					dispose();
 
 				} catch (Exception ex) {
 					JOptionPane.showMessageDialog(getRootPane(), ex.getMessage(), "ERROR CREATE CLIENT", JOptionPane.ERROR_MESSAGE);

@@ -74,8 +74,8 @@ public class FormCreateCity extends JDialog {
 				try{
 					city.setName(Util.parseString(nameText.getText()));
 					city.setActive(Util.parseActive(activeComboBox.getSelectedItem().toString()));
-					dispose();
 					AppController.getInstance().execute(new LightContext(Event.CREATE_CITY, city));
+					dispose();
 				}
 				catch(Exception e){
 					JOptionPane.showMessageDialog(getRootPane(), e.getMessage(), "ERROR IN CREATE CITY", JOptionPane.ERROR_MESSAGE);

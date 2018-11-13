@@ -131,10 +131,9 @@ public class FormCreateRental extends JDialog {
 						rent.setDateFrom(dateFromToCheck);
 						rent.setDateTo(dateToToCheck);
 
-						dispose();
 						AppController.getInstance().execute(new LightContext(Event.CREATE_RENTAL, rent));
+						dispose();
 					}
-
 
 				}
 				catch(Exception exc){

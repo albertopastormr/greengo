@@ -63,8 +63,8 @@ public class FormShowRental extends JDialog{
 				TRental rent = new TRental();
 				try{
 					rent.setId(Util.parseNoNegativeInt(idText.getText()));
-					dispose();
 					AppController.getInstance().execute(new LightContext(Event.SHOW_RENTAL, rent));
+					dispose();
 				}
 				catch(Exception e){
 					JOptionPane.showMessageDialog(getRootPane(), e.getMessage(),
