@@ -102,7 +102,7 @@ public class ASRentalImp implements ASRental {
     public Integer update(TRental rental) throws ASException, IncorrectInputException {
         Integer idr = null;
 
-        if(rental.getId() > 0 &&rental.getIdVehicle() > 0 && rental.getNumKmRented() > 0 && rental.getIdClient() > 0 && rental.getDateFrom()!= null
+        if(rental.getId() > 0 && rental.getNumKmRented() > 0 && rental.getDateFrom()!= null
                 && rental.getDateTo() != null) {
             try {
                 Transaction tr = TransactionManager.getInstance().createTransaction();
@@ -110,14 +110,13 @@ public class ASRentalImp implements ASRental {
                 if (tr != null) {
                     tr.start();
                     TRental tl = DAORentalFactory.getInstance().generateDAORental().readById(rental.getId());
-                    TVehicle tv = DAOVehicleFactory.getInstance().generateDAOVehicle().readById((rental.getIdVehicle()));
-                    TClient tc = DAOClientFactory.getInstance().generateDAOClient().readById(rental.getIdClient());
 
-
-                    if (tl != null && tv != null && tc != null && tv.isActive() && tc.isActive() && rental.isActive()) {//the rental exists, the client and vehicle are actived, exists and free in the dates
-                        Collection<TRental> vehicleRentals = DAORentalFactory.getInstance().generateDAORental().readByIdVehicleAndDateRange(rental.getIdVehicle(),rental.getDateFrom(),rental.getDateTo());
-                        Collection<TRental> clientsRentals = DAORentalFactory.getInstance().generateDAORental().readByIdClientAndDateRange(rental.getIdClient(),rental.getDateFrom(),rental.getDateTo());
+                    if (tl != null && rental.isActive()) {//the rental exists, the client and vehicle are actived, exists and free in the dates
+                        Collection<TRental> vehicleRentals = DAORentalFactory.getInstance().generateDAORental().readByIdVehicleAndDateRange(tl.getIdVehicle(),rental.getDateFrom(),rental.getDateTo());
+                        Collection<TRental> clientsRentals = DAORentalFactory.getInstance().generateDAORental().readByIdClientAndDateRange(tl.getIdClient(),rental.getDateFrom(),rental.getDateTo());
                         if(vehicleRentals.isEmpty() && clientsRentals.isEmpty()) {
+                            rental.setIdVehicle(tl.getIdVehicle());
+                            rental.setIdClient(tl.getIdClient());
                             idr = DAORentalFactory.getInstance().generateDAORental().update(rental);
                             tr.commit();
                         }
@@ -128,10 +127,6 @@ public class ASRentalImp implements ASRental {
                         tr.rollback();
                         TransactionManager.getInstance().removeTransaction();
                         if (tl == null) throw new ASException("The rental doesn't exists");
-                        else if (tv == null || tc == null)
-                            throw new ASException("ERROR: The client or vehicle doesn't exists");
-                        else if (!tv.isActive() || !tc.isActive())
-                            throw new ASException("ERROR: The client or vehicle is disabled");
                         else if (rental.isActive())
                             throw new ASException("ERROR: Active field must be true in order to update it");
                     }
