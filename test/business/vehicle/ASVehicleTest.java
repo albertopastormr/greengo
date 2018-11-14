@@ -118,9 +118,6 @@ public class ASVehicleTest {
         assertThrows(ASException.class, () -> {as.create(tv2);});
     }
 
-    //TODO vehiculo con matricula o numero de serie que ya existe
-
-
     //Drop method
     @Test
     public void dropSuccessful() throws ASException, IncorrectInputException {
@@ -402,17 +399,6 @@ public class ASVehicleTest {
         assertThrows(ASException.class, () -> {as.update(tv);});
     }
 
-    @Test
-    public void updateVehicleCurrentlyOccupied() throws ASException, IncorrectInputException {
-        TCity tc2 = new TCity(null,"Madrid",true);
-        TCarVehicle tcar = new TCarVehicle(null,"Tesla",6000,0,
-                true,null,true,"XXXX");
-        Integer idC = asCity.create(tc2);
-        tcar.setCity(idC);
-        Integer idv = as.create(tcar);
-        tcar.setId(idv);
-        assertThrows(ASException.class, () -> {as.update(tcar);});
-    }
 
     @Test
     public void updateVehicleCityNotExists() throws ASException, IncorrectInputException {

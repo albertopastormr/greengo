@@ -49,7 +49,6 @@ class DAOVehicleTest {
                 && expected.getType().equals(actual.getType());
     }
 
-    //TODO mejorar este test mediante read??
     @Test
     void create() throws DAOException{
         Integer idM = dao.create(tv1);

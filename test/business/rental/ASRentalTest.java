@@ -431,10 +431,6 @@ public class ASRentalTest {
         assertTrue(checkValues(tr,updtRental));
     }
 
-    //TODO bussiness rules errors
-    //comprobar uno con client, uno con vehiculo y otro ambos vacios
-    //ifual update
-
     @Test
     void createRentalVehicleOccupied() throws ASException, IncorrectInputException {
         tv = new TBicycleVehicle(null,"Tesla",6000,0,

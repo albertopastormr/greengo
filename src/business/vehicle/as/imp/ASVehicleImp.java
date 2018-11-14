@@ -21,7 +21,6 @@ import integration.vehicle.factory.DAOVehicleFactory;
 import java.util.ArrayList;
 import java.util.Collection;
 
-//TODO separar las excepciones tanto AS como InputError para que aporten informacion relevante, corregir mensajes
 // de las excepciones
 public class ASVehicleImp implements ASVehicle {
     @Override
@@ -80,13 +79,13 @@ public class ASVehicleImp implements ASVehicle {
                     tr.start();
                     TVehicle tv = DAOVehicleFactory.getInstance().generateDAOVehicle().readById(idVehicle);
 
-                    if (tv != null && tv.isActive()) {//the vehicle exists and is active
+                    if (tv != null && tv.isActive() && !tv.isOccupied()) {//the vehicle exists and is active
 
                         Collection<TRental> rentalList = DAORentalFactory.getInstance().generateDAORental().readByRentalsByVehicle(idVehicle);
 
                         for (TRental tRental : rentalList) // If exists vehicles actives not update
                             if (tRental.isActive())
-                                throw new ASException("ERROR: Exists active rentals belonged to this vehicle ");
+                                throw new ASException("ERROR: Exists active rentals belonged to this vehicle\n");
 
                             tv.setActive(false);
                             idv = DAOVehicleFactory.getInstance().generateDAOVehicle().update(tv);
@@ -96,8 +95,9 @@ public class ASVehicleImp implements ASVehicle {
                     } else {
                         tr.rollback();
                         TransactionManager.getInstance().removeTransaction();
-                        if (tv == null) throw new ASException("ERROR: The vehicle doesn't exists");
-                        else if (!tv.isActive()) throw new ASException("ERROR: The vehicle is already disabled");
+                        if (tv == null) throw new ASException("ERROR: The vehicle doesn't exists\n");
+                        else if (!tv.isActive()) throw new ASException("ERROR: The vehicle is already disabled\n");
+                        else if (tv.isOccupied()) throw new ASException("ERROR: The vehicle is occupied\n");
                     }
                 }
                 else {
@@ -129,7 +129,7 @@ public class ASVehicleImp implements ASVehicle {
                     tr.start();
                     TVehicle tv = DAOVehicleFactory.getInstance().generateDAOVehicle().readById(tVehicle.getId());
 
-                    if (tv != null  &&  tv.isActive() && !tv.isOccupied() ) { //the vehicle exists, is active and ins`t occupied
+                    if (tv != null  &&  tv.isActive()) { //the vehicle exists, is active and ins`t occupied
                         idv = DAOVehicleFactory.getInstance().generateDAOVehicle().update(tVehicle);
                         tr.commit();
                         TransactionManager.getInstance().removeTransaction();
