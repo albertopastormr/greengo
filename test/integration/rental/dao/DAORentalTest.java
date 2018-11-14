@@ -1,7 +1,5 @@
 package integration.rental.dao;
 
-import business.ASException;
-import business.IncorrectInputException;
 import business.city.TCity;
 import business.client.TClient;
 import business.client.as.ASClient;
@@ -12,7 +10,6 @@ import business.vehicle.TVehicle;
 import business.vehicle.as.ASVehicle;
 import business.vehicle.factory.ASVehicleFactory;
 import integration.DAOException;
-import integration.Transaction.Transaction;
 import integration.city.dao.DAOCity;
 import integration.city.factory.DAOCityFactory;
 import integration.client.dao.DAOClient;
@@ -47,10 +44,6 @@ class DAORentalTest {
 
     @BeforeEach
     void setUp() throws DAOException {
-        dao.deleteAll();
-        daoCity.create(tc1);
-        daoVehicle.create(tv);
-        daoClient.create(tc);
 
         asC = ASClientFactory.getInstance().generateASClient();
         tc = new TClient(1,"00000000X",0,false);
@@ -59,6 +52,11 @@ class DAORentalTest {
                 false,1,false,"0000 XXX");
         tc1 = new TCity(1,"Madrid",false);
         tr = new TRental(1,1,true,10,1,dFrom,dTo);
+
+        dao.deleteAll();
+        daoCity.create(tc1);
+        daoVehicle.create(tv);
+        daoClient.create(tc);
 
     }
 
@@ -102,7 +100,7 @@ class DAORentalTest {
         Integer id = dao.create(tr);
         tr.setId(id);
 
-        Collection<TRental> read = dao.showRentalsByClient(1);
+        Collection<TRental> read = dao.readByRentalsByClient(1);
 
         assertTrue(checkValues(tr, (TRental) read.toArray()[0]));
     }

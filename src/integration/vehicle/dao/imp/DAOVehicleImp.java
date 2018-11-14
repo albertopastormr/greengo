@@ -1,12 +1,11 @@
 
 package integration.vehicle.dao.imp;
 
-import business.city.TCity;
 import business.vehicle.TBicycleVehicle;
 import business.vehicle.TCarVehicle;
 import business.vehicle.TVehicle;
 import integration.DAOException;
-import integration.Transaction.Transaction;
+import integration.transaction.Transaction;
 import integration.Util;
 import integration.transactionManager.TransactionManager;
 import integration.vehicle.dao.DAOVehicle;

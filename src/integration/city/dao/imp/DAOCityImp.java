@@ -3,7 +3,7 @@ package integration.city.dao.imp;
 import business.city.TCity;
 import business.client.TClient;
 import integration.DAOException;
-import integration.Transaction.Transaction;
+import integration.transaction.Transaction;
 import integration.city.dao.DAOCity;
 import integration.transactionManager.TransactionManager;
 import integration.Util;
@@ -231,7 +231,7 @@ public class DAOCityImp implements DAOCity {
     }
 
     @Override
-    public Collection<TClient> showClientsByCity(Integer idCity) throws DAOException {
+    public Collection<TClient> readClientsByCity(Integer idCity) throws DAOException {
         Collection<TClient> readClients = new ArrayList<>();
 
         String queryTail = " FOR UPDATE";
@@ -244,7 +244,7 @@ public class DAOCityImp implements DAOCity {
                 connec = DriverManager.getConnection(Util.getConnectionChain());
             }
             catch(SQLException ex){
-                throw new DAOException("ERROR: access to DB at operation 'showClientsByCity' @city unsuccessful\n");
+                throw new DAOException("ERROR: access to DB at operation 'readClientsByCity' @city unsuccessful\n");
             }
             queryTail = "";
         }
@@ -267,7 +267,7 @@ public class DAOCityImp implements DAOCity {
             ps.close();
         }
         catch (SQLException e){
-            throw new DAOException("ERROR: SQL statement execution at operation 'showClientsByCity' @city " +
+            throw new DAOException("ERROR: SQL statement execution at operation 'readClientsByCity' @city " +
                     "unsuccessful\n");
         }
 
@@ -276,7 +276,7 @@ public class DAOCityImp implements DAOCity {
                 try {
                     connec.close();
                 } catch (SQLException e) {
-                    throw new DAOException("ERROR: closing connection to DB at operation 'showClientsByCity' @city " +
+                    throw new DAOException("ERROR: closing connection to DB at operation 'readClientsByCity' @city " +
                             "unsuccessful\n");
                 }
             }

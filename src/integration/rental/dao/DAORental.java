@@ -14,9 +14,9 @@ public interface DAORental {
 
     TRental readById(Integer id) throws DAOException;
 
-    Collection<TRental> showRentalsByClient(Integer id) throws DAOException;
+    Collection<TRental> readByRentalsByClient(Integer id) throws DAOException;
 
-    Collection<TRental> showRentalsByVehicle(Integer id) throws DAOException;
+    Collection<TRental> readByRentalsByVehicle(Integer id) throws DAOException;
 
     Collection<TRental> readAll() throws DAOException;
 

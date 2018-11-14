@@ -193,7 +193,7 @@ public class ASCityTest {
         return out.getName().equals(city) && out.isActive();
     }
 
-	//showClientsByCity method
+	//readClientsByCity method
 	@Test
 	public void showClientsByCitySuccessful() throws ASException, IncorrectInputException {
 		TCity tc3 = new TCity(null,"Madrid",true);

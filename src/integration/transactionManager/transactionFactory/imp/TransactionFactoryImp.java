@@ -1,7 +1,7 @@
 package integration.transactionManager.transactionFactory.imp;
 
-import integration.Transaction.Transaction;
-import integration.Transaction.imp.TransactionMariaDB;
+import integration.transaction.Transaction;
+import integration.transaction.imp.TransactionMariaDB;
 import integration.TransactionException;
 import integration.transactionManager.transactionFactory.TransactionFactory;
 

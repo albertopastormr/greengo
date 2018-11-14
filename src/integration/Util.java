@@ -1,8 +1,5 @@
 package integration;
 
-import integration.Transaction.Transaction;
-import integration.transactionManager.TransactionManager;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;

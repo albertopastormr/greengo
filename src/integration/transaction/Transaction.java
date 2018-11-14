@@ -1,9 +1,7 @@
-package integration.Transaction;
+package integration.transaction;
 
 import integration.DAOException;
 import integration.TransactionException;
-
-import java.sql.Connection;
 
 public interface Transaction {
 

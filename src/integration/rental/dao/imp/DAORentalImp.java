@@ -2,7 +2,7 @@ package integration.rental.dao.imp;
 
 import business.rental.TRental;
 import integration.DAOException;
-import integration.Transaction.Transaction;
+import integration.transaction.Transaction;
 import integration.Util;
 import integration.rental.dao.DAORental;
 import integration.transactionManager.TransactionManager;
@@ -187,7 +187,7 @@ public class DAORentalImp implements DAORental {
     }
 
     @Override
-    public Collection<TRental> showRentalsByClient(Integer id) throws DAOException {
+    public Collection<TRental> readByRentalsByClient(Integer id) throws DAOException {
         Collection<TRental> readRentals = new ArrayList<>();
 
         String queryTail = " FOR UPDATE";
@@ -200,7 +200,7 @@ public class DAORentalImp implements DAORental {
                 connec = DriverManager.getConnection(Util.getConnectionChain());
             }
             catch(SQLException ex){
-                throw new DAOException("ERROR: access to DB at operation 'showRentalsByClient' @rental unsuccessful\n");
+                throw new DAOException("ERROR: access to DB at operation 'readByRentalsByClient' @rental unsuccessful\n");
             }
             queryTail = "";
         }
@@ -222,7 +222,7 @@ public class DAORentalImp implements DAORental {
             ps.close();
         }
         catch (SQLException e){
-            throw new DAOException("ERROR: SQL statement execution at operation 'showRentalsByClient' @rental " +
+            throw new DAOException("ERROR: SQL statement execution at operation 'readByRentalsByClient' @rental " +
                     "unsuccessful\n");
         }
 
@@ -231,7 +231,7 @@ public class DAORentalImp implements DAORental {
                 try {
                     connec.close();
                 } catch (SQLException e) {
-                    throw new DAOException("ERROR: closing connection to DB at operation 'showRentalsByClient' " +
+                    throw new DAOException("ERROR: closing connection to DB at operation 'readByRentalsByClient' " +
                             "@rental unsuccessful\n");
                 }
             }
@@ -240,7 +240,7 @@ public class DAORentalImp implements DAORental {
         return readRentals;
     }
 
-    public Collection<TRental> showRentalsByVehicle(Integer id) throws DAOException {
+    public Collection<TRental> readByRentalsByVehicle(Integer id) throws DAOException {
         Collection<TRental> readRentals = new ArrayList<>();
 
         String queryTail = " FOR UPDATE";
@@ -253,7 +253,7 @@ public class DAORentalImp implements DAORental {
                 connec = DriverManager.getConnection(Util.getConnectionChain());
             }
             catch(SQLException ex){
-                throw new DAOException("ERROR: access to DB at operation 'showRentalsByVehicle' @rental unsuccessful\n");
+                throw new DAOException("ERROR: access to DB at operation 'readByRentalsByVehicle' @rental unsuccessful\n");
             }
             queryTail = "";
         }
@@ -275,7 +275,7 @@ public class DAORentalImp implements DAORental {
             ps.close();
         }
         catch (SQLException e){
-            throw new DAOException("ERROR: SQL statement execution at operation 'showRentalsByVehicle' @rental " +
+            throw new DAOException("ERROR: SQL statement execution at operation 'readByRentalsByVehicle' @rental " +
                     "unsuccessful\n");
         }
 
@@ -284,7 +284,7 @@ public class DAORentalImp implements DAORental {
                 try {
                     connec.close();
                 } catch (SQLException e) {
-                    throw new DAOException("ERROR: closing connection to DB at operation 'showRentalsByVehicle' " +
+                    throw new DAOException("ERROR: closing connection to DB at operation 'readByRentalsByVehicle' " +
                             "@rental unsuccessful\n");
                 }
             }

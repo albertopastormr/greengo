@@ -6,7 +6,7 @@ import business.client.TClient;
 import business.client.as.ASClient;
 import business.rental.TRental;
 import integration.DAOException;
-import integration.Transaction.Transaction;
+import integration.transaction.Transaction;
 import integration.TransactionException;
 import integration.client.factory.DAOClientFactory;
 import integration.rental.factory.DAORentalFactory;
@@ -35,7 +35,7 @@ public class ASClientImp implements ASClient {
                             throw new ASException("ERROR: There is a client with the parameter 'idCard'=="+client.getIdCardNumber()+" (duplication)\n");
                         }
                     } else
-                        throw new ASException("ERROR: Transaction creation failed\n");
+                        throw new ASException("ERROR: transaction creation failed\n");
             } catch (DAOException | TransactionException e) {
                 throw new ASException(e.getMessage());
             }
@@ -55,7 +55,7 @@ public class ASClientImp implements ASClient {
                 if (tr != null) {
                     tr.start();
                     TClient tl = DAOClientFactory.getInstance().generateDAOClient().readById(id);
-                    Collection<TRental> listRentals = DAORentalFactory.getInstance().generateDAORental().showRentalsByClient(id);
+                    Collection<TRental> listRentals = DAORentalFactory.getInstance().generateDAORental().readByRentalsByClient(id);
 
                     for (TRental rental : listRentals) // Cannot drop client if there are connected rentals with parameter active==true
                         if (rental.isActive())
@@ -73,7 +73,7 @@ public class ASClientImp implements ASClient {
                         else if (!tl.isActive()) throw new ASException("ERROR: The client has parameter 'active'==false");
                     }
                 }else
-                    throw new ASException("ERROR: Transaction creation failed\n");
+                    throw new ASException("ERROR: transaction creation failed\n");
             } catch (DAOException | TransactionException e) {
                 throw new ASException(e.getMessage());
             }
@@ -108,7 +108,7 @@ public class ASClientImp implements ASClient {
                         else throw new ASException("ERROR: There is a client with the parameter 'idCard'=="+client.getIdCardNumber()+" (duplication)\n");
                     }
                 } else
-                    throw new ASException("ERROR: Transaction creation failed\n");
+                    throw new ASException("ERROR: transaction creation failed\n");
             } catch (DAOException | TransactionException e) {
                 throw new ASException(e.getMessage());
             }
@@ -137,7 +137,7 @@ public class ASClientImp implements ASClient {
                     TransactionManager.getInstance().removeTransaction();
                     if (client == null) throw new ASException("ERROR: There is not an existing client with id=="+id+"\n");
                 }else
-                    throw new ASException("ERROR: Transaction creation failed\n");
+                    throw new ASException("ERROR: transaction creation failed\n");
             } catch (DAOException | TransactionException e) {
                 throw new ASException(e.getMessage());
             }
@@ -157,7 +157,7 @@ public class ASClientImp implements ASClient {
                 tr.commit();
                 TransactionManager.getInstance().removeTransaction();
             }else
-                throw new ASException("ERROR: Transaction creation failed\n");
+                throw new ASException("ERROR: transaction creation failed\n");
         }catch (DAOException | TransactionException e) {
             throw new ASException(e.getMessage());
         }
@@ -177,7 +177,7 @@ public class ASClientImp implements ASClient {
                     tr.commit();
                     TransactionManager.getInstance().removeTransaction();
                 }else
-                    throw new ASException("ERROR: Transaction creation failed\n");
+                    throw new ASException("ERROR: transaction creation failed\n");
             } catch (DAOException | TransactionException e) {
                 throw new ASException(e.getMessage());
             }

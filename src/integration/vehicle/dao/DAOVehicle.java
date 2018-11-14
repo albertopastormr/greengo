@@ -16,10 +16,10 @@ public interface DAOVehicle {
 
     Collection<TVehicle> readAllAvailableVehicles() throws DAOException;
 
-    void deleteAll() throws DAOException;
-    
     Collection<TVehicle> readVehiclesByCity(Integer id) throws DAOException;
 
     Integer readByPlateOrSerialNumber(TVehicle vehicle) throws DAOException;
+
+    void deleteAll() throws DAOException;
 
 }

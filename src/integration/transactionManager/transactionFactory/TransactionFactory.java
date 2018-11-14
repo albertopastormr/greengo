@@ -1,6 +1,6 @@
 package integration.transactionManager.transactionFactory;
 
-import integration.Transaction.Transaction;
+import integration.transaction.Transaction;
 import integration.TransactionException;
 import integration.transactionManager.transactionFactory.imp.TransactionFactoryImp;
 

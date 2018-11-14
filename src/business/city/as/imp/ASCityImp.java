@@ -7,14 +7,12 @@ import business.city.as.ASCity;
 import business.client.TClient;
 import business.vehicle.TVehicle;
 import integration.DAOException;
-import integration.Transaction.Transaction;
+import integration.transaction.Transaction;
 import integration.TransactionException;
 import integration.city.factory.DAOCityFactory;
 import integration.transactionManager.TransactionManager;
-import integration.vehicle.dao.DAOVehicle;
 import integration.vehicle.factory.DAOVehicleFactory;
 
-import java.lang.invoke.MethodHandles;
 import java.util.Collection;
 
 public class ASCityImp implements ASCity {
@@ -33,7 +31,7 @@ public class ASCityImp implements ASCity {
                     tr.commit();
                     TransactionManager.getInstance().removeTransaction();
                 } else
-                    throw new ASException("ERROR: Transaction creation failed\n");
+                    throw new ASException("ERROR: transaction creation failed\n");
             } catch (DAOException | TransactionException e) {
                 throw new ASException(e.getMessage());
             }
@@ -72,7 +70,7 @@ public class ASCityImp implements ASCity {
                         else if (!tc.isActive()) throw new ASException("ERROR: The city is already disabled");
                     }
                 } else
-                    throw new ASException("ERROR: Transaction drop failed\n");
+                    throw new ASException("ERROR: transaction drop failed\n");
             } catch (DAOException | ASException | TransactionException e) {
                 throw new ASException(e.getMessage());
             }
@@ -105,7 +103,7 @@ public class ASCityImp implements ASCity {
                     }
                 }
                 else
-                    throw new ASException("ERROR: Transaction update failed\n");
+                    throw new ASException("ERROR: transaction update failed\n");
             } catch (DAOException | TransactionException e) {
                 throw new ASException(e.getMessage());
             }
@@ -132,7 +130,7 @@ public class ASCityImp implements ASCity {
                         TransactionManager.getInstance().removeTransaction();
                         if (city == null) throw new ASException("ERROR: The city doesn't exists");
                 } else
-                    throw new ASException("ERROR: Transaction show failed\n");
+                    throw new ASException("ERROR: transaction show failed\n");
             } catch (DAOException | TransactionException e) {
                 throw new ASException(e.getMessage());
             }
@@ -153,7 +151,7 @@ public class ASCityImp implements ASCity {
                 tr.commit();
                 TransactionManager.getInstance().removeTransaction();
             }else
-                throw new ASException("ERROR: Transaction showALL failed\n");
+                throw new ASException("ERROR: transaction showALL failed\n");
         }catch (DAOException | TransactionException e) {
             throw new ASException(e.getMessage());
         }
@@ -171,11 +169,11 @@ public class ASCityImp implements ASCity {
                     tr.start();
                     TCity city = DAOCityFactory.getInstance().generateDAOCity().readById(idCity);
                     if(city==null) throw new ASException("ERROR: The city doesn`t exist");
-                    clientList = DAOCityFactory.getInstance().generateDAOCity().showClientsByCity(idCity);
+                    clientList = DAOCityFactory.getInstance().generateDAOCity().readClientsByCity(idCity);
                     tr.commit();
                     TransactionManager.getInstance().removeTransaction();
                 } else
-                    throw new ASException("ERROR: Transaction showClientsByCity failed\n");
+                    throw new ASException("ERROR: transaction readClientsByCity failed\n");
             } catch (DAOException | TransactionException e) {
                 throw new ASException(e.getMessage());
             }

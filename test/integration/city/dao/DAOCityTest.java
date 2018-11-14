@@ -25,11 +25,11 @@ class DAOCityTest {
 
     @BeforeEach
     private void setUp() throws Exception {
-        dao.deleteAll();
-
         tc1 = new TCity(1,"Madrid",false);
         tc2 = new TCity(2,"Barcelona",false);
         tclient = new TClient(null,"00000000X",0,false);
+
+        dao.deleteAll();
     }
 
     private boolean checkValues(TCity expected,TCity actual){
@@ -125,7 +125,7 @@ class DAOCityTest {
         Integer idM = dao.create(tc1);
         Integer idClient = asClient.create(tclient);
 
-        Collection<TClient> clients = dao.showClientsByCity(idM);
+        Collection<TClient> clients = dao.readClientsByCity(idM);
         for(TClient c : clients) {
             assertEquals(idClient, c.getId());
             assertEquals(tclient.getIdCardNumber(), c.getIdCardNumber());
@@ -138,7 +138,7 @@ class DAOCityTest {
     void showClientsByCity2() throws DAOException {
         Integer idM = dao.create(tc1);
 
-        Collection<TClient> clients = dao.showClientsByCity(idM);
+        Collection<TClient> clients = dao.readClientsByCity(idM);
         assertTrue(clients.isEmpty());
     }
 

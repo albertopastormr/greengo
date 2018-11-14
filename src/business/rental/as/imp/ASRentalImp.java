@@ -10,10 +10,9 @@ import business.rental.as.ASRental;
 import business.vehicle.TVehicle;
 import business.vehicle.factory.ASVehicleFactory;
 import integration.DAOException;
-import integration.Transaction.Transaction;
+import integration.transaction.Transaction;
 import integration.TransactionException;
 import integration.client.factory.DAOClientFactory;
-import integration.rental.dao.DAORental;
 import integration.rental.factory.DAORentalFactory;
 import integration.transactionManager.TransactionManager;
 import integration.vehicle.factory.DAOVehicleFactory;
@@ -55,7 +54,7 @@ public class ASRentalImp implements ASRental {
                             throw new ASException("ERROR: NumKmRentes must be less than EstimatedDuration from vehicle");
                     }
                 }else
-                    throw new ASException("ERROR: Transaction creation failed\n");
+                    throw new ASException("ERROR: transaction creation failed\n");
             } catch (DAOException | TransactionException e) {
                 throw new ASException(e.getMessage());
             }
@@ -88,7 +87,7 @@ public class ASRentalImp implements ASRental {
                     }
 
                 } else
-                    throw new ASException("ERROR: Transaction drop failed\n");
+                    throw new ASException("ERROR: transaction drop failed\n");
             } catch (DAOException | TransactionException e) {
                 throw new ASException(e.getMessage());
             }
@@ -131,7 +130,7 @@ public class ASRentalImp implements ASRental {
                             throw new ASException("ERROR: Active field must be true in order to update it");
                     }
                 }else
-                    throw new ASException("ERROR: Transaction update failed\n");
+                    throw new ASException("ERROR: transaction update failed\n");
             } catch (DAOException | TransactionException e) {
                 throw new ASException(e.getMessage());
             }
@@ -161,7 +160,7 @@ public class ASRentalImp implements ASRental {
                         throw new ASException("ERROR: The rental doesn't exists");
                     }
                 }else
-                    throw new ASException("ERROR: Transaction show failed\n");
+                    throw new ASException("ERROR: transaction show failed\n");
             } catch (IncorrectInputException | DAOException | TransactionException e) {
                 throw new ASException(e.getMessage());
             }
@@ -182,7 +181,7 @@ public class ASRentalImp implements ASRental {
                 tr.commit();
                 TransactionManager.getInstance().removeTransaction();
             }else
-                throw new ASException("ERROR: Transaction showALL failed\n");
+                throw new ASException("ERROR: transaction showALL failed\n");
         }catch (DAOException | TransactionException e) {
             throw new ASException(e.getMessage());
         } catch (IncorrectInputException e) {

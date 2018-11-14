@@ -1,7 +1,7 @@
-package integration.Transaction.imp;
+package integration.transaction.imp;
 
 import integration.DAOException;
-import integration.Transaction.Transaction;
+import integration.transaction.Transaction;
 import integration.TransactionException;
 import integration.Util;
 

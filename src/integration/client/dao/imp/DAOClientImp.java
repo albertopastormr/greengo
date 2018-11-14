@@ -2,8 +2,7 @@ package integration.client.dao.imp;
 
 import business.client.TClient;
 import integration.DAOException;
-import integration.Transaction.Transaction;
-import integration.TransactionException;
+import integration.transaction.Transaction;
 import integration.Util;
 import integration.client.dao.DAOClient;
 import integration.transactionManager.TransactionManager;

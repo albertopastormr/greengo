@@ -5,22 +5,17 @@ import business.IncorrectInputException;
 import business.city.TCity;
 import business.city.factory.ASCityFactory;
 import business.rental.TRental;
-import business.rental.TRentalDetails;
-import business.vehicle.TBicycleVehicle;
-import business.vehicle.TCarVehicle;
 import business.vehicle.TVehicle;
 import business.vehicle.TVehicleDetails;
 import business.vehicle.as.ASVehicle;
 import business.vehicle.factory.ASVehicleFactory;
 import integration.DAOException;
-import integration.Transaction.Transaction;
+import integration.transaction.Transaction;
 import integration.TransactionException;
 import integration.city.dao.DAOCity;
 import integration.city.factory.DAOCityFactory;
 import integration.rental.factory.DAORentalFactory;
-import integration.rental.factory.imp.DAORentalFactoryImp;
 import integration.transactionManager.TransactionManager;
-import integration.vehicle.dao.DAOVehicle;
 import integration.vehicle.factory.DAOVehicleFactory;
 
 import java.util.ArrayList;
@@ -64,7 +59,7 @@ public class ASVehicleImp implements ASVehicle {
                     tr.commit();
                     TransactionManager.getInstance().removeTransaction();
                 }else
-                    throw new ASException("ERROR: Transaction creation failed\n");
+                    throw new ASException("ERROR: transaction creation failed\n");
             } catch (DAOException | TransactionException e) {
                 throw new ASException(e.getMessage());
             }
@@ -87,7 +82,7 @@ public class ASVehicleImp implements ASVehicle {
 
                     if (tv != null && tv.isActive()) {//the vehicle exists and is active
 
-                        Collection<TRental> rentalList = DAORentalFactory.getInstance().generateDAORental().showRentalsByVehicle(idVehicle);
+                        Collection<TRental> rentalList = DAORentalFactory.getInstance().generateDAORental().readByRentalsByVehicle(idVehicle);
 
                         for (TRental tRental : rentalList) // If exists vehicles actives not update
                             if (tRental.isActive())
@@ -106,7 +101,7 @@ public class ASVehicleImp implements ASVehicle {
                     }
                 }
                 else {
-                    throw new ASException("ERROR: Transaction drop failed\n");
+                    throw new ASException("ERROR: transaction drop failed\n");
 
                 }
             }catch (DAOException | ASException | TransactionException e) {
@@ -146,7 +141,7 @@ public class ASVehicleImp implements ASVehicle {
                         else if ( tv.isOccupied()) throw new ASException("ERROR: The vehicle is occupied");
                     }
                 } else
-                    throw new ASException("ERROR: Transaction update failed\n");
+                    throw new ASException("ERROR: transaction update failed\n");
                 } catch (DAOException | ASException | TransactionException e) {
                 throw new ASException(e.getMessage());
             }
@@ -175,7 +170,7 @@ public class ASVehicleImp implements ASVehicle {
                     TransactionManager.getInstance().removeTransaction();
 
                 } else
-                    throw new ASException("ERROR: Transaction show failed\n");
+                    throw new ASException("ERROR: transaction show failed\n");
             } catch (TransactionException | ASException | DAOException e) {
                 throw new ASException(e.getMessage());
             }
@@ -234,7 +229,7 @@ public class ASVehicleImp implements ASVehicle {
                 tr.commit();
                 TransactionManager.getInstance().removeTransaction();
             }else
-                throw new ASException("ERROR: Transaction showAllAvailableVehicles failed\n");
+                throw new ASException("ERROR: transaction showAllAvailableVehicles failed\n");
         }catch (DAOException | TransactionException e) {
             throw new ASException(e.getMessage());
         }
