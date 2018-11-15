@@ -39,6 +39,14 @@ public class ASRentalImp implements ASRental {
                         Collection<TRental> clientsRentals = DAORentalFactory.getInstance().generateDAORental().readByIdClientAndDateRange(rental.getIdClient(),rental.getDateFrom(),rental.getDateTo());
                         if(vehicleRentals.isEmpty() && clientsRentals.isEmpty()) {
                             idr = DAORentalFactory.getInstance().generateDAORental().create(rental);
+
+                            TClient idC = DAOClientFactory.getInstance().generateDAOClient().readById(rental.getIdClient());
+                            idC.setNumRentals(idC.getNumRentals()+1);
+                            DAOClientFactory.getInstance().generateDAOClient().update(idC);
+
+                            TVehicle idV = DAOVehicleFactory.getInstance().generateDAOVehicle().readById(rental.getIdVehicle());
+                            idV.setNumKmTravelled(idV.getNumKmTravelled()+rental.getNumKmRented());
+                            DAOVehicleFactory.getInstance().generateDAOVehicle().update(idV);
                             tr.commit();
                         }else
                             throw new ASException("ERROR: There are vehicles or clients occupied for this dates");
@@ -75,6 +83,8 @@ public class ASRentalImp implements ASRental {
                     if (tl != null && tl.isActive()) {//the rental exists and is active
                         tl.setActive(false);
                         idr = DAORentalFactory.getInstance().generateDAORental().update(tl);
+
+
                         tr.commit();
                         TransactionManager.getInstance().removeTransaction();
                     } else {
@@ -117,6 +127,8 @@ public class ASRentalImp implements ASRental {
                             rental.setIdVehicle(tl.getIdVehicle());
                             rental.setIdClient(tl.getIdClient());
                             idr = DAORentalFactory.getInstance().generateDAORental().update(rental);
+
+
                             tr.commit();
                         }
                         else

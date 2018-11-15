@@ -253,8 +253,8 @@ public class DAOCityImp implements DAOCity {
 
         try { // Tratamiento db
             PreparedStatement ps = connec.
-                    prepareStatement("SELECT * FROM (vehicle join rental ON vehicle.id = rental.idVehicle) " +
-                            "join city ON rental.idClient = city.id" +" join client ON rental.idClient = client.id"+"  WHERE vehicle.city = ?" + queryTail);
+                    prepareStatement("SELECT DISTINCT client.id, client.idCardNumber, client.numRentals, client.active  FROM (vehicle join rental ON vehicle.id = rental.idVehicle) " +
+                             " join client ON rental.idClient = client.id"+"  WHERE vehicle.city = ?" + queryTail);
             ps.setInt(1, idCity);
             ResultSet rs = ps.executeQuery();
 
