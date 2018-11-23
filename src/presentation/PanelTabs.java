@@ -58,7 +58,7 @@ public class PanelTabs extends JTabbedPane {
 
 		//vista employee
 //		JComponent employeeTab = new JPanel(new GridLayout(1, 1));
-//		addTab("Employee", new ImageIcon("resources/images/employee.png"), employeeTab, "Employee view");
+//		addTab("employee", new ImageIcon("resources/images/employee.png"), employeeTab, "employee view");
 //		setMnemonicAt(0, KeyEvent.VK_4);
 //		employeePane = new EmployeePanel(this);
 //		employeeTab.add(employeePane);
@@ -79,7 +79,7 @@ public class PanelTabs extends JTabbedPane {
 
 		//vista service
 //		JComponent serviceTab = new JPanel(new GridLayout(1, 1));
-//		addTab("Service", new ImageIcon("resources/images/service.png"), serviceTab, "Service view");
+//		addTab("service", new ImageIcon("resources/images/service.png"), serviceTab, "service view");
 //		setMnemonicAt(0, KeyEvent.VK_7);
 //		servicePane = new ServicePanel(this);
 //		serviceTab.add(servicePane);

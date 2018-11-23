@@ -20,7 +20,7 @@ public class FormDropService extends JDialog{
 	private JTextField idText;
 
 	public FormDropService() {
-		setTitle("Drop Service");
+		setTitle("Drop service");
 		setResizable(false);
 		Util.addEscapeListener(this);
 		initGUI();

@@ -41,8 +41,8 @@ public class FormCreateContract extends JDialog {
 	private JPanel fieldsPanel() {
 		JPanel ret = ViewHelpers.createFieldPanel(4);
 
-		//Service Level
-		JLabel serviceLevelLabel = new JLabel("Service Level");
+		//service Level
+		JLabel serviceLevelLabel = new JLabel("service Level");
 		ret.add(serviceLevelLabel);
 
 		serviceLevelText = new JTextField(10);
@@ -55,8 +55,8 @@ public class FormCreateContract extends JDialog {
 		idMainOfficeText = new JTextField(10);
 		ret.add(idMainOfficeText);
 
-		//ID Service
-		JLabel idServiceLabel = new JLabel("ID Service");
+		//ID service
+		JLabel idServiceLabel = new JLabel("ID service");
 		ret.add(idServiceLabel);
 
 		idServiceText = new JTextField(10);
