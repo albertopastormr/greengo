@@ -2,12 +2,11 @@ package business.mainoffice;
 
 import business.ASException;
 import business.IncorrectInputException;
-import business.contract.TContract;
 import business.contract.as.ASContract;
+import business.contract.TContract;
 import business.contract.as.imp.ASContractImp;
 import business.employee.TEmployee;
 import business.employee.TPermanentEmployee;
-import business.employee.TTemporaryEmployee;
 import business.employee.as.ASEmployee;
 import business.employee.as.imp.ASEmployeeImp;
 import business.mainoffice.as.ASMain_Office;

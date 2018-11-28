@@ -1,6 +1,6 @@
 package business.contract.factory;
 
-import business.contract.ASContract;
+import business.contract.as.ASContract;
 import business.contract.factory.imp.ASContractFactoryImp;
 
 public abstract class ASContractFactory {

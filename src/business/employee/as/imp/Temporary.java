@@ -19,38 +19,28 @@ import javax.persistence.NamedQuery;
 @Entity
 @NamedQuery(name = "Business.employee.as.imp.Temporary.findByid", query = "select obj from Temporary obj where :id = obj.id ")
 public class Temporary extends Employee implements Serializable {
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
+	/**
 	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
 	*/
 	private static final long serialVersionUID = 0;
 
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
+	/**
 	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
 	*/
 	public Temporary() {
 	}
 
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
+	/**
 	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
 	*/
 	@Id
 	private Integer id;
 
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
+	/**
 	* @param tt
 	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
 	*/
 	public Temporary(TTemporaryEmployee tt) {
-		// begin-user-code
-		// TODO Auto-generated constructor stub
-		// end-user-code
+
 	}
 }
