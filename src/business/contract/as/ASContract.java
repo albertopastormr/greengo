@@ -1,4 +1,4 @@
-package business.contract;
+package business.contract.as;
 
 import business.contract.TContract;
 import java.util.Collection;

@@ -1,6 +1,7 @@
 package business.contract;
 
-import business.contract.imp.ASContractImp;
+import business.contract.as.ASContract;
+import business.contract.as.imp.ASContractImp;
 import business.mainoffice.TMainOffice;
 import business.mainoffice.as.ASMain_Office;
 import business.mainoffice.as.imp.ASMain_OfficeImp;
@@ -10,7 +11,6 @@ import business.service.as.imp.ASServiceImp;
 import org.junit.jupiter.api.BeforeEach;
 
 import java.util.ArrayList;
-import java.util.Collection;
 
 import static org.junit.jupiter.api.Assertions.*;
 
