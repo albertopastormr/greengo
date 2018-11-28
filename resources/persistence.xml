@@ -5,7 +5,7 @@
              http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd"
              version="2.2">
 	<persistence-unit name="greengo"  transaction-type="RESOURCE_LOCAL">
-		<class>business.contract.as.imp.Contract</class>
+		<class>business.contract.imp.Contract</class>
 		<class>business.employee.as.imp.Employee</class>
 		<class>business.employee.as.imp.Permanent</class>
 		<class>business.employee.as.imp.Temporary</class>

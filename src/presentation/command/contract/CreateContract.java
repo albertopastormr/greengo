@@ -2,9 +2,7 @@ package presentation.command.contract;
 
 import business.ASException;
 import business.contract.TContract;
-import business.contract.as.ASContract;
 import business.contract.factory.ASContractFactory;
-import integration.DAOException;
 import presentation.command.Command;
 import presentation.controller.Event;
 import presentation.controller.LightContext;

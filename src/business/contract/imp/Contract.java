@@ -1,7 +1,7 @@
 /**
  * 
  */
-package business.contract.as.imp;
+package business.contract.imp;
 
 import javax.persistence.Entity;
 import java.io.Serializable;

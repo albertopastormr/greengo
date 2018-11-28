@@ -1,7 +1,7 @@
-package business.contract.as.imp;
+package business.contract.imp;
 
 import business.contract.TContract;
-import business.contract.as.ASContract;
+import business.contract.ASContract;
 
 import java.util.Collection;
 

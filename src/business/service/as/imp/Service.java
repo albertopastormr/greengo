@@ -8,7 +8,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.NamedQueries;
 import javax.persistence.OneToMany;
 
-import business.contract.as.imp.Contract;
+import business.contract.imp.Contract;
 import business.service.TService;
 
 /** 

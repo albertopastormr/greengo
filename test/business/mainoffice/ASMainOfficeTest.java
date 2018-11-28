@@ -38,7 +38,7 @@ public class ASMainOfficeTest {
     @Test
     public void createMainOfficeIncorrectInput2(){//address mustn't be null
         tmo.setAdress(null);
-        assertThrows(IncorrectInputException.class, () -> {as.create(tmo);});
+        assertThrows(IncorrectInputException.class, () -> as.create(tmo));
     }
 
     @Test

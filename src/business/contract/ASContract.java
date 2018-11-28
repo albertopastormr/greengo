@@ -1,7 +1,6 @@
-package business.contract.as;
+package business.contract;
 
 import business.contract.TContract;
-
 import java.util.Collection;
 
 public interface ASContract {

@@ -10,7 +10,7 @@ import javax.persistence.NamedQuery;
 import java.util.Set;
 import javax.persistence.OneToMany;
 import javax.persistence.NamedQueries;
-import business.contract.as.imp.Contract;
+import business.contract.imp.Contract;
 import business.employee.as.imp.Employee;
 import business.mainoffice.TMainOffice;
 
