@@ -2,86 +2,301 @@ package business.mainoffice;
 
 import business.ASException;
 import business.IncorrectInputException;
+import business.contract.TContract;
+import business.contract.as.ASContract;
+import business.contract.as.imp.ASContractImp;
+import business.employee.TEmployee;
+import business.employee.TPermanentEmployee;
+import business.employee.TTemporaryEmployee;
+import business.employee.as.ASEmployee;
+import business.employee.as.imp.ASEmployeeImp;
 import business.mainoffice.as.ASMain_Office;
-import business.mainoffice.factory.ASMain_OfficeFactory;
+import business.mainoffice.as.imp.ASMain_OfficeImp;
+import business.service.TService;
 import business.service.as.ASService;
-import business.service.factory.ASServiceFactory;
+import business.service.as.imp.ASServiceImp;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.Collection;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ASMainOfficeTest {
-    private static ASMain_Office as = ASMain_OfficeFactory.getInstance().generateASMain_Office();
-    private static ASService ass = ASServiceFactory.getInstance().generateASService();
-    private static TMainOffice tmo = new TMainOffice(null,"Madrid","C/Villamayor",true);
 
+    //Application services:
+    private ASMain_Office asMainOffice = new ASMain_OfficeImp();
+    private ASService asService = new ASServiceImp();
+    private ASEmployee asEmployee = new ASEmployeeImp();
+    private ASContract asContract = new ASContractImp();
+
+    //Transfers:
+    private TMainOffice tMainOffice;
+    private TEmployee tPermanentEmployee;
+    private TContract tContract;
+    private TService tService;
 
     @BeforeEach
     private void setUp() throws Exception{
+        tMainOffice = new TMainOffice(null,"Madrid","C/Villamayor",true);
+        tPermanentEmployee = new TPermanentEmployee(null, "ABCD", 1350f, true, null, 20f);
+        tContract = new TContract(null, 2, null, null, true);
+        tService = new TService(null, 100, true, "ABC", "c/Example", 0);
 
 
     }
 
     @Test
     public void createMainOfficeSuccessful(){
-        assertTrue(as.create(tmo)>0);
+        assertTrue(asMainOffice.create(tMainOffice)>0);
     }
 
     @Test
     public void createMainOfficeIncorrectInput(){//id must be null
-        tmo.setId(0);
-        assertThrows(IncorrectInputException.class, () -> {as.create(tmo);});
+        tMainOffice.setId(0);
+        assertThrows(IncorrectInputException.class, () -> {
+            asMainOffice.create(tMainOffice);});
     }
 
     @Test
     public void createMainOfficeIncorrectInput2(){//address mustn't be null
-        tmo.setAdress(null);
-        assertThrows(IncorrectInputException.class, () -> {as.create(tmo);});
+        tMainOffice.setAdress(null);
+        assertThrows(IncorrectInputException.class, () -> {
+            asMainOffice.create(tMainOffice);});
     }
 
     @Test
     public void createMainOfficeIncorrectInput3(){//active mustn't be null
-        tmo.setActive(null);
-        assertThrows(IncorrectInputException.class, () -> {as.create(tmo);});
+        tMainOffice.setActive(null);
+        assertThrows(IncorrectInputException.class, () -> {
+            asMainOffice.create(tMainOffice);});
     }
 
     @Test
     public void createMainOfficeErrorAddress(){//couldn´t exit other main_office with the same address
-        as.create(tmo);
-        assertThrows(ASException.class, () -> {as.create(tmo);});
+        asMainOffice.create(tMainOffice);
+        assertThrows(ASException.class, () -> {
+            asMainOffice.create(tMainOffice);});
     }
 
     @Test
     public void dropMainOfficeSuccessful(){
-        as.drop(as.create(tmo));
-        assertTrue(!as.show(tmo.getId()).isActive());
+        Integer idMO = asMainOffice.create(tMainOffice);
+        tMainOffice.setId(idMO);
+        asMainOffice.drop(idMO);
+
+        assertTrue(!asMainOffice.show(tMainOffice.getId()).isActive());
+    }
+
+    @Test
+    public void dropMainOfficeSuccesfulDisabledEmployees(){ //dropping a main Office without active employees is allowed.
+        Integer idMO = asMainOffice.create(tMainOffice);
+        tMainOffice.setId(idMO);
+
+        tPermanentEmployee.setIdMainOffice(idMO);
+        Integer idEmp = asEmployee.create(tPermanentEmployee);
+        asEmployee.drop(idEmp);
+
+        asMainOffice.drop(idMO);
+
+        assertTrue(!asMainOffice.show(idMO).isActive());
+
+    }
+
+    @Test
+    public void dropMainOfficeSucessfulDisabledContracts(){ //dropping a main Office without active contracts is allowed.
+        Integer idMO = asMainOffice.create(tMainOffice);
+        Integer idS = asService.create(tService);
+
+        tMainOffice.setId(idMO);
+        tService.setId(idS);
+
+        tContract.setIdMainOffice(idMO);
+        tContract.setServiceLevel(idS);
+
+        Integer idCon = asContract.create(tContract);
+        asContract.drop(idCon);
+
+        asMainOffice.drop(idMO);
+
+        assertTrue(!asMainOffice.show(idMO).isActive());
     }
 
     @Test
     public void dropMainOfficeIncorrectInput(){//id mustn`t be null
-        tmo.setId(null);
-        assertThrows(IncorrectInputException.class, () -> {as.drop(tmo.getId());});
+        tMainOffice.setId(null);
+        assertThrows(IncorrectInputException.class, () -> {
+            asMainOffice.drop(tMainOffice.getId());});
     }
 
     @Test
     public void dropMainOfficeIncorrectInput2(){//id must be > 0
-        tmo.setId(-1);
-        assertThrows(IncorrectInputException.class, () -> {as.drop(tmo.getId());});
+        tMainOffice.setId(-1);
+        assertThrows(IncorrectInputException.class, () -> {
+            asMainOffice.drop(tMainOffice.getId());});
     }
 
     @Test
-    public void dropMainOfficeErrorNotExists(){//couldn´t drop a main_office which doesn't exists
-        tmo.setId(100);
-        assertThrows(ASException.class, () -> {as.drop(tmo.getId());});
+    public void dropMainOfficeErrorNotExists(){//shouldn't drop a main_office which doesn't exists
+        tMainOffice.setId(100);
+        assertThrows(ASException.class, () -> {
+            asMainOffice.drop(tMainOffice.getId());});
     }
 
     @Test
-    public void dropMainOfficeErrorNotActive(){//couldn´t drop a disbled main_office
-        tmo.setActive(false);
-        tmo.setId(as.create(tmo));
-        tmo.setAdress("XXX");
-        assertThrows(ASException.class, () -> {as.drop(tmo.getId());});
+    public void dropMainOfficeErrorNotActive(){//shouldn't drop a disbled main_office
+        tMainOffice.setActive(false);
+        tMainOffice.setId(asMainOffice.create(tMainOffice));
+        tMainOffice.setAdress("XXX");
+        assertThrows(ASException.class, () -> {
+            asMainOffice.drop(tMainOffice.getId());});
+    }
+
+    @Test
+    public void dropMainOfficeErrorActiveEmployees(){ //dropping main office with active employees is forbidden.
+        Integer idMO = asMainOffice.create(tMainOffice);
+        tMainOffice.setId(idMO);
+
+        tPermanentEmployee.setIdMainOffice(idMO);
+        asEmployee.create(tPermanentEmployee);
+
+        assertThrows(ASException.class, () -> asMainOffice.drop(idMO));
+    }
+
+    @Test
+    public void dropMainOfficeErrorActiveContracts(){ //dropping main office with active contracts is forbidden.
+        Integer idMO = asMainOffice.create(tMainOffice);
+        Integer idS = asService.create(tService);
+
+        tMainOffice.setId(idMO);
+        tService.setId(idS);
+
+        tContract.setIdMainOffice(idMO);
+        tContract.setServiceLevel(idS);
+
+        asContract.create(tContract);
+        assertThrows(ASException.class, () -> asMainOffice.drop(idMO));
+    }
+
+    @Test
+    public void showMainOfficeSuccessful(){
+        Integer idMO = asMainOffice.create(tMainOffice);
+        tMainOffice.setId(idMO);
+
+        TMainOffice toCompare = asMainOffice.show(idMO);
+
+        assertTrue(checkValues(tMainOffice, toCompare));
+    }
+
+    @Test
+    public void showMainOfficeErrorNotExists(){
+        tMainOffice.setId(100);
+        assertThrows(ASException.class, () -> asMainOffice.show(tMainOffice.getId()));
+    }
+
+    @Test
+    public void showMainOfficeIncorrectInput(){//id mustn`t be null
+        tMainOffice.setId(null);
+        assertThrows(IncorrectInputException.class, () -> {
+            asMainOffice.show(tMainOffice.getId());});
+    }
+
+    @Test
+    public void showMainOfficeIncorrectInput2(){//id must be > 0
+        tMainOffice.setId(-1);
+        assertThrows(IncorrectInputException.class, () -> {
+            asMainOffice.show(tMainOffice.getId());});
+    }
+
+
+    @Test
+    public void showAllMainOfficeSuccessful(){
+        TMainOffice tmo2 = new TMainOffice(null, "Barcelona", "calle manuao", true);
+
+        Integer idMO1 = asMainOffice.create(tMainOffice);
+        Integer idMO2 = asMainOffice.create(tmo2);
+
+        tMainOffice.setId(idMO1);
+        tmo2.setId(idMO2);
+
+        Collection<TMainOffice> toCompare = asMainOffice.showAll();
+
+        for(TMainOffice x: toCompare){
+            if(x.getId() == idMO1){
+                assertTrue(checkValues(x, tMainOffice));
+            }
+            else assertTrue(checkValues(x, tmo2));
+        }
+    }
+
+    @Test
+    public void showAllMainOfficeEmptySuccessful(){
+        assertTrue(asMainOffice.showAll().isEmpty());
+    }
+
+    @Test
+    public void updateMainOfficeSuccesful(){
+        Integer idMO = asMainOffice.create(tMainOffice);
+        tMainOffice.setId(idMO);
+        tMainOffice.setAdress("EFGH");
+        tMainOffice.setActive(!asMainOffice.show(idMO).isActive());
+
+        asMainOffice.update(tMainOffice);
+
+        assertTrue(checkValues(tMainOffice, asMainOffice.show(idMO)));
+    }
+
+    @Test
+    public void updateMainOfficeIncorrectInput(){//id mustn`t be null
+        tMainOffice.setId(null);
+        assertThrows(IncorrectInputException.class, () -> {
+            asMainOffice.update(tMainOffice);});
+    }
+
+    @Test
+    public void updateMainOfficeIncorrectInput2(){//id must be > 0
+        tMainOffice.setId(-1);
+        assertThrows(IncorrectInputException.class, () -> {
+            asMainOffice.update(tMainOffice);});
+    }
+
+    @Test
+    public void updateMainOfficeIncorrectInput3(){ //Address must be a defined value
+        tMainOffice.setAdress(null);
+        assertThrows(IncorrectInputException.class, () -> asMainOffice.update(tMainOffice));
+    }
+
+    @Test
+    public void updateMainOfficeIncorrectInput4(){ //Active must be a defined value
+        tMainOffice.setActive(null);
+        assertThrows(IncorrectInputException.class, () -> asMainOffice.update(tMainOffice));
+    }
+
+    @Test
+    public void updateMainOfficeIncorrectInput5(){ //City must be a defined value.
+        tMainOffice.setCity(null);
+        assertThrows(IncorrectInputException.class, () -> asMainOffice.update(tMainOffice));
+    }
+
+    @Test
+    public void updateMainOfficeErrorNotExists(){ //Main office must exists
+        tMainOffice.setId(100);
+        assertThrows(ASException.class, () -> asMainOffice.update(tMainOffice));
+    }
+
+    @Test
+    public void updateMainOfficeErrorAddress(){ //shouldn't exists other main_office with the same address
+        asMainOffice.create(tMainOffice);
+        assertThrows(ASException.class, () -> asMainOffice.update(tMainOffice));
+    }
+
+
+    //Auxiliary methods
+    public static boolean checkValues(TMainOffice t1, TMainOffice t2){
+        return t1.getId() == t2.getId() &&
+                t1.getAddress().equals(t2.getAddress()) &&
+                t1.getCity().equals(t2.getCity()) &&
+                t1.isActive() == t2.isActive();
     }
 }
