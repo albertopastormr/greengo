@@ -1,5 +1,6 @@
 package business.contract;
 
+import business.ASException;
 import business.contract.as.ASContract;
 import business.contract.as.imp.ASContractImp;
 import business.mainoffice.TMainOffice;
@@ -9,6 +10,8 @@ import business.service.TService;
 import business.service.as.ASService;
 import business.service.as.imp.ASServiceImp;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 
 import java.util.ArrayList;
 
@@ -26,6 +29,7 @@ class ASContractTest {
     private static TContract tContract2;
 
     @BeforeEach
+    @Test
     void setUp() {
 
         tMainOffice = new TMainOffice(1,"manu","C/algomas",true);
@@ -37,6 +41,7 @@ class ASContractTest {
         asService.create(tService);
     }
 
+    @Test
     boolean checkValuesTContract(TContract expected, TContract actual){
         return expected.getId().equals(actual.getId()) && expected.getServiceLevel().equals(actual.getServiceLevel())
                 && expected.getIdService().equals(actual.getIdService())
@@ -46,126 +51,147 @@ class ASContractTest {
 
 
     // ----------- CREATE ---------------
+    @Test
     void createOK(){
         assertTrue( asContract.create(tContract) > 0);
     }
 
+    @Test
     void createIncorrectMainOfficeId(){
         tContract.setIdMainOffice(tContract.getIdMainOffice() + 100);
-        assertThrows(Exception.class, () -> asContract.create(tContract));
+        assertThrows(ASException.class, () -> asContract.create(tContract));
     }
 
+    @Test
     void createIncorrectMainOfficeActive(){
         asMainOffice.drop(tContract.getIdMainOffice());
-        assertThrows(Exception.class, () -> asContract.create(tContract));
+        assertThrows(ASException.class, () -> asContract.create(tContract));
     }
 
+    @Test
     void createIncorrectServiceId(){
         tContract.setIdService(tContract.getIdService() + 100);
-        assertThrows(Exception.class, () -> asContract.create(tContract));
+        assertThrows(ASException.class, () -> asContract.create(tContract));
     }
 
+    @Test
     void createIncorrectServiceActive(){
         asService.drop(tContract.getIdService());
-        assertThrows(Exception.class, () -> asContract.create(tContract));
+        assertThrows(ASException.class, () -> asContract.create(tContract));
     }
 
+    @Test
     void createIncorrectMainOfficeServiceId(){
         tContract.setIdMainOffice(tContract.getIdMainOffice() + 100);
         tContract.setIdService(tContract.getIdService() + 100);
-        assertThrows(Exception.class, () -> asContract.create(tContract));
+        assertThrows(ASException.class, () -> asContract.create(tContract));
     }
 
+    @Test
     void createIncorrectMainOfficeServiceActive(){
         asMainOffice.drop(tContract.getIdMainOffice());
         asService.drop(tContract.getIdService());
-        assertThrows(Exception.class, () -> asContract.create(tContract));
+        assertThrows(ASException.class, () -> asContract.create(tContract));
     }
 
     // ------------------- DROP -----------------
 
+    @Test
     void dropOK(){
         asContract.create(tContract);
         assertTrue( asContract.drop(tContract.getId()) > 0);
     }
 
+    @Test
     void dropIncorrectId(){
-        asContract.create(tContract);
-        tContract.setId(tContract.getId() + 100);
-        assertThrows(Exception.class, () -> asContract.drop(tContract.getId()));
+        assertThrows(ASException.class, () -> asContract.drop(tContract.getId() + 100));
     }
 
+    @Test
     void dropIncorrectActive(){
         asContract.create(tContract);
         asContract.drop(tContract.getId());
-        assertThrows(Exception.class, () -> asContract.drop(tContract.getId()));
+        assertThrows(ASException.class, () -> asContract.drop(tContract.getId()));
     }
 
 
     // ------------------- UPDATE ---------------
 
+    @Test
     void updateOK(){
         asContract.create(tContract);
         assertTrue( asContract.update(tContract) > 0);
     }
 
+    @Test
     void updateIncorrectId(){
         asContract.create(tContract);
         tContract.setId(tContract.getId() + 100);
-        assertThrows(Exception.class, () -> asContract.update(tContract));
+        assertThrows(ASException.class, () -> asContract.update(tContract));
     }
 
+    @Test
     void updateIncorrectMainOfficeId(){
         asContract.create(tContract);
         tContract.setIdMainOffice(tContract.getIdMainOffice() + 100);
-        assertThrows(Exception.class, () -> asContract.update(tContract));
+        assertThrows(ASException.class, () -> asContract.update(tContract));
     }
 
+    @Test
     void updateIncorrectMainOfficeActive(){
         asContract.create(tContract);
         asMainOffice.drop(tContract.getIdMainOffice());
-        assertThrows(Exception.class, () -> asContract.update(tContract));
+        assertThrows(ASException.class, () -> asContract.update(tContract));
     }
 
+    @Test
     void updateIncorrectServiceId(){
         asContract.create(tContract);
         tContract.setIdService(tContract.getIdService() + 100);
-        assertThrows(Exception.class, () -> asContract.update(tContract));
+        assertThrows(ASException.class, () -> asContract.update(tContract));
     }
 
+    @Test
     void updateIncorrectServiceActive(){
         asContract.create(tContract);
         asService.drop(tContract.getIdService());
-        assertThrows(Exception.class, () -> asContract.update(tContract));
+        assertThrows(ASException.class, () -> asContract.update(tContract));
     }
 
+    @Test
     void updateIncorrectMainOfficeServiceId(){
         asContract.create(tContract);
         tContract.setIdMainOffice(tContract.getIdMainOffice() + 100);
         tContract.setIdService(tContract.getIdService() + 100);
-        assertThrows(Exception.class, () -> asContract.update(tContract));
+        assertThrows(ASException.class, () -> asContract.update(tContract));
     }
 
+    @Test
     void updateIncorrectMainOfficeServiceActive(){
         asContract.create(tContract);
         asMainOffice.drop(tContract.getIdMainOffice());
         asService.drop(tContract.getIdService());
-        assertThrows(Exception.class, () -> asContract.update(tContract));
+        assertThrows(ASException.class, () -> asContract.update(tContract));
     }
 
 
-    // ------------------ SHOW -------------
+    // ------------------ SHOW -----------------
 
+    @Test
     void showOK(){
         asContract.create(tContract);
         assertTrue(checkValuesTContract(tContract, asContract.show(tContract.getId())));
     }
 
+    @Test
     void showIncorrectId(){
-        asContract.create(tContract);
-        assertThrows(Exception.class, () -> asContract.show(tContract.getId() + 100));
+        assertThrows(ASException.class, () -> asContract.show(tContract.getId() + 100));
     }
 
+
+    // ------------------- SHOW ALL -----------------
+
+    @Test
     void showAllOK(){
         asContract.create(tContract);
         asContract.create(tContract2);
@@ -174,6 +200,7 @@ class ASContractTest {
         assertTrue(checkValuesTContract(tContract2, result.get(1)));
     }
 
+    @Test
     void showAllIncorrectActive(){
         asContract.create(tContract);
         tContract2.setActive(false);

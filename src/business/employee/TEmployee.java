@@ -11,7 +11,7 @@ public class TEmployee {
 	public TEmployee() {
 	}
 
-	public TEmployee(Integer id, String idCardNumber, float salary, Boolean active, Integer idMainOffice, String type) {
+	public TEmployee(Integer id, String idCardNumber, Float salary, Boolean active, Integer idMainOffice, String type) {
 		this.id = id;
 		this.idCardNumber = idCardNumber;
 		this.salary = salary;

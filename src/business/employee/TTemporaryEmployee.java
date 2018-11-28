@@ -6,7 +6,7 @@ public class TTemporaryEmployee extends TEmployee {
 	public TTemporaryEmployee() {
 	}
 
-	public TTemporaryEmployee(Integer id, String id_card_number, float salary, boolean active, Integer id_main_office, Integer numWorkedHours) {
+	public TTemporaryEmployee(Integer id, String id_card_number, Float salary, Boolean active, Integer id_main_office, Integer numWorkedHours) {
 		super(id, id_card_number, salary, active, id_main_office, "Temporary");
 		this.numWorkedHours = numWorkedHours;
 	}
