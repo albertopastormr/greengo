@@ -19,6 +19,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Collection;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -32,7 +33,7 @@ class ASMainOfficeTest {
 
     //Transfers:
     private TMainOffice tMainOffice;
-    private TEmployee tPermanentEmployee;
+    private TPermanentEmployee tPermanentEmployee;
     private TContract tContract;
     private TService tService;
 
@@ -43,10 +44,9 @@ class ASMainOfficeTest {
                 true, null, 20f);
         tContract = new TContract(null, 2, null, null, true);
         tService = new TService(null, 100, true, "ABC", "c/Example", 0);
-
-
     }
 
+    // === CREATE === //
     @Test
     void createMainOfficeSuccessful(){
         assertTrue(asMainOffice.create(tMainOffice)>0);
@@ -76,6 +76,7 @@ class ASMainOfficeTest {
         assertThrows(ASException.class, () -> asMainOffice.create(tMainOffice));
     }
 
+    // === DROP === //
     @Test
     void dropMainOfficeSuccessful(){
         Integer idMO = asMainOffice.create(tMainOffice);
@@ -171,6 +172,7 @@ class ASMainOfficeTest {
         assertThrows(ASException.class, () -> asMainOffice.drop(idMO));
     }
 
+    // === SHOW === //
     @Test
     void showMainOfficeSuccessful(){
         Integer idMO = asMainOffice.create(tMainOffice);
@@ -199,7 +201,7 @@ class ASMainOfficeTest {
         assertThrows(IncorrectInputException.class, () -> asMainOffice.show(tMainOffice.getId()));
     }
 
-
+	// === SHOWALL === //
     @Test
     void showAllMainOfficeSuccessful(){
         TMainOffice tmo2 = new TMainOffice(null, "Barcelona", "calle manuao", true);
@@ -225,6 +227,7 @@ class ASMainOfficeTest {
         assertTrue(asMainOffice.showAll().isEmpty());
     }
 
+    // === UPDATE === //
     @Test
     void updateMainOfficeSuccesful(){
         Integer idMO = asMainOffice.create(tMainOffice);
@@ -278,6 +281,48 @@ class ASMainOfficeTest {
         asMainOffice.create(tMainOffice);
         assertThrows(ASException.class, () -> asMainOffice.update(tMainOffice));
     }
+
+    // === TOTAL SALARY === //
+    @Test
+	public void totalSalaryMainOfficeSuccessful(){
+    	Integer idMO = asMainOffice.create(tMainOffice);
+    	tMainOffice.setId(idMO);
+
+    	tPermanentEmployee.setIdMainOffice(idMO);
+    	asEmployee.create(tPermanentEmployee);
+
+		Float totalSalary = tPermanentEmployee.getSalary() + tPermanentEmployee.getApportionment();
+
+		assertTrue(totalSalary.equals(asMainOffice.showSalary(tMainOffice.getId())));
+	}
+
+	@Test
+	public void totalSalaryMainOfficeIncorrectInput(){//id mustn`t be null
+		tMainOffice.setId(null);
+		assertThrows(IncorrectInputException.class, () -> {
+			asMainOffice.showSalary(tMainOffice.getId());});
+	}
+
+	@Test
+	public void totalSalaryMainOfficeIncorrectInput2(){//id must be > 0
+		tMainOffice.setId(-1);
+		assertThrows(IncorrectInputException.class, () -> {
+			asMainOffice.showSalary(tMainOffice.getId());});
+	}
+
+	@Test
+	public void totalSalaryMainOfficeErrorNotExists(){ //Main office must exists
+    	tMainOffice.setId(100);
+    	assertThrows(ASException.class, () -> asMainOffice.showSalary(tMainOffice.getId()));
+	}
+
+	@Test
+	public void totalSalaryMainOfficeErrorActive(){ //Main office must be active
+    	tMainOffice.setActive(false);
+    	Integer idMO = asMainOffice.create(tMainOffice);
+
+    	assertThrows(ASException.class, () -> asMainOffice.showSalary(idMO));
+	}
 
 
     //Auxiliary methods
