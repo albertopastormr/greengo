@@ -4,7 +4,7 @@ import business.mainoffice.TMainOffice;
 
 import java.util.Collection;
 
-public interface  ASMain_Office {
+public interface ASMain_Office {
 
     /*This is related to JPA*/
 
