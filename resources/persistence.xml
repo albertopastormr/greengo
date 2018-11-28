@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence
+             http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd"
+             version="2.2">
+	<persistence-unit name="greengo"  transaction-type="RESOURCE_LOCAL">
+		<class>business.contract.as.imp.Contract</class>
+		<class>business.employee.as.imp.Employee</class>
+		<class>business.employee.as.imp.Permanent</class>
+		<class>business.employee.as.imp.Temporary</class>
+		<class>business.main_Office.as.imp.Main_Office</class>
+		<class>business.service.as.imp.Service</class>
+		<properties>
+            <property name="eclipselink.cache.shared.default" value="false"/>
+            <property name="javax.persistence.jdbc.driver" value="org.mariadb.jdbc.Driver"/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:mariadb://localhost:3306/greengo"/>
+            <property name="javax.persistence.jdbc.user" value="manager"/>
+            <property name="javax.persistence.jdbc.password" value="manager_if"/>
+            <property name="eclipselink.ddl-generation" value="drop-and-create-tables"/>
+            <property name="eclipselink.create-ddl-jdbc-file-name" value="createDDL_ddlGeneration.jdbc"/>
+            <property name="eclipselink.drop-ddl-jdbc-file-name" value="dropDDL_ddlGeneration.jdbc"/>
+            <property name="eclipselink.ddl-generation.output-mode" value="both"/>
+		</properties>
+	</persistence-unit>
+</persistence>
