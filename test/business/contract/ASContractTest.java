@@ -1,6 +1,7 @@
 package business.contract;
 
 import business.ASException;
+import business.IncorrectInputException;
 import business.contract.as.ASContract;
 import business.contract.as.imp.ASContractImp;
 import business.mainoffice.TMainOffice;
@@ -54,6 +55,40 @@ class ASContractTest {
     @Test
     void createOK(){
         assertTrue( asContract.create(tContract) > 0);
+    }
+
+    @Test
+    void createIncorrectInputID(){
+        tContract.setId(1); //id must be null at create method
+        assertThrows(IncorrectInputException.class, () -> asContract.create(tContract));
+    }
+
+    @Test
+    void createIncorrectInputServiceLevel(){
+        tContract.setServiceLevel(-1);
+        assertThrows(IncorrectInputException.class, () -> asContract.create(tContract));
+        tContract.setServiceLevel(0);
+        assertThrows(IncorrectInputException.class, () -> asContract.create(tContract));
+    }
+
+    @Test
+    void createIncorrectInputMainOffice(){
+        tContract.setIdMainOffice(null);
+        assertThrows(IncorrectInputException.class, ()-> asContract.create(tContract));
+        tContract.setIdMainOffice(-1);
+        assertThrows(IncorrectInputException.class, ()-> asContract.create(tContract));
+        tContract.setIdMainOffice(0);
+        assertThrows(IncorrectInputException.class, ()-> asContract.create(tContract));
+    }
+
+    @Test
+    void createIncorrectInputIdService(){
+        tContract.setIdService(null);
+        assertThrows(IncorrectInputException.class, ()-> asContract.create(tContract));
+        tContract.setIdService(-1);
+        assertThrows(IncorrectInputException.class, ()-> asContract.create(tContract));
+        tContract.setIdService(0);
+        assertThrows(IncorrectInputException.class, ()-> asContract.create(tContract));
     }
 
     @Test
