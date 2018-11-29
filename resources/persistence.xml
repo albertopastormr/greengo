@@ -5,12 +5,12 @@
              http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd"
              version="2.2">
 	<persistence-unit name="greengo"  transaction-type="RESOURCE_LOCAL">
-		<class>business.contract.as.imp.Contract</class>
-		<class>business.employee.as.imp.Employee</class>
-		<class>business.employee.as.imp.Permanent</class>
-		<class>business.employee.as.imp.Temporary</class>
+		<class>business.contract.Contract</class>
+		<class>business.employee.Employee</class>
+		<class>business.employee.Permanent</class>
+		<class>business.employee.Temporary</class>
 		<class>business.mainOffice.as.imp.MainOffice</class>
-		<class>business.service.as.imp.Service</class>
+		<class>business.service.Service</class>
 		<properties>
             <property name="eclipselink.cache.shared.default" value="false"/>
             <property name="javax.persistence.jdbc.driver" value="org.mariadb.jdbc.Driver"/>

@@ -1,6 +1,7 @@
 package business.employee;
 
 public class TPermanentEmployee extends TEmployee {
+
 	private Float apportionment;
 
 	public TPermanentEmployee() {

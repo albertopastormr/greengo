@@ -1,4 +1,4 @@
-package business.service.as.imp;
+package business.service;
 
 import javax.persistence.Entity;
 import java.io.Serializable;
@@ -8,8 +8,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.NamedQueries;
 import javax.persistence.OneToMany;
 
-import business.contract.as.imp.Contract;
-import business.service.TService;
+import business.contract.Contract;
 
 /**
 * @author ...
@@ -25,53 +24,89 @@ import business.service.TService;
 		@NamedQuery(name = "Business.service.as.imp.service.findByvehicles_attended", query = "select obj from service obj where :vehicles_attended = obj.vehicles_attended "),
 		@NamedQuery(name = "Business.service.as.imp.service.findByactive", query = "select obj from service obj where :active = obj.active ") })
 public class Service implements Serializable {
-	/**
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
+
 	private static final long serialVersionUID = 0;
 
-	/**
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
+	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
+	private Integer id;
+
+	private String type;
+
+	private String address;
+
+	@OneToMany(mappedBy = "service")
+	private Set<Contract> contract;
+
+	private Integer capacity;
+
+	private Integer numVehiclesAttended;
+
+	private Boolean active;
+
 	public Service() {
 	}
 
-	/**
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
-	@Id
-	private Integer id;
-	/**
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
-	private Class type;
-	/**
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
-	private Class address;
-	/**
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
-	@OneToMany(mappedBy = "service")
-	private Set<Contract> contract;
-	/**
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
-	private Class capacity;
-	/**
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
-	private Class vehicles_attended;
-	/**
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
-	private Class active;
-
-	/**
-	* @param ts
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
 	public Service(TService ts) {
 
+	}
+
+	public static long getSerialVersionUID() {
+		return serialVersionUID;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public Set<Contract> getContract() {
+		return contract;
+	}
+
+	public void setContract(Set<Contract> contract) {
+		this.contract = contract;
+	}
+
+	public Integer getCapacity() {
+		return capacity;
+	}
+
+	public void setCapacity(Integer capacity) {
+		this.capacity = capacity;
+	}
+
+	public Integer getNumVehiclesAttended() {
+		return numVehiclesAttended;
+	}
+
+	public void setNumVehiclesAttended(Integer numVehiclesAttended) {
+		this.numVehiclesAttended = numVehiclesAttended;
+	}
+
+	public Boolean getActive() {
+		return active;
+	}
+
+	public void setActive(Boolean active) {
+		this.active = active;
 	}
 }
