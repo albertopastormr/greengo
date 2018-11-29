@@ -1,17 +1,9 @@
-/**
- * 
- */
 package business.contract;
 
-import javax.annotation.Generated;
-import javax.persistence.Entity;
+import javax.persistence.*;
 import java.io.Serializable;
-import javax.persistence.Id;
-import javax.persistence.NamedQuery;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
+
 import business.mainoffice.MainOffice;
-import business.contract.TContract;
 import business.service.Service;
 
 @Entity
@@ -25,7 +17,7 @@ public class Contract implements Serializable {
 
 	private static final long serialVersionUID = 0;
 
-	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Id @GeneratedValue(strategy= GenerationType.IDENTITY)
 	private Integer id;
 
 	@ManyToOne
@@ -41,11 +33,15 @@ public class Contract implements Serializable {
 	public Contract() {
 	}
 
-	public Contract(TContract tc) {
+    public Contract(TContract tc) {
+        this.id =
+        this.service = getService();
+        this.main_Office = main_Office;
+        this.service_level = service_level;
+        this.active = active;
+    }
 
-	}
-
-	public static long getSerialVersionUID() {
+    public static long getSerialVersionUID() {
 		return serialVersionUID;
 	}
 
