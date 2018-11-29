@@ -140,7 +140,7 @@ public class FormCreateEmployee extends JDialog {
 						TPermanentEmployee emp = new TPermanentEmployee();
 						emp.setIdCardNumber(Util.parseString(idCardNumberText.getText()));
 						emp.setActive(Util.parseActive(activeComboBox.getSelectedItem().toString()));
-						emp.setApportionment(Util.parseNoNegativeInt(appotionmentText.getText()));
+						emp.setApportionment(Util.parseNoNegativeFloat(appotionmentText.getText()));
 						emp.setSalary(Util.parseNoNegativeFloat(salaryText.getText()));
 						emp.setType(Util.parseString(typeComboBox.getSelectedItem().toString()));
                         dispose();

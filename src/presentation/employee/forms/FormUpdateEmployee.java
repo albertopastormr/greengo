@@ -138,7 +138,7 @@ public class FormUpdateEmployee extends JDialog {
 						TPermanentEmployee emp = new TPermanentEmployee();
 						emp.setId(Util.parseNoNegativeInt(idText.getText()));
 						emp.setIdCardNumber(Util.parseString(idCardNumberText.getText()));
-						emp.setApportionment(Util.parseNoNegativeInt(appotionmentText.getText()));
+						emp.setApportionment(Util.parseNoNegativeFloat(appotionmentText.getText()));
 						emp.setSalary(Util.parseNoNegativeFloat(salaryText.getText()));
 						emp.setType(Util.parseString(typeComboBox.getSelectedItem().toString()));
                         dispose();

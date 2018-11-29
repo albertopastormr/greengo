@@ -223,6 +223,21 @@ class ASMainOfficeTest {
     }
 
     @Test
+    void showAllMainOfficesActiveSuccessful(){
+        TMainOffice tmo2 = new TMainOffice(null, "Barcelona", "calle manuao", false);
+
+        Integer idMO1 = asMainOffice.create(tMainOffice);
+        Integer idMO2 = asMainOffice.create(tmo2);
+
+        tMainOffice.setId(idMO1);
+        tmo2.setId(idMO2);
+
+        Collection<TMainOffice> toCompare = asMainOffice.showAll();
+
+        assertEquals(toCompare.size(),1);
+    }
+
+    @Test
     void showAllMainOfficeEmptySuccessful(){
         assertTrue(asMainOffice.showAll().isEmpty());
     }
@@ -284,7 +299,7 @@ class ASMainOfficeTest {
 
     // === TOTAL SALARY === //
     @Test
-	public void totalSalaryMainOfficeSuccessful(){
+    void totalSalaryMainOfficeSuccessful(){
     	Integer idMO = asMainOffice.create(tMainOffice);
     	tMainOffice.setId(idMO);
 
@@ -293,31 +308,29 @@ class ASMainOfficeTest {
 
 		Float totalSalary = tPermanentEmployee.getSalary() + tPermanentEmployee.getApportionment();
 
-		assertTrue(totalSalary.equals(asMainOffice.showSalary(tMainOffice.getId())));
+        assertEquals(totalSalary, asMainOffice.showSalary(tMainOffice.getId()), 0.0);
 	}
 
 	@Test
-	public void totalSalaryMainOfficeIncorrectInput(){//id mustn`t be null
+    void totalSalaryMainOfficeIncorrectInput(){//id mustn`t be null
 		tMainOffice.setId(null);
-		assertThrows(IncorrectInputException.class, () -> {
-			asMainOffice.showSalary(tMainOffice.getId());});
+		assertThrows(IncorrectInputException.class, () -> asMainOffice.showSalary(tMainOffice.getId()));
 	}
 
 	@Test
-	public void totalSalaryMainOfficeIncorrectInput2(){//id must be > 0
+    void totalSalaryMainOfficeIncorrectInput2(){//id must be > 0
 		tMainOffice.setId(-1);
-		assertThrows(IncorrectInputException.class, () -> {
-			asMainOffice.showSalary(tMainOffice.getId());});
+		assertThrows(IncorrectInputException.class, () -> asMainOffice.showSalary(tMainOffice.getId()));
 	}
 
 	@Test
-	public void totalSalaryMainOfficeErrorNotExists(){ //Main office must exists
+    void totalSalaryMainOfficeErrorNotExists(){ //Main office must exists
     	tMainOffice.setId(100);
     	assertThrows(ASException.class, () -> asMainOffice.showSalary(tMainOffice.getId()));
 	}
 
 	@Test
-	public void totalSalaryMainOfficeErrorActive(){ //Main office must be active
+    void totalSalaryMainOfficeErrorActive(){ //Main office must be active
     	tMainOffice.setActive(false);
     	Integer idMO = asMainOffice.create(tMainOffice);
 
@@ -326,10 +339,10 @@ class ASMainOfficeTest {
 
 
     //Auxiliary methods
-    static boolean checkValues(TMainOffice t1, TMainOffice t2){
+    private static boolean checkValues(TMainOffice t1, TMainOffice t2){
         return t1.getId().equals(t2.getId()) &&
                 t1.getAddress().equals(t2.getAddress()) &&
                 t1.getCity().equals(t2.getCity()) &&
-                t1.isActive() == t2.isActive();
+                t1.isActive().equals(t2.isActive());
     }
 }
