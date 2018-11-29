@@ -43,34 +43,39 @@ public class ASServiceTest {
         tContractPrincipal = new TContract();
     }
 
+    // --------------------- CREATE --------------------
+
     @Test
     public void createServiceSuccessful(){
         assertTrue(as.create(tServicePrincipal)>0);
     }
 
     @Test
-    public void createServiceEqualsType(){
+    public void createIncorrectServiceSameType(){
 
         Integer idService = as.create(tServicePrincipal);
         tServicePrincipal = as.show(idService);
 
-        // Creamos todos los campos diferentes menos el tipo
+        // Create all diferents fields less the type
         TService tServiceSecond = new TService(null, 201, true, "Taller","Calle mercado,3 Modificado",54321);
-
         assertThrows(ASException.class, ()-> as.create(tServiceSecond));
     }
 
     @Test
-    public void createServiceIdNegative(){
+    public void createIncorrectServiceIdNegative(){
         tServicePrincipal.setId(-1);
         assertThrows(IncorrectInputException.class, ()-> as.create(tServicePrincipal));
     }
 
     @Test
-    public void createServiceTypeNull(){
+    public void createIncorrectServiceTypeNull(){
         tServicePrincipal.setType(null);
         assertThrows(IncorrectInputException.class, ()-> as.create(tServicePrincipal));
     }
+
+
+    // --------------------- DROP --------------------
+
 
     @Test
     public void dropServiceSuccessful(){
@@ -79,7 +84,7 @@ public class ASServiceTest {
     }
 
     @Test
-    public void dropServiceContractAssociated(){
+    public void dropIncorrectServiceContractAssociated(){
 
         Integer idService = as.create(tServicePrincipal);
         tServicePrincipal = as.show(idService);
@@ -119,31 +124,34 @@ public class ASServiceTest {
     }
 
     @Test
-    public void dropServiceAlreadyInactive(){
+    public void dropIncorrectServiceAlreadyInactive(){
         Integer idService = as.drop(as.create(tServicePrincipal));
 
         assertThrows(ASException.class, ()-> as.drop(idService));
     }
 
     @Test
-    public void dropServiceNotExist(){
+    public void dropIncorrectServiceNotExist(){
         assertThrows(ASException.class, ()-> as.drop(20));
     }
 
     @Test
-    public void dropServiceIdNull(){
+    public void dropIncorrectServiceIdNull(){
         assertThrows(ASException.class, ()-> as.drop(null));
     }
 
     @Test
-    public void dropServiceIdNegative(){
+    public void dropIncorrectServiceIdNegative(){
         assertThrows(ASException.class, ()-> as.drop(-1));
     }
+
+
+    // --------------------- UPDATE --------------------
 
     @Test
     public void updateServiceSuccessful(){
 
-        // Service con campos igual menos el type
+        // Change all fields less type
         TService tServiceComparator = new TService(null, 201, true, "Limpieza","Calle Mercado,3 Modificada",54321);
         tServiceComparator = as.show(as.create(tServiceComparator));
 
@@ -163,9 +171,8 @@ public class ASServiceTest {
     }
 
     @Test
-    public void updateServiceEqualsType(){
+    public void updateIncorrectServiceSameType(){
 
-        // Service con campos igual menos el type
         TService tServiceComparator = new TService(null, 201, true, "Limpieza","Calle Mercado,3 Modificada",54321);
         as.create(tServiceComparator);
 
@@ -181,7 +188,7 @@ public class ASServiceTest {
     }
 
     @Test
-    public void updateServiceTypeNull(){
+    public void updateIncorrectServiceTypeNull(){
 
         // Service con campos igual menos el type
         TService tServiceComparator = new TService(null, 201, true, "Limpieza","Calle Mercado,3 Modificada",54321);
@@ -199,31 +206,31 @@ public class ASServiceTest {
     }
 
     @Test
-    public void updateServiceNotExist(){
+    public void updateIncorrectServiceNotExist(){
         tServicePrincipal.setId(20);
         assertThrows(ASException.class, ()-> as.update(tServicePrincipal));
     }
 
     @Test
-    public void updateServiceZero(){
+    public void updateIncorrectServiceZero(){
         tServicePrincipal.setId(0);
         assertThrows(ASException.class, ()-> as.update(tServicePrincipal));
     }
 
     @Test
-    public void updateServiceNotActive(){
+    public void updateIncorrectServiceNotActive(){
         tServicePrincipal.setActive(false);
         assertThrows(ASException.class, ()-> as.update(tServicePrincipal));
     }
 
     @Test
-    public void updateServiceActiveNull(){
+    public void updateIncorrectServiceActiveNull(){
         tServicePrincipal.setActive(null);
         assertThrows(ASException.class, ()-> as.update(tServicePrincipal));
     }
 
     @Test
-    public void updateServiceNotNullActive(){
+    public void updateIncorrectServiceNotNullActive(){
         tServicePrincipal.setId(null);
         tServicePrincipal.setActive(true);
 
@@ -231,17 +238,19 @@ public class ASServiceTest {
     }
 
     @Test
-    public void updateServiceNotNegativeActive(){
+    public void updateIncorrectServiceNotNegativeActive(){
         tServicePrincipal.setId(-1);
         tServicePrincipal.setActive(true);
 
         assertThrows(ASException.class, ()-> as.update(tServicePrincipal));
     }
 
+    // --------------------- SHOW --------------------
+
     @Test
     public void showServiceSuccessful(){
         Integer idService = as.create(tServicePrincipal);
-        assertTrue(as.show(idService).isActive());
+        assertTrue(checkTransfersService(tServicePrincipal, as.show(idService)));
     }
 
     @Test
@@ -259,6 +268,9 @@ public class ASServiceTest {
         assertThrows(ASException.class, ()-> as.show(null));
     }
 
+    // ----------------- SHOW ALL -------------------
+
+
     @Test
     public void showAllServiceSuccessful(){
         Integer idServicePrincipal = as.create(tServicePrincipal);
@@ -272,7 +284,6 @@ public class ASServiceTest {
                 assertTrue(checkTransferValues(tServiceAux,"Limpieza"));
             else
                 assertTrue(checkTransferValues(tServiceAux,"Reparaciones"));
-
         }
     }
 
@@ -286,8 +297,13 @@ public class ASServiceTest {
         return out.getType().equals(type) && out.isActive();
     }
 
-    // TODO dar vuelta checkTRanfer
-    // TODO operacion level falta
+    private boolean checkTransfersService(TService first, TService second) {
+        return first.getId().equals(second.getId())
+                && first.getAddress().equals(second.getAddress())
+                && first.getNumVehiclesAttended().equals(second.getNumVehiclesAttended())
+                && first.getType().equals(second.getType())
+                && first.isActive().equals(second.isActive());
+    }
 
     @Test
     public void showServicesFromLevel() {
@@ -329,12 +345,12 @@ public class ASServiceTest {
     }
 
     @Test
-    public void showServicesFromLevelNull() {
+    public void showIncorrectServicesFromLevelNull() {
         assertThrows(ASException.class, ()-> as.show(null));
     }
 
     @Test
-    public void showServicesFromLevelNegative() {
+    public void showIncorrectServicesFromLevelNegative() {
         assertThrows(ASException.class, ()-> as.show(-1));
     }
 
