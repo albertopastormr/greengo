@@ -14,12 +14,9 @@ public class Permanent extends Employee implements Serializable {
 
 	private static final long serialVersionUID = 0;
 
-<<<<<<< HEAD
 	@Id @GeneratedValue(strategy= GenerationType.IDENTITY)
 	private Integer id;
 
-=======
->>>>>>> 603d92817707b9545096e6ae0f7cb5264d8469f3
 	private Float apportionment;
 
 	public Permanent() {

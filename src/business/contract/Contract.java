@@ -1,9 +1,8 @@
 package business.contract;
 
-<<<<<<< HEAD
+
 import javax.annotation.Generated;
-=======
->>>>>>> 603d92817707b9545096e6ae0f7cb5264d8469f3
+
 import javax.persistence.*;
 import java.io.Serializable;
 

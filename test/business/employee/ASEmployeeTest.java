@@ -42,7 +42,7 @@ class ASEmployeeTest {
                 && expected.getIdMainOffice().equals(actual.getIdMainOffice())
                 && expected.getApportionment().equals(actual.getApportionment())
                 && expected.getType().equals(actual.getType())
-                && expected.getActive().equals(actual.getActive());
+                && expected.isActive().equals(actual.isActive());
     }
 
     private boolean checkValuesTEmployee(TTemporaryEmployee expected, TTemporaryEmployee actual){
@@ -51,7 +51,7 @@ class ASEmployeeTest {
                 && expected.getIdMainOffice().equals(actual.getIdMainOffice())
                 && expected.getNumWorkedHours().equals(actual.getNumWorkedHours())
                 && expected.getType().equals(actual.getType())
-                && expected.getActive().equals(actual.getActive());
+                && expected.isActive().equals(actual.isActive());
     }
 
     // ----------------- CREATE -------------------

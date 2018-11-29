@@ -2,11 +2,9 @@ package business.mainoffice;
 
 import javax.persistence.*;
 import java.io.Serializable;
-<<<<<<< HEAD
-=======
+
 import java.util.ArrayList;
 import java.util.Collection;
->>>>>>> 603d92817707b9545096e6ae0f7cb5264d8469f3
 import java.util.HashSet;
 import java.util.Set;
 

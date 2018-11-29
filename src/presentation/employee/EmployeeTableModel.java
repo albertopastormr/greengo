@@ -23,7 +23,7 @@ public class EmployeeTableModel extends TableModel<TEmployee> {
 				s = list.get(indiceFil).getSalary();
 				break;
 			case 3:
-				s = list.get(indiceFil).getActive();
+				s = list.get(indiceFil).isActive();
 				break;
 			case 4:
 				s = list.get(indiceFil).getIdMainOffice();
