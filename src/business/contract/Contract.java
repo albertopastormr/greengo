@@ -8,11 +8,16 @@ import business.service.Service;
 
 @Entity
 @NamedQueries({
-		@NamedQuery(name = "Business.contract.as.imp.contract.findByid", query = "select obj from contract obj where :id = obj.id "),
-		@NamedQuery(name = "Business.contract.as.imp.contract.findByservice", query = "select obj from contract obj where :service = obj.service "),
-		@NamedQuery(name = "Business.contract.as.imp.contract.findBymain_Office", query = "select obj from contract obj where :main_Office = obj.main_Office "),
-		@NamedQuery(name = "Business.contract.as.imp.contract.findByservice_level", query = "select obj from contract obj where :service_level = obj.service_level "),
-		@NamedQuery(name = "Business.contract.as.imp.contract.findByactive", query = "select obj from contract obj where :active = obj.active ") })
+		@NamedQuery(name = "Contract.findByid",
+                query = "select obj from contract obj where :id = obj.id "),
+		@NamedQuery(name = "Contract.findByservice",
+                query = "select obj from contract obj where :service = obj.service "),
+		@NamedQuery(name = "Contract.findBymain_Office",
+                query = "select obj from contract obj where :main_Office = obj.main_Office "),
+		@NamedQuery(name = "Contract.findByservice_level",
+                query = "select obj from contract obj where :service_level = obj.service_level "),
+		@NamedQuery(name = "Contract.findByactive",
+                query = "select obj from contract obj where :active = obj.active ") })
 public class Contract implements Serializable {
 
 	private static final long serialVersionUID = 0;
@@ -24,9 +29,9 @@ public class Contract implements Serializable {
 	private Service service;
 
 	@ManyToOne
-	private MainOffice main_Office;
+	private MainOffice mainOffice;
 
-	private Integer service_level;
+	private Integer serviceLevel;
 
 	private Boolean active;
 
@@ -34,11 +39,11 @@ public class Contract implements Serializable {
 	}
 
     public Contract(TContract tc) {
-        this.id =
+        this.id = tc.getId();
         this.service = getService();
-        this.main_Office = main_Office;
-        this.service_level = service_level;
-        this.active = active;
+        this.mainOffice = getMainOffice();
+        this.serviceLevel = tc.getServiceLevel();
+        this.active = tc.isActive();
     }
 
     public static long getSerialVersionUID() {
@@ -61,20 +66,20 @@ public class Contract implements Serializable {
 		this.service = service;
 	}
 
-	public MainOffice getMain_Office() {
-		return main_Office;
+	public MainOffice getMainOffice() {
+		return mainOffice;
 	}
 
-	public void setMain_Office(MainOffice main_Office) {
-		this.main_Office = main_Office;
+	public void setMainOffice(MainOffice mainOffice) {
+		this.mainOffice = mainOffice;
 	}
 
-	public Integer getService_level() {
-		return service_level;
+	public Integer getServiceLevel() {
+		return serviceLevel;
 	}
 
-	public void setService_level(Integer service_level) {
-		this.service_level = service_level;
+	public void setServiceLevel(Integer serviceLevel) {
+		this.serviceLevel = serviceLevel;
 	}
 
 	public Boolean getActive() {

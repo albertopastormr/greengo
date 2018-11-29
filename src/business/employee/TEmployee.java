@@ -44,7 +44,7 @@ public class TEmployee {
 		this.salary = salary;
 	}
 
-	public Boolean getActive() {
+	public Boolean isActive() {
 		return active;
 	}
 

@@ -11,11 +11,17 @@ import business.mainoffice.MainOffice;
 
 @Entity
 @NamedQueries({
-		@NamedQuery(name = "Business.employee.as.imp.employee.findByid", query = "select obj from employee obj where :id = obj.id "),
-		@NamedQuery(name = "Business.employee.as.imp.employee.findBymain_Office", query = "select obj from employee obj where :main_Office = obj.main_Office "),
-		@NamedQuery(name = "Business.employee.as.imp.employee.findByid_card_number", query = "select obj from employee obj where :id_card_number = obj.id_card_number "),
-		@NamedQuery(name = "Business.employee.as.imp.employee.findBysalary", query = "select obj from employee obj where :salary = obj.salary "),
-		@NamedQuery(name = "Business.employee.as.imp.employee.findByactive", query = "select obj from employee obj where :active = obj.active ") })
+		@NamedQuery(name = "Employee.findByid",
+                query = "select obj from employee obj where :id = obj.id "),
+		@NamedQuery(name = "Employee.findBymainOffice",
+                query = "select obj from employee obj where :mainOffice = obj.mainOffice "),
+		@NamedQuery(name = "Employee.findByidCardNumber",
+                query = "select obj from employee obj where :idCardNumber = obj.idCardNumber "),
+		@NamedQuery(name = "Employee.findBysalary",
+                query = "select obj from employee obj where :salary = obj.salary "),
+		@NamedQuery(name = "Employee.findByactive",
+                query = "select obj from employee obj where :active = obj.active ") })
+@Inheritance(strategy=InheritanceType.JOINED)
 public class Employee implements Serializable {
 
 	private static final long serialVersionUID = 0;
@@ -24,9 +30,9 @@ public class Employee implements Serializable {
 	private Integer id;
 
 	@ManyToOne
-	private MainOffice main_Office;
+	private MainOffice mainOffice;
 
-	private String id_card_number;
+	private String idCardNumber;
 
 	private Float salary;
 
@@ -37,11 +43,15 @@ public class Employee implements Serializable {
 	}
 
 
-	public Employee(TEmployee te) {
+    public Employee(TEmployee te) {
+        this.id = te.getId();
+        this.mainOffice = getMainOffice();
+        this.idCardNumber = te.getIdCardNumber();
+        this.salary = te.getSalary();
+        this.active = te.isActive();
+    }
 
-	}
-
-	public static long getSerialVersionUID() {
+    public static long getSerialVersionUID() {
 		return serialVersionUID;
 	}
 
@@ -53,20 +63,20 @@ public class Employee implements Serializable {
 		this.id = id;
 	}
 
-	public MainOffice getMain_Office() {
-		return main_Office;
+	public MainOffice getMainOffice() {
+		return mainOffice;
 	}
 
-	public void setMain_Office(MainOffice main_Office) {
-		this.main_Office = main_Office;
+	public void setMainOffice(MainOffice mainOffice) {
+		this.mainOffice = mainOffice;
 	}
 
-	public String getId_card_number() {
-		return id_card_number;
+	public String getIdCardNumber() {
+		return idCardNumber;
 	}
 
-	public void setId_card_number(String id_card_number) {
-		this.id_card_number = id_card_number;
+	public void setIdCardNumber(String idCardNumber) {
+		this.idCardNumber = idCardNumber;
 	}
 
 	public Float getSalary() {
@@ -77,7 +87,7 @@ public class Employee implements Serializable {
 		this.salary = salary;
 	}
 
-	public Boolean getActive() {
+	public Boolean isActive() {
 		return active;
 	}
 

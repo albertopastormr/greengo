@@ -1,6 +1,3 @@
-/**
- * 
- */
 package business.employee;
 
 import javax.persistence.Entity;
@@ -10,14 +7,10 @@ import javax.persistence.NamedQuery;
 
 
 @Entity
-@NamedQuery(name = "Business.employee.as.imp.Temporary.findByid", query = "select obj from Temporary obj where :id = obj.id ")
+@NamedQuery(name = "Temporary.findByid", query = "select obj from Temporary obj where :id = obj.id ")
 public class Temporary extends Employee implements Serializable {
 
 	private static final long serialVersionUID = 0;
-
-
-	@Id
-	private Integer id;
 
 	private Integer numWorkedHours;
 
@@ -40,13 +33,4 @@ public class Temporary extends Employee implements Serializable {
 		this.numWorkedHours = numWorkedHours;
 	}
 
-	@Override
-	public Integer getId() {
-		return id;
-	}
-
-	@Override
-	public void setId(Integer id) {
-		this.id = id;
-	}
 }
