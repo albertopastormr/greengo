@@ -4,10 +4,8 @@
 package business.employee;
 
 
-import javax.persistence.Entity;
+import javax.persistence.*;
 import java.io.Serializable;
-import javax.persistence.Id;
-import javax.persistence.NamedQuery;
 
 
 @Entity
@@ -16,7 +14,7 @@ public class Permanent extends Employee implements Serializable {
 
 	private static final long serialVersionUID = 0;
 
-	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Id @GeneratedValue(strategy= GenerationType.IDENTITY)
 	private Integer id;
 
 	private Float apportionment;

@@ -77,12 +77,12 @@ public class PanelTabs extends JTabbedPane {
 		rentalPane = new RentalPanel(this);
 		rentalTab.add(rentalPane);
 
-		//vista service
-//		JComponent serviceTab = new JPanel(new GridLayout(1, 1));
-//		addTab("service", new ImageIcon("resources/images/service.png"), serviceTab, "service view");
-//		setMnemonicAt(0, KeyEvent.VK_7);
-//		servicePane = new ServicePanel(this);
-//		serviceTab.add(servicePane);
+		//vista
+		JComponent serviceTab = new JPanel(new GridLayout(1, 1));
+		addTab("service", new ImageIcon("resources/images/service.png"), serviceTab, "service view");
+		setMnemonicAt(0, KeyEvent.VK_7);
+		servicePane = new ServicePanel(this);
+		serviceTab.add(servicePane);
 
 		//vista vehicle
 		JComponent vehicleTab = new JPanel(new GridLayout(1, 1));
@@ -114,9 +114,10 @@ public class PanelTabs extends JTabbedPane {
 
 
 				    //JPA version
-					/*case 0:
-						AppController.getInstance().execute(new LightContext(Event.RELOAD_CITY, null));
+					case 4:
+						AppController.getInstance().execute(new LightContext(Event.RELOAD_SERVICE, null));
 						break;
+						/*
 					case 1:
 						AppController.getInstance().execute(new LightContext(Event.RELOAD_CLIENT, null));
 						break;
@@ -161,10 +162,11 @@ public class PanelTabs extends JTabbedPane {
 
 
 		    //JPA version
-		    /*
-			case 0:
-				cityPane.getModel().setList(newList);
+
+			case 4:
+				servicePane.getModel().setList(newList);
 				break;
+				/*
 			case 1:
 				clientPane.getModel().setList(newList);
 				break;

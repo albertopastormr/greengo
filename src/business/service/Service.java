@@ -1,12 +1,8 @@
 package business.service;
 
-import javax.persistence.Entity;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Set;
-import javax.persistence.Id;
-import javax.persistence.NamedQuery;
-import javax.persistence.NamedQueries;
-import javax.persistence.OneToMany;
 
 import business.contract.Contract;
 

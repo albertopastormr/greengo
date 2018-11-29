@@ -9,7 +9,7 @@
 		<class>business.employee.Employee</class>
 		<class>business.employee.Permanent</class>
 		<class>business.employee.Temporary</class>
-		<class>business.mainOffice.as.imp.MainOffice</class>
+		<class>business.mainoffice.MainOffice</class>
 		<class>business.service.Service</class>
 		<properties>
             <property name="eclipselink.cache.shared.default" value="false"/>

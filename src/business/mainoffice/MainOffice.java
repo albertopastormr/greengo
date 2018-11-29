@@ -3,14 +3,11 @@
  */
 package business.mainoffice;
 
-import javax.persistence.Entity;
+import javax.persistence.*;
 import java.io.Serializable;
-import javax.persistence.Id;
-import javax.persistence.NamedQuery;
 import java.util.HashSet;
 import java.util.Set;
-import javax.persistence.OneToMany;
-import javax.persistence.NamedQueries;
+
 import business.contract.Contract;
 import business.employee.Employee;
 

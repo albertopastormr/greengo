@@ -4,12 +4,9 @@
 package business.contract;
 
 import javax.annotation.Generated;
-import javax.persistence.Entity;
+import javax.persistence.*;
 import java.io.Serializable;
-import javax.persistence.Id;
-import javax.persistence.NamedQuery;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
+
 import business.mainoffice.MainOffice;
 import business.contract.TContract;
 import business.service.Service;

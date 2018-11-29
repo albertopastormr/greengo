@@ -3,15 +3,10 @@
  */
 package business.employee;
 
-import javax.persistence.Entity;
+import javax.persistence.*;
 import java.io.Serializable;
-import javax.persistence.Id;
-import javax.persistence.NamedQuery;
 
 import business.mainoffice.MainOffice;
-
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
 
 
 @Entity
