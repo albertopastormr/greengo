@@ -1,28 +1,32 @@
-/**
- * 
- */
 package business.mainoffice;
 
 import javax.persistence.*;
 import java.io.Serializable;
+<<<<<<< HEAD
+=======
+import java.util.ArrayList;
+import java.util.Collection;
+>>>>>>> 603d92817707b9545096e6ae0f7cb5264d8469f3
 import java.util.HashSet;
 import java.util.Set;
 
 import business.contract.Contract;
 import business.employee.Employee;
 
-/**
-* @author ...
-* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-*/
 @Entity
 @NamedQueries({
-		@NamedQuery(name = "Business.MainOffice.as.imp.MainOffice.findByid", query = "select obj from MainOffice obj where :id = obj.id "),
-		@NamedQuery(name = "Business.MainOffice.as.imp.MainOffice.findByemployee", query = "select obj from MainOffice obj where :employee MEMBER OF obj.employee "),
-		@NamedQuery(name = "Business.MainOffice.as.imp.MainOffice.findBycontract", query = "select obj from MainOffice obj where :contract MEMBER OF obj.contract "),
-		@NamedQuery(name = "Business.MainOffice.as.imp.MainOffice.findByaddress", query = "select obj from MainOffice obj where :address = obj.address "),
-		@NamedQuery(name = "Business.MainOffice.as.imp.MainOffice.findBycity", query = "select obj from MainOffice obj where :city = obj.city "),
-		@NamedQuery(name = "Business.MainOffice.as.imp.MainOffice.findByactive", query = "select obj from MainOffice obj where :active = obj.active ") })
+		@NamedQuery(name = "MainOffice.findByid",
+                query = "select obj from MainOffice obj where :id = obj.id "),
+		@NamedQuery(name = "MainOffice.findByemployee",
+                query = "select obj from MainOffice obj where :employee MEMBER OF obj.employee "),
+		@NamedQuery(name = "MainOffice.findBycontract",
+                query = "select obj from MainOffice obj where :contract MEMBER OF obj.contract "),
+		@NamedQuery(name = "MainOffice.findByaddress",
+                query = "select obj from MainOffice obj where :address = obj.address "),
+		@NamedQuery(name = "MainOffice.findBycity",
+                query = "select obj from MainOffice obj where :city = obj.city "),
+		@NamedQuery(name = "MainOffice.findByactive",
+                query = "select obj from MainOffice obj where :active = obj.active ") })
 public class MainOffice implements Serializable {
 
 	private static final long serialVersionUID = 0;
@@ -30,11 +34,11 @@ public class MainOffice implements Serializable {
 	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 
-	@OneToMany(mappedBy = "mainOffice")
-	private Set<Employee> employee;
+	@OneToMany(mappedBy = "MainOffice")
+	private Collection<Employee> employee;
 
-	@OneToMany(mappedBy = "mainOffice")
-	private Set<Contract> contract;
+	@OneToMany(mappedBy = "MainOffice")
+	private Collection<Contract> contract;
 
 	private String address;
 
@@ -51,8 +55,9 @@ public class MainOffice implements Serializable {
 		this.address = tm.getAddress();
 		this.city = tm.getCity();
 		this.active = tm.isActive();
-		this.employee = new HashSet<>();
-		this.contract = new HashSet<>();
+		//TODO revisar esto
+		this.employee = new ArrayList<>();
+		this.contract = new ArrayList<>();
 	}
 
 	public static long getSerialVersionUID() {
@@ -67,19 +72,19 @@ public class MainOffice implements Serializable {
 		this.id = id;
 	}
 
-	public Set<Employee> getEmployee() {
+	public Collection<Employee> getEmployee() {
 		return employee;
 	}
 
-	public void setEmployee(Set<Employee> employee) {
+	public void setEmployee(Collection<Employee> employee) {
 		this.employee = employee;
 	}
 
-	public Set<Contract> getContract() {
+	public Collection<Contract> getContract() {
 		return contract;
 	}
 
-	public void setContract(Set<Contract> contract) {
+	public void setContract(Collection<Contract> contract) {
 		this.contract = contract;
 	}
 

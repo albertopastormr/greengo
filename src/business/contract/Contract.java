@@ -1,48 +1,56 @@
-/**
- * 
- */
 package business.contract;
 
+<<<<<<< HEAD
 import javax.annotation.Generated;
+=======
+>>>>>>> 603d92817707b9545096e6ae0f7cb5264d8469f3
 import javax.persistence.*;
 import java.io.Serializable;
 
 import business.mainoffice.MainOffice;
-import business.contract.TContract;
 import business.service.Service;
 
 @Entity
 @NamedQueries({
-		@NamedQuery(name = "Business.contract.as.imp.contract.findByid", query = "select obj from contract obj where :id = obj.id "),
-		@NamedQuery(name = "Business.contract.as.imp.contract.findByservice", query = "select obj from contract obj where :service = obj.service "),
-		@NamedQuery(name = "Business.contract.as.imp.contract.findBymain_Office", query = "select obj from contract obj where :main_Office = obj.main_Office "),
-		@NamedQuery(name = "Business.contract.as.imp.contract.findByservice_level", query = "select obj from contract obj where :service_level = obj.service_level "),
-		@NamedQuery(name = "Business.contract.as.imp.contract.findByactive", query = "select obj from contract obj where :active = obj.active ") })
+		@NamedQuery(name = "Contract.findByid",
+                query = "select obj from contract obj where :id = obj.id "),
+		@NamedQuery(name = "Contract.findByservice",
+                query = "select obj from contract obj where :service = obj.service "),
+		@NamedQuery(name = "Contract.findBymain_Office",
+                query = "select obj from contract obj where :main_Office = obj.main_Office "),
+		@NamedQuery(name = "Contract.findByservice_level",
+                query = "select obj from contract obj where :service_level = obj.service_level "),
+		@NamedQuery(name = "Contract.findByactive",
+                query = "select obj from contract obj where :active = obj.active ") })
 public class Contract implements Serializable {
 
 	private static final long serialVersionUID = 0;
 
-	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Id @GeneratedValue(strategy= GenerationType.IDENTITY)
 	private Integer id;
 
 	@ManyToOne
 	private Service service;
 
 	@ManyToOne
-	private MainOffice main_Office;
+	private MainOffice mainOffice;
 
-	private Integer service_level;
+	private Integer serviceLevel;
 
 	private Boolean active;
 
 	public Contract() {
 	}
 
-	public Contract(TContract tc) {
+    public Contract(TContract tc) {
+        this.id = tc.getId();
+        this.service = getService();
+        this.mainOffice = getMainOffice();
+        this.serviceLevel = tc.getServiceLevel();
+        this.active = tc.isActive();
+    }
 
-	}
-
-	public static long getSerialVersionUID() {
+    public static long getSerialVersionUID() {
 		return serialVersionUID;
 	}
 
@@ -62,20 +70,20 @@ public class Contract implements Serializable {
 		this.service = service;
 	}
 
-	public MainOffice getMain_Office() {
-		return main_Office;
+	public MainOffice getMainOffice() {
+		return mainOffice;
 	}
 
-	public void setMain_Office(MainOffice main_Office) {
-		this.main_Office = main_Office;
+	public void setMainOffice(MainOffice mainOffice) {
+		this.mainOffice = mainOffice;
 	}
 
-	public Integer getService_level() {
-		return service_level;
+	public Integer getServiceLevel() {
+		return serviceLevel;
 	}
 
-	public void setService_level(Integer service_level) {
-		this.service_level = service_level;
+	public void setServiceLevel(Integer serviceLevel) {
+		this.serviceLevel = serviceLevel;
 	}
 
 	public Boolean getActive() {

@@ -2,23 +2,28 @@ package business.service;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Set;
 
 import business.contract.Contract;
 
-/**
-* @author ...
-* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-*/
 @Entity
 @NamedQueries({
-		@NamedQuery(name = "Business.service.as.imp.service.findByid", query = "select obj from service obj where :id = obj.id "),
-		@NamedQuery(name = "Business.service.as.imp.service.findBytype", query = "select obj from service obj where :type = obj.type "),
-		@NamedQuery(name = "Business.service.as.imp.service.findByaddress", query = "select obj from service obj where :address = obj.address "),
-		@NamedQuery(name = "Business.service.as.imp.service.findBycontract", query = "select obj from service obj where :contract MEMBER OF obj.contract "),
-		@NamedQuery(name = "Business.service.as.imp.service.findBycapacity", query = "select obj from service obj where :capacity = obj.capacity "),
-		@NamedQuery(name = "Business.service.as.imp.service.findByvehicles_attended", query = "select obj from service obj where :vehicles_attended = obj.vehicles_attended "),
-		@NamedQuery(name = "Business.service.as.imp.service.findByactive", query = "select obj from service obj where :active = obj.active ") })
+		@NamedQuery(name = "Service.findByid",
+                query = "select obj from service obj where :id = obj.id "),
+		@NamedQuery(name = "Service.findBytype",
+                query = "select obj from service obj where :type = obj.type "),
+		@NamedQuery(name = "Service.findByaddress",
+                query = "select obj from service obj where :address = obj.address "),
+		@NamedQuery(name = "Service.findBycontract",
+                query = "select obj from service obj where :contract MEMBER OF obj.contract "),
+		@NamedQuery(name = "Service.findBycapacity",
+                query = "select obj from service obj where :capacity = obj.capacity "),
+		@NamedQuery(name = "Service.findByvehicles_attended",
+                query = "select obj from service obj where :vehicles_attended = obj.vehicles_attended "),
+		@NamedQuery(name = "Service.findByactive",
+                query = "select obj from service obj where :active = obj.active ") })
 public class Service implements Serializable {
 
 	private static final long serialVersionUID = 0;
@@ -30,8 +35,8 @@ public class Service implements Serializable {
 
 	private String address;
 
-	@OneToMany(mappedBy = "service")
-	private Set<Contract> contract;
+	@OneToMany(mappedBy = "Service")
+	private Collection<Contract> contract;
 
 	private Integer capacity;
 
@@ -42,9 +47,15 @@ public class Service implements Serializable {
 	public Service() {
 	}
 
-	public Service(TService ts) {
-
-	}
+    public Service(TService ts) {
+        this.id = ts.getId();
+        this.type = ts.getType();
+        this.address = ts.getAddress();
+        this.contract = new ArrayList<>();
+        this.capacity = ts.getCapacity();
+        this.numVehiclesAttended = ts.getNumVehiclesAttended();
+        this.active = ts.isActive();
+    }
 
 	public static long getSerialVersionUID() {
 		return serialVersionUID;
@@ -74,11 +85,11 @@ public class Service implements Serializable {
 		this.address = address;
 	}
 
-	public Set<Contract> getContract() {
+	public Collection<Contract> getContract() {
 		return contract;
 	}
 
-	public void setContract(Set<Contract> contract) {
+	public void setContract(Collection<Contract> contract) {
 		this.contract = contract;
 	}
 
