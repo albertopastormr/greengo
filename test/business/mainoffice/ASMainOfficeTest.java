@@ -5,12 +5,11 @@ import business.IncorrectInputException;
 import business.contract.as.ASContract;
 import business.contract.TContract;
 import business.contract.as.imp.ASContractImp;
-import business.employee.TEmployee;
 import business.employee.TPermanentEmployee;
 import business.employee.as.ASEmployee;
 import business.employee.as.imp.ASEmployeeImp;
-import business.mainoffice.as.ASMain_Office;
-import business.mainoffice.as.imp.ASMain_OfficeImp;
+import business.mainoffice.as.ASMainOffice;
+import business.mainoffice.as.imp.ASMainOfficeImp;
 import business.service.TService;
 import business.service.as.ASService;
 import business.service.as.imp.ASServiceImp;
@@ -26,7 +25,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class ASMainOfficeTest {
 
     //Application services:
-    private ASMain_Office asMainOffice = new ASMain_OfficeImp();
+    private ASMainOffice asMainOffice = new ASMainOfficeImp();
     private ASService asService = new ASServiceImp();
     private ASEmployee asEmployee = new ASEmployeeImp();
     private ASContract asContract = new ASContractImp();

@@ -6,14 +6,14 @@ import business.contract.Contract;
 import business.employee.Employee;
 import business.mainoffice.MainOffice;
 import business.mainoffice.TMainOffice;
-import business.mainoffice.as.ASMain_Office;
+import business.mainoffice.as.ASMainOffice;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class ASMain_OfficeImp implements ASMain_Office {
+public class ASMainOfficeImp implements ASMainOffice {
 	@Override
 	public Integer create(TMainOffice tMainOffice) throws IncorrectInputException, ASException {
 		Integer id;

@@ -12,7 +12,9 @@ import java.util.Collection;
 public class ShowAllMain_Office implements Command {
 	@Override
 	public LightContext execute(LightContext in) throws ASException {
-		Collection<TMainOffice> ret = ASMainOfficeFactory.getInstance().generateASMain_Office().showAll();
+		Collection<TMainOffice> ret = ASMainOfficeFactory.getInstance().
+                generateASMainOffice().
+                showAll();
 		return new LightContext(Event.SHOWALL_MAIN_OFFICE, ret);
 	}
 }

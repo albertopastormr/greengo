@@ -10,13 +10,10 @@ import presentation.controller.LightContext;
 
 public class DropMain_Office implements Command {
 	@Override
-<<<<<<< HEAD
-	public LightContext execute(LightContext in) throws ASException {
-		Integer ret = ASMainOfficeFactory.getInstance().generateASMain_Office().drop(((TMainOffice)in.getData()).getId());
-=======
 	public LightContext execute(LightContext in) throws ASException, IncorrectInputException {
-		Integer ret = ASMain_OfficeFactory.getInstance().generateASMain_Office().drop(((TMainOffice)in.getData()).getId());
->>>>>>> c872c5b46c12723453f4ea2e2ede5fa4828fda17
+		Integer ret = ASMainOfficeFactory.getInstance().
+                generateASMainOffice().
+                drop(((TMainOffice)in.getData()).getId());
 		return new LightContext(Event.DROP_MAIN_OFFICE, ret);
 	}
 }

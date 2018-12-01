@@ -5,8 +5,8 @@ import business.IncorrectInputException;
 import business.employee.as.ASEmployee;
 import business.employee.as.imp.ASEmployeeImp;
 import business.mainoffice.TMainOffice;
-import business.mainoffice.as.ASMain_Office;
-import business.mainoffice.as.imp.ASMain_OfficeImp;
+import business.mainoffice.as.ASMainOffice;
+import business.mainoffice.as.imp.ASMainOfficeImp;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class ASEmployeeTest {
 
     private static ASEmployee asEmployee = new ASEmployeeImp();
-    private static ASMain_Office asMainOffice = new ASMain_OfficeImp();
+    private static ASMainOffice asMainOffice = new ASMainOfficeImp();
 
     private static TPermanentEmployee tEmployee;
     private static TTemporaryEmployee tEmployee2;
