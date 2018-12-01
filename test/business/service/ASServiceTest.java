@@ -9,7 +9,7 @@ import business.contract.factory.ASContractFactory;
 import business.mainoffice.TMainOffice;
 import business.mainoffice.as.ASMain_Office;
 
-import business.mainoffice.factory.ASMain_OfficeFactory;
+import business.mainoffice.factory.ASMainOfficeFactory;
 import business.service.factory.ASServiceFactory;
 
 import business.service.as.ASService;
@@ -35,7 +35,7 @@ public class ASServiceTest {
     private void setUp() throws Exception{
 
         as = ASServiceFactory.getInstance().generateASService();
-        asMainOffice = ASMain_OfficeFactory.getInstance().generateASMain_Office();
+        asMainOffice = ASMainOfficeFactory.getInstance().generateASMain_Office();
         asContract = ASContractFactory.getInstance().generateASContract();
 
         tServicePrincipal = new TService(null, 200, true, "Taller","Calle mercado,3",12345);

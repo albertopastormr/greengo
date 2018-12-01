@@ -6,7 +6,7 @@ public abstract class ASCityFactory {
 
     private static ASCityFactory instance;
 
-    public static ASCityFactory getInstance(){
+    public static synchronized ASCityFactory getInstance(){
         if(instance == null)
             instance = new ASCityFactoryImp();
         return instance;

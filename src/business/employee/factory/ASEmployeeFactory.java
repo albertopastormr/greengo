@@ -6,7 +6,7 @@ import business.employee.factory.imp.ASEmployeeFactoryImp;
 public abstract class  ASEmployeeFactory {
     private static ASEmployeeFactory instance;
 
-    public static ASEmployeeFactory getInstance (){
+    public static synchronized ASEmployeeFactory getInstance (){
         if (instance == null)
             instance = new ASEmployeeFactoryImp();
         return instance;

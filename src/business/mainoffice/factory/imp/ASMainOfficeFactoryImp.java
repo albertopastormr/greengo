@@ -2,9 +2,9 @@ package business.mainoffice.factory.imp;
 
 import business.mainoffice.as.ASMain_Office;
 import business.mainoffice.as.imp.ASMain_OfficeImp;
-import business.mainoffice.factory.ASMain_OfficeFactory;
+import business.mainoffice.factory.ASMainOfficeFactory;
 
-public class ASMain_OfficeFactoryImp extends ASMain_OfficeFactory {
+public class ASMainOfficeFactoryImp extends ASMainOfficeFactory {
     @Override
 
 
