@@ -1,4 +1,4 @@
-package presentation.main_office.forms;
+package presentation.mainOffice.forms;
 
 import business.mainoffice.TMainOffice;
 import presentation.controller.AppController;
@@ -12,12 +12,12 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class FormShowMainOffice extends JDialog{
+public class FormDropMainOffice extends JDialog{
 
 	private JTextField idText;
 
-	public FormShowMainOffice(){
-		setTitle("Show main office");
+	public FormDropMainOffice(){
+		setTitle("Drop main office");
 		setResizable(false);
 		Util.addEscapeListener(this);
 		initGUI();
@@ -54,9 +54,9 @@ public class FormShowMainOffice extends JDialog{
 		//Buttons
 		JPanel buttonsPanel = new JPanel(new FlowLayout());
 
-		JButton show = ViewHelpers.buttonsForms("SHOW");
+		JButton drop = ViewHelpers.buttonsForms("DROP");
 
-		show.addActionListener(new ActionListener() {
+		drop.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -65,9 +65,9 @@ public class FormShowMainOffice extends JDialog{
 					/*This is related to JPA*/
 					mainOffice.setId(Util.parseNoNegativeInt(idText.getText()));
 					dispose();
-					AppController.getInstance().execute(new LightContext(Event.SHOW_MAIN_OFFICE, mainOffice));
+					AppController.getInstance().execute(new LightContext(Event.DROP_MAIN_OFFICE, mainOffice));
 				} catch (Exception ex) {
-					JOptionPane.showMessageDialog(getRootPane(), ex.getMessage(), "ERROR SHOW MAIN OFFICE", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(getRootPane(), ex.getMessage(), "ERROR DROP MAIN OFFICE", JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
@@ -82,14 +82,14 @@ public class FormShowMainOffice extends JDialog{
 			}
 		});
 
-		buttonsPanel.add(show);
+		buttonsPanel.add(drop);
 		buttonsPanel.add(cancel);
 
 		return buttonsPanel;
 	}
 
 	public static void main(String[] args) {
-		FormShowMainOffice formShowMainOffice = new FormShowMainOffice();
-		formShowMainOffice.setVisible(true);
+		FormDropMainOffice formDropMainOffice = new FormDropMainOffice();
+		formDropMainOffice.setVisible(true);
 	}
 }

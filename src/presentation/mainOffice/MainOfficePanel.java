@@ -1,8 +1,6 @@
-package presentation.main_office;
+package presentation.mainOffice;
 
 import presentation.PanelTabs;
-import presentation.UI;
-import presentation.client.ClientTableModel;
 import presentation.util.TableModel;
 import presentation.util.TablePanel;
 

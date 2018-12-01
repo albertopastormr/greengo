@@ -1,7 +1,7 @@
-package presentation.main_office;
+package presentation.mainOffice;
 
 import presentation.PanelTabs;
-import presentation.main_office.forms.*;
+import presentation.mainOffice.forms.*;
 import presentation.util.ViewHelpers;
 
 import javax.swing.*;

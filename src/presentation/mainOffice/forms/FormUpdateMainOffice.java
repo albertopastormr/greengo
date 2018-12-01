@@ -1,4 +1,4 @@
-package presentation.main_office.forms;
+package presentation.mainOffice.forms;
 
 import business.mainoffice.TMainOffice;
 import presentation.controller.AppController;
@@ -12,12 +12,15 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class FormTotalSalaryMainOffice extends JDialog{
+public class FormUpdateMainOffice extends JDialog{
 
 	private JTextField idText;
+	private JTextField cityText;
+	private JTextField addressText;
+	private JComboBox activeCombobox;
 
-	public FormTotalSalaryMainOffice(){
-		setTitle("Total salary main office");
+	public FormUpdateMainOffice(){
+		setTitle("Update main office");
 		setResizable(false);
 		Util.addEscapeListener(this);
 		initGUI();
@@ -35,9 +38,9 @@ public class FormTotalSalaryMainOffice extends JDialog{
 		setLocationRelativeTo(null);
 	}
 
-	private JPanel fieldsPanel() {
+	private JPanel fieldsPanel(){
 
-		JPanel ret = ViewHelpers.createFieldPanel(1);
+		JPanel ret = ViewHelpers.createFieldPanel(3);
 
 		//ID
 		JLabel idLabel = new JLabel("ID");
@@ -46,17 +49,31 @@ public class FormTotalSalaryMainOffice extends JDialog{
 		idText = new JTextField(10);
 		ret.add(idText);
 
+		//City
+		JLabel cityLabel = new JLabel("City");
+		ret.add(cityLabel);
+
+		cityText = new JTextField(10);
+		ret.add(cityText);
+
+		//Address
+		JLabel addressLabel = new JLabel("Address");
+		ret.add(addressLabel);
+
+		addressText = new JTextField(10);
+		ret.add(addressText);
+
 		return ret;
 	}
 
-	private JPanel buttonsPanel() {
+	private JPanel buttonsPanel(){
 
 		//Buttons
 		JPanel buttonsPanel = new JPanel(new FlowLayout());
 
-		JButton totalSalary = ViewHelpers.buttonsForms("SHOW ");
+		JButton update = ViewHelpers.buttonsForms("UPDATE");
 
-		totalSalary.addActionListener(new ActionListener() {
+		update.addActionListener(new ActionListener(){
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -64,17 +81,19 @@ public class FormTotalSalaryMainOffice extends JDialog{
 				try {
 					/*This is related to JPA*/
 					mainOffice.setId(Util.parseNoNegativeInt(idText.getText()));
+					mainOffice.setCity(Util.parseString(cityText.getText()));
+					mainOffice.setAdress(Util.parseString(addressText.getText()));
 					dispose();
-					AppController.getInstance().execute(new LightContext(Event.TOTAL_SALARY_MAIN_OFFICE, mainOffice));
+					AppController.getInstance().execute(new LightContext(Event.UPDATE_MAIN_OFFICE, mainOffice));
 				} catch (Exception ex) {
-					JOptionPane.showMessageDialog(getRootPane(), ex.getMessage(), "ERROR SHOW TOTAL SALARY MAIN OFFICE", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(getRootPane(), ex.getMessage(), "ERROR UPDATE MAIN OFFICE", JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
 
 		JButton cancel = ViewHelpers.buttonsForms("CANCEL");
 
-		cancel.addActionListener(new ActionListener() {
+		cancel.addActionListener(new ActionListener(){
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -82,14 +101,14 @@ public class FormTotalSalaryMainOffice extends JDialog{
 			}
 		});
 
-		buttonsPanel.add(totalSalary);
+		buttonsPanel.add(update);
 		buttonsPanel.add(cancel);
 
 		return buttonsPanel;
 	}
 
 	public static void main(String[] args) {
-		FormTotalSalaryMainOffice formTotalSalaryMainOffice = new FormTotalSalaryMainOffice();
-		formTotalSalaryMainOffice.setVisible(true);
+		FormUpdateMainOffice formUpdateMainOffice = new FormUpdateMainOffice();
+		formUpdateMainOffice.setVisible(true);
 	}
 }

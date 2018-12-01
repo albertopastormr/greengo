@@ -1,4 +1,4 @@
-package presentation.main_office;
+package presentation.mainOffice;
 
 import business.mainoffice.TMainOffice;
 import presentation.util.TableModel;

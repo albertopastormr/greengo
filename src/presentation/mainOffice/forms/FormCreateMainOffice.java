@@ -1,4 +1,4 @@
-package presentation.main_office.forms;
+package presentation.mainOffice.forms;
 
 import business.mainoffice.TMainOffice;
 import presentation.controller.AppController;

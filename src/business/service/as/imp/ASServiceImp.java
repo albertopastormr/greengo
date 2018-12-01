@@ -17,13 +17,11 @@ public class ASServiceImp implements ASService {
 
     @Override
     public Integer create(TService tService) throws ASException, IncorrectInputException {
-        try {checkTOValuesForCreate(tService);}
-        catch (IncorrectInputException e) {
-            throw new IncorrectInputException(e.getMessage());
-        }
         Integer id;
+        checkValuesForCreate(tService);
 
         try {
+
             Service serviceObject = new Service(tService);
 
             EntityManagerFactory emf = Persistence.createEntityManagerFactory("greengo");
@@ -35,13 +33,12 @@ public class ASServiceImp implements ASService {
             Query query = em.createNamedQuery("Service.findBytype", Service.class);
             query.setParameter("type", serviceObject.getId());
 
-            List serviceslist = query.getResultList();
-            if(!serviceslist.isEmpty()){
+            List serviceList = query.getResultList();
+            if (!serviceList.isEmpty()) {
                 transaction.rollback();
                 throw new ASException("ERROR: There is a service with the same type " +
                         "(" + tService.getType() + ") (duplication)");
-            }
-            else {
+            } else {
                 em.persist(serviceObject);
                 transaction.commit();
                 id = serviceObject.getId();
@@ -49,16 +46,15 @@ public class ASServiceImp implements ASService {
             em.close();
             emf.close();
 
-        }
-        catch (PersistenceException | EclipseLinkException e){
-                throw new ASException(e.getMessage());
+        } catch (PersistenceException | EclipseLinkException e) {
+            throw new ASException(e.getMessage());
         }
 
         return id;
     }
 
-	@Override
-	public Integer drop(Integer idService) throws IncorrectInputException, ASException {
+    @Override
+    public Integer drop(Integer idService) throws IncorrectInputException, ASException {
 
         if (idService == null)
             throw new IncorrectInputException("Error: service's id not specified");
@@ -67,6 +63,7 @@ public class ASServiceImp implements ASService {
 
         Integer id;
         try {
+
             EntityManagerFactory emf = Persistence.createEntityManagerFactory("greengo");
             EntityManager em = emf.createEntityManager();
             EntityTransaction transaction = em.getTransaction();
@@ -90,7 +87,7 @@ public class ASServiceImp implements ASService {
             for (Contract contract : contractslist) {
                 if (contract.isActive()) {
                     transaction.rollback();
-                    throw new ASException("There are contracts activated");
+                    throw new ASException("There are active contracts");
                 }
             }
             id = service.getId();
@@ -99,24 +96,19 @@ public class ASServiceImp implements ASService {
 
             em.close();
             emf.close();
-        }
-        catch (PersistenceException | EclipseLinkException e) {
+        } catch (PersistenceException | EclipseLinkException e) {
             throw new ASException(e.getMessage());
         }
         return id;
     }
 
     @Override
-    public Integer update (TService tService) throws ASException, IncorrectInputException {
-
-        try {
-            checkTOValuesForUpdate(tService);
-        } catch (IncorrectInputException e) {
-            throw new IncorrectInputException(e.getMessage());
-        }
-
+    public Integer update(TService tService) throws ASException, IncorrectInputException {
         Integer id;
+        checkValuesForUpdate(tService);
+
         try {
+
             EntityManagerFactory emf = Persistence.createEntityManagerFactory("greengo");
             EntityManager em = emf.createEntityManager();
             EntityTransaction transaction = em.getTransaction();
@@ -148,8 +140,7 @@ public class ASServiceImp implements ASService {
             transaction.commit();
             em.close();
             emf.close();
-        }
-        catch (PersistenceException | EclipseLinkException e) {
+        } catch (PersistenceException | EclipseLinkException e) {
             throw new ASException(e.getMessage());
         }
         return id;
@@ -157,7 +148,7 @@ public class ASServiceImp implements ASService {
 
     //TODO Es necesario que haya transaccion?
     @Override
-    public TService show (Integer idService) throws ASException, IncorrectInputException {
+    public TService show(Integer idService) throws ASException, IncorrectInputException {
         if (idService == null)
             throw new IncorrectInputException("Error: service's id not specified");
         if (idService <= 0)
@@ -165,6 +156,7 @@ public class ASServiceImp implements ASService {
 
         TService tService;
         try {
+
             EntityManagerFactory emf = Persistence.createEntityManagerFactory("greengo");
             EntityManager em = emf.createEntityManager();
             EntityTransaction transaction = em.getTransaction();
@@ -183,8 +175,7 @@ public class ASServiceImp implements ASService {
             em.close();
             emf.close();
 
-        }
-        catch (PersistenceException | EclipseLinkException e) {
+        } catch (PersistenceException | EclipseLinkException e) {
             throw new ASException(e.getMessage());
         }
         return tService;
@@ -192,9 +183,10 @@ public class ASServiceImp implements ASService {
 
     //TODO es necesario hacer transaccion?
     @Override
-    public Collection<TService> showAll () throws ASException {
+    public Collection<TService> showAll() throws ASException {
         Collection<TService> tServicesList = new ArrayList<>();
         try {
+
             EntityManagerFactory emf = Persistence.createEntityManagerFactory("greengo");
             EntityManager em = emf.createEntityManager();
             EntityTransaction transaction = em.getTransaction();
@@ -212,9 +204,8 @@ public class ASServiceImp implements ASService {
             transaction.commit();
             em.close();
             emf.close();
-        }
-        catch (Exception e) {
-            throw new ASException("Error in Database");
+        } catch (PersistenceException | EclipseLinkException e) {
+            throw new ASException(e.getMessage());
         }
 
         return tServicesList;
@@ -224,97 +215,96 @@ public class ASServiceImp implements ASService {
     @Override
     public Collection<TService> showServicesFromLevel(Integer level) throws ASException, IncorrectInputException {
 
-        if(level == null)
+        if (level == null)
             throw new IncorrectInputException("level not specified");
 
-        if(level <= 0)
+        if (level <= 0)
             throw new IncorrectInputException("level must be a positive integer greater than zero");
 
         Collection<TService> tServicesList = new ArrayList<>();
-            try {
-                EntityManagerFactory emf = Persistence.createEntityManagerFactory("greengo");
-                EntityManager em = emf.createEntityManager();
-                EntityTransaction transaction = em.getTransaction();
+        try {
 
-                transaction.begin();
+            EntityManagerFactory emf = Persistence.createEntityManagerFactory("greengo");
+            EntityManager em = emf.createEntityManager();
+            EntityTransaction transaction = em.getTransaction();
 
-                Query query = em.createNamedQuery("Contract.findByservice_level", Contract.class);
-                query.setParameter("serviceLevel", level);
+            transaction.begin();
 
-                List<Contract> listContracts = query.getResultList();
-                Collection<Service> servicesList = new ArrayList<>();
+            Query query = em.createNamedQuery("Contract.findByservice_level", Contract.class);
+            query.setParameter("serviceLevel", level);
 
-                for (Contract contract : listContracts) {
-                    tServicesList.add(new TService(contract.getService().getId(), contract.getService().getCapacity(),
-                            contract.getService().getActive(), contract.getService().getType(),
-                            contract.getService().getAddress(), contract.getService().getNumVehiclesAttended()));
-                }
+            List<Contract> listContracts = query.getResultList();
 
-                transaction.commit();
-                em.close();
-                emf.close();
-
-            }
-            catch (PersistenceException | EclipseLinkException e) {
-                e.printStackTrace();
-                throw new ASException(e.getMessage());
+            for (Contract contract : listContracts) {
+                tServicesList.add(new TService(contract.getService().getId(), contract.getService().getCapacity(),
+                        contract.getService().getActive(), contract.getService().getType(),
+                        contract.getService().getAddress(), contract.getService().getNumVehiclesAttended()));
             }
 
-        return tServicesList;
+            transaction.commit();
+            em.close();
+            emf.close();
+
+        } catch (PersistenceException | EclipseLinkException e) {
+            e.printStackTrace();
+            throw new ASException(e.getMessage());
         }
 
-    private void checkTOValuesForCreate(TService tService) throws IncorrectInputException{
-        if(tService.getId() != null)
+        return tServicesList;
+    }
+
+    private static void checkValuesForCreate(TService tService) throws IncorrectInputException {
+        if (tService.getId() != null)
             throw new IncorrectInputException("ID must be null");
 
-        if(tService.getType() == null)
+        if (tService.getType() == null)
             throw new IncorrectInputException("Type not specified");
 
-        if(tService.getAddress() == null)
+        if (tService.getAddress() == null)
             throw new IncorrectInputException("Address not specified");
 
-        if(tService.getNumVehiclesAttended() == null)
+        if (tService.getNumVehiclesAttended() == null)
             throw new IncorrectInputException("Number of vehicles attended not specified");
 
-        if(tService.getNumVehiclesAttended() < 0)
+        if (tService.getNumVehiclesAttended() < 0)
             throw new IncorrectInputException("Number of vehicles attended must be a " +
                     "positive integer greater than zero");
 
-        if(tService.getCapacity() == null)
+        if (tService.getCapacity() == null)
             throw new IncorrectInputException("Capacity not specified");
 
-        if(tService.getCapacity() <= 0)
+        if (tService.getCapacity() <= 0)
             throw new IncorrectInputException("Capacity must be a " +
                     "positive integer greater than zero");
 
-        if(tService.isActive() == null)
+        if (tService.isActive() == null)
             throw new IncorrectInputException("service state is not specified");
     }
 
-    private void checkTOValuesForUpdate(TService tService) throws IncorrectInputException{
-        if(tService.getId() == null)
+    private static void checkValuesForUpdate(TService tService) throws IncorrectInputException {
+        if (tService.getId() == null)
             throw new IncorrectInputException("ID not specified");
 
-        if(tService.getId() <= 0)
+        if (tService.getId() <= 0)
             throw new IncorrectInputException("ID must be a positive integer greater than zero");
 
-        if(tService.getType() == null)
+        if (tService.getType() == null)
             throw new IncorrectInputException("Type not specified");
 
-        if(tService.getAddress() == null)
+        if (tService.getAddress() == null)
             throw new IncorrectInputException("Address not specified");
 
-        if(tService.getNumVehiclesAttended() == null)
+        if (tService.getNumVehiclesAttended() == null)
             throw new IncorrectInputException("Number of vehicles attended not specified");
 
-        if(tService.getNumVehiclesAttended() < 0)
+        if (tService.getNumVehiclesAttended() < 0)
             throw new IncorrectInputException("Number of vehicles attended must be a " +
                     "positive integer greater than zero");
 
-        if(tService.getCapacity() == null)
+        if (tService.getCapacity() == null)
             throw new IncorrectInputException("Capacity not specified");
 
-        if(tService.getCapacity() <= 0)
+        if (tService.getCapacity() <= 0)
             throw new IncorrectInputException("Capacity must be a " +
                     "positive integer greater than zero");
     }

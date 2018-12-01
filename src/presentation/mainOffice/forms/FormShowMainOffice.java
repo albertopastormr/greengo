@@ -1,4 +1,4 @@
-package presentation.main_office.forms;
+package presentation.mainOffice.forms;
 
 import business.mainoffice.TMainOffice;
 import presentation.controller.AppController;
@@ -12,15 +12,12 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class FormUpdateMainOffice extends JDialog{
+public class FormShowMainOffice extends JDialog{
 
 	private JTextField idText;
-	private JTextField cityText;
-	private JTextField addressText;
-	private JComboBox activeCombobox;
 
-	public FormUpdateMainOffice(){
-		setTitle("Update main office");
+	public FormShowMainOffice(){
+		setTitle("Show main office");
 		setResizable(false);
 		Util.addEscapeListener(this);
 		initGUI();
@@ -38,9 +35,9 @@ public class FormUpdateMainOffice extends JDialog{
 		setLocationRelativeTo(null);
 	}
 
-	private JPanel fieldsPanel(){
+	private JPanel fieldsPanel() {
 
-		JPanel ret = ViewHelpers.createFieldPanel(3);
+		JPanel ret = ViewHelpers.createFieldPanel(1);
 
 		//ID
 		JLabel idLabel = new JLabel("ID");
@@ -49,31 +46,17 @@ public class FormUpdateMainOffice extends JDialog{
 		idText = new JTextField(10);
 		ret.add(idText);
 
-		//City
-		JLabel cityLabel = new JLabel("City");
-		ret.add(cityLabel);
-
-		cityText = new JTextField(10);
-		ret.add(cityText);
-
-		//Address
-		JLabel addressLabel = new JLabel("Address");
-		ret.add(addressLabel);
-
-		addressText = new JTextField(10);
-		ret.add(addressText);
-
 		return ret;
 	}
 
-	private JPanel buttonsPanel(){
+	private JPanel buttonsPanel() {
 
 		//Buttons
 		JPanel buttonsPanel = new JPanel(new FlowLayout());
 
-		JButton update = ViewHelpers.buttonsForms("UPDATE");
+		JButton show = ViewHelpers.buttonsForms("SHOW");
 
-		update.addActionListener(new ActionListener(){
+		show.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -81,19 +64,17 @@ public class FormUpdateMainOffice extends JDialog{
 				try {
 					/*This is related to JPA*/
 					mainOffice.setId(Util.parseNoNegativeInt(idText.getText()));
-					mainOffice.setCity(Util.parseString(cityText.getText()));
-					mainOffice.setAdress(Util.parseString(addressText.getText()));
 					dispose();
-					AppController.getInstance().execute(new LightContext(Event.UPDATE_MAIN_OFFICE, mainOffice));
+					AppController.getInstance().execute(new LightContext(Event.SHOW_MAIN_OFFICE, mainOffice));
 				} catch (Exception ex) {
-					JOptionPane.showMessageDialog(getRootPane(), ex.getMessage(), "ERROR UPDATE MAIN OFFICE", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(getRootPane(), ex.getMessage(), "ERROR SHOW MAIN OFFICE", JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
 
 		JButton cancel = ViewHelpers.buttonsForms("CANCEL");
 
-		cancel.addActionListener(new ActionListener(){
+		cancel.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -101,14 +82,14 @@ public class FormUpdateMainOffice extends JDialog{
 			}
 		});
 
-		buttonsPanel.add(update);
+		buttonsPanel.add(show);
 		buttonsPanel.add(cancel);
 
 		return buttonsPanel;
 	}
 
 	public static void main(String[] args) {
-		FormUpdateMainOffice formUpdateMainOffice = new FormUpdateMainOffice();
-		formUpdateMainOffice.setVisible(true);
+		FormShowMainOffice formShowMainOffice = new FormShowMainOffice();
+		formShowMainOffice.setVisible(true);
 	}
 }

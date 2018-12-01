@@ -70,7 +70,7 @@ class ASMainOfficeTest {
     }
 
     @Test
-    void createMainOfficeErrorAddress() throws ASException, IncorrectInputException {//couldn´t exit other main_office with the same address
+    void createMainOfficeErrorAddress() throws ASException, IncorrectInputException {//couldn´t exit other mainOffice with the same address
         asMainOffice.create(tMainOffice);
         assertThrows(ASException.class, () -> asMainOffice.create(tMainOffice));
     }
@@ -132,13 +132,13 @@ class ASMainOfficeTest {
     }
 
     @Test
-    void dropMainOfficeErrorNotExists(){//shouldn't drop a main_office which doesn't exists
+    void dropMainOfficeErrorNotExists(){//shouldn't drop a mainOffice which doesn't exists
         tMainOffice.setId(100);
         assertThrows(ASException.class, () -> asMainOffice.drop(tMainOffice.getId()));
     }
 
     @Test
-    void dropMainOfficeErrorNotActive() throws ASException, IncorrectInputException {//shouldn't drop a disbled main_office
+    void dropMainOfficeErrorNotActive() throws ASException, IncorrectInputException {//shouldn't drop a disbled mainOffice
         tMainOffice.setActive(false);
         tMainOffice.setId(asMainOffice.create(tMainOffice));
         tMainOffice.setAdress("XXX");
@@ -291,7 +291,7 @@ class ASMainOfficeTest {
     }
 
     @Test
-    void updateMainOfficeErrorAddress() throws ASException, IncorrectInputException { //shouldn't exists other main_office with the same address
+    void updateMainOfficeErrorAddress() throws ASException, IncorrectInputException { //shouldn't exists other mainOffice with the same address
         asMainOffice.create(tMainOffice);
         assertThrows(ASException.class, () -> asMainOffice.update(tMainOffice));
     }

@@ -1,4 +1,4 @@
-package presentation.main_office.forms;
+package presentation.mainOffice.forms;
 
 import business.mainoffice.TMainOffice;
 import presentation.controller.AppController;
@@ -12,12 +12,12 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class FormDropMainOffice extends JDialog{
+public class FormTotalSalaryMainOffice extends JDialog{
 
 	private JTextField idText;
 
-	public FormDropMainOffice(){
-		setTitle("Drop main office");
+	public FormTotalSalaryMainOffice(){
+		setTitle("Total salary main office");
 		setResizable(false);
 		Util.addEscapeListener(this);
 		initGUI();
@@ -54,9 +54,9 @@ public class FormDropMainOffice extends JDialog{
 		//Buttons
 		JPanel buttonsPanel = new JPanel(new FlowLayout());
 
-		JButton drop = ViewHelpers.buttonsForms("DROP");
+		JButton totalSalary = ViewHelpers.buttonsForms("SHOW ");
 
-		drop.addActionListener(new ActionListener() {
+		totalSalary.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -65,9 +65,9 @@ public class FormDropMainOffice extends JDialog{
 					/*This is related to JPA*/
 					mainOffice.setId(Util.parseNoNegativeInt(idText.getText()));
 					dispose();
-					AppController.getInstance().execute(new LightContext(Event.DROP_MAIN_OFFICE, mainOffice));
+					AppController.getInstance().execute(new LightContext(Event.TOTAL_SALARY_MAIN_OFFICE, mainOffice));
 				} catch (Exception ex) {
-					JOptionPane.showMessageDialog(getRootPane(), ex.getMessage(), "ERROR DROP MAIN OFFICE", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(getRootPane(), ex.getMessage(), "ERROR SHOW TOTAL SALARY MAIN OFFICE", JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
@@ -82,14 +82,14 @@ public class FormDropMainOffice extends JDialog{
 			}
 		});
 
-		buttonsPanel.add(drop);
+		buttonsPanel.add(totalSalary);
 		buttonsPanel.add(cancel);
 
 		return buttonsPanel;
 	}
 
 	public static void main(String[] args) {
-		FormDropMainOffice formDropMainOffice = new FormDropMainOffice();
-		formDropMainOffice.setVisible(true);
+		FormTotalSalaryMainOffice formTotalSalaryMainOffice = new FormTotalSalaryMainOffice();
+		formTotalSalaryMainOffice.setVisible(true);
 	}
 }
