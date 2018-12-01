@@ -30,5 +30,6 @@ code.iml
 .project
 .classpath
 META-INF/
+!resources/eclipselink/META-INF/
 log/
 package-info.java
