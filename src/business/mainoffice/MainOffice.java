@@ -24,7 +24,10 @@ import business.employee.Employee;
 		@NamedQuery(name = "MainOffice.findBycity",
                 query = "select obj from MainOffice obj where :city = obj.city "),
 		@NamedQuery(name = "MainOffice.findByactive",
-                query = "select obj from MainOffice obj where :active = obj.active ") })
+                query = "select obj from MainOffice obj where :active = obj.active "),
+		@NamedQuery(name = "Service.findAllMainOffices",
+				query = "select obj from MainOffice obj ") })
+
 public class MainOffice implements Serializable {
 
 	private static final long serialVersionUID = 0;
@@ -105,7 +108,7 @@ public class MainOffice implements Serializable {
 		this.city = city;
 	}
 
-	public Boolean getActive() {
+	public Boolean isActive() {
 		return active;
 	}
 
