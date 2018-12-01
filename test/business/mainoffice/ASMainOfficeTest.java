@@ -102,7 +102,7 @@ class ASMainOfficeTest {
     }
 
     @Test
-    void dropMainOfficeSucessfulDisabledContracts(){ //dropping a main Office without active contracts is allowed.
+    void dropMainOfficeSucessfulDisabledContracts() throws ASException, IncorrectInputException { //dropping a main Office without active contracts is allowed.
         Integer idMO = asMainOffice.create(tMainOffice);
         Integer idS = asService.create(tService);
 
@@ -158,7 +158,7 @@ class ASMainOfficeTest {
     }
 
     @Test
-    void dropMainOfficeErrorActiveContracts(){ //dropping main office with active contracts is forbidden.
+    void dropMainOfficeErrorActiveContracts() throws ASException, IncorrectInputException { //dropping main office with active contracts is forbidden.
         Integer idMO = asMainOffice.create(tMainOffice);
         Integer idS = asService.create(tService);
 

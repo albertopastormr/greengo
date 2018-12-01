@@ -1,6 +1,7 @@
 package presentation.command.service;
 
 import business.ASException;
+import business.IncorrectInputException;
 import business.service.TService;
 import business.service.factory.ASServiceFactory;
 import integration.DAOException;
@@ -10,7 +11,7 @@ import presentation.controller.LightContext;
 
 public class ShowService implements Command {
 	@Override
-	public LightContext execute(LightContext in) throws ASException {
+	public LightContext execute(LightContext in) throws ASException, IncorrectInputException {
 		TService ret = ASServiceFactory.getInstance().generateASService().show(((TService)in.getData()).getId());
 		return new LightContext(Event.SHOW_SERVICE, ret);
 	}

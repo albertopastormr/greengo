@@ -46,12 +46,12 @@ public class ASServiceTest {
     // --------------------- CREATE --------------------
 
     @Test
-    public void createServiceSuccessful(){
+    public void createServiceSuccessful() throws ASException, IncorrectInputException {
         assertTrue(as.create(tServicePrincipal)>0);
     }
 
     @Test
-    public void createIncorrectServiceSameType(){
+    public void createIncorrectServiceSameType() throws ASException, IncorrectInputException {
 
         Integer idService = as.create(tServicePrincipal);
         tServicePrincipal = as.show(idService);
@@ -78,13 +78,13 @@ public class ASServiceTest {
 
 
     @Test
-    public void dropServiceSuccessful(){
+    public void dropServiceSuccessful() throws ASException, IncorrectInputException {
         as.drop(as.create(tServicePrincipal));
         assertTrue(!as.show(tServicePrincipal.getId()).isActive());
     }
 
     @Test
-    public void dropIncorrectServiceContractAssociated(){
+    public void dropIncorrectServiceContractAssociated() throws ASException, IncorrectInputException {
 
         Integer idService = as.create(tServicePrincipal);
         tServicePrincipal = as.show(idService);
@@ -104,7 +104,7 @@ public class ASServiceTest {
     }
 
     @Test
-    public void dropServiceSuccessfulContractAssociated(){
+    public void dropServiceSuccessfulContractAssociated() throws ASException, IncorrectInputException {
 
         Integer idService = as.create(tServicePrincipal);
         tServicePrincipal = as.show(idService);
@@ -124,7 +124,7 @@ public class ASServiceTest {
     }
 
     @Test
-    public void dropIncorrectServiceAlreadyInactive(){
+    public void dropIncorrectServiceAlreadyInactive() throws ASException, IncorrectInputException {
         Integer idService = as.drop(as.create(tServicePrincipal));
 
         assertThrows(ASException.class, ()-> as.drop(idService));
@@ -149,7 +149,7 @@ public class ASServiceTest {
     // --------------------- UPDATE --------------------
 
     @Test
-    public void updateServiceSuccessful(){
+    public void updateServiceSuccessful() throws ASException, IncorrectInputException {
 
         // Change all fields less type
         TService tServiceComparator = new TService(null, 201, true, "Limpieza","Calle Mercado,3 Modificada",54321);
@@ -171,7 +171,7 @@ public class ASServiceTest {
     }
 
     @Test
-    public void updateIncorrectServiceSameType(){
+    public void updateIncorrectServiceSameType() throws ASException, IncorrectInputException {
 
         TService tServiceComparator = new TService(null, 201, true, "Limpieza","Calle Mercado,3 Modificada",54321);
         as.create(tServiceComparator);
@@ -188,7 +188,7 @@ public class ASServiceTest {
     }
 
     @Test
-    public void updateIncorrectServiceTypeNull(){
+    public void updateIncorrectServiceTypeNull() throws ASException, IncorrectInputException {
 
         // Service con campos igual menos el type
         TService tServiceComparator = new TService(null, 201, true, "Limpieza","Calle Mercado,3 Modificada",54321);
@@ -248,7 +248,7 @@ public class ASServiceTest {
     // --------------------- SHOW --------------------
 
     @Test
-    public void showServiceSuccessful(){
+    public void showServiceSuccessful() throws ASException, IncorrectInputException {
         Integer idService = as.create(tServicePrincipal);
         assertTrue(checkTransfersService(tServicePrincipal, as.show(idService)));
     }
@@ -272,7 +272,7 @@ public class ASServiceTest {
 
 
     @Test
-    public void showAllServiceSuccessful(){
+    public void showAllServiceSuccessful() throws ASException, IncorrectInputException {
         Integer idServicePrincipal = as.create(tServicePrincipal);
         tServicePrincipal.setType("Reparaciones");
 
@@ -306,7 +306,7 @@ public class ASServiceTest {
     }
 
     @Test
-    public void showServicesFromLevel() {
+    public void showServicesFromLevel() throws ASException, IncorrectInputException {
 
         // Contract one
 

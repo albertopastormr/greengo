@@ -31,7 +31,7 @@ class ASContractTest {
 
     @BeforeEach
     @Test
-    void setUp() {
+    void setUp() throws ASException, IncorrectInputException {
 
         tMainOffice = new TMainOffice(1,"manu","C/algomas",true);
         tService = new TService(1,1,true,"tipo planta", "~", 1);
@@ -110,7 +110,7 @@ class ASContractTest {
     }
 
     @Test
-    void createIncorrectServiceActive(){
+    void createIncorrectServiceActive() throws ASException, IncorrectInputException {
         asService.drop(tContract.getIdService());
         assertThrows(ASException.class, () -> asContract.create(tContract));
     }
@@ -123,7 +123,7 @@ class ASContractTest {
     }
 
     @Test
-    void createIncorrectMainOfficeServiceActive(){
+    void createIncorrectMainOfficeServiceActive() throws ASException, IncorrectInputException {
         asMainOffice.drop(tContract.getIdMainOffice());
         asService.drop(tContract.getIdService());
         assertThrows(ASException.class, () -> asContract.create(tContract));
@@ -187,7 +187,7 @@ class ASContractTest {
     }
 
     @Test
-    void updateIncorrectServiceActive(){
+    void updateIncorrectServiceActive() throws ASException, IncorrectInputException {
         asContract.create(tContract);
         asService.drop(tContract.getIdService());
         assertThrows(ASException.class, () -> asContract.update(tContract));
@@ -202,7 +202,7 @@ class ASContractTest {
     }
 
     @Test
-    void updateIncorrectMainOfficeServiceActive(){
+    void updateIncorrectMainOfficeServiceActive() throws ASException, IncorrectInputException {
         asContract.create(tContract);
         asMainOffice.drop(tContract.getIdMainOffice());
         asService.drop(tContract.getIdService());

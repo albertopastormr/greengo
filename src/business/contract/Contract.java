@@ -1,7 +1,6 @@
 package business.contract;
 
 
-import javax.annotation.Generated;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -85,7 +84,7 @@ public class Contract implements Serializable {
 		this.serviceLevel = serviceLevel;
 	}
 
-	public Boolean getActive() {
+	public Boolean isActive() {
 		return active;
 	}
 

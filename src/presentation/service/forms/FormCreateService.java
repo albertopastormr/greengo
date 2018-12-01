@@ -100,6 +100,7 @@ public class FormCreateService extends JDialog{
 					service.setAddress(Util.parseString(addressText.getText()));
 					service.setCapacity(Util.parseNoNegativeInt(capacityText.getText()));
 					service.setNumVehiclesAttended(Util.parseNoNegativeInt(vehicles_attendedText.getText()));
+					service.setActive(Util.parseActive(activeComboBox.getSelectedItem().toString()));
 					dispose();
 					AppController.getInstance().execute(new LightContext(Event.CREATE_SERVICE, service));
 				} catch (Exception ex) {
