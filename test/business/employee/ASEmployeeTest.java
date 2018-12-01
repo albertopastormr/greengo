@@ -1,6 +1,7 @@
 package business.employee;
 
 import business.ASException;
+import business.IncorrectInputException;
 import business.employee.as.ASEmployee;
 import business.employee.as.imp.ASEmployeeImp;
 import business.mainoffice.TMainOffice;
@@ -24,7 +25,7 @@ class ASEmployeeTest {
     private static TMainOffice tMainOffice;
 
     @BeforeEach
-    void setUp() {
+    void setUp() throws ASException, IncorrectInputException {
         // deleteAll
 
         tEmployee = new TPermanentEmployee(1, "ABCD", 1350f,
@@ -68,7 +69,7 @@ class ASEmployeeTest {
     }
 
     @Test
-    void createIncorrectMainOfficeActive(){
+    void createIncorrectMainOfficeActive() throws ASException, IncorrectInputException {
         asMainOffice.drop(tEmployee.getIdMainOffice());
         assertThrows(ASException.class, () -> asEmployee.create(tEmployee));
     }
@@ -145,7 +146,7 @@ class ASEmployeeTest {
     }
 
     @Test
-    void updateIncorrectMainOfficeActive(){
+    void updateIncorrectMainOfficeActive() throws ASException, IncorrectInputException {
         asEmployee.create(tEmployee);
         asMainOffice.drop(tEmployee.getIdMainOffice());
 

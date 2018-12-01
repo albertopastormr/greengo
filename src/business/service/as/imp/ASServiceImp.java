@@ -30,7 +30,7 @@ public class ASServiceImp implements ASService {
                 transaction.begin();
 
                 Query query = em.createNamedQuery("Service.findBytype", Service.class);
-                query.setParameter("type", serviceObject.getId());
+                query.setParameter("type", serviceObject.getType());
 
                 List serviceslist = query.getResultList();
                 if(!serviceslist.isEmpty()){
@@ -45,7 +45,7 @@ public class ASServiceImp implements ASService {
                 em.close();
                 emf.close();
             }catch(PersistenceException e){
-                throw new ASException("Error in Database");
+               throw new ASException("Error in Database");
             }
         }
         else{
@@ -69,6 +69,7 @@ public class ASServiceImp implements ASService {
 
                 Query query = em.createNamedQuery("Contract.findByservice", Contract.class);
                 query.setParameter("service",service);
+
                 List <Contract> contractslist = query.getResultList();
 
                 if (service == null) {
@@ -99,7 +100,7 @@ public class ASServiceImp implements ASService {
 	}
 	
     @Override
-    public Integer update(TService tService) throws ASException {
+    public Integer update(TService tService) throws ASException, IncorrectInputException {
         Integer id = null ;
         if(tService.getId() != null && tService.getType()!=null && tService.getAddress()!=null && tService.getNumVehiclesAttended()!=null && tService.getCapacity() !=null
                 && tService.getNumVehiclesAttended() >=0 && tService.getCapacity() > 0) {
@@ -132,10 +133,14 @@ public class ASServiceImp implements ASService {
                 serviceBD.setNumVehiclesAttended(tService.getNumVehiclesAttended());
                 id = serviceBD.getId();
                 transaction.commit();
+                em.close();
+                emf.close();
             } catch (PersistenceException e) {
                 throw new ASException("Error in database");
             }
         }
+        else throw new IncorrectInputException("Parameters mustn`t be null and their numbers must be positive");
+
         return id;
 
     }
@@ -154,7 +159,7 @@ public class ASServiceImp implements ASService {
 
                 Service service = em.find(Service.class, idService);
                 if (service == null) {
-                    //transaction.rollback();
+                    transaction.rollback();
                     throw new ASException("The tService doesn´t exist");
                 }
                 tService = new TService(service.getId(), service.getCapacity(), service.getActive(), service.getType(), service.getAddress(), service.getNumVehiclesAttended());
@@ -166,6 +171,7 @@ public class ASServiceImp implements ASService {
             }
         }
         else throw new IncorrectInputException("The id mustn`t be null and positive");
+
         return tService;
     }
 
@@ -185,36 +191,47 @@ public class ASServiceImp implements ASService {
             for(Service service: servicesList){
                 tServicesList.add(new TService(service.getId(), service.getCapacity(), service.getActive(), service.getType(), service.getAddress(), service.getNumVehiclesAttended()));
             }
+
+            transaction.commit();
+            em.close();
+            emf.close();
         }catch(Exception e){
             throw new ASException("Error in Database");
         }
+
         return tServicesList;
     }
 
     @Override
-    public Collection<TService> showServicesFromLevel(Integer level) throws ASException {
+    public Collection<TService> showServicesFromLevel(Integer level) throws ASException, IncorrectInputException {
         Collection<TService> tServicesList = new ArrayList<>();
-        try {
-            EntityManagerFactory emf = Persistence.createEntityManagerFactory("greengo");
-            EntityManager em = emf.createEntityManager();
-            EntityTransaction transaction = em.getTransaction();
+        if(level != null && level > 0) {
+            try {
+                EntityManagerFactory emf = Persistence.createEntityManagerFactory("greengo");
+                EntityManager em = emf.createEntityManager();
+                EntityTransaction transaction = em.getTransaction();
 
-            transaction.begin();
+                transaction.begin();
 
-            Query query = em.createNamedQuery("Contract.findByservice_level",Contract.class);
-            query.setParameter("serviceLevel",level);
+                Query query = em.createNamedQuery("Contract.findByservice_level", Contract.class);
+                query.setParameter("serviceLevel", level);
 
-            List <Contract> listContracts = query.getResultList();
-            Collection<Service> servicesList = new ArrayList<>();
+                List<Contract> listContracts = query.getResultList();
+                Collection<Service> servicesList = new ArrayList<>();
 
-            for(Contract contract: listContracts){
-                tServicesList.add(new TService(contract.getService().getId(), contract.getService().getCapacity(), contract.getService().getActive(),
-                        contract.getService().getType(), contract.getService().getAddress(), contract.getService().getNumVehiclesAttended()));
+                for (Contract contract : listContracts) {
+                    tServicesList.add(new TService(contract.getService().getId(), contract.getService().getCapacity(), contract.getService().getActive(),
+                            contract.getService().getType(), contract.getService().getAddress(), contract.getService().getNumVehiclesAttended()));
+                }
+
+                transaction.commit();
+                em.close();
+                emf.close();
+            } catch (Exception e) {
+                throw new ASException("Error in Database");
             }
-
-        } catch (Exception e) {
-            throw new ASException("Error in Database");
         }
+        else throw new IncorrectInputException("Parameter mustn`t be null and his number must be positive");
         return tServicesList;
     }
 }

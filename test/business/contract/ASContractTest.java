@@ -98,7 +98,7 @@ class ASContractTest {
     }
 
     @Test
-    void createIncorrectMainOfficeActive(){
+    void createIncorrectMainOfficeActive() throws ASException, IncorrectInputException {
         asMainOffice.drop(tContract.getIdMainOffice());
         assertThrows(ASException.class, () -> asContract.create(tContract));
     }
@@ -173,7 +173,7 @@ class ASContractTest {
     }
 
     @Test
-    void updateIncorrectMainOfficeActive(){
+    void updateIncorrectMainOfficeActive() throws ASException, IncorrectInputException {
         asContract.create(tContract);
         asMainOffice.drop(tContract.getIdMainOffice());
         assertThrows(ASException.class, () -> asContract.update(tContract));

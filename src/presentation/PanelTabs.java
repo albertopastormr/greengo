@@ -64,11 +64,11 @@ public class PanelTabs extends JTabbedPane {
 //		employeeTab.add(employeePane);
 
 		//vista main office
-//		JComponent mainOfficeTab = new JPanel(new GridLayout(1, 1));
-//		addTab("MainOffice", new ImageIcon("resources/images/mainOffice.png"), mainOfficeTab, "MainOffice view");
-//		setMnemonicAt(0, KeyEvent.VK_5);
-//		mainOfficePane = new MainOfficePanel(this);
-//		mainOfficeTab.add(mainOfficePane);
+		JComponent mainOfficeTab = new JPanel(new GridLayout(1, 1));
+		addTab("MainOffice", new ImageIcon("resources/images/mainOffice.png"), mainOfficeTab, "MainOffice view");
+		setMnemonicAt(0, KeyEvent.VK_5);
+		mainOfficePane = new MainOfficePanel(this);
+		mainOfficeTab.add(mainOfficePane);
 
 		//vista rental
 		JComponent rentalTab = new JPanel(new GridLayout(1, 1));
@@ -105,13 +105,16 @@ public class PanelTabs extends JTabbedPane {
                     case 1:
                         AppController.getInstance().execute(new LightContext(Event.RELOAD_CLIENT, null));
                         break;
-                    case 2:
+					case 2:
+						AppController.getInstance().execute(new LightContext(Event.RELOAD_MAIN_OFFICE, null));
+						break;
+                    case 3:
                         AppController.getInstance().execute(new LightContext(Event.RELOAD_RENTAL, null));
                         break;
-					case 3:
+					case 4:
 						AppController.getInstance().execute(new LightContext(Event.RELOAD_SERVICE, null));
 						break;
-                    case 4:
+                    case 5:
                         AppController.getInstance().execute(new LightContext(Event.RELOAD_VEHICLE, null));
                         break;
 
@@ -154,16 +157,18 @@ public class PanelTabs extends JTabbedPane {
             case 1:
                 clientPane.getModel().setList(newList);
                 break;
-            case 2:
+			case 2:
+				mainOfficePane.getModel().setList(newList);
+				break;
+            case 3:
                 rentalPane.getModel().setList(newList);
                 break;
-			case 3:
+			case 4:
 				servicePane.getModel().setList(newList);
 				break;
-            case 4:
+            case 5:
                 vehiclePane.getModel().setList(newList);
                 break;
-
 
 		    //JPA version
 

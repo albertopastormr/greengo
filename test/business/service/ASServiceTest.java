@@ -355,7 +355,7 @@ public class ASServiceTest {
     }
 
     @Test
-    public void showServicesFromLevelEmpty() throws ASException {
+    public void showServicesFromLevelEmpty() throws ASException, IncorrectInputException {
         assertTrue(as.showServicesFromLevel(3).isEmpty());
     }
 
