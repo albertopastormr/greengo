@@ -32,6 +32,9 @@ public class MainOffice implements Serializable {
 	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 
+	@Version
+	private Integer version;
+
 	@OneToMany(mappedBy = "MainOffice")
 	private Collection<Employee> employee;
 

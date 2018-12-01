@@ -8,27 +8,28 @@ import java.io.Serializable;
 
 import business.mainoffice.MainOffice;
 
-
+@Inheritance(strategy=InheritanceType.JOINED)
 @Entity
 @NamedQueries({
 		@NamedQuery(name = "Employee.findByid",
-                query = "select obj from employee obj where :id = obj.id "),
+                query = "select obj from Employee obj where :id = obj.id "),
 		@NamedQuery(name = "Employee.findBymainOffice",
-                query = "select obj from employee obj where :mainOffice = obj.mainOffice "),
+                query = "select obj from Employee obj where :mainOffice = obj.mainOffice "),
 		@NamedQuery(name = "Employee.findByidCardNumber",
-                query = "select obj from employee obj where :idCardNumber = obj.idCardNumber "),
+                query = "select obj from Employee obj where :idCardNumber = obj.idCardNumber "),
 		@NamedQuery(name = "Employee.findBysalary",
-                query = "select obj from employee obj where :salary = obj.salary "),
+                query = "select obj from Employee obj where :salary = obj.salary "),
 		@NamedQuery(name = "Employee.findByactive",
-                query = "select obj from employee obj where :active = obj.active ") })
-@Inheritance(strategy=InheritanceType.JOINED)
+                query = "select obj from Employee obj where :active = obj.active ") })
+
 public class Employee implements Serializable {
 
 	private static final long serialVersionUID = 0;
 
 	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
-
+	@Version
+	protected Integer version;
 	@ManyToOne
 	private MainOffice mainOffice;
 

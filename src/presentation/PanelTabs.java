@@ -108,15 +108,16 @@ public class PanelTabs extends JTabbedPane {
                     case 2:
                         AppController.getInstance().execute(new LightContext(Event.RELOAD_RENTAL, null));
                         break;
-                    case 3:
+					case 3:
+						AppController.getInstance().execute(new LightContext(Event.RELOAD_SERVICE, null));
+						break;
+                    case 4:
                         AppController.getInstance().execute(new LightContext(Event.RELOAD_VEHICLE, null));
                         break;
 
 
 				    //JPA version
-					case 4:
-						AppController.getInstance().execute(new LightContext(Event.RELOAD_SERVICE, null));
-						break;
+
 						/*
 					case 1:
 						AppController.getInstance().execute(new LightContext(Event.RELOAD_CLIENT, null));
@@ -156,16 +157,17 @@ public class PanelTabs extends JTabbedPane {
             case 2:
                 rentalPane.getModel().setList(newList);
                 break;
-            case 3:
+			case 3:
+				servicePane.getModel().setList(newList);
+				break;
+            case 4:
                 vehiclePane.getModel().setList(newList);
                 break;
 
 
 		    //JPA version
 
-			case 4:
-				servicePane.getModel().setList(newList);
-				break;
+
 				/*
 			case 1:
 				clientPane.getModel().setList(newList);

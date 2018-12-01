@@ -11,12 +11,12 @@ public interface ASService {
 
     Integer drop(Integer service) throws IncorrectInputException, ASException;
 
-    Integer update(TService service);
+    Integer update(TService service) throws ASException;
 
     TService show (Integer id) throws ASException, IncorrectInputException;
 
-    Collection<TService> showAll ();
+    Collection<TService> showAll () throws ASException;
 
-    Collection<TService> showServicesFromLevel(Integer level);
+    Collection<TService> showServicesFromLevel(Integer level) throws ASException;
 
 }

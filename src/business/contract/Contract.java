@@ -11,21 +11,24 @@ import business.service.Service;
 @Entity
 @NamedQueries({
 		@NamedQuery(name = "Contract.findByid",
-                query = "select obj from contract obj where :id = obj.id "),
+                query = "select obj from Contract obj where :id = obj.id "),
 		@NamedQuery(name = "Contract.findByservice",
-                query = "select obj from contract obj where :service = obj.service "),
+                query = "select obj from Contract obj where :service = obj.service "),
 		@NamedQuery(name = "Contract.findBymain_Office",
-                query = "select obj from contract obj where :main_Office = obj.main_Office "),
+                query = "select obj from Contract obj where :mainOffice = obj.mainOffice "),
 		@NamedQuery(name = "Contract.findByservice_level",
-                query = "select obj from contract obj where :service_level = obj.service_level "),
+                query = "select obj from Contract obj where :serviceLevel = obj.serviceLevel"),
 		@NamedQuery(name = "Contract.findByactive",
-                query = "select obj from contract obj where :active = obj.active ") })
+                query = "select obj from Contract obj where :active = obj.active ")})
 public class Contract implements Serializable {
 
 	private static final long serialVersionUID = 0;
 
 	@Id @GeneratedValue(strategy= GenerationType.IDENTITY)
 	private Integer id;
+
+	@Version
+	private Integer version;
 
 	@ManyToOne
 	private Service service;

@@ -11,25 +11,30 @@ import business.contract.Contract;
 @Entity
 @NamedQueries({
 		@NamedQuery(name = "Service.findByid",
-                query = "select obj from service obj where :id = obj.id "),
+                query = "select obj from Service obj where :id = obj.id "),
 		@NamedQuery(name = "Service.findBytype",
-                query = "select obj from service obj where :type = obj.type "),
+                query = "select obj from Service obj where :type = obj.type "),
 		@NamedQuery(name = "Service.findByaddress",
-                query = "select obj from service obj where :address = obj.address "),
+                query = "select obj from Service obj where :address = obj.address "),
 		@NamedQuery(name = "Service.findBycontract",
-                query = "select obj from service obj where :contract MEMBER OF obj.contract "),
+                query = "select obj from Service obj where :contract MEMBER OF obj.contract "),
 		@NamedQuery(name = "Service.findBycapacity",
-                query = "select obj from service obj where :capacity = obj.capacity "),
+                query = "select obj from Service obj where :capacity = obj.capacity "),
 		@NamedQuery(name = "Service.findByvehicles_attended",
-                query = "select obj from service obj where :vehicles_attended = obj.vehicles_attended "),
+                query = "select obj from Service obj where :vehicles_attended = obj.numVehiclesAttended "),
 		@NamedQuery(name = "Service.findByactive",
-                query = "select obj from service obj where :active = obj.active ") })
+                query = "select obj from Service obj where :active = obj.active "),
+		@NamedQuery(name = "Service.findAllServices",
+				query = "select obj from Service obj ") })
 public class Service implements Serializable {
 
 	private static final long serialVersionUID = 0;
 
 	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
+
+	@Version
+	private Integer version;
 
 	private String type;
 

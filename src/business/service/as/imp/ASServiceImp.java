@@ -8,19 +8,20 @@ import business.service.TService;
 import business.service.as.ASService;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 public class ASServiceImp implements ASService {
 
     @Override
-    public Integer create(TService service) throws ASException, IncorrectInputException {
+    public Integer create(TService tService) throws ASException, IncorrectInputException {
 
         Integer id;
-        if(service.getId() == null && service.getType()!=null && service.getAddress()!=null && service.getNumVehiclesAttended()!=null && service.getCapacity() !=null
-        && service.isActive()!=null && service.getNumVehiclesAttended() >=0 && service.getCapacity() > 0) {
+        if(tService.getId() == null && tService.getType()!=null && tService.getAddress()!=null && tService.getNumVehiclesAttended()!=null && tService.getCapacity() !=null
+        && tService.isActive()!=null && tService.getNumVehiclesAttended() >=0 && tService.getCapacity() > 0) {
             try {
-                Service serviceObject = new Service(service);
+                Service serviceObject = new Service(tService);
 
                 EntityManagerFactory emf = Persistence.createEntityManagerFactory("greengo");
                 EntityManager em = emf.createEntityManager();
@@ -34,7 +35,7 @@ public class ASServiceImp implements ASService {
                 List serviceslist = query.getResultList();
                 if(!serviceslist.isEmpty()){
                     transaction.rollback();
-                    throw new ASException("ERROR: There is a client with the parameter 'idCard'==\"+client.getIdCardNumber()+\" (duplication)");
+                    throw new ASException("ERROR: There is a tService with the parameter 'type'= "+tService.getType()+" (duplication)");
                 }
                 else{
                     em.persist(serviceObject);
@@ -43,12 +44,12 @@ public class ASServiceImp implements ASService {
                 }
                 em.close();
                 emf.close();
-            }catch(Exception e){
-                throw new ASException(e.getMessage());
+            }catch(PersistenceException e){
+                throw new ASException("Error in Database");
             }
         }
         else{
-            throw new IncorrectInputException("Parameters mustn`t be null and their  numbers must be positive");
+            throw new IncorrectInputException("Parameters mustn`t be null and their numbers must be positive");
         }
         return id;
     }
@@ -67,8 +68,8 @@ public class ASServiceImp implements ASService {
                 Service service = em.find(Service.class, idService);
 
                 Query query = em.createNamedQuery("Contract.findByservice", Contract.class);
-                query.setParameter("service", idService);
-                List <Contract>contractslist = query.getResultList();
+                query.setParameter("service",service);
+                List <Contract> contractslist = query.getResultList();
 
                 if (service == null) {
                     transaction.rollback();
@@ -89,8 +90,8 @@ public class ASServiceImp implements ASService {
 
                 em.close();
                 emf.close();
-            } catch (Exception e) {
-                throw new ASException(e.getMessage());
+            } catch (PersistenceException e) {
+                throw new ASException("Error in Database");
             }
         }
         else throw new IncorrectInputException("Id parameter mustn`t be null and must be positive");
@@ -98,9 +99,47 @@ public class ASServiceImp implements ASService {
 	}
 	
     @Override
-    public Integer update(TService service) {
-        return null;
+    public Integer update(TService tService) throws ASException {
+        Integer id = null ;
+        if(tService.getId() != null && tService.getType()!=null && tService.getAddress()!=null && tService.getNumVehiclesAttended()!=null && tService.getCapacity() !=null
+                && tService.getNumVehiclesAttended() >=0 && tService.getCapacity() > 0) {
+            try {
+                Service serviceObject = new Service(tService);
+
+                EntityManagerFactory emf = Persistence.createEntityManagerFactory("greengo");
+                EntityManager em = emf.createEntityManager();
+                EntityTransaction transaction = em.getTransaction();
+
+                transaction.begin();
+
+                Service serviceBD  = em.find(Service.class,tService.getId());
+
+                Query query = em.createNamedQuery("Service.findBytype",Service.class);
+                query.setParameter("type", tService.getType());
+
+                List<Service> typeServiceList = query.getResultList();
+
+                if(serviceBD == null){
+                    transaction.rollback();
+                    throw new ASException("The Service doesn´t exist");
+                }else if(!typeServiceList.isEmpty() && !typeServiceList.get(0).getId().equals(serviceBD.getId())){
+                    transaction.rollback();
+                    throw new ASException("ERROR: There is a tService with the parameter 'type'= "+tService.getType()+" (duplication)");
+                }
+                serviceBD.setActive(true);
+                serviceBD.setAddress(tService.getAddress());
+                serviceBD.setType(tService.getType());
+                serviceBD.setNumVehiclesAttended(tService.getNumVehiclesAttended());
+                id = serviceBD.getId();
+                transaction.commit();
+            } catch (PersistenceException e) {
+                throw new ASException("Error in database");
+            }
+        }
+        return id;
+
     }
+
 
     @Override
     public TService show(Integer idService) throws ASException, IncorrectInputException {
@@ -115,14 +154,15 @@ public class ASServiceImp implements ASService {
 
                 Service service = em.find(Service.class, idService);
                 if (service == null) {
-                    transaction.rollback();
-                    throw new ASException("The service doesn´t exist");
+                    //transaction.rollback();
+                    throw new ASException("The tService doesn´t exist");
                 }
                 tService = new TService(service.getId(), service.getCapacity(), service.getActive(), service.getType(), service.getAddress(), service.getNumVehiclesAttended());
+                transaction.commit();
                 em.close();
                 emf.close();
-            } catch (Exception e) {
-                throw new ASException(e.getMessage());
+            } catch (PersistenceException e) {
+                throw new ASException("Error in Database");
             }
         }
         else throw new IncorrectInputException("The id mustn`t be null and positive");
@@ -130,12 +170,51 @@ public class ASServiceImp implements ASService {
     }
 
     @Override
-    public Collection<TService> showAll() {
-        return null;
+    public Collection<TService> showAll() throws ASException {
+        Collection<TService> tServicesList = new ArrayList<>();
+        try{
+            EntityManagerFactory emf = Persistence.createEntityManagerFactory("greengo");
+            EntityManager em = emf.createEntityManager();
+            EntityTransaction transaction = em.getTransaction();
+
+            transaction.begin();
+
+            Query query = em.createNamedQuery("Service.findAllServices", Contract.class);
+
+            Collection<Service> servicesList = query.getResultList();
+            for(Service service: servicesList){
+                tServicesList.add(new TService(service.getId(), service.getCapacity(), service.getActive(), service.getType(), service.getAddress(), service.getNumVehiclesAttended()));
+            }
+        }catch(Exception e){
+            throw new ASException("Error in Database");
+        }
+        return tServicesList;
     }
 
     @Override
-    public Collection<TService> showServicesFromLevel(Integer level) {
-        return null;
+    public Collection<TService> showServicesFromLevel(Integer level) throws ASException {
+        Collection<TService> tServicesList = new ArrayList<>();
+        try {
+            EntityManagerFactory emf = Persistence.createEntityManagerFactory("greengo");
+            EntityManager em = emf.createEntityManager();
+            EntityTransaction transaction = em.getTransaction();
+
+            transaction.begin();
+
+            Query query = em.createNamedQuery("Contract.findByservice_level",Contract.class);
+            query.setParameter("serviceLevel",level);
+
+            List <Contract> listContracts = query.getResultList();
+            Collection<Service> servicesList = new ArrayList<>();
+
+            for(Contract contract: listContracts){
+                tServicesList.add(new TService(contract.getService().getId(), contract.getService().getCapacity(), contract.getService().getActive(),
+                        contract.getService().getType(), contract.getService().getAddress(), contract.getService().getNumVehiclesAttended()));
+            }
+
+        } catch (Exception e) {
+            throw new ASException("Error in Database");
+        }
+        return tServicesList;
     }
 }

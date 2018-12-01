@@ -288,7 +288,7 @@ public class ASServiceTest {
     }
 
     @Test
-    public void showAllCitySuccessfulEmpty() {
+    public void showAllCitySuccessfulEmpty() throws ASException {
         Collection<TService> c = as.showAll();
         assertTrue(c.isEmpty());
     }
@@ -355,7 +355,7 @@ public class ASServiceTest {
     }
 
     @Test
-    public void showServicesFromLevelEmpty() {
+    public void showServicesFromLevelEmpty() throws ASException {
         assertTrue(as.showServicesFromLevel(3).isEmpty());
     }
 
