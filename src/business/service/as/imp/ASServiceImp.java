@@ -6,6 +6,7 @@ import business.contract.Contract;
 import business.service.Service;
 import business.service.TService;
 import business.service.as.ASService;
+import org.eclipse.persistence.exceptions.EclipseLinkException;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -16,10 +17,10 @@ public class ASServiceImp implements ASService {
 
     @Override
     public Integer create(TService tService) throws ASException, IncorrectInputException {
-
         Integer id;
-        if(tService.getId() == null && tService.getType()!=null && tService.getAddress()!=null && tService.getNumVehiclesAttended()!=null && tService.getCapacity() !=null
-        && tService.isActive()!=null && tService.getNumVehiclesAttended() >=0 && tService.getCapacity() > 0) {
+
+        if(tService.getId() == null && tService.getType() != null && tService.getAddress() != null && tService.getNumVehiclesAttended() != null && tService.getCapacity() != null
+                && tService.isActive() != null && tService.getNumVehiclesAttended() >= 0 && tService.getCapacity() > 0) {
             try {
                 Service serviceObject = new Service(tService);
 
@@ -35,21 +36,21 @@ public class ASServiceImp implements ASService {
                 List serviceslist = query.getResultList();
                 if(!serviceslist.isEmpty()){
                     transaction.rollback();
-                    throw new ASException("ERROR: There is a tService with the parameter 'type'= "+tService.getType()+" (duplication)");
+                    throw new ASException("ERROR: There is a service with the same type (" + tService.getType() + ") (duplication)");
                 }
-                else{
+                else {
                     em.persist(serviceObject);
                     transaction.commit();
                     id = serviceObject.getId();
                 }
                 em.close();
                 emf.close();
-            }catch(PersistenceException e){
-                throw new ASException("Error in Database");
+            } catch (PersistenceException | EclipseLinkException e){
+                throw new ASException(e.getMessage());
             }
         }
         else{
-            throw new IncorrectInputException("Parameters mustn`t be null and their numbers must be positive");
+            throw new IncorrectInputException("ERROR: Parameters can`t be null and their values must be positive integers");
         }
         return id;
     }
@@ -57,7 +58,7 @@ public class ASServiceImp implements ASService {
 	@Override
 	public Integer drop(Integer idService) throws IncorrectInputException, ASException {
         Integer id;
-        if(idService != null && idService >0) {
+        if(idService != null && idService > 0) {
             try {
                 EntityManagerFactory emf = Persistence.createEntityManagerFactory("greengo");
                 EntityManager em = emf.createEntityManager();
@@ -73,15 +74,16 @@ public class ASServiceImp implements ASService {
 
                 if (service == null) {
                     transaction.rollback();
-                    throw new ASException("The service doesn`t exist");
+                    throw new ASException("ERROR: The service doesn`t exist");
                 } else if (!service.getActive()) {
                     transaction.rollback();
-                    throw new ASException("The service is already disabled");
+                    throw new ASException("ERROR: The service is already disabled");
                 }
+
                 for (Contract contract : contractslist) {
                     if (contract.isActive()) {
                         transaction.rollback();
-                        throw new ASException("There are contracts activated");
+                        throw new ASException("ERROR: There are active contracts");
                     }
                 }
                 id = service.getId();
@@ -90,21 +92,22 @@ public class ASServiceImp implements ASService {
 
                 em.close();
                 emf.close();
-            } catch (PersistenceException e) {
-                throw new ASException("Error in Database");
+
+            } catch (PersistenceException | EclipseLinkException e) {
+                throw new ASException(e.getMessage());
             }
         }
-        else throw new IncorrectInputException("Id parameter mustn`t be null and must be positive");
+        else throw new IncorrectInputException("ERROR: Parameters can`t be null and their values must be positive integers");
+
         return id;
 	}
 	
     @Override
     public Integer update(TService tService) throws ASException {
         Integer id = null ;
-        if(tService.getId() != null && tService.getType()!=null && tService.getAddress()!=null && tService.getNumVehiclesAttended()!=null && tService.getCapacity() !=null
-                && tService.getNumVehiclesAttended() >=0 && tService.getCapacity() > 0) {
+        if(tService.getId() != null && tService.getType() != null && tService.getAddress() != null && tService.getNumVehiclesAttended() != null && tService.getCapacity() != null
+                && tService.getNumVehiclesAttended() >= 0 && tService.getCapacity() > 0) {
             try {
-                Service serviceObject = new Service(tService);
 
                 EntityManagerFactory emf = Persistence.createEntityManagerFactory("greengo");
                 EntityManager em = emf.createEntityManager();
@@ -121,30 +124,34 @@ public class ASServiceImp implements ASService {
 
                 if(serviceBD == null){
                     transaction.rollback();
-                    throw new ASException("The Service doesn´t exist");
+                    throw new ASException("ERROR: The service doesn´t exist");
                 }else if(!typeServiceList.isEmpty() && !typeServiceList.get(0).getId().equals(serviceBD.getId())){
                     transaction.rollback();
-                    throw new ASException("ERROR: There is a tService with the parameter 'type'= "+tService.getType()+" (duplication)");
+                    throw new ASException("ERROR: There is a service with the same type (" + tService.getType() + ") (duplication)");
                 }
+
                 serviceBD.setActive(true);
                 serviceBD.setAddress(tService.getAddress());
                 serviceBD.setType(tService.getType());
                 serviceBD.setNumVehiclesAttended(tService.getNumVehiclesAttended());
                 id = serviceBD.getId();
+
                 transaction.commit();
-            } catch (PersistenceException e) {
-                throw new ASException("Error in database");
+                em.close();
+                emf.close();
+
+            } catch (PersistenceException | EclipseLinkException e) {
+                throw new ASException(e.getMessage());
             }
         }
         return id;
 
     }
 
-
     @Override
     public TService show(Integer idService) throws ASException, IncorrectInputException {
         TService tService;
-        if(idService!= null && idService > 0) {
+        if(idService != null && idService > 0) {
             try {
                 EntityManagerFactory emf = Persistence.createEntityManagerFactory("greengo");
                 EntityManager em = emf.createEntityManager();
@@ -154,25 +161,29 @@ public class ASServiceImp implements ASService {
 
                 Service service = em.find(Service.class, idService);
                 if (service == null) {
-                    //transaction.rollback();
-                    throw new ASException("The tService doesn´t exist");
+                    transaction.rollback();
+                    throw new ASException("ERROR: The service doesn´t exist");
                 }
-                tService = new TService(service.getId(), service.getCapacity(), service.getActive(), service.getType(), service.getAddress(), service.getNumVehiclesAttended());
+                tService = new TService(service.getId(), service.getCapacity(), service.getActive(), service.getType(),
+                        service.getAddress(), service.getNumVehiclesAttended());
                 transaction.commit();
+
                 em.close();
                 emf.close();
-            } catch (PersistenceException e) {
-                throw new ASException("Error in Database");
+
+            } catch (PersistenceException | EclipseLinkException e) {
+                throw new ASException(e.getMessage());
             }
         }
-        else throw new IncorrectInputException("The id mustn`t be null and positive");
+        else throw new IncorrectInputException("ERROR: Parameters can`t be null and their values must be positive integers");
         return tService;
     }
 
     @Override
     public Collection<TService> showAll() throws ASException {
         Collection<TService> tServicesList = new ArrayList<>();
-        try{
+        try {
+
             EntityManagerFactory emf = Persistence.createEntityManagerFactory("greengo");
             EntityManager em = emf.createEntityManager();
             EntityTransaction transaction = em.getTransaction();
@@ -183,38 +194,49 @@ public class ASServiceImp implements ASService {
 
             Collection<Service> servicesList = query.getResultList();
             for(Service service: servicesList){
-                tServicesList.add(new TService(service.getId(), service.getCapacity(), service.getActive(), service.getType(), service.getAddress(), service.getNumVehiclesAttended()));
+                tServicesList.add(new TService(service.getId(), service.getCapacity(), service.getActive(),
+                        service.getType(), service.getAddress(), service.getNumVehiclesAttended()));
             }
-        }catch(Exception e){
-            throw new ASException("Error in Database");
+            transaction.commit();
+            em.close();
+            emf.close();
+
+        } catch(PersistenceException | EclipseLinkException e){
+            throw new ASException(e.getMessage());
         }
+
         return tServicesList;
     }
 
     @Override
     public Collection<TService> showServicesFromLevel(Integer level) throws ASException {
+
         Collection<TService> tServicesList = new ArrayList<>();
-        try {
-            EntityManagerFactory emf = Persistence.createEntityManagerFactory("greengo");
-            EntityManager em = emf.createEntityManager();
-            EntityTransaction transaction = em.getTransaction();
+            try {
 
-            transaction.begin();
+                EntityManagerFactory emf = Persistence.createEntityManagerFactory("greengo");
+                EntityManager em = emf.createEntityManager();
+                EntityTransaction transaction = em.getTransaction();
 
-            Query query = em.createNamedQuery("Contract.findByservice_level",Contract.class);
-            query.setParameter("serviceLevel",level);
+                transaction.begin();
 
-            List <Contract> listContracts = query.getResultList();
-            Collection<Service> servicesList = new ArrayList<>();
+                Query query = em.createNamedQuery("Contract.findByservice_level", Contract.class);
+                query.setParameter("serviceLevel", level);
 
-            for(Contract contract: listContracts){
-                tServicesList.add(new TService(contract.getService().getId(), contract.getService().getCapacity(), contract.getService().getActive(),
-                        contract.getService().getType(), contract.getService().getAddress(), contract.getService().getNumVehiclesAttended()));
+                List<Contract> listContracts = query.getResultList();
+
+                for (Contract contract : listContracts) {
+                    tServicesList.add(new TService(contract.getService().getId(), contract.getService().getCapacity(), contract.getService().getActive(),
+                            contract.getService().getType(), contract.getService().getAddress(), contract.getService().getNumVehiclesAttended()));
+                }
+
+                transaction.commit();
+                em.close();
+                emf.close();
+
+            } catch (PersistenceException | EclipseLinkException e) {
+                throw new ASException(e.getMessage());
             }
-
-        } catch (Exception e) {
-            throw new ASException("Error in Database");
-        }
         return tServicesList;
     }
 }
