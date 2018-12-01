@@ -102,7 +102,7 @@ public class ASServiceImp implements ASService {
 	}
 	
     @Override
-    public Integer update(TService tService) throws ASException {
+    public Integer update(TService tService) throws ASException, IncorrectInputException {
         Integer id = null ;
         if(tService.getId() != null && tService.getType() != null && tService.getAddress() != null && tService.getNumVehiclesAttended() != null && tService.getCapacity() != null
                 && tService.getNumVehiclesAttended() >= 0 && tService.getCapacity() > 0) {
@@ -208,7 +208,7 @@ public class ASServiceImp implements ASService {
     }
 
     @Override
-    public Collection<TService> showServicesFromLevel(Integer level) throws ASException {
+    public Collection<TService> showServicesFromLevel(Integer level) throws ASException, IncorrectInputException {
         Collection<TService> tServicesList = new ArrayList<>();
         if(level != null && level > 0) {
             try {
