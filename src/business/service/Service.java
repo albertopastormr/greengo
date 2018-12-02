@@ -114,7 +114,7 @@ public class Service implements Serializable {
 		this.numVehiclesAttended = numVehiclesAttended;
 	}
 
-	public Boolean getActive() {
+	public Boolean isActive() {
 		return active;
 	}
 

@@ -31,7 +31,7 @@ public class ASServiceImp implements ASService {
             transaction.begin();
 
             Query query = em.createNamedQuery("Service.findBytype", Service.class);
-            query.setParameter("type", serviceObject.getId());
+            query.setParameter("type", serviceObject.getType());
 
             List serviceList = query.getResultList();
             if (!serviceList.isEmpty()) {
@@ -57,9 +57,9 @@ public class ASServiceImp implements ASService {
     public Integer drop(Integer idService) throws IncorrectInputException, ASException {
 
         if (idService == null)
-            throw new IncorrectInputException("Error: service's id not specified");
+            throw new IncorrectInputException("ERROR: service's id not specified");
         if (idService <= 0)
-            throw new IncorrectInputException("Error: service's id must be a positive integer greater than zero");
+            throw new IncorrectInputException("ERROR: service's id must be a positive integer greater than zero");
 
         Integer id;
         try {
@@ -75,7 +75,7 @@ public class ASServiceImp implements ASService {
                 transaction.rollback();
                 throw new ASException("ERROR: The service doesn`t exist");
             }
-            if (!service.getActive()) {
+            if (!service.isActive()) {
                 transaction.rollback();
                 throw new ASException("ERROR: The service is already disabled");
             }
@@ -168,7 +168,7 @@ public class ASServiceImp implements ASService {
                 transaction.rollback();
                 throw new ASException("ERROR: The service doesn´t exist");
             }
-            tService = new TService(service.getId(), service.getCapacity(), service.getActive(), service.getType(),
+            tService = new TService(service.getId(), service.getCapacity(), service.isActive(), service.getType(),
                     service.getAddress(), service.getNumVehiclesAttended());
 
             transaction.commit();
@@ -197,7 +197,7 @@ public class ASServiceImp implements ASService {
 
             Collection<Service> servicesList = query.getResultList();
             for (Service service : servicesList) {
-                tServicesList.add(new TService(service.getId(), service.getCapacity(), service.getActive(),
+                tServicesList.add(new TService(service.getId(), service.getCapacity(), service.isActive(),
                         service.getType(), service.getAddress(), service.getNumVehiclesAttended()));
             }
 
@@ -237,7 +237,7 @@ public class ASServiceImp implements ASService {
 
             for (Contract contract : listContracts) {
                 tServicesList.add(new TService(contract.getService().getId(), contract.getService().getCapacity(),
-                        contract.getService().getActive(), contract.getService().getType(),
+                        contract.getService().isActive(), contract.getService().getType(),
                         contract.getService().getAddress(), contract.getService().getNumVehiclesAttended()));
             }
 

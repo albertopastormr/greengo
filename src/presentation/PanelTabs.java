@@ -75,11 +75,11 @@ public class PanelTabs extends JTabbedPane {
 		vehicleTab.add(vehiclePane);
 
         //vista contract
-//		JComponent contractTab = new JPanel(new GridLayout(1, 1));
-//		addTab("Contract", new ImageIcon("resources/images/contract.png"), contractTab, "Contract view");
-//		setMnemonicAt(0, KeyEvent.VK_3);
-//		contractPane = new ContractPanel(this);
-//		contractTab.add(contractPane);
+		JComponent contractTab = new JPanel(new GridLayout(1, 1));
+		addTab("Contract", new ImageIcon("resources/images/contract.png"), contractTab, "Contract view");
+		setMnemonicAt(0, KeyEvent.VK_3);
+		contractPane = new ContractPanel(this);
+		contractTab.add(contractPane);
 
         //vista employee
 //		JComponent employeeTab = new JPanel(new GridLayout(1, 1));
@@ -113,12 +113,12 @@ public class PanelTabs extends JTabbedPane {
                     case 5:
                         AppController.getInstance().execute(new LightContext(Event.RELOAD_VEHICLE, null));
                         break;
-                  /*  case 6:
+                    case 6:
                         AppController.getInstance().execute(new LightContext(Event.RELOAD_CONTRACT, null));
                         break;
-                    case 7:
+                    /*case 7:
                         AppController.getInstance().execute(new LightContext(Event.RELOAD_EMPLOYEE, null));
-                        break; */
+                        break;*/
 				}
 			}
 		});
@@ -145,10 +145,10 @@ public class PanelTabs extends JTabbedPane {
             case 5:
                 vehiclePane.getModel().setList(newList);
                 break;
-           /* case 6:
+            case 6:
                 contractPane.getModel().setList(newList);
                 break;
-            case 7:
+            /*case 7:
                 employeePane.getModel().setList(newList);
                 break;*/
 		}

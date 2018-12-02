@@ -88,7 +88,7 @@ public class FormCreateContract extends JDialog {
 					/*This is related to JPA*/
 					contract.setServiceLevel(Util.parseNoNegativeInt(serviceLevelText.getText()));
 					contract.setIdMainOffice(Util.parseNoNegativeInt(idMainOfficeText.getText()));
-					contract.setIdService(Util.parseNoNegativeInt(idMainOfficeText.getText()));
+					contract.setIdService(Util.parseNoNegativeInt(idServiceText.getText()));
 					contract.setActive(Util.parseActive(activeComboBox.getSelectedItem().toString()));
 					dispose();
 					AppController.getInstance().execute(new LightContext(Event.CREATE_CONTRACT, contract));

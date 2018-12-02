@@ -53,7 +53,7 @@ class ASContractTest {
 
     // ----------- CREATE ---------------
     @Test
-    void createOK(){
+    void createOK() throws ASException, IncorrectInputException {
         assertTrue( asContract.create(tContract) > 0);
     }
 
@@ -132,7 +132,7 @@ class ASContractTest {
     // ------------------- DROP -----------------
 
     @Test
-    void dropOK(){
+    void dropOK() throws ASException, IncorrectInputException {
         asContract.create(tContract);
         assertTrue( asContract.drop(tContract.getId()) > 0);
     }
@@ -143,7 +143,7 @@ class ASContractTest {
     }
 
     @Test
-    void dropIncorrectActive(){
+    void dropIncorrectActive() throws ASException, IncorrectInputException {
         asContract.create(tContract);
         asContract.drop(tContract.getId());
         assertThrows(ASException.class, () -> asContract.drop(tContract.getId()));
@@ -153,20 +153,20 @@ class ASContractTest {
     // ------------------- UPDATE ---------------
 
     @Test
-    void updateOK(){
+    void updateOK() throws ASException, IncorrectInputException {
         asContract.create(tContract);
         assertTrue( asContract.update(tContract) > 0);
     }
 
     @Test
-    void updateIncorrectId(){
+    void updateIncorrectId() throws ASException, IncorrectInputException {
         asContract.create(tContract);
         tContract.setId(tContract.getId() + 100);
         assertThrows(ASException.class, () -> asContract.update(tContract));
     }
 
     @Test
-    void updateIncorrectMainOfficeId(){
+    void updateIncorrectMainOfficeId() throws ASException, IncorrectInputException {
         asContract.create(tContract);
         tContract.setIdMainOffice(tContract.getIdMainOffice() + 100);
         assertThrows(ASException.class, () -> asContract.update(tContract));
@@ -180,7 +180,7 @@ class ASContractTest {
     }
 
     @Test
-    void updateIncorrectServiceId(){
+    void updateIncorrectServiceId() throws ASException, IncorrectInputException {
         asContract.create(tContract);
         tContract.setIdService(tContract.getIdService() + 100);
         assertThrows(ASException.class, () -> asContract.update(tContract));
@@ -194,7 +194,7 @@ class ASContractTest {
     }
 
     @Test
-    void updateIncorrectMainOfficeServiceId(){
+    void updateIncorrectMainOfficeServiceId() throws ASException, IncorrectInputException {
         asContract.create(tContract);
         tContract.setIdMainOffice(tContract.getIdMainOffice() + 100);
         tContract.setIdService(tContract.getIdService() + 100);
@@ -213,7 +213,7 @@ class ASContractTest {
     // ------------------ SHOW -----------------
 
     @Test
-    void showOK(){
+    void showOK() throws ASException, IncorrectInputException {
         asContract.create(tContract);
         assertTrue(checkValuesTContract(tContract, asContract.show(tContract.getId())));
     }
@@ -227,7 +227,7 @@ class ASContractTest {
     // ------------------- SHOW ALL -----------------
 
     @Test
-    void showAllOK(){
+    void showAllOK() throws ASException, IncorrectInputException {
         asContract.create(tContract);
         asContract.create(tContract2);
         ArrayList<TContract> result = (ArrayList<TContract>) asContract.showAll();
@@ -236,7 +236,7 @@ class ASContractTest {
     }
 
     @Test
-    void showAllIncorrectActive(){
+    void showAllIncorrectActive() throws ASException, IncorrectInputException {
         asContract.create(tContract);
         tContract2.setActive(false);
         asContract.create(tContract2);
