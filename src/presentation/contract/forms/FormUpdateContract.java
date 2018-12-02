@@ -16,9 +16,6 @@ public class FormUpdateContract extends JDialog {
 
 	private JTextField idText;
 	private JTextField serviceLevelText;
-	private JTextField idMainOfficeText;
-	private JTextField idServiceText;
-	private JComboBox activeComboBox;
 
 	public FormUpdateContract() {
 		setTitle("Update contract");
@@ -40,7 +37,7 @@ public class FormUpdateContract extends JDialog {
 	}
 
 	private JPanel fieldsPanel() {
-		JPanel ret = ViewHelpers.createFieldPanel(4);
+		JPanel ret = ViewHelpers.createFieldPanel(2);
 
 		//ID
 		JLabel idLabel = new JLabel("ID");
@@ -56,19 +53,6 @@ public class FormUpdateContract extends JDialog {
 		serviceLevelText = new JTextField(10);
 		ret.add(serviceLevelText);
 
-		//ID Main Office
-		JLabel idMainOfficeLabel = new JLabel("ID Main Office");
-		ret.add(idMainOfficeLabel);
-
-		idMainOfficeText = new JTextField(10);
-		ret.add(idMainOfficeText);
-
-		//ID service
-		JLabel idServiceLabel = new JLabel("ID service");
-		ret.add(idServiceLabel);
-
-		idServiceText = new JTextField(10);
-		ret.add(idServiceText);
 
 		return ret;
 	}
@@ -89,9 +73,6 @@ public class FormUpdateContract extends JDialog {
 					/*This is related to JPA*/
 					contract.setId(Util.parseNoNegativeInt(idText.getText()));
 					contract.setServiceLevel(Util.parseNoNegativeInt(serviceLevelText.getText()));
-					contract.setIdMainOffice(Util.parseNoNegativeInt(idMainOfficeText.getText()));
-					contract.setIdService(Util.parseNoNegativeInt(idMainOfficeText.getText()));
-					contract.setActive(Util.parseActive(activeComboBox.getSelectedItem().toString()));
 					dispose();
 					AppController.getInstance().execute(new LightContext(Event.UPDATE_CONTRACT, contract));
 				} catch (Exception ex) {

@@ -115,8 +115,50 @@ public class ASContractImp implements ASContract {
     }
 
     @Override
-    public Integer update(TContract contract) {
-        return null;
+    public Integer update(TContract tContract) throws ASException, IncorrectInputException {
+        Integer id;
+        checkValuesToUpdate(tContract);
+        try {
+            EntityManagerFactory emf = Persistence.createEntityManagerFactory("greengo");
+            EntityManager em = emf.createEntityManager();
+            EntityTransaction transaction = em.getTransaction();
+
+            transaction.begin();
+
+            Contract contract = em.find(Contract.class, tContract.getId());
+
+            MainOffice mainOffice = contract.getMainOffice();
+            Service service = contract.getService();
+
+            if (contract == null) {
+                transaction.rollback();
+                throw new ASException("ERROR: The Contract doesn't exist");
+            } else if (mainOffice == null) {
+                transaction.rollback();
+                throw new ASException("ERROR: The Main Office doesn't exist");
+            } else if (service == null) {
+                transaction.rollback();
+                throw new ASException("ERROR: The Service doesn't exist");
+            } else if (!mainOffice.isActive()) {
+                transaction.rollback();
+                throw new ASException("ERROR: The Main Office is disabled");
+            } else if (!service.isActive()) {
+                transaction.rollback();
+                throw new ASException("ERROR: The Service is disabled");
+            }
+
+            id = contract.getId();
+            contract.setActive(true);
+            contract.setServiceLevel(tContract.getServiceLevel());
+            transaction.commit();
+            em.close();
+            emf.close();
+
+        } catch (PersistenceException | EclipseLinkException e) {
+            throw new ASException(e.getMessage());
+        }
+
+        return id;
     }
 
     @Override
@@ -191,6 +233,13 @@ public class ASContractImp implements ASContract {
         if(contract.getIdService() == null) throw new IncorrectInputException("Id service field can't be empty");
         if(contract.getIdService() <= 0) throw new IncorrectInputException("Id service field must be a positive integer greater than zero");
         if(contract.isActive() == null) throw new IncorrectInputException("Active field can't be empty");
+    }
+
+    private static void checkValuesToUpdate(TContract contract) throws IncorrectInputException {
+        if(contract.getId() == null) throw new IncorrectInputException("Id field must be empty");
+        if(contract.getId() <= 0 ) throw new IncorrectInputException("Id field must be a positive integer greater than zero");
+        if(contract.getServiceLevel() == null) throw new IncorrectInputException("Service level field can't be empty");
+        if(contract.getServiceLevel() < 0) throw new IncorrectInputException("Service level field must be a positive integer");
     }
 
 }

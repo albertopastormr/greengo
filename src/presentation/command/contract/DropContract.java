@@ -13,6 +13,6 @@ public class DropContract implements Command {
 	@Override
 	public LightContext execute(LightContext in)  throws ASException, IncorrectInputException {
 		Integer ret = ASContractFactory.getInstance().generateASContract().drop(((TContract)in.getData()).getId());
-		return new LightContext(Event.CREATE_CONTRACT, ret);
+		return new LightContext(Event.DROP_CONTRACT, ret);
 	}
 }

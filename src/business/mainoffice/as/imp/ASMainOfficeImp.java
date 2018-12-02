@@ -227,10 +227,16 @@ public class ASMainOfficeImp implements ASMainOffice {
 
             transaction.begin();
 
-            Query query = em.createNamedQuery("MainOffice.findByemployee", MainOffice.class);
-            query.setParameter("employee", idMainOffice);
 
-            Collection<Employee> employeesList = query.getResultList();
+
+            MainOffice mainOffice = em.find(MainOffice.class,idMainOffice);
+
+            if(mainOffice == null){
+                transaction.rollback();
+                throw  new ASException("The Main Office doesn't exists");
+            }
+
+            Collection<Employee> employeesList = mainOffice.getEmployee();
 
             for (Employee employee : employeesList) {
                 result += employee.getSalary();
