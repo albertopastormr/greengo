@@ -72,11 +72,7 @@ public class ASMainOfficeImp implements ASMainOffice {
             query.setParameter("mainOffice", mainOffice);
 
             List<Contract> contractslist = query.getResultList();
-
-            Query queryEmp = em.createNamedQuery("MainOffice.findByemployee", Contract.class);
-            queryEmp.setParameter("employee", mainOffice);
-
-            List<Employee> employeeList = query.getResultList();
+            Collection<Employee> employeeList = mainOffice.getEmployee();
 
             if (mainOffice == null) {
                 transaction.rollback();
@@ -123,8 +119,6 @@ public class ASMainOfficeImp implements ASMainOffice {
 
             transaction.begin();
 
-            MainOffice mainOffice = new MainOffice(tMainoffice);
-
             MainOffice mainOfficeBD = em.find(MainOffice.class, tMainoffice.getId());
 
             Query query = em.createNamedQuery("MainOffice.findByaddress", MainOffice.class);
@@ -140,6 +134,7 @@ public class ASMainOfficeImp implements ASMainOffice {
                 throw new ASException("ERROR: There is a tMainOffice with the same address (" + tMainoffice.getAddress() + ") (duplication)");
             }
 
+            id = mainOfficeBD.getId();
             mainOfficeBD.setAddress(tMainoffice.getAddress());
             mainOfficeBD.setCity(tMainoffice.getCity());
             mainOfficeBD.setActive(true);
