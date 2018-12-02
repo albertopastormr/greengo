@@ -1,6 +1,7 @@
 package presentation.command.employee;
 
 import business.ASException;
+import business.IncorrectInputException;
 import business.employee.TEmployee;
 import business.employee.as.ASEmployee;
 import business.employee.factory.ASEmployeeFactory;
@@ -11,7 +12,7 @@ import presentation.controller.LightContext;
 
 public class CreateEmployee implements Command {
 	@Override
-	public LightContext execute(LightContext in) throws ASException {
+	public LightContext execute(LightContext in) throws ASException, IncorrectInputException {
 		Integer ret = ASEmployeeFactory.getInstance().generateASEmployee().create((TEmployee)in.getData());
 		return new LightContext(Event.CREATE_EMPLOYEE, ret);
 	}

@@ -82,11 +82,11 @@ public class PanelTabs extends JTabbedPane {
 		contractTab.add(contractPane);
 
         //vista employee
-//		JComponent employeeTab = new JPanel(new GridLayout(1, 1));
-//		addTab("employee", new ImageIcon("resources/images/employee.png"), employeeTab, "employee view");
-//		setMnemonicAt(0, KeyEvent.VK_4);
-//		employeePane = new EmployeePanel(this);
-//		employeeTab.add(employeePane);
+		JComponent employeeTab = new JPanel(new GridLayout(1, 1));
+		addTab("employee", new ImageIcon("resources/images/employee.png"), employeeTab, "employee view");
+		setMnemonicAt(0, KeyEvent.VK_4);
+		employeePane = new EmployeePanel(this);
+		employeeTab.add(employeePane);
 
 		//The following line enables to use scrolling tabs.
 		setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
@@ -116,9 +116,9 @@ public class PanelTabs extends JTabbedPane {
                     case 6:
                         AppController.getInstance().execute(new LightContext(Event.RELOAD_CONTRACT, null));
                         break;
-                    /*case 7:
+                    case 7:
                         AppController.getInstance().execute(new LightContext(Event.RELOAD_EMPLOYEE, null));
-                        break;*/
+                        break;
 				}
 			}
 		});
@@ -148,9 +148,9 @@ public class PanelTabs extends JTabbedPane {
             case 6:
                 contractPane.getModel().setList(newList);
                 break;
-            /*case 7:
+            case 7:
                 employeePane.getModel().setList(newList);
-                break;*/
+                break;
 		}
 
 	}

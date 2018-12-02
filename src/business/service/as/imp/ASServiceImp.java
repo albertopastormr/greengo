@@ -38,11 +38,11 @@ public class ASServiceImp implements ASService {
                 transaction.rollback();
                 throw new ASException("ERROR: There is a service with the same type " +
                         "(" + tService.getType() + ") (duplication)");
-            } else {
-                em.persist(serviceObject);
-                transaction.commit();
-                id = serviceObject.getId();
             }
+
+            em.persist(serviceObject);
+            transaction.commit();
+            id = serviceObject.getId();
             em.close();
             emf.close();
 
@@ -140,6 +140,7 @@ public class ASServiceImp implements ASService {
             transaction.commit();
             em.close();
             emf.close();
+
         } catch (PersistenceException | EclipseLinkException e) {
             throw new ASException(e.getMessage());
         }

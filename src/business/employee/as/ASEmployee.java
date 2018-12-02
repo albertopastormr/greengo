@@ -1,12 +1,14 @@
 package business.employee.as;
 
+import business.ASException;
+import business.IncorrectInputException;
 import business.employee.TEmployee;
 
 import java.util.Collection;
 
 public interface ASEmployee {
 
-    Integer create(TEmployee client);
+    Integer create(TEmployee client) throws IncorrectInputException, ASException;
 
     Integer drop(Integer id);
 
