@@ -58,7 +58,7 @@ public class ASServiceTest {
 
         // Create all diferents fields less the type
         TService tServiceSecond = new TService(null, 201, true, "Taller","Calle mercado,3 Modificado",54321);
-        assertThrows(ASException.class, ()-> as.create(tServiceSecond));
+        assertThrows(IncorrectInputException.class, ()-> as.create(tServiceSecond));
     }
 
     @Test
@@ -132,17 +132,17 @@ public class ASServiceTest {
 
     @Test
     public void dropIncorrectServiceNotExist(){
-        assertThrows(ASException.class, ()-> as.drop(20));
+        assertThrows(IncorrectInputException.class, ()-> as.drop(20));
     }
 
     @Test
     public void dropIncorrectServiceIdNull(){
-        assertThrows(ASException.class, ()-> as.drop(null));
+        assertThrows(IncorrectInputException.class, ()-> as.drop(null));
     }
 
     @Test
     public void dropIncorrectServiceIdNegative(){
-        assertThrows(ASException.class, ()-> as.drop(-1));
+        assertThrows(IncorrectInputException.class, ()-> as.drop(-1));
     }
 
 
@@ -206,35 +206,35 @@ public class ASServiceTest {
     }
 
     @Test
-    public void updateIncorrectServiceNotExist(){
+    public void updateIncorrectServiceNotExist() {
         tServicePrincipal.setId(20);
         assertThrows(ASException.class, ()-> as.update(tServicePrincipal));
     }
 
     @Test
-    public void updateIncorrectServiceZero(){
+    public void updateIncorrectServiceZero() {
         tServicePrincipal.setId(0);
-        assertThrows(ASException.class, ()-> as.update(tServicePrincipal));
+        assertThrows(IncorrectInputException.class, ()-> as.update(tServicePrincipal));
     }
 
     @Test
-    public void updateIncorrectServiceNotActive(){
+    public void updateIncorrectServiceNotActive() {
         tServicePrincipal.setActive(false);
         assertThrows(ASException.class, ()-> as.update(tServicePrincipal));
     }
 
     @Test
-    public void updateIncorrectServiceActiveNull(){
+    public void updateIncorrectServiceActiveNull() {
         tServicePrincipal.setActive(null);
-        assertThrows(ASException.class, ()-> as.update(tServicePrincipal));
+        assertThrows(IncorrectInputException.class, ()-> as.update(tServicePrincipal));
     }
 
     @Test
-    public void updateIncorrectServiceNotNullActive(){
+    public void updateIncorrectServiceNotNullActive() {
         tServicePrincipal.setId(null);
         tServicePrincipal.setActive(true);
 
-        assertThrows(ASException.class, ()-> as.update(tServicePrincipal));
+        assertThrows(IncorrectInputException.class, ()-> as.update(tServicePrincipal));
     }
 
     @Test
@@ -242,7 +242,7 @@ public class ASServiceTest {
         tServicePrincipal.setId(-1);
         tServicePrincipal.setActive(true);
 
-        assertThrows(ASException.class, ()-> as.update(tServicePrincipal));
+        assertThrows(IncorrectInputException.class, ()-> as.update(tServicePrincipal));
     }
 
     // --------------------- SHOW --------------------
@@ -260,12 +260,12 @@ public class ASServiceTest {
 
     @Test
     public void showServiceIdNegative(){
-        assertThrows(ASException.class, ()-> as.show(-1));
+        assertThrows(IncorrectInputException.class, ()-> as.show(-1));
     }
 
     @Test
     public void showServiceIdNull(){
-        assertThrows(ASException.class, ()-> as.show(null));
+        assertThrows(IncorrectInputException.class, ()-> as.show(null));
     }
 
     // ----------------- SHOW ALL -------------------
@@ -346,12 +346,12 @@ public class ASServiceTest {
 
     @Test
     public void showIncorrectServicesFromLevelNull() {
-        assertThrows(ASException.class, ()-> as.show(null));
+        assertThrows(IncorrectInputException.class, ()-> as.show(null));
     }
 
     @Test
     public void showIncorrectServicesFromLevelNegative() {
-        assertThrows(ASException.class, ()-> as.show(-1));
+        assertThrows(IncorrectInputException.class, ()-> as.show(-1));
     }
 
     @Test
