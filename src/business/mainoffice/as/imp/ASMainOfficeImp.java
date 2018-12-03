@@ -72,7 +72,7 @@ public class ASMainOfficeImp implements ASMainOffice {
             query.setParameter("mainOffice", mainOffice);
 
             List<Contract> contractslist = query.getResultList();
-            Collection<Employee> employeeList = mainOffice.getEmployee();
+
 
             if (mainOffice == null) {
                 transaction.rollback();
@@ -88,6 +88,9 @@ public class ASMainOfficeImp implements ASMainOffice {
                     throw new ASException("There are active contracts");
                 }
             }
+
+            Collection<Employee> employeeList = mainOffice.getEmployee();
+
             for (Employee employee : employeeList) {
                 if (employee.isActive()) {
                     transaction.rollback();
