@@ -6,7 +6,7 @@ import business.rental.factory.imp.ASRentalFactoryImp;
 public abstract class ASRentalFactory {
     private static ASRentalFactory instance;
 
-    public static ASRentalFactory getInstance(){
+    public static synchronized ASRentalFactory getInstance(){
         if(instance == null)
             instance = new ASRentalFactoryImp();
         return instance;

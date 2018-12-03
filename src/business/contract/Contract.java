@@ -19,7 +19,9 @@ import business.service.Service;
 		@NamedQuery(name = "Contract.findByservice_level",
                 query = "select obj from Contract obj where :serviceLevel = obj.serviceLevel"),
 		@NamedQuery(name = "Contract.findByactive",
-                query = "select obj from Contract obj where :active = obj.active ")})
+                query = "select obj from Contract obj where :active = obj.active "),
+        @NamedQuery(name = "Contract.findAllContracts",
+                query = "select obj from Contract obj")})
 public class Contract implements Serializable {
 
 	private static final long serialVersionUID = 0;

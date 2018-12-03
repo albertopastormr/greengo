@@ -23,7 +23,8 @@ public class Permanent extends Employee implements Serializable {
 	}
 
 	public Permanent(TPermanentEmployee tp) {
-
+		super(tp);
+		apportionment= tp.getApportionment();
 	}
 
 	public static long getSerialVersionUID() {

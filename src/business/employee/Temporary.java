@@ -18,7 +18,8 @@ public class Temporary extends Employee implements Serializable {
 	}
 
 	public Temporary(TTemporaryEmployee tt) {
-
+		super(tt);
+		numWorkedHours = tt.getNumWorkedHours();
 	}
 
 	public static long getSerialVersionUID() {

@@ -6,7 +6,7 @@ import business.contract.factory.imp.ASContractFactoryImp;
 public abstract class ASContractFactory {
     private static ASContractFactoryImp instance;
 
-    public static ASContractFactory getInstance() {
+    public static synchronized ASContractFactory getInstance() {
         if (instance == null)
             instance = new ASContractFactoryImp();
         return instance;

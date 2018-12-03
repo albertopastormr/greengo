@@ -7,9 +7,9 @@ import business.contract.TContract;
 import business.contract.as.ASContract;
 import business.contract.factory.ASContractFactory;
 import business.mainoffice.TMainOffice;
-import business.mainoffice.as.ASMain_Office;
+import business.mainoffice.as.ASMainOffice;
 
-import business.mainoffice.factory.ASMain_OfficeFactory;
+import business.mainoffice.factory.ASMainOfficeFactory;
 import business.service.factory.ASServiceFactory;
 
 import business.service.as.ASService;
@@ -24,7 +24,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class ASServiceTest {
 
     private ASService as;
-    private ASMain_Office asMainOffice;
+    private ASMainOffice asMainOffice;
     private ASContract asContract;
 
     private TService tServicePrincipal;
@@ -35,7 +35,7 @@ public class ASServiceTest {
     private void setUp() throws Exception{
 
         as = ASServiceFactory.getInstance().generateASService();
-        asMainOffice = ASMain_OfficeFactory.getInstance().generateASMain_Office();
+        asMainOffice = ASMainOfficeFactory.getInstance().generateASMainOffice();
         asContract = ASContractFactory.getInstance().generateASContract();
 
         tServicePrincipal = new TService(null, 200, true, "Taller","Calle mercado,3",12345);
@@ -355,7 +355,7 @@ public class ASServiceTest {
     }
 
     @Test
-    public void showServicesFromLevelEmpty() throws ASException {
+    public void showServicesFromLevelEmpty() throws ASException, IncorrectInputException {
         assertTrue(as.showServicesFromLevel(3).isEmpty());
     }
 
