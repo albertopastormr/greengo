@@ -63,67 +63,67 @@ class ASEmployeeTest {
     }
 
     @Test
-    void createIncorrectMainOfficeId(){
+    void createIncorrectMainOfficeNotExist() {
         tEmployee.setIdMainOffice(tEmployee.getIdMainOffice() + 100);
         assertThrows(ASException.class, () -> asEmployee.create(tEmployee));
     }
 
     @Test
-    void createIncorrectMainOfficeActive() throws ASException, IncorrectInputException {
+    void createIncorrectMainOfficePreviouslyDeactivated() throws ASException, IncorrectInputException {
         asMainOffice.drop(tEmployee.getIdMainOffice());
         assertThrows(ASException.class, () -> asEmployee.create(tEmployee));
     }
 
     @Test
-    void createIncorrectIdCardNumber() throws ASException, IncorrectInputException {
+    void createIncorrectIdCardNumberNotExists() throws ASException, IncorrectInputException {
         asEmployee.create(tEmployee);
         assertThrows(ASException.class, () -> asEmployee.create(tEmployee));
     }
 
     @Test
-    void createIncorrectInput(){//idCardNumber mustn`t  be null
+    void createIncorrectInputIDCardNumberNull(){//idCardNumber must not  be null
         tEmployee.setIdCardNumber(null);
         assertThrows(ASException.class,() -> asEmployee.create(tEmployee));
     }
 
     @Test
-    void createIncorrectInput2(){//salary mustn`t be null
+    void createIncorrectInputSalaryNull(){//salary must not be null
         tEmployee.setSalary(null);
         assertThrows(ASException.class,() -> asEmployee.create(tEmployee));
     }
 
     @Test
-    void createIncorrectInput3(){//salary must be positive
+    void createIncorrectInputNegativeSalary() {//salary must be positive
         tEmployee.setSalary(-5f);
         assertThrows(ASException.class,() -> asEmployee.create(tEmployee));
     }
 
     @Test
-    void createIncorrectInput4(){//active mustn`t be null
+    void createIncorrectInputActiveNull(){//active must not be null
         tEmployee.setActive(null);
         assertThrows(ASException.class,() -> asEmployee.create(tEmployee));
     }
 
     @Test
-    void createIncorrectInput5(){//idMainOffice mustn`t be null
+    void createIncorrectInputIDMainOfficeNull(){//idMainOffice must not be null
         tEmployee.setIdMainOffice(null);
         assertThrows(ASException.class,() -> asEmployee.create(tEmployee));
     }
 
     @Test
-    void createIncorrectInput6(){//idMainOffice must be positive
+    void createIncorrectInputNegativeIDMainOffice(){//idMainOffice must be positive
         tEmployee.setIdMainOffice(-3);
         assertThrows(ASException.class,() -> asEmployee.create(tEmployee));
     }
 
     @Test
-    void createIncorrectInput7(){//apportionment mustn`t be null
+    void createIncorrectInputApportionmentNull(){//apportionment must not be null
         tEmployee.setApportionment(null);
         assertThrows(ASException.class,() -> asEmployee.create(tEmployee));
     }
 
     @Test
-    void createIncorrectInput8(){//apportionment must be positive
+    void createIncorrectInputNegativeApportionment(){//apportionment must be positive
         tEmployee.setApportionment(-3f);
         assertThrows(ASException.class,() -> asEmployee.create(tEmployee));
     }
@@ -139,14 +139,14 @@ class ASEmployeeTest {
     }
 
     @Test
-    void updateIncorrectMainOfficeId() throws ASException, IncorrectInputException {
+    void updateIncorrectMainOfficeNotExist() throws ASException, IncorrectInputException {
         asEmployee.create(tEmployee);
         tEmployee.setIdMainOffice(tEmployee.getIdMainOffice() + 100);
         assertThrows(ASException.class, () -> asEmployee.update(tEmployee));
     }
 
     @Test
-    void updateIncorrectMainOfficeActive() throws ASException, IncorrectInputException {
+    void updateIncorrectMainOfficePreviouslyDeactivated() throws ASException, IncorrectInputException {
         asEmployee.create(tEmployee);
         asMainOffice.drop(tEmployee.getIdMainOffice());
 
@@ -154,7 +154,7 @@ class ASEmployeeTest {
     }
 
     @Test
-    void updateIncorrectIdCardNumber() throws ASException, IncorrectInputException {
+    void updateIncorrectIdCardNumberAlreadyExists() throws ASException, IncorrectInputException {
         asEmployee.create(tEmployee);
         asEmployee.create(tEmployee2);
         tEmployee.setIdCardNumber(tEmployee2.getIdCardNumber());
@@ -163,61 +163,61 @@ class ASEmployeeTest {
     }
 
     @Test
-    void updateIncorrectInput(){//idCardNumber mustn`t  be null
+    void updateIncorrectInputIDCardNumberNull(){//idCardNumber must not  be null
         tEmployee.setIdCardNumber(null);
         assertThrows(ASException.class,() -> asEmployee.update(tEmployee));
     }
 
     @Test
-    void updateIncorrectInput2(){//salary mustn`t be null
+    void updateIncorrectInputSalaryNull(){//salary must not be null
         tEmployee.setSalary(null);
         assertThrows(ASException.class,() -> asEmployee.update(tEmployee));
     }
 
     @Test
-    void updateIncorrectInput3(){//salary must be positive
+    void updateIncorrectInputNegativeSalary(){//salary must be positive
         tEmployee.setSalary(-5f);
         assertThrows(ASException.class,() -> asEmployee.update(tEmployee));
     }
 
     @Test
-    void updateIncorrectInput4(){//active mustn`t be null
+    void updateIncorrectInputActiveNull(){//active must not be null
         tEmployee.setActive(null);
         assertThrows(ASException.class,() -> asEmployee.update(tEmployee));
     }
 
     @Test
-    void updateIncorrectInput5(){//idMainOffice mustn`t be null
+    void updateIncorrectInputIDMainOfficeNull(){//idMainOffice must not be null
         tEmployee.setIdMainOffice(null);
         assertThrows(ASException.class,() -> asEmployee.update(tEmployee));
     }
 
     @Test
-    void updateIncorrectInput6(){//idMainOffice must be positive
+    void updateIncorrectInputNegativeIDMainOffice(){//idMainOffice must be positive
         tEmployee.setIdMainOffice(-3);
         assertThrows(ASException.class,() -> asEmployee.update(tEmployee));
     }
 
     @Test
-    void updateIncorrectInput7(){//apportionment mustn`t be null
+    void updateIncorrectInputApportionmentNull(){//apportionment must not be null
         tEmployee.setApportionment(null);
         assertThrows(ASException.class,() -> asEmployee.update(tEmployee));
     }
 
     @Test
-    void updateIncorrectInput8(){//apportionment must be positive
+    void updateIncorrectInputNegativeApportionment(){//apportionment must be positive
         tEmployee.setApportionment(-3f);
         assertThrows(ASException.class,() -> asEmployee.update(tEmployee));
     }
 
     @Test
-    void updateIncorrectInput9(){//NumWorkedHours mustn`t be null
+    void updateIncorrectInputNumWorkedHoursNull(){//NumWorkedHours must not be null
         tEmployee2.setNumWorkedHours(null);
         assertThrows(ASException.class,() -> asEmployee.update(tEmployee));
     }
 
     @Test
-    void updateIncorrectInput10(){//NumWorkedHours must be positive
+    void updateIncorrectInputNegativeNumWorkedHours(){//NumWorkedHours must be positive
         tEmployee2.setNumWorkedHours(-10);
         assertThrows(ASException.class,() -> asEmployee.update(tEmployee));
     }
@@ -232,18 +232,18 @@ class ASEmployeeTest {
     }
 
     @Test
-    void setSalaryIncorrectId(){
+    void setSalaryIncorrectIdNotExists(){
         assertThrows(ASException.class, () -> asEmployee.setSalary(tEmployee.getId()+100, 0f));
     }
 
     @Test
-    void setSalaryIncorrectInput1(){//id must be positive
+    void setSalaryIncorrectInputNegativeID(){//id must be positive
         tEmployee.setId(-5);
         assertThrows(ASException.class,() -> asEmployee.setSalary(tEmployee.getId(),5f));
     }
 
     @Test
-    void setSalaryIncorrectInput2(){//id mustn`t be null
+    void setSalaryIncorrectInputSalaryNull(){//id must not be null
         tEmployee.setId(null);
         assertThrows(ASException.class,() -> asEmployee.setSalary(tEmployee.getId(),5f));
     }
@@ -261,12 +261,12 @@ class ASEmployeeTest {
     }
 
     @Test
-    void dropIncorrectId(){
+    void dropIncorrectIdNotExists(){
         assertThrows(ASException.class, () -> asEmployee.drop(tEmployee.getId()+100));
     }
 
     @Test
-    void dropIncorrectActive() throws ASException, IncorrectInputException {
+    void dropIncorrectAlreadyDeactivated() throws ASException, IncorrectInputException {
         asEmployee.create(tEmployee);
         asEmployee.drop(tEmployee.getId());
 
@@ -274,13 +274,13 @@ class ASEmployeeTest {
     }
 
     @Test
-    void dropIncorrectInput1(){//id must be positive
+    void dropIncorrectInputNegativeID(){//id must be positive
         tEmployee.setId(-5);
         assertThrows(ASException.class,() -> asEmployee.drop(tEmployee.getId()));
     }
 
     @Test
-    void dropIncorrectInput2(){//id mustn`t be null
+    void dropIncorrectInputIDNull(){//id must not be null
         tEmployee.setId(null);
         assertThrows(ASException.class,() -> asEmployee.drop(tEmployee.getId()));
     }
@@ -295,18 +295,18 @@ class ASEmployeeTest {
     }
 
     @Test
-    void showIncorrectId(){
+    void showIncorrectIdNotExist(){
         assertThrows(Exception.class, () -> asEmployee.show(tEmployee.getId() + 100));
     }
 
     @Test
-    void showIncorrectInput1(){//id must be positive
+    void showIncorrectInputNegativeID(){//id must be positive
         tEmployee.setId(-5);
         assertThrows(ASException.class,() -> asEmployee.show(tEmployee.getId()));
     }
 
     @Test
-    void showIncorrectInput2(){//id mustn`t be null
+    void showIncorrectInputIDNull(){//id must not be null
         tEmployee.setId(null);
         assertThrows(ASException.class,() -> asEmployee.show(tEmployee.getId()));
     }
@@ -316,20 +316,11 @@ class ASEmployeeTest {
     @Test
     void showAllOK() throws ASException, IncorrectInputException {
         asEmployee.create(tEmployee);
-        asEmployee.create(tEmployee2);
-        ArrayList<TEmployee> result = (ArrayList<TEmployee>) asEmployee.showAll();
-        assertTrue(checkValuesTEmployee(tEmployee, (TPermanentEmployee) result.get(0)));
-        assertTrue(checkValuesTEmployee(tEmployee2, (TTemporaryEmployee) result.get(1)));
-    }
-
-    @Test
-    void showAllIncorrectActive() throws ASException, IncorrectInputException {
-        asEmployee.create(tEmployee);
         tEmployee2.setActive(false);
         asEmployee.create(tEmployee2);
-        asEmployee.drop(tEmployee2.getId());
         ArrayList<TEmployee> result = (ArrayList<TEmployee>) asEmployee.showAll();
         assertEquals(1, result.size());
         assertTrue(checkValuesTEmployee(tEmployee, (TPermanentEmployee) result.get(0)));
     }
+
 }
