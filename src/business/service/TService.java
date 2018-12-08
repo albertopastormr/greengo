@@ -11,7 +11,8 @@ public class TService {
 
 	public TService(){}
 
-	public TService(Integer id, Integer capacity, Boolean active, String type, String address, Integer numVehiclesAttended) {
+	public TService(Integer id, Integer capacity, Boolean active, String type,
+                    String address, Integer numVehiclesAttended) {
 		this.id = id;
 		this.capacity = capacity;
 		this.active = active;

@@ -257,7 +257,7 @@ public class ASMainOfficeImp implements ASMainOffice {
     }
 
 	private static void checkValuesToCreate(TMainOffice office) throws IncorrectInputException{
-	    if(office.getId() != null) throw new IncorrectInputException("Id must be null");
+	    //if(office.getId() != null) throw new IncorrectInputException("Id must be null");
 	    if(office.getAddress() == null) throw new IncorrectInputException("Address field can't be empty");
 	    if(office.getCity() == null) throw new IncorrectInputException("City field can't be empty");
 	    if(office.isActive() == null) throw new IncorrectInputException("Active field can't be empty");
