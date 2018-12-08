@@ -186,8 +186,8 @@ public class ASServiceTest {
 
         TService tServiceUpdated = as.show(as.update(tService));
 
-        assertFalse(checkTransfersService(oldService,tServiceUpdated));
-        assertTrue(checkTransfersService(tService, tServiceUpdated));
+        assertFalse(checkTransferValues(oldService,tServiceUpdated));
+        assertTrue(checkTransferValues(tService, tServiceUpdated));
     }
 
     @Test
@@ -295,65 +295,63 @@ public class ASServiceTest {
         tService.setNumVehiclesAttended(0);
         assertThrows(IncorrectInputException.class,()->as.update(tService));
     }
-    
+
     // --------------------- SHOW --------------------
 
     @Test
     public void showServiceSuccessful() throws ASException, IncorrectInputException {
         Integer idService = as.create(tService);
-        assertTrue(checkTransfersService(tService, as.show(idService)));
+        assertTrue(checkTransferValues(tService, as.show(idService)));
     }
 
     @Test
-    public void showServiceNotExits(){
+    void showServiceNotExits(){
         assertThrows(ASException.class, ()-> as.show(20));
     }
 
     @Test
-    public void showServiceIdNegative(){
+    void showServiceIdNegative(){
         assertThrows(IncorrectInputException.class, ()-> as.show(-1));
     }
 
     @Test
-    public void showServiceIdNull(){
-        assertThrows(IncorrectInputException.class, ()-> as.show(null));
-    }
+    void showServiceIdNull() { assertThrows(IncorrectInputException.class, ()-> as.show(null)); }
+
+    @Test
+    void showServiceId0() { assertThrows(IncorrectInputException.class, ()-> as.show(0)); }
 
     // ----------------- SHOW ALL -------------------
 
 
     @Test
-    public void showAllServiceSuccessful() throws ASException, IncorrectInputException {
-        Integer idServicePrincipal = as.create(tService);
+    void showAllServiceSuccessful() throws ASException, IncorrectInputException {
+        Integer idService1 = as.create(tService);
         tService.setType("Reparaciones");
 
         as.create(tService);
         Collection<TService> c = as.showAll();
 
         for(TService tServiceAux : c){
-            if(tServiceAux.getId().equals(idServicePrincipal))
-                assertTrue(checkTransferValues(tServiceAux,"Limpieza"));
+            if(tServiceAux.getId().equals(idService1))
+                assertEquals(tServiceAux.getType(),"Limpieza");
             else
-                assertTrue(checkTransferValues(tServiceAux,"Reparaciones"));
+                assertEquals(tServiceAux.getType(),"Reparaciones");
         }
     }
 
     @Test
-    public void showAllCitySuccessfulEmpty() throws ASException {
+    void showAllCitySuccessfulEmpty() throws ASException {
         Collection<TService> c = as.showAll();
         assertTrue(c.isEmpty());
     }
 
+    //show service by level
     @Test
-    public void showServicesFromLevel() throws ASException, IncorrectInputException {
-
+    void showServicesFromLevelSuccessful() throws ASException, IncorrectInputException {
         // Contract one
 
         Integer idService = as.create(tService);
-        tService = as.show(idService);
-
         Integer idMainOffice = asMainOffice.create(tMainOffice);
-        tService = as.show(idService);
 
         tContract.setIdService(idService);
         tContract.setIdMainOffice(idMainOffice);
@@ -364,14 +362,12 @@ public class ASServiceTest {
 
         // Contract two
 
-        tService = new TService(null, 500, true, "cloud","Calle Alberto Guacamole,3",9876);
+        TService service2 = new TService(null, 500, true,
+                "cloud","Calle Alberto Guacamole,3",9876);
         tMainOffice = new TMainOffice(null,"Algete","Calle Don Juan", true);
 
-        idService = as.create(tService);
-        tService = as.show(idService);
-
+        idService = as.create(service2);
         idMainOffice = asMainOffice.create(tMainOffice);
-        tService = as.show(idService);
 
         tContract.setIdService(idService);
         tContract.setIdMainOffice(idMainOffice);
@@ -380,26 +376,32 @@ public class ASServiceTest {
 
         asContract.create(tContract);
 
-        assertTrue(as.showServicesFromLevel(3).size() == 1);
+        assertEquals(1,as.showServicesFromLevel(3).size());
+        assertTrue(checkTransferValues(tService,as.showServicesFromLevel(3).iterator().next()));
     }
 
     @Test
-    public void showIncorrectServicesFromLevelNull() {
-        assertThrows(IncorrectInputException.class, ()-> as.show(null));
-    }
-
-    @Test
-    public void showIncorrectServicesFromLevelNegative() {
-        assertThrows(IncorrectInputException.class, ()-> as.show(-1));
-    }
-
-    @Test
-    public void showServicesFromLevelEmpty() throws ASException, IncorrectInputException {
+    void showServicesFromLevelEmpty() throws ASException, IncorrectInputException {
         assertTrue(as.showServicesFromLevel(3).isEmpty());
     }
 
+    @Test
+    void showServicesFromLevelIncorrectInputNullLevel() {
+        assertThrows(IncorrectInputException.class, ()-> as.showServicesFromLevel(null));
+    }
+
+    @Test
+    void showServicesFromLevelIncorrectInputLevel0() {
+        assertThrows(IncorrectInputException.class, ()-> as.showServicesFromLevel(0));
+    }
+
+    @Test
+    void showServicesFromLevelIncorrectInputNegativeLevel() {
+        assertThrows(IncorrectInputException.class, ()-> as.showServicesFromLevel(-1));
+    }
+
     //private methods
-    private boolean checkTransfersService(TService expected, TService actual) {
+    private boolean checkTransferValues(TService expected, TService actual) {
         return expected.getId().equals(actual.getId())
                 && expected.getAddress().equals(actual.getAddress())
                 && expected.getNumVehiclesAttended().equals(actual.getNumVehiclesAttended())
