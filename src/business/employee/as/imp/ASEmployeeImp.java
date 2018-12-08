@@ -5,6 +5,11 @@ import business.IncorrectInputException;
 import business.employee.*;
 import business.employee.as.ASEmployee;
 import business.mainoffice.MainOffice;
+import integration.DAOException;
+import integration.TransactionException;
+import integration.transaction.Transaction;
+import integration.transaction.imp.TransactionMariaDB;
+import integration.transactionManager.TransactionManager;
 import org.eclipse.persistence.exceptions.EclipseLinkException;
 
 import javax.persistence.*;
@@ -70,8 +75,43 @@ public class ASEmployeeImp implements ASEmployee {
     }
 
     @Override
-    public Integer drop(Integer id) {
-        return null;
+    public Integer drop(Integer idEmployee) throws ASException, IncorrectInputException {
+        Integer id;
+
+        if(idEmployee == null) throw  new IncorrectInputException("Id field can't be empty");
+        if(idEmployee < 0) throw new IncorrectInputException("Id field must be a positive integer greater than zero");
+
+        try{
+            EntityManagerFactory emf = Persistence.createEntityManagerFactory("greengo");
+            EntityManager em = emf.createEntityManager();
+            EntityTransaction transaction = em.getTransaction();
+
+            transaction.begin();
+
+            Employee employee = em.find(Employee.class, idEmployee);
+
+            if(employee == null){
+                transaction.rollback();
+                throw  new ASException("ERROR: The employee doesn't exist");
+            }
+
+            if(!employee.isActive()){
+                transaction.rollback();
+                throw  new ASException("ERROR: The employee is already disabled");
+            }
+
+            id = employee.getId();
+            employee.setActive(false);
+            transaction.commit();
+
+            em.close();
+            emf.close();
+
+        }catch (PersistenceException | EclipseLinkException e){
+            throw new ASException(e.getMessage());
+        }
+
+        return id;
     }
 
     @Override
@@ -80,8 +120,40 @@ public class ASEmployeeImp implements ASEmployee {
     }
 
     @Override
-    public TEmployee show(Integer id) {
-        return null;
+    public TEmployee show(Integer idEmployee) throws  ASException, IncorrectInputException{
+
+        if(idEmployee == null) throw  new IncorrectInputException("Id field can't be empty");
+        if(idEmployee < 0) throw new IncorrectInputException("Id field must be a positive integer greater than zero");
+
+        TEmployee tEmployee;
+
+        try{
+            EntityManagerFactory emf = Persistence.createEntityManagerFactory("greengo");
+            EntityManager em = emf.createEntityManager();
+            EntityTransaction transaction = em.getTransaction();
+
+            transaction.begin();
+
+            Employee employee = em.find(Employee.class, idEmployee);
+
+            if(employee == null){
+                transaction.rollback();
+                throw new ASException("ERROR: The employee doesn't exist");
+            }
+
+            //TODO paso type a null ya que en Employee no existe el atributo type mientras que en TEmployee si existe
+            tEmployee = new TEmployee(employee.getId(), employee.getIdCardNumber(), employee.getSalary(),
+                    employee.isActive(), employee.getMainOffice().getId(), null);
+
+            transaction.commit();
+
+            em.close();
+            emf.close();
+        }catch (PersistenceException | EclipseLinkException e){
+            throw new ASException(e.getMessage());
+        }
+
+        return tEmployee;
     }
 
     @Override

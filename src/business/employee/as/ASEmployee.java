@@ -10,13 +10,13 @@ public interface ASEmployee {
 
     Integer create(TEmployee client) throws IncorrectInputException, ASException;
 
-    Integer drop(Integer id);
+    Integer drop(Integer id) throws IncorrectInputException, ASException;
 
-    Integer update(TEmployee client);
+    Integer update(TEmployee client) throws IncorrectInputException, ASException;
 
-    TEmployee show (Integer id);
+    TEmployee show (Integer id) throws IncorrectInputException, ASException;
 
-    Collection<TEmployee> showAll ();
+    Collection<TEmployee> showAll () throws ASException;
 
-    Integer setSalary (Integer idEmployee, Float salary);
+    Integer setSalary (Integer idEmployee, Float salary) throws IncorrectInputException, ASException;
 }

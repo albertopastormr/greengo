@@ -20,7 +20,7 @@ public interface ASVehicle {
 
     Collection<TVehicleDetails> showAllAvailableVehicles() throws ASException;
 
-    TVehicleDetails getVehicleDetails(Integer vehicleID) throws ASException, IncorrectInputException;
+    //TVehicleDetails getVehicleDetails(Integer vehicleID) throws ASException, IncorrectInputException;
 
-    Collection<TVehicleDetails> getAllVehiclesDetails() throws ASException, IncorrectInputException;
+    //Collection<TVehicleDetails> getAllVehiclesDetails() throws ASException, IncorrectInputException;
 }
