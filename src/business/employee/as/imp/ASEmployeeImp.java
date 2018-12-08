@@ -250,8 +250,16 @@ public class ASEmployeeImp implements ASEmployee {
 
 
             for (Employee employee : employeeList) {
-                tEmployeeArrayList.add(new TEmployee(employee.getId(), employee.getIdCardNumber(), employee.getSalary(),
-                        employee.isActive(), employee.getMainOffice().getId(), null));
+                if(employee.getType().equals("Temporary")){
+                    Temporary temporary = em.find(Temporary.class, employee.getId());
+                    tEmployeeArrayList.add( new TTemporaryEmployee(employee.getId(), employee.getIdCardNumber(), employee.getSalary(),
+                            employee.isActive(), employee.getMainOffice().getId(), temporary.getNumWorkedHours()));
+                }
+                else{
+                    Permanent permanent = em.find(Permanent.class, employee.getId());
+                    tEmployeeArrayList.add( new TPermanentEmployee(employee.getId(), employee.getIdCardNumber(), employee.getSalary(),
+                            employee.isActive(), employee.getMainOffice().getId(), permanent.getApportionment()));
+                }
             }
 
             transaction.commit();
@@ -265,8 +273,41 @@ public class ASEmployeeImp implements ASEmployee {
     }
 
     @Override
-    public Integer setSalary(Integer idEmployee, Float salary) {
-        return null;
+    public Integer setSalary(Integer idEmployee, Float salary) throws IncorrectInputException, ASException {
+        Integer id;
+
+        if(idEmployee == null) throw new IncorrectInputException("Id is null");
+        if(idEmployee <= 0) throw new IncorrectInputException("Id field must be a positive " +
+                "integer greater than zero");
+        if(salary == null) throw new IncorrectInputException("Salary field can't be empty");
+        if(salary < 0) throw new IncorrectInputException("Salary field must be a positive integer");
+
+        try {
+            EntityManagerFactory emf = Persistence.createEntityManagerFactory("greengo");
+            EntityManager em = emf.createEntityManager();
+            EntityTransaction transaction = em.getTransaction();
+
+            transaction.begin();
+
+            Employee employee = em.find(Employee.class, idEmployee);
+
+            if(employee == null){
+                transaction.rollback();
+                throw  new ASException("ERROR: The employee doesn't exist");
+            }
+
+            employee.setSalary(salary);
+
+            transaction.commit();
+            id = employee.getId();
+            em.close();
+            emf.close();
+
+        } catch (PersistenceException | EclipseLinkException e) {
+            throw new ASException(e.getMessage());
+        }
+
+        return id;
     }
 
     private static void checkValuesToCreate(TEmployee employee) throws IncorrectInputException {
