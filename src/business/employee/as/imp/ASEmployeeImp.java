@@ -141,14 +141,24 @@ public class ASEmployeeImp implements ASEmployee {
                 throw new ASException("ERROR: The employee doesn't exist");
             }
 
-            //TODO paso type a null ya que en Employee no existe el atributo type mientras que en TEmployee si existe
             tEmployee = new TEmployee(employee.getId(), employee.getIdCardNumber(), employee.getSalary(),
-                    employee.isActive(), employee.getMainOffice().getId(), null);
+                    employee.isActive(), employee.getMainOffice().getId(), employee.getType());
 
+            if(tEmployee.getType().equals("Temporary")){
+                Temporary temporary = em.find(Temporary.class,idEmployee);
+                tEmployee = new TTemporaryEmployee(tEmployee.getId(), tEmployee.getIdCardNumber(), tEmployee.getSalary(),
+                        tEmployee.isActive(), tEmployee.getIdMainOffice(), temporary.getNumWorkedHours());
+            }
+            else{
+                Permanent permanent = em.find(Permanent.class, idEmployee);
+                tEmployee = new TPermanentEmployee(tEmployee.getId(), tEmployee.getIdCardNumber(), tEmployee.getSalary(),
+                        tEmployee.isActive(), tEmployee.getIdMainOffice(), permanent.getApportionment());
+            }
             transaction.commit();
 
             em.close();
             emf.close();
+
         }catch (PersistenceException | EclipseLinkException e){
             throw new ASException(e.getMessage());
         }

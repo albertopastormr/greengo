@@ -1,6 +1,7 @@
 package presentation.command.employee;
 
 import business.ASException;
+import business.IncorrectInputException;
 import business.employee.TEmployee;
 import business.employee.factory.ASEmployeeFactory;
 import integration.DAOException;
@@ -10,7 +11,7 @@ import presentation.controller.LightContext;
 
 public class SetSalaryEmployee implements Command {
 	@Override
-	public LightContext execute(LightContext in)  throws ASException {
+	public LightContext execute(LightContext in) throws ASException, IncorrectInputException {
 		Integer ret = ASEmployeeFactory.getInstance().generateASEmployee().setSalary(((TEmployee)in.getData()).getId(),
 				((TEmployee)in.getData()).getSalary());
 		return new LightContext(Event.SET_SALARY_EMPLOYEE, ret);

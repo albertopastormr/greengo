@@ -40,6 +40,9 @@ public class Employee implements Serializable {
 	private Boolean active;
 
 
+	private String dtype;
+
+
 	public Employee() {
 	}
 
@@ -95,4 +98,10 @@ public class Employee implements Serializable {
 	public void setActive(Boolean active) {
 		this.active = active;
 	}
+
+	public String getType() { return dtype; }
+
+	public void setType(String type) { this.dtype = type; }
+
+
 }
