@@ -47,12 +47,12 @@ public class ASServiceTest {
     // --------------------- CREATE --------------------
 
     @Test
-    public void createServiceSuccessful() throws ASException, IncorrectInputException {
+    void createServiceSuccessful() throws ASException, IncorrectInputException {
         assertTrue(as.create(tService)>0);
     }
 
     @Test
-    public void createIncorrectServiceSameType() throws ASException, IncorrectInputException {
+    void createIncorrectServiceSameType() throws ASException, IncorrectInputException {
         as.create(tService);
 
         // all different fields except the type
@@ -62,19 +62,19 @@ public class ASServiceTest {
     }
 
     @Test
-    public void createIncorrectInputServiceIdNegative(){
+    void createIncorrectInputServiceIdNegative(){
         tService.setId(-1);
         assertThrows(IncorrectInputException.class, ()-> as.create(tService));
     }
 
     @Test
-    public void createIncorrectInputServiceTypeNull(){
+    void createIncorrectInputServiceTypeNull(){
         tService.setType(null);
         assertThrows(IncorrectInputException.class, ()-> as.create(tService));
     }
 
     @Test
-    public void createIncorrectInputServiceTypeVoid(){
+    void createIncorrectInputServiceTypeVoid(){
         tService.setType("");
         assertThrows(IncorrectInputException.class, ()-> as.create(tService));
     }
@@ -109,73 +109,63 @@ public class ASServiceTest {
         assertThrows(IncorrectInputException.class, ()->as.create(tService));
     }
 
-    // --------------------- DROP --------------------
 
+    // --------------------- DROP --------------------
     @Test
-    public void dropServiceSuccessful() throws ASException, IncorrectInputException {
+    void dropServiceSuccessful() throws ASException, IncorrectInputException {
         as.drop(as.create(tService));
         assertTrue(!as.show(tService.getId()).isActive());
     }
 
     @Test
-    public void dropIncorrectServiceContractAssociated() throws ASException, IncorrectInputException {
-
+    void dropServiceWithContractAssociatedSuccessful() throws ASException, IncorrectInputException {
         Integer idService = as.create(tService);
-        tService = as.show(idService);
-
         Integer idMainOffice = asMainOffice.create(tMainOffice);
-        tService = as.show(idService);
-
-        tContract.setIdService(idService);
-        tContract.setIdMainOffice(idMainOffice);
-        tContract.setServiceLevel(3);
-        tContract.setActive(true);
-
-        Integer idContract = asContract.create(tContract);
-        tContract = asContract.show(idContract);
-
-        assertThrows(ASException.class, ()-> as.drop(idService));
-    }
-
-    @Test
-    public void dropServiceSuccessfulContractAssociated() throws ASException, IncorrectInputException {
-
-        Integer idService = as.create(tService);
-        tService = as.show(idService);
-
-        Integer idMainOffice = asMainOffice.create(tMainOffice);
-        tService = as.show(idService);
 
         tContract.setIdService(idService);
         tContract.setIdMainOffice(idMainOffice);
         tContract.setServiceLevel(3);
         tContract.setActive(false);
 
-        Integer idContract = asContract.create(tContract);
-        tContract = asContract.show(idContract);
+        asContract.create(tContract);
 
         assertTrue(!as.show(as.drop(idService)).isActive());
     }
 
     @Test
-    public void dropIncorrectServiceAlreadyInactive() throws ASException, IncorrectInputException {
+    void dropIncorrectServiceWithContractActive() throws ASException, IncorrectInputException {
+        Integer idService = as.create(tService);
+        Integer idMainOffice = asMainOffice.create(tMainOffice);
+
+        tContract.setIdService(idService);
+        tContract.setIdMainOffice(idMainOffice);
+        tContract.setServiceLevel(3);
+        tContract.setActive(true);
+
+        asContract.create(tContract);
+
+        assertThrows(ASException.class, ()-> as.drop(idService));
+    }
+
+    @Test
+    void dropIncorrectServiceAlreadyInactive() throws ASException, IncorrectInputException {
         Integer idService = as.drop(as.create(tService));
 
         assertThrows(ASException.class, ()-> as.drop(idService));
     }
 
     @Test
-    public void dropIncorrectServiceNotExist(){
-        assertThrows(IncorrectInputException.class, ()-> as.drop(20));
+    void dropIncorrectServiceNotExist(){
+        assertThrows(ASException.class, ()-> as.drop(20));
     }
 
     @Test
-    public void dropIncorrectServiceIdNull(){
+    void dropIncorrectServiceIdNull(){
         assertThrows(IncorrectInputException.class, ()-> as.drop(null));
     }
 
     @Test
-    public void dropIncorrectServiceIdNegative(){
+    void dropIncorrectServiceIdNegative(){
         assertThrows(IncorrectInputException.class, ()-> as.drop(-1));
     }
 
@@ -183,102 +173,129 @@ public class ASServiceTest {
     // --------------------- UPDATE --------------------
 
     @Test
-    public void updateServiceSuccessful() throws ASException, IncorrectInputException {
+    void updateServiceSuccessful() throws ASException, IncorrectInputException {
+        // tService = new TService(null, 200, true, "Taller","Calle mercado,3",12345);
 
-        // Change all fields less type
-        TService tServiceComparator = new TService(null, 201, true, "Limpieza","Calle Mercado,3 Modificada",54321);
-        tServiceComparator = as.show(as.create(tServiceComparator));
+        TService oldService = as.show(as.create(tService));
 
-        Integer idService = as.create(tService);
-        tService = as.show(idService);
-
+        tService.setId(oldService.getId());
         tService.setCapacity(201);
         tService.setType("Taller modificado");
         tService.setAddress("Calle Mercado,3 Modificada");
-        tService.setCapacity(54321);
+        tService.setNumVehiclesAttended(54321);
 
-        Integer idServiceSecond = as.update(tService);
-        TService tServiceSecond = as.show(idServiceSecond);
+        TService tServiceUpdated = as.show(as.update(tService));
 
-        assertEquals(tService.getId(), idServiceSecond);
-        assertNotEquals(tServiceComparator.getType(), tServiceSecond.getType());
+        assertFalse(checkTransfersService(oldService,tServiceUpdated));
+        assertTrue(checkTransfersService(tService, tServiceUpdated));
     }
 
     @Test
-    public void updateIncorrectServiceSameType() throws ASException, IncorrectInputException {
+    void updateIncorrectServiceSameType() throws ASException, IncorrectInputException {
+        // tService = new TService(null, 200, true, "Taller","Calle mercado,3",12345);
+        as.create(tService);
 
-        TService tServiceComparator = new TService(null, 201, true, "Limpieza","Calle Mercado,3 Modificada",54321);
-        as.create(tServiceComparator);
+        TService service2 = new TService(null,200,true,
+                "Lavado","Calle mayor",100);
+        as.create(service2);
 
-        Integer idService = as.create(tService);
-        tService = as.show(idService);
-
-        tService.setCapacity(201);
-        tService.setType("Limpieza");
-        tService.setAddress("Calle Mercado,3 Modificada");
-        tService.setCapacity(54321);
-
-        assertThrows(ASException.class, ()-> as.update(tService));
+        tService.setType("Lavado");
+        assertThrows(ASException.class, ()->as.update(tService));
     }
 
     @Test
-    public void updateIncorrectServiceTypeNull() throws ASException, IncorrectInputException {
+    void updateIncorrectActiveModified() throws ASException, IncorrectInputException {
+        // tService = new TService(null, 200, true, "Taller","Calle mercado,3",12345);
+        as.create(tService);
+        tService.setActive(false); //active field can't be modified
 
-        // Service con campos igual menos el type
-        TService tServiceComparator = new TService(null, 201, true, "Limpieza","Calle Mercado,3 Modificada",54321);
-        as.create(tServiceComparator);
-
-        Integer idService = as.create(tService);
-        tService = as.show(idService);
-
-        tService.setCapacity(201);
-        tService.setType(null);
-        tService.setAddress("Calle Mercado,3 Modificada");
-        tService.setCapacity(54321);
-
-        assertThrows(ASException.class, ()-> as.update(tService));
+        assertThrows(ASException.class, ()->as.update(tService));
     }
 
     @Test
-    public void updateIncorrectServiceNotExist() {
+    void updateIncorrectServiceNotExist() {
         tService.setId(20);
         assertThrows(ASException.class, ()-> as.update(tService));
     }
 
     @Test
-    public void updateIncorrectServiceZero() {
+    void updateIncorrectInputNullID() {
+        tService.setId(null);
+        assertThrows(IncorrectInputException.class, ()-> as.update(tService));
+    }
+
+    @Test
+    void updateIncorrectInputId0() {
         tService.setId(0);
         assertThrows(IncorrectInputException.class, ()-> as.update(tService));
     }
 
     @Test
-    public void updateIncorrectServiceNotActive() {
-        tService.setActive(false);
-        assertThrows(ASException.class, ()-> as.update(tService));
-    }
-
-    @Test
-    public void updateIncorrectServiceActiveNull() {
-        tService.setActive(null);
-        assertThrows(IncorrectInputException.class, ()-> as.update(tService));
-    }
-
-    @Test
-    public void updateIncorrectServiceNotNullActive() {
-        tService.setId(null);
-        tService.setActive(true);
-
-        assertThrows(IncorrectInputException.class, ()-> as.update(tService));
-    }
-
-    @Test
-    public void updateIncorrectServiceNotNegativeActive(){
+    void updateIncorrectInputNegativeId() {
         tService.setId(-1);
-        tService.setActive(true);
-
         assertThrows(IncorrectInputException.class, ()-> as.update(tService));
     }
 
+    @Test
+    void updateIncorrectInputNegativeCapacity(){
+        tService.setCapacity(-10);
+        assertThrows(IncorrectInputException.class, ()->as.update(tService));
+    }
+
+    @Test
+    void updateIncorrectInputCapacity0(){
+        tService.setCapacity(0);
+        assertThrows(IncorrectInputException.class, ()->as.update(tService));
+    }
+
+    @Test
+    void updateIncorrectInputNullActive(){
+        tService.setActive(null);
+        assertThrows(IncorrectInputException.class, ()->as.update(tService));
+    }
+
+    @Test
+    void updateIncorrectInputNullType(){
+        tService.setType(null);
+        assertThrows(IncorrectInputException.class,()->as.update(tService));
+    }
+
+    @Test
+    void updateIncorrectInputVoidType(){
+        tService.setType("");
+        assertThrows(IncorrectInputException.class,()->as.update(tService));
+    }
+
+    @Test
+    void updateIncorrectInputNullAddress(){
+        tService.setAddress(null);
+        assertThrows(IncorrectInputException.class,()->as.update(tService));
+    }
+
+    @Test
+    void updateIncorrectInputVoidAddress(){
+        tService.setAddress("");
+        assertThrows(IncorrectInputException.class,()->as.update(tService));
+    }
+
+    @Test
+    void updateIncorrectInputNegativeNumVehicleAttended(){
+        tService.setNumVehiclesAttended(-1);
+        assertThrows(IncorrectInputException.class,()->as.update(tService));
+    }
+
+    @Test
+    void updateIncorrectInputNullNumVehicleAttended(){
+        tService.setNumVehiclesAttended(null);
+        assertThrows(IncorrectInputException.class,()->as.update(tService));
+    }
+
+    @Test
+    void updateIncorrectInputNumVehicleAttended0(){
+        tService.setNumVehiclesAttended(0);
+        assertThrows(IncorrectInputException.class,()->as.update(tService));
+    }
+    
     // --------------------- SHOW --------------------
 
     @Test
@@ -325,18 +342,6 @@ public class ASServiceTest {
     public void showAllCitySuccessfulEmpty() throws ASException {
         Collection<TService> c = as.showAll();
         assertTrue(c.isEmpty());
-    }
-
-    private boolean checkTransferValues(TService out, String type) {
-        return out.getType().equals(type) && out.isActive();
-    }
-
-    private boolean checkTransfersService(TService first, TService second) {
-        return first.getId().equals(second.getId())
-                && first.getAddress().equals(second.getAddress())
-                && first.getNumVehiclesAttended().equals(second.getNumVehiclesAttended())
-                && first.getType().equals(second.getType())
-                && first.isActive().equals(second.isActive());
     }
 
     @Test
@@ -393,4 +398,12 @@ public class ASServiceTest {
         assertTrue(as.showServicesFromLevel(3).isEmpty());
     }
 
+    //private methods
+    private boolean checkTransfersService(TService expected, TService actual) {
+        return expected.getId().equals(actual.getId())
+                && expected.getAddress().equals(actual.getAddress())
+                && expected.getNumVehiclesAttended().equals(actual.getNumVehiclesAttended())
+                && expected.getType().equals(actual.getType())
+                && expected.isActive().equals(actual.isActive());
+    }
 }
