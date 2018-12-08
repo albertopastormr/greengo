@@ -22,7 +22,7 @@ import business.contract.Contract;
                 query = "select obj from Service obj where :capacity = obj.capacity "),
 		@NamedQuery(name = "Service.findByvehicles_attended",
                 query = "select obj from Service obj where :vehicles_attended = obj.numVehiclesAttended "),
-		@NamedQuery(name = "Service.findByactive",
+		@NamedQuery(name = "Service.findByActive",
                 query = "select obj from Service obj where :active = obj.active "),
 		@NamedQuery(name = "Service.findAllServices",
 				query = "select obj from Service obj ") })

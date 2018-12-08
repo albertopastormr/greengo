@@ -23,7 +23,7 @@ import business.employee.Employee;
                 query = "select obj from MainOffice obj where :address = obj.address "),
 		@NamedQuery(name = "MainOffice.findBycity",
                 query = "select obj from MainOffice obj where :city = obj.city "),
-		@NamedQuery(name = "MainOffice.findByactive",
+		@NamedQuery(name = "MainOffice.findByActive",
                 query = "select obj from MainOffice obj where :active = obj.active "),
 		@NamedQuery(name = "Service.findAllMainOffices",
 				query = "select obj from MainOffice obj ") })

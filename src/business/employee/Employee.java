@@ -19,7 +19,7 @@ import business.mainoffice.MainOffice;
                 query = "select obj from Employee obj where :idCardNumber = obj.idCardNumber "),
 		@NamedQuery(name = "Employee.findBysalary",
                 query = "select obj from Employee obj where :salary = obj.salary "),
-		@NamedQuery(name = "Employee.findByactive",
+		@NamedQuery(name = "Employee.findByActive",
                 query = "select obj from Employee obj where :active = obj.active "),
 		@NamedQuery(name = "Service.findAllEmployees",
 				query = "select obj from Employee obj ") })
