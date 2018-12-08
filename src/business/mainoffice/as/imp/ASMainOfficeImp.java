@@ -111,7 +111,7 @@ public class ASMainOfficeImp implements ASMainOffice {
 
     @Override
     public Integer update(TMainOffice tMainoffice) throws ASException, IncorrectInputException {
-        Integer id = null;
+        Integer id;
         checkValuesToUpdate(tMainoffice);
 
         try {
@@ -152,7 +152,6 @@ public class ASMainOfficeImp implements ASMainOffice {
         return id;
     }
 
-    //TODO revisar si es necesaria abrir una transaccion en show
     @Override
     public TMainOffice show(Integer idMainOffice) throws ASException, IncorrectInputException {
         TMainOffice tMainOffice;
@@ -195,7 +194,8 @@ public class ASMainOfficeImp implements ASMainOffice {
 			EntityTransaction transaction = em.getTransaction();
 
 			transaction.begin();
-			Query query = em.createNamedQuery("Service.findAllMainOffices", MainOffice.class);
+			Query query = em.createNamedQuery("MainOffice.findByActive", MainOffice.class);
+			query.setParameter("active", true);
 
 			Collection<MainOffice> mainOfficesList = query.getResultList();
 
@@ -236,7 +236,7 @@ public class ASMainOfficeImp implements ASMainOffice {
 
             if(mainOffice == null){
                 transaction.rollback();
-                throw  new ASException("The Main Office doesn't exists");
+                throw  new ASException("The Main Office doesn't exist");
             }
 
             Collection<Employee> employeesList = mainOffice.getEmployee();
@@ -257,7 +257,6 @@ public class ASMainOfficeImp implements ASMainOffice {
     }
 
 	private static void checkValuesToCreate(TMainOffice office) throws IncorrectInputException{
-	    //if(office.getId() != null) throw new IncorrectInputException("Id must be null");
 	    if(office.getAddress() == null) throw new IncorrectInputException("Address field can't be empty");
 	    if(office.getCity() == null) throw new IncorrectInputException("City field can't be empty");
 	    if(office.isActive() == null) throw new IncorrectInputException("Active field can't be empty");

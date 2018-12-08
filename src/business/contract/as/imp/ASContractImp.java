@@ -24,12 +24,14 @@ public class ASContractImp implements ASContract {
 
         try{
 
-            Contract contractObject = new Contract(tContract);
             EntityManagerFactory emf = Persistence.createEntityManagerFactory("greengo");
             EntityManager em = emf.createEntityManager();
             EntityTransaction transaction = em.getTransaction();
 
             transaction.begin();
+
+            Contract contractObject = new Contract(tContract);
+
             Query serviceQuery = em.createNamedQuery("Service.findByid", Service.class);
             serviceQuery.setParameter("id", tContract.getIdService());
 
@@ -93,8 +95,7 @@ public class ASContractImp implements ASContract {
             if(contract == null){
                 transaction.rollback();
                 throw new ASException("The contract doesn't exist");
-            }
-            else if(!contract.isActive()){
+            } else if(!contract.isActive()){
                 transaction.rollback();
                 throw new ASException("The contract is already disabled");
             }
@@ -106,12 +107,11 @@ public class ASContractImp implements ASContract {
             em.close();
             emf.close();
 
-            return idRet;
-
         }
         catch (PersistenceException | EclipseLinkException e){
             throw new ASException(e.getMessage());
         }
+        return idRet;
     }
 
     @Override
@@ -127,13 +127,15 @@ public class ASContractImp implements ASContract {
 
             Contract contract = em.find(Contract.class, tContract.getId());
 
-            MainOffice mainOffice = contract.getMainOffice();
-            Service service = contract.getService();
-
             if (contract == null) {
                 transaction.rollback();
                 throw new ASException("ERROR: The Contract doesn't exist");
-            } else if (mainOffice == null) {
+            }
+
+            MainOffice mainOffice = contract.getMainOffice();
+            Service service = contract.getService();
+
+            if (mainOffice == null) {
                 transaction.rollback();
                 throw new ASException("ERROR: The Main Office doesn't exist");
             } else if (service == null) {
@@ -184,6 +186,7 @@ public class ASContractImp implements ASContract {
                     contract.getMainOffice().getId(), contract.getService().getId(), contract.isActive());
 
             transaction.commit();
+
             em.close();
             emf.close();
         } catch(PersistenceException | EclipseLinkException e){
@@ -194,7 +197,6 @@ public class ASContractImp implements ASContract {
 
     }
 
-    //TODO es necesario hacer transaccion?
     @Override
     public Collection<TContract> showAll() throws ASException {
         Collection<TContract> tContractList = new ArrayList<>();
@@ -204,7 +206,8 @@ public class ASContractImp implements ASContract {
             EntityTransaction transaction = em.getTransaction();
 
             transaction.begin();
-            Query query = em.createNamedQuery("Contract.findAllContracts", Contract.class);
+            Query query = em.createNamedQuery("Contract.findByActive", Contract.class);
+            query.setParameter("active", true);
 
             Collection<Contract> contractList = query.getResultList();
 
@@ -225,7 +228,6 @@ public class ASContractImp implements ASContract {
     }
 
     private static void checkValuesToCreate(TContract contract) throws IncorrectInputException {
-        if(contract.getId() != null) throw new IncorrectInputException("Id field must be empty");
         if(contract.getServiceLevel() == null) throw new IncorrectInputException("Service level field can't be empty");
         if(contract.getServiceLevel() < 0) throw new IncorrectInputException("Service level field must be a positive integer");
         if(contract.getIdMainOffice() == null) throw new IncorrectInputException("Id main office field can't be empty");

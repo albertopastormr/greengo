@@ -147,7 +147,6 @@ public class ASServiceImp implements ASService {
         return id;
     }
 
-    //TODO Es necesario que haya transaccion?
     @Override
     public TService show(Integer idService) throws ASException, IncorrectInputException {
         if (idService == null)
@@ -182,7 +181,6 @@ public class ASServiceImp implements ASService {
         return tService;
     }
 
-    //TODO es necesario hacer transaccion?
     @Override
     public Collection<TService> showAll() throws ASException {
         Collection<TService> tServicesList = new ArrayList<>();
@@ -194,7 +192,8 @@ public class ASServiceImp implements ASService {
 
             transaction.begin();
 
-            Query query = em.createNamedQuery("Service.findAllServices", Contract.class);
+            Query query = em.createNamedQuery("Service.findByActive", Contract.class);
+            query.setParameter("active", true);
 
             Collection<Service> servicesList = query.getResultList();
             for (Service service : servicesList) {
@@ -214,7 +213,7 @@ public class ASServiceImp implements ASService {
 
 
     @Override
-    public Collection<TService> showServicesFromLevel(Integer level) throws ASException, IncorrectInputException {
+    public Collection<TService> showServicesByLevel(Integer level) throws ASException, IncorrectInputException {
 
         if (level == null)
             throw new IncorrectInputException("level not specified");
@@ -255,58 +254,39 @@ public class ASServiceImp implements ASService {
     }
 
     private static void checkValuesForCreate(TService tService) throws IncorrectInputException {
-        if (tService.getId() != null)
-            throw new IncorrectInputException("ID must be null");
 
-        if (tService.getType() == null)
-            throw new IncorrectInputException("Type not specified");
+        if (tService.getType() == null) throw new IncorrectInputException("Type not specified");
 
-        if (tService.getAddress() == null)
-            throw new IncorrectInputException("Address not specified");
-
-        if (tService.getNumVehiclesAttended() == null)
-            throw new IncorrectInputException("Number of vehicles attended not specified");
-
-        if (tService.getNumVehiclesAttended() < 0)
-            throw new IncorrectInputException("Number of vehicles attended must be a " +
-                    "positive integer greater than zero");
-
-        if (tService.getCapacity() == null)
-            throw new IncorrectInputException("Capacity not specified");
-
-        if (tService.getCapacity() <= 0)
-            throw new IncorrectInputException("Capacity must be a " +
-                    "positive integer greater than zero");
-
-        if (tService.isActive() == null)
-            throw new IncorrectInputException("service state is not specified");
+        if (tService.getAddress() == null) throw new IncorrectInputException("Address not specified");
+        if (tService.getNumVehiclesAttended() == null) throw new IncorrectInputException("Number of vehicles " +
+                "attended not specified");
+        if (tService.getNumVehiclesAttended() < 0)throw new IncorrectInputException("Number of vehicles attended" +
+                " must be a positive integer greater than zero");
+        if (tService.getCapacity() == null) throw new IncorrectInputException("Capacity not specified");
+        if (tService.getCapacity() <= 0) throw new IncorrectInputException("Capacity must be a positive" +
+                " integer greater than zero");
+        if (tService.isActive() == null) throw new IncorrectInputException("service state is not specified");
     }
 
     private static void checkValuesForUpdate(TService tService) throws IncorrectInputException {
         if (tService.getId() == null)
             throw new IncorrectInputException("ID not specified");
 
-        if (tService.getId() <= 0)
-            throw new IncorrectInputException("ID must be a positive integer greater than zero");
+        if (tService.getId() <= 0) throw new IncorrectInputException("ID must be a positive integer greater than zero");
 
-        if (tService.getType() == null)
-            throw new IncorrectInputException("Type not specified");
+        if (tService.getType() == null) throw new IncorrectInputException("Type not specified");
 
-        if (tService.getAddress() == null)
-            throw new IncorrectInputException("Address not specified");
+        if (tService.getAddress() == null) throw new IncorrectInputException("Address not specified");
 
-        if (tService.getNumVehiclesAttended() == null)
-            throw new IncorrectInputException("Number of vehicles attended not specified");
+        if (tService.getNumVehiclesAttended() == null) throw new IncorrectInputException("Number of vehicles" +
+                " attended not specified");
 
-        if (tService.getNumVehiclesAttended() < 0)
-            throw new IncorrectInputException("Number of vehicles attended must be a " +
-                    "positive integer greater than zero");
+        if (tService.getNumVehiclesAttended() < 0) throw new IncorrectInputException("Number of vehicles attended " +
+                "must be a positive integer greater than zero");
 
-        if (tService.getCapacity() == null)
-            throw new IncorrectInputException("Capacity not specified");
+        if (tService.getCapacity() == null) throw new IncorrectInputException("Capacity not specified");
 
-        if (tService.getCapacity() <= 0)
-            throw new IncorrectInputException("Capacity must be a " +
+        if (tService.getCapacity() <= 0) throw new IncorrectInputException("Capacity must be a " +
                     "positive integer greater than zero");
     }
 }

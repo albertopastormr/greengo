@@ -376,28 +376,28 @@ public class ASServiceTest {
 
         asContract.create(tContract);
 
-        assertEquals(1,as.showServicesFromLevel(3).size());
-        assertTrue(checkTransferValues(tService,as.showServicesFromLevel(3).iterator().next()));
+        assertEquals(1,as.showServicesByLevel(3).size());
+        assertTrue(checkTransferValues(tService,as.showServicesByLevel(3).iterator().next()));
     }
 
     @Test
     void showServicesFromLevelEmpty() throws ASException, IncorrectInputException {
-        assertTrue(as.showServicesFromLevel(3).isEmpty());
+        assertTrue(as.showServicesByLevel(3).isEmpty());
     }
 
     @Test
     void showServicesFromLevelIncorrectInputNullLevel() {
-        assertThrows(IncorrectInputException.class, ()-> as.showServicesFromLevel(null));
+        assertThrows(IncorrectInputException.class, ()-> as.showServicesByLevel(null));
     }
 
     @Test
     void showServicesFromLevelIncorrectInputLevel0() {
-        assertThrows(IncorrectInputException.class, ()-> as.showServicesFromLevel(0));
+        assertThrows(IncorrectInputException.class, ()-> as.showServicesByLevel(0));
     }
 
     @Test
     void showServicesFromLevelIncorrectInputNegativeLevel() {
-        assertThrows(IncorrectInputException.class, ()-> as.showServicesFromLevel(-1));
+        assertThrows(IncorrectInputException.class, ()-> as.showServicesByLevel(-1));
     }
 
     //private methods

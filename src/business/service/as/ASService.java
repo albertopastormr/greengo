@@ -17,6 +17,6 @@ public interface ASService {
 
     Collection<TService> showAll () throws ASException;
 
-    Collection<TService> showServicesFromLevel(Integer level) throws ASException, IncorrectInputException;
+    Collection<TService> showServicesByLevel(Integer level) throws ASException, IncorrectInputException;
 
 }

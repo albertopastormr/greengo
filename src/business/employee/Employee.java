@@ -20,7 +20,9 @@ import business.mainoffice.MainOffice;
 		@NamedQuery(name = "Employee.findBysalary",
                 query = "select obj from Employee obj where :salary = obj.salary "),
 		@NamedQuery(name = "Employee.findByactive",
-                query = "select obj from Employee obj where :active = obj.active ") })
+                query = "select obj from Employee obj where :active = obj.active "),
+		@NamedQuery(name = "Service.findAllEmployees",
+				query = "select obj from Employee obj ") })
 
 public class Employee implements Serializable {
 
