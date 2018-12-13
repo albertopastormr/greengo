@@ -222,32 +222,6 @@ class ASEmployeeTest {
         assertThrows(ASException.class,() -> asEmployee.update(tEmployee));
     }
 
-    // -------------------- SET SALARY ------------
-
-    @Test
-    void setSalaryOK() throws ASException, IncorrectInputException {
-        asEmployee.create(tEmployee);
-        assertTrue( asEmployee.setSalary(tEmployee.getId(), tEmployee.getSalary() + 10) > 0);
-        assertTrue(checkValuesTEmployee(tEmployee, (TPermanentEmployee) asEmployee.show(tEmployee.getId())));
-    }
-
-    @Test
-    void setSalaryIncorrectIdNotExists(){
-        assertThrows(ASException.class, () -> asEmployee.setSalary(tEmployee.getId()+100, 0f));
-    }
-
-    @Test
-    void setSalaryIncorrectInputNegativeID(){//id must be positive
-        tEmployee.setId(-5);
-        assertThrows(ASException.class,() -> asEmployee.setSalary(tEmployee.getId(),5f));
-    }
-
-    @Test
-    void setSalaryIncorrectInputSalaryNull(){//id must not be null
-        tEmployee.setId(null);
-        assertThrows(ASException.class,() -> asEmployee.setSalary(tEmployee.getId(),5f));
-    }
-
     // ---------------------- DROP ----------------
 
     @Test

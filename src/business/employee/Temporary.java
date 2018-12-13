@@ -17,11 +17,6 @@ public class Temporary extends Employee implements Serializable {
 	public Temporary() {
 	}
 
-	@Override
-	public float getDetailedSalary() {
-		return 0;
-	}
-
 	public Temporary(TTemporaryEmployee tt) {
 		super(tt);
 		numWorkedHours = tt.getNumWorkedHours();
@@ -37,6 +32,12 @@ public class Temporary extends Employee implements Serializable {
 
 	public void setNumWorkedHours(Integer numWorkedHours) {
 		this.numWorkedHours = numWorkedHours;
+	}
+
+	@Override
+	public Float getDetailedSalary() {
+		//TODO comprobar
+		return getSalary() + numWorkedHours * 4.2f;
 	}
 
 }

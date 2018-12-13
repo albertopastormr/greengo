@@ -19,17 +19,11 @@ public class Permanent extends Employee implements Serializable {
 
 	private Float apportionment;
 
-	public Permanent() {
-	}
-
-	@Override
-	public float getDetailedSalary() {
-		return 0;
-	}
+	public Permanent() { }
 
 	public Permanent(TPermanentEmployee tp) {
 		super(tp);
-		apportionment= tp.getApportionment();
+		apportionment = tp.getApportionment();
 	}
 
 	public static long getSerialVersionUID() {
@@ -42,6 +36,13 @@ public class Permanent extends Employee implements Serializable {
 
 	public void setApportionment(Float apportionment) {
 		this.apportionment = apportionment;
+	}
+
+
+	@Override
+	public Float getDetailedSalary() {
+		//TODO comprobar
+		return getSalary() + apportionment;
 	}
 
 }

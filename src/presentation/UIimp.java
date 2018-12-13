@@ -163,9 +163,6 @@ public class UIimp extends UI{
 				List<TEmployee> employeeList = new ArrayList<>();
 				AppController.getInstance().execute(new LightContext(Event.SHOWALL_EMPLOYEE, employeeList));
 				break;
-			case SET_SALARY_EMPLOYEE:
-				Util.inform("Updated the salary to employee " + context.getData() + "successfully");
-				break;
 			case CREATE_CONTRACT:
 				Util.inform("Added contract with id " + (context.getData()));
 				AppController.getInstance().execute(new LightContext(Event.RELOAD_CONTRACT, null));

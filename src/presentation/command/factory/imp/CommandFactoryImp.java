@@ -102,9 +102,6 @@ public class CommandFactoryImp extends CommandFactory {
 			case SHOWALL_EMPLOYEE:
 				ret = new ShowAllEmployee();
 				break;
-			case SET_SALARY_EMPLOYEE:
-				ret = new SetSalaryEmployee();
-				break;
 			case CREATE_CONTRACT:
 				ret = new CreateContract();
 				break;

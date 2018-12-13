@@ -21,7 +21,7 @@ public class ASEmployeeImp implements ASEmployee {
 
     @Override
     public Integer create(TEmployee tEmployee) throws ASException, IncorrectInputException {
-        Integer id;
+        Integer id = null;
         checkValuesToCreate(tEmployee);
 
         try {
@@ -30,15 +30,6 @@ public class ASEmployeeImp implements ASEmployee {
             EntityTransaction transaction = em.getTransaction();
 
             transaction.begin();
-
-            // TODO CHAPUZA, HAY QUE CAMBIARLO, SOLO ESTA PARA QUE COMPILE
-            Employee employee = new Employee(tEmployee) {
-                @Override
-                public float getDetailedSalary() {
-                    return 0;
-                }
-            };
-
 
             Query query = em.createNamedQuery("Employee.findByidCardNumber", Employee.class);
             query.setParameter("idCardNumber", tEmployee.getIdCardNumber());
@@ -65,14 +56,16 @@ public class ASEmployeeImp implements ASEmployee {
                 permanent.setMainOffice(mainOffice);
                 permanent.setApportionment( ((TPermanentEmployee)tEmployee).getApportionment());
                 em.persist(permanent);
+                transaction.commit();
+                id = permanent.getId();
             } else if (tEmployee.getType().equals("Temporary")) {
                 Temporary temporary = new Temporary((TTemporaryEmployee) tEmployee);
                 temporary.setMainOffice(mainOffice);
                 temporary.setNumWorkedHours( ((TTemporaryEmployee) tEmployee).getNumWorkedHours());
                 em.persist(temporary);
+                transaction.commit();
+                id = temporary.getId();
             }
-            transaction.commit();
-            id = employee.getId();
             em.close();
             emf.close();
 
@@ -276,44 +269,6 @@ public class ASEmployeeImp implements ASEmployee {
             throw new ASException(e.getMessage());
         }
         return tEmployeeArrayList;
-    }
-
-    @Override
-    public Integer setSalary(Integer idEmployee, Float salary) throws IncorrectInputException, ASException {
-        Integer id;
-
-        if(idEmployee == null) throw new IncorrectInputException("Id is null");
-        if(idEmployee <= 0) throw new IncorrectInputException("Id field must be a positive " +
-                "integer greater than zero");
-        if(salary == null) throw new IncorrectInputException("Salary field can't be empty");
-        if(salary < 0) throw new IncorrectInputException("Salary field must be a positive integer");
-
-        try {
-            EntityManagerFactory emf = Persistence.createEntityManagerFactory("greengo");
-            EntityManager em = emf.createEntityManager();
-            EntityTransaction transaction = em.getTransaction();
-
-            transaction.begin();
-
-            Employee employee = em.find(Employee.class, idEmployee);
-
-            if(employee == null){
-                transaction.rollback();
-                throw  new ASException("ERROR: The employee doesn't exist");
-            }
-
-            employee.setSalary(salary);
-
-            transaction.commit();
-            id = employee.getId();
-            em.close();
-            emf.close();
-
-        } catch (PersistenceException | EclipseLinkException e) {
-            throw new ASException(e.getMessage());
-        }
-
-        return id;
     }
 
     private static void checkValuesToCreate(TEmployee employee) throws IncorrectInputException {

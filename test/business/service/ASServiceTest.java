@@ -14,6 +14,7 @@ import business.service.factory.ASServiceFactory;
 
 import business.service.as.ASService;
 
+import integration.Util;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -23,20 +24,20 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class ASServiceTest {
 
-    private ASService as;
-    private ASMainOffice asMainOffice;
-    private ASContract asContract;
+    private ASService as = ASServiceFactory.getInstance().generateASService();;
+    private ASMainOffice asMainOffice = ASMainOfficeFactory.getInstance().generateASMainOffice();
+    private ASContract asContract = ASContractFactory.getInstance().generateASContract();
 
     private TService tService;
     private TMainOffice tMainOffice;
     private TContract tContract;
 
+
+
     @BeforeEach
     private void setUp() throws Exception{
 
-        as = ASServiceFactory.getInstance().generateASService();
-        asMainOffice = ASMainOfficeFactory.getInstance().generateASMainOffice();
-        asContract = ASContractFactory.getInstance().generateASContract();
+        Util.deleteAll();
 
         tService = new TService(null, 200,
                 true, "Taller","Calle mercado,3",12345);

@@ -1,21 +1,11 @@
 package integration;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Util {
-    private static List<String> tables = new ArrayList<String>(){{
-        add("city");
-        add("vehicle");
-        add("bicyclevehicle");
-        add("carvehicle");
-        add("rental");
-        add("client");
-    }};
+    private static List<String> tables = new ArrayList<String>();
     private static String connectionChain = "jdbc:mariadb://localhost:3306/greengo?user=manager&password=manager_if";
 
     public static void deleteAll() throws DAOException {
@@ -30,6 +20,15 @@ public class Util {
             PreparedStatement ps = connec.prepareStatement("SET FOREIGN_KEY_CHECKS = 0");
             ps.execute();
             ps.close();
+
+            ps = connec.prepareStatement("SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_SCHEMA='greengo' ");
+            ResultSet  rs =  ps.executeQuery();
+            rs.next();
+            while(rs.next()){
+                tables.add(rs.getString(1));
+            }
+            ps.close();
+
             for(String table : tables){
                 ps = connec.prepareStatement("TRUNCATE TABLE " + table);
                 ps.execute();
