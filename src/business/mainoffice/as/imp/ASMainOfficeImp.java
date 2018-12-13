@@ -242,7 +242,7 @@ public class ASMainOfficeImp implements ASMainOffice {
             Collection<Employee> employeesList = mainOffice.getEmployee();
 
             for (Employee employee : employeesList) {
-                result += employee.getSalary();
+                result += employee.getDetailedSalary();
             }
 
             transaction.commit();

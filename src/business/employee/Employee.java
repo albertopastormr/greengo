@@ -57,7 +57,7 @@ public abstract class Employee implements Serializable {
         this.active = te.isActive();
     }
 
-    public abstract Double getDetailedSalary();
+    public abstract Float getDetailedSalary();
 
     public static long getSerialVersionUID() {
 		return serialVersionUID;

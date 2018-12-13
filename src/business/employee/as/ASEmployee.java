@@ -17,6 +17,4 @@ public interface ASEmployee {
     TEmployee show (Integer id) throws IncorrectInputException, ASException;
 
     Collection<TEmployee> showAll () throws ASException;
-
-    Integer setSalary (Integer idEmployee, Float salary) throws IncorrectInputException, ASException;
 }
