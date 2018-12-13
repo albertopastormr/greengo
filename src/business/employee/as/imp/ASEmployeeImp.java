@@ -34,8 +34,8 @@ public class ASEmployeeImp implements ASEmployee {
             // TODO CHAPUZA, HAY QUE CAMBIARLO, SOLO ESTA PARA QUE COMPILE
             Employee employee = new Employee(tEmployee) {
                 @Override
-                public float getDetailedSalary() {
-                    return 0;
+                public Double getDetailedSalary() {
+                    return 0d;
                 }
             };
 
