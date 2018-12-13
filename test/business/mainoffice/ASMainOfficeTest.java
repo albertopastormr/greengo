@@ -2,6 +2,8 @@ package business.mainoffice;
 
 import business.ASException;
 import business.IncorrectInputException;
+import business.contract.Contract;
+import business.contract.ContractId;
 import business.contract.as.ASContract;
 import business.contract.TContract;
 import business.contract.as.imp.ASContractImp;
@@ -41,7 +43,7 @@ class ASMainOfficeTest {
         tMainOffice = new TMainOffice(null,"Madrid","C/Villamayor",true);
         tPermanentEmployee = new TPermanentEmployee(null, "ABCD", 1350f,
                 true, null, 20f);
-        tContract = new TContract(null, 2, null, null, true);
+        tContract = new TContract(2, null, null, true);
         tService = new TService(null, 100, true, "ABC", "c/Example", 0);
     }
 
@@ -111,8 +113,8 @@ class ASMainOfficeTest {
         tContract.setIdMainOffice(idMO);
         tContract.setServiceLevel(idS);
 
-        Integer idCon = asContract.create(tContract);
-        asContract.drop(idCon);
+        ContractId idCon = asContract.create(tContract);
+        asContract.drop(idCon.getMainOfficeId(),idCon.getServiceId());
 
         asMainOffice.drop(idMO);
 
