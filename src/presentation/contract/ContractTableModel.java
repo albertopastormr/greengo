@@ -14,7 +14,7 @@ public class ContractTableModel extends TableModel<TContract> {
 		Object s = null;
 		switch (indiceCol) {
 			case 0:
-				s = list.get(indiceFil).getId();
+				s = list.get(indiceFil).getIdMainOffice();
 				break;
 			case 1:
 				s = list.get(indiceFil).getServiceLevel();

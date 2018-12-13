@@ -41,7 +41,7 @@ class ASMainOfficeTest {
         tMainOffice = new TMainOffice(null,"Madrid","C/Villamayor",true);
         tPermanentEmployee = new TPermanentEmployee(null, "ABCD", 1350f,
                 true, null, 20f);
-        tContract = new TContract(null, 2, null, null, true);
+        tContract = new TContract(2, null, null, true);
         tService = new TService(null, 100, true, "ABC", "c/Example", 0);
     }
 
@@ -111,8 +111,8 @@ class ASMainOfficeTest {
         tContract.setIdMainOffice(idMO);
         tContract.setServiceLevel(idS);
 
-        Integer idCon = asContract.create(tContract);
-        asContract.drop(idCon);
+        //Integer idCon = asContract.create(tContract);
+        //asContract.drop(idCon);
 
         asMainOffice.drop(idMO);
 

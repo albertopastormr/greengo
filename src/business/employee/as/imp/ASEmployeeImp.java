@@ -142,7 +142,7 @@ public class ASEmployeeImp implements ASEmployee {
 
             MainOffice mainOffice = em.find(MainOffice.class, tEmployee.getIdMainOffice());
 
-            if (!employeeList.isEmpty()) {
+            if (!employeeList.isEmpty() && !(employeeList.get(0).getId().equals(tEmployee.getId()))) {
                 transaction.rollback();
                 throw new ASException("ERROR: There is an employee with the same idCardNumber" +
                         "(" + tEmployee.getIdCardNumber() + ") (duplication)");

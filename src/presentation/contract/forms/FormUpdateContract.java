@@ -71,7 +71,7 @@ public class FormUpdateContract extends JDialog {
 				TContract contract = new TContract();
 				try {
 					/*This is related to JPA*/
-					contract.setId(Util.parseNoNegativeInt(idText.getText()));
+					contract.setIdMainOffice(Util.parseNoNegativeInt(idText.getText()));
 					contract.setServiceLevel(Util.parseNoNegativeInt(serviceLevelText.getText()));
 					dispose();
 					AppController.getInstance().execute(new LightContext(Event.UPDATE_CONTRACT, contract));
