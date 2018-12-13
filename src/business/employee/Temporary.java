@@ -35,9 +35,9 @@ public class Temporary extends Employee implements Serializable {
 	}
 
 	@Override
-	public Double getDetailedSalary() {
+	public Float getDetailedSalary() {
 		//TODO comprobar
-		return getSalary() + (numWorkedHours * 4.2d);
+		return getSalary() + numWorkedHours * 4.2f;
 	}
 
 }
