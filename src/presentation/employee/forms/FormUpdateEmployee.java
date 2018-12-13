@@ -124,10 +124,12 @@ public class FormUpdateEmployee extends JDialog {
 						/*This is related to JPA*/
 						TTemporaryEmployee emp = new TTemporaryEmployee();
 						emp.setId(Util.parseNoNegativeInt(idText.getText()));
+						emp.setIdMainOffice(Util.parseNoNegativeInt(idMainOfficeText.getText()));
 						emp.setIdCardNumber(Util.parseString(idCardNumberText.getText()));
 						emp.setNumWorkedHours(Util.parseNoNegativeInt(workedHoursText.getText()));
 						emp.setSalary(Util.parseNoNegativeFloat(salaryText.getText()));
 						emp.setType(Util.parseString(typeComboBox.getSelectedItem().toString()));
+						emp.setActive(true);
                         dispose();
 						AppController.getInstance().execute(new LightContext(Event.UPDATE_EMPLOYEE, emp));
 
@@ -136,10 +138,12 @@ public class FormUpdateEmployee extends JDialog {
 						/*This is related to JPA*/
 						TPermanentEmployee emp = new TPermanentEmployee();
 						emp.setId(Util.parseNoNegativeInt(idText.getText()));
+						emp.setIdMainOffice(Util.parseNoNegativeInt(idMainOfficeText.getText()));
 						emp.setIdCardNumber(Util.parseString(idCardNumberText.getText()));
 						emp.setApportionment(Util.parseNoNegativeFloat(appotionmentText.getText()));
 						emp.setSalary(Util.parseNoNegativeFloat(salaryText.getText()));
 						emp.setType(Util.parseString(typeComboBox.getSelectedItem().toString()));
+						emp.setActive(true);
                         dispose();
                         AppController.getInstance().execute(new LightContext(Event.UPDATE_EMPLOYEE, emp));
 					}
