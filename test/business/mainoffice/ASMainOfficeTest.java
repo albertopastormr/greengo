@@ -2,6 +2,8 @@ package business.mainoffice;
 
 import business.ASException;
 import business.IncorrectInputException;
+import business.contract.Contract;
+import business.contract.ContractId;
 import business.contract.as.ASContract;
 import business.contract.TContract;
 import business.contract.as.imp.ASContractImp;
@@ -111,8 +113,8 @@ class ASMainOfficeTest {
         tContract.setIdMainOffice(idMO);
         tContract.setServiceLevel(idS);
 
-        //Integer idCon = asContract.create(tContract);
-        //asContract.drop(idCon);
+        ContractId idCon = asContract.create(tContract);
+        asContract.drop(idCon.getMainOfficeId(),idCon.getServiceId());
 
         asMainOffice.drop(idMO);
 

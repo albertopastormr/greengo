@@ -254,9 +254,8 @@ public class ASServiceImp implements ASService {
     }
 
     private static void checkValuesForCreate(TService tService) throws IncorrectInputException {
-
+        if (tService.getId()!= null)  throw new IncorrectInputException("Id must be null");
         if (tService.getType() == null) throw new IncorrectInputException("Type not specified");
-
         if (tService.getAddress() == null) throw new IncorrectInputException("Address not specified");
         if (tService.getNumVehiclesAttended() == null) throw new IncorrectInputException("Number of vehicles " +
                 "attended not specified");
@@ -288,5 +287,7 @@ public class ASServiceImp implements ASService {
 
         if (tService.getCapacity() <= 0) throw new IncorrectInputException("Capacity must be a " +
                     "positive integer greater than zero");
+
+        if (!tService.isActive()) throw new IncorrectInputException("Active must be true");
     }
 }

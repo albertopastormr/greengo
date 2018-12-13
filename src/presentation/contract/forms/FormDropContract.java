@@ -62,7 +62,10 @@ public class FormDropContract extends JDialog{
 				TContract contract = new TContract();
 				try {
 					/*This is related to JPA*/
+<<<<<<< HEAD
 					contract.setIdMainOffice(Util.parseNoNegativeInt(idText.getText()));
+=======
+>>>>>>> 51e69a3f83b6aaa9cd11a65524429b04e446dd72
 					dispose();
 					AppController.getInstance().execute(new LightContext(Event.DROP_CONTRACT, contract));
 				} catch (Exception ex) {
