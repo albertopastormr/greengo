@@ -80,6 +80,10 @@ public class FormUpdateContract extends JDialog {
 				TContract contract = new TContract();
 				try {
 					/*This is related to JPA*/
+<<<<<<< HEAD
+					contract.setIdMainOffice(Util.parseNoNegativeInt(idText.getText()));
+=======
+>>>>>>> 51e69a3f83b6aaa9cd11a65524429b04e446dd72
 					contract.setServiceLevel(Util.parseNoNegativeInt(serviceLevelText.getText()));
 					contract.setIdMainOffice(Util.parseNoNegativeInt(idMainOfficeText.getText()));
 					contract.setIdService(Util.parseNoNegativeInt(idServiceText.getText()));
