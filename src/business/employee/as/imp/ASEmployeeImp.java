@@ -31,7 +31,13 @@ public class ASEmployeeImp implements ASEmployee {
 
             transaction.begin();
 
-            Employee employee = new Employee(tEmployee);
+            // TODO CHAPUZA, HAY QUE CAMBIARLO, SOLO ESTA PARA QUE COMPILE
+            Employee employee = new Employee(tEmployee) {
+                @Override
+                public float getDetailedSalary() {
+                    return 0;
+                }
+            };
 
 
             Query query = em.createNamedQuery("Employee.findByidCardNumber", Employee.class);
