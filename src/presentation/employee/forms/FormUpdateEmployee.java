@@ -29,7 +29,6 @@ public class FormUpdateEmployee extends JDialog {
 	private JTextField salaryText;
 
 	/*JComboBox fields*/
-	private JComboBox activeComboBox;
 	private JComboBox typeComboBox;
 
 	public FormUpdateEmployee(){
@@ -147,7 +146,7 @@ public class FormUpdateEmployee extends JDialog {
 
 				} catch(Exception e){
 					JOptionPane.showMessageDialog(getRootPane(), e.getMessage(),
-							"ERROR UPDATE EMLOYEE", JOptionPane.ERROR_MESSAGE);
+							"ERROR UPDATE EMPLOYEE", JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});

@@ -34,4 +34,10 @@ public class Temporary extends Employee implements Serializable {
 		this.numWorkedHours = numWorkedHours;
 	}
 
+	@Override
+	public Double getDetailedSalary() {
+		//TODO comprobar
+		return getSalary() + (numWorkedHours * 4.2d);
+	}
+
 }

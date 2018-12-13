@@ -81,21 +81,6 @@ public class EmployeeToolbar extends JToolBar {
 			}
 		});
 
-		// Set salary employee
-		JButton setSalary = ViewHelpers.buttonsForms("Set salary employee");
-		setSalary.setToolTipText("Set salary employee");
-		setSalary.setIcon(new ImageIcon("resources/images/setSalary.png"));
-		setSalary.setVerticalTextPosition(SwingConstants.BOTTOM);
-		setSalary.setHorizontalTextPosition(SwingConstants.CENTER);
-		setSalary.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				FormSetSalaryEmployee formSetSalaryEmployee = new FormSetSalaryEmployee();
-				formSetSalaryEmployee.setVisible(true);
-			}
-		});
-
 		add(create);
 		addSeparator();
 		add(drop);
@@ -103,7 +88,5 @@ public class EmployeeToolbar extends JToolBar {
 		add(show);
 		addSeparator();
 		add(update);
-		addSeparator();
-		add(setSalary);
 	}
 }

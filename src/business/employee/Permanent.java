@@ -24,7 +24,7 @@ public class Permanent extends Employee implements Serializable {
 
 	public Permanent(TPermanentEmployee tp) {
 		super(tp);
-		apportionment= tp.getApportionment();
+		apportionment = tp.getApportionment();
 	}
 
 	public static long getSerialVersionUID() {
@@ -37,6 +37,13 @@ public class Permanent extends Employee implements Serializable {
 
 	public void setApportionment(Float apportionment) {
 		this.apportionment = apportionment;
+	}
+
+
+	@Override
+	public Double getDetailedSalary() {
+		//TODO comprobar
+		return getSalary() + (apportionment * 1d);
 	}
 
 }
