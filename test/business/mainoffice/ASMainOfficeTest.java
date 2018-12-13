@@ -15,6 +15,8 @@ import business.mainoffice.as.imp.ASMainOfficeImp;
 import business.service.TService;
 import business.service.as.ASService;
 import business.service.as.imp.ASServiceImp;
+import integration.DAOException;
+import integration.Util;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -40,10 +42,17 @@ class ASMainOfficeTest {
 
     @BeforeEach
     private void setUp(){
+
+        try {
+            Util.deleteAll();
+        } catch (DAOException e) {
+            e.printStackTrace();
+        }
+
         tMainOffice = new TMainOffice(null,"Madrid","C/Villamayor",true);
         tPermanentEmployee = new TPermanentEmployee(null, "ABCD", 1350f,
                 true, null, 20f);
-        tContract = new TContract(2, null, null, true);
+        tContract = new TContract(2, null, 10, true);
         tService = new TService(null, 100, true, "ABC", "c/Example", 0);
     }
 
@@ -111,7 +120,7 @@ class ASMainOfficeTest {
         tService.setId(idS);
 
         tContract.setIdMainOffice(idMO);
-        tContract.setServiceLevel(idS);
+        tContract.setIdService(idS);
 
         ContractId idCon = asContract.create(tContract);
         asContract.drop(idCon.getMainOfficeId(),idCon.getServiceId());
@@ -167,7 +176,7 @@ class ASMainOfficeTest {
         tService.setId(idS);
 
         tContract.setIdMainOffice(idMO);
-        tContract.setServiceLevel(idS);
+        tContract.setIdService(idS);
 
         asContract.create(tContract);
         assertThrows(ASException.class, () -> asMainOffice.drop(idMO));
@@ -296,7 +305,11 @@ class ASMainOfficeTest {
     void updateMainOfficeErrorAddress() throws ASException, IncorrectInputException { //shouldn't exists other mainOffice with the same address
         Integer idMO = asMainOffice.create(tMainOffice);
         tMainOffice.setId(idMO);
-        assertThrows(ASException.class, () -> asMainOffice.update(tMainOffice));
+        TMainOffice tMainOffice2 = new TMainOffice(null,"Madrid","C/Villamayor3",true);
+        Integer idMO2 = asMainOffice.create(tMainOffice2);
+        tMainOffice2.setAdress("C/Villamayor");
+        tMainOffice2.setId(idMO2);
+        assertThrows(ASException.class, () -> asMainOffice.update(tMainOffice2));
     }
 
     // === TOTAL SALARY === //
@@ -310,7 +323,7 @@ class ASMainOfficeTest {
 
 		Float totalSalary = tPermanentEmployee.getSalary() + tPermanentEmployee.getApportionment();
 
-        assertEquals(totalSalary, asMainOffice.showSalary(tMainOffice.getId()), 0.0);
+        assertEquals(totalSalary, asMainOffice.showSalary(tMainOffice.getId()));
 	}
 
 	@Test
@@ -329,14 +342,6 @@ class ASMainOfficeTest {
     void totalSalaryMainOfficeErrorNotExists(){ //Main office must exists
     	tMainOffice.setId(100);
     	assertThrows(ASException.class, () -> asMainOffice.showSalary(tMainOffice.getId()));
-	}
-
-	@Test
-    void totalSalaryMainOfficeErrorActive() throws ASException, IncorrectInputException { //Main office must be active
-    	tMainOffice.setActive(false);
-    	Integer idMO = asMainOffice.create(tMainOffice);
-
-    	assertThrows(ASException.class, () -> asMainOffice.showSalary(idMO));
 	}
 
 
