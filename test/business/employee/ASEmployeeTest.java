@@ -154,6 +154,7 @@ class ASEmployeeTest {
 
     @Test
     void updateIncorrectMainOfficePreviouslyDeactivated() throws ASException, IncorrectInputException {
+        tEmployee.setActive(false);
         asEmployee.create(tEmployee);
         asMainOffice.drop(tEmployee.getIdMainOffice());
 
