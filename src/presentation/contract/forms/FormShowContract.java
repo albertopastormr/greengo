@@ -71,15 +71,9 @@ public class FormShowContract extends JDialog {
 				TContract contract = new TContract();
 				try {
 					/*This is related to JPA*/
-<<<<<<< HEAD
 					contract.setIdMainOffice(Util.parseNoNegativeInt(idMainOfficeText.getText()));
 					contract.setIdService(Util.parseNoNegativeInt(idServiceText.getText()));
-=======
-<<<<<<< HEAD
-					contract.setIdMainOffice(Util.parseNoNegativeInt(idText.getText()));
-=======
->>>>>>> 51e69a3f83b6aaa9cd11a65524429b04e446dd72
->>>>>>> dd8ec58bb2059f55d2c114b05d04e9bdd1e65bf9
+
 					dispose();
 					AppController.getInstance().execute(new LightContext(Event.SHOW_CONTRACT, contract));
 				} catch (Exception ex) {

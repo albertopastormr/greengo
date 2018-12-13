@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ASContractTest {
 
-    /*private static ASContract asContract = new ASContractImp();
+    private static ASContract asContract = new ASContractImp();
     private static ASMainOffice asMainOffice = new ASMainOfficeImp();
     private static ASService asService = new ASServiceImp();
 
@@ -52,10 +52,10 @@ class ASContractTest {
 
 
     // ----------- CREATE ---------------
-   /*void createOK() throws ASException, IncorrectInputException {
-        assertTrue( asContract.create(tContract) > 0);
+   void createOK() throws ASException, IncorrectInputException {
+        assertTrue( asContract.create(tContract) != null);
     }
-*/
+
 
     @Test
     void createIncorrectInputServiceLevel(){
@@ -241,6 +241,4 @@ class ASContractTest {
         assertEquals(1, result.size());
         assertTrue(checkValuesTContract(tContract, result.get(0)));
     }
-
-*/
 }
