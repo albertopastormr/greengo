@@ -18,6 +18,7 @@ import integration.Util;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -104,7 +105,8 @@ public class ASServiceTest {
     // --------------------- DROP --------------------
     @Test
     void dropServiceSuccessful() throws ASException, IncorrectInputException { //-
-        as.drop(as.create(tService));
+        tService.setId(as.create(tService));
+        as.drop(tService.getId());
         assertTrue(!as.show(tService.getId()).isActive());
     }
 
@@ -324,6 +326,7 @@ public class ASServiceTest {
 
         Integer idService = as.create(tService);
         Integer idMainOffice = asMainOffice.create(tMainOffice);
+        tService.setId(idService);
 
         tContract.setIdService(idService);
         tContract.setIdMainOffice(idMainOffice);
@@ -349,7 +352,8 @@ public class ASServiceTest {
         asContract.create(tContract);
 
         assertEquals(1,as.showServicesByLevel(3).size());
-        assertTrue(checkTransferValues(tService,as.showServicesByLevel(3).iterator().next()));
+        ArrayList<TService> list = (ArrayList<TService>) as.showServicesByLevel(3);
+        assertTrue(checkTransferValues(tService,list.get(0)));
     }
 
     @Test

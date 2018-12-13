@@ -11,7 +11,7 @@ import java.awt.*;
 
 public class ContractPanel extends JPanel {
 
-	private final String[] columnId = {"Id", "service Level", "Id Main Office", "Id service", "Active"};
+	private final String[] columnId = { "Id Main Office","Id service", "service Level", "Active"};
 	private TableModel model;
 
 	public ContractPanel(PanelTabs panelTabs) {

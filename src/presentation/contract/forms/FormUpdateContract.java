@@ -14,7 +14,8 @@ import java.awt.event.ActionListener;
 
 public class FormUpdateContract extends JDialog {
 
-	private JTextField idText;
+	private JTextField idMainOfficeText;
+	private JTextField idServiceText;
 	private JTextField serviceLevelText;
 
 	public FormUpdateContract() {
@@ -37,14 +38,22 @@ public class FormUpdateContract extends JDialog {
 	}
 
 	private JPanel fieldsPanel() {
-		JPanel ret = ViewHelpers.createFieldPanel(2);
+		JPanel ret = ViewHelpers.createFieldPanel(3);
 
-		//ID
-		JLabel idLabel = new JLabel("ID");
-		ret.add(idLabel);
+		//IDMainOffice
+		JLabel idMainOfficeLabel = new JLabel("MainOffice");
+		ret.add(idMainOfficeLabel);
 
-		idText = new JTextField(10);
-		ret.add(idText);
+		idMainOfficeText = new JTextField(10);
+		ret.add(idMainOfficeText);
+
+
+		//IDService
+		JLabel idServiceLabel = new JLabel("Service");
+		ret.add(idServiceLabel);
+
+		idServiceText = new JTextField(10);
+		ret.add(idServiceText);
 
 		//service Level
 		JLabel serviceLevelLabel = new JLabel("service Level");
@@ -72,6 +81,8 @@ public class FormUpdateContract extends JDialog {
 				try {
 					/*This is related to JPA*/
 					contract.setServiceLevel(Util.parseNoNegativeInt(serviceLevelText.getText()));
+					contract.setIdMainOffice(Util.parseNoNegativeInt(idMainOfficeText.getText()));
+					contract.setIdService(Util.parseNoNegativeInt(idServiceText.getText()));
 					dispose();
 					AppController.getInstance().execute(new LightContext(Event.UPDATE_CONTRACT, contract));
 				} catch (Exception ex) {

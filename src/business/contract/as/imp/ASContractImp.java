@@ -220,8 +220,8 @@ public class ASContractImp implements ASContract {
             Collection<Contract> contractList = query.getResultList();
 
             for(Contract c: contractList){
-                tContractList.add(new TContract(c.getServiceLevel(),
-                        c.getMainOffice().getId(), c.getService().getId(), c.isActive()));
+                tContractList.add(new TContract(c.getMainOffice().getId(),
+                        c.getService().getId(), c.getServiceLevel(), c.isActive()));
             }
 
             transaction.commit();

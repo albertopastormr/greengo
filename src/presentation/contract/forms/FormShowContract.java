@@ -14,7 +14,8 @@ import java.awt.event.ActionListener;
 
 public class FormShowContract extends JDialog {
 
-	private JTextField idText;
+	private JTextField idMainOfficeText;
+	private JTextField idServiceText;
 
 	public FormShowContract() {
 		setTitle("Show contract");
@@ -36,14 +37,22 @@ public class FormShowContract extends JDialog {
 	}
 
 	private JPanel fieldsPanel() {
-		JPanel ret = ViewHelpers.createFieldPanel(1);
+		JPanel ret = ViewHelpers.createFieldPanel(2);
 
-		//ID
-		JLabel idLabel = new JLabel("ID");
-		ret.add(idLabel);
+		//IDMainOffice
+		JLabel idMainOfficeLabel = new JLabel("MainOffice");
+		ret.add(idMainOfficeLabel);
 
-		idText = new JTextField(10);
-		ret.add(idText);
+		idMainOfficeText = new JTextField(10);
+		ret.add(idMainOfficeText);
+
+
+		//IDService
+		JLabel idServiceLabel = new JLabel("Service");
+		ret.add(idServiceLabel);
+
+		idServiceText = new JTextField(10);
+		ret.add(idServiceText);
 
 		return ret;
 	}
@@ -62,6 +71,8 @@ public class FormShowContract extends JDialog {
 				TContract contract = new TContract();
 				try {
 					/*This is related to JPA*/
+					contract.setIdMainOffice(Util.parseNoNegativeInt(idMainOfficeText.getText()));
+					contract.setIdService(Util.parseNoNegativeInt(idServiceText.getText()));
 					dispose();
 					AppController.getInstance().execute(new LightContext(Event.SHOW_CONTRACT, contract));
 				} catch (Exception ex) {

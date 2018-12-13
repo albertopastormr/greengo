@@ -28,15 +28,18 @@ public class Contract implements Serializable {
 
 	//@Id @GeneratedValue(strategy= GenerationType.IDENTITY)
 	//private Integer id;
-	@EmbeddedId private ContractId id;
+	@EmbeddedId
+	private ContractId id;
 
 	@Version
 	private Integer version;
 
 	@ManyToOne
+	@JoinColumn(name = "SERVICE_ID", insertable = false, updatable = false)
 	private Service service;
 
 	@ManyToOne
+	@JoinColumn(name = "MAINOFFICE_ID", insertable = false, updatable = false)
 	private MainOffice mainOffice;
 
 	private Integer serviceLevel;

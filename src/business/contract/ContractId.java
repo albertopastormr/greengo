@@ -1,12 +1,16 @@
 package business.contract;
 
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import java.io.Serializable;
 
 @Embeddable
 public class ContractId implements Serializable {
 
+    @Column(name = "MAINOFFICE_ID")
     private Integer mainOfficeId;
+
+    @Column(name = "SERVICE_ID")
     private Integer serviceId;
 
     public ContractId(){}

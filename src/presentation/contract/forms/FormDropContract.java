@@ -14,7 +14,8 @@ import java.awt.event.ActionListener;
 
 public class FormDropContract extends JDialog{
 
-		private JTextField idText;
+		private JTextField idMainOfficeText;
+		private JTextField idServiceText;
 
 		public FormDropContract() {
 			setTitle("Drop contract");
@@ -36,15 +37,22 @@ public class FormDropContract extends JDialog{
 		}
 
 	private JPanel fieldsPanel() {
-		JPanel ret = ViewHelpers.createFieldPanel(1);
+		JPanel ret = ViewHelpers.createFieldPanel(2);
 
 		//ID
-		JLabel idLabel = new JLabel("ID");
-		ret.add(idLabel);
+		JLabel idMainOfficeLabel = new JLabel("MainOffice");
+		ret.add(idMainOfficeLabel);
 
-		idText = new JTextField(10);
-		ret.add(idText);
+		idMainOfficeText = new JTextField(10);
+		ret.add(idMainOfficeText);
 
+
+		//ID
+		JLabel idServiceLabel = new JLabel("Service");
+		ret.add(idServiceLabel);
+
+		idServiceText = new JTextField(10);
+		ret.add(idServiceText);
 		return ret;
 	}
 
@@ -63,6 +71,9 @@ public class FormDropContract extends JDialog{
 				try {
 					/*This is related to JPA*/
 					dispose();
+					contract.setIdMainOffice(Util.parseNoNegativeInt(idMainOfficeText.getText()));
+					contract.setIdService(Util.parseNoNegativeInt(idServiceText.getText()));
+
 					AppController.getInstance().execute(new LightContext(Event.DROP_CONTRACT, contract));
 				} catch (Exception ex) {
 					JOptionPane.showMessageDialog(getRootPane(), ex.getMessage(), "ERROR DROP CONTRACT", JOptionPane.ERROR_MESSAGE);
