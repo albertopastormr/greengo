@@ -24,7 +24,7 @@ import business.mainoffice.MainOffice;
 		@NamedQuery(name = "Service.findAllEmployees",
 				query = "select obj from Employee obj ") })
 
-public class Employee implements Serializable {
+public abstract class Employee implements Serializable {
 
 	private static final long serialVersionUID = 0;
 
@@ -56,6 +56,8 @@ public class Employee implements Serializable {
         this.salary = te.getSalary();
         this.active = te.isActive();
     }
+
+    public abstract float getDetailedSalary();
 
     public static long getSerialVersionUID() {
 		return serialVersionUID;

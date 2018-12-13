@@ -47,12 +47,12 @@ public class ASServiceTest {
     // --------------------- CREATE --------------------
 
     @Test
-    void createServiceSuccessful() throws ASException, IncorrectInputException {
+    void createServiceSuccessful() throws ASException, IncorrectInputException { //-
         assertTrue(as.create(tService)>0);
     }
 
     @Test
-    void createIncorrectServiceSameType() throws ASException, IncorrectInputException {
+    void createIncorrectServiceSameType() throws ASException, IncorrectInputException { //-
         as.create(tService);
 
         // all different fields except the type
@@ -62,49 +62,49 @@ public class ASServiceTest {
     }
 
     @Test
-    void createIncorrectInputServiceIdNegative(){
+    void createIncorrectInputServiceIdNegative(){ //-
         tService.setId(-1);
         assertThrows(IncorrectInputException.class, ()-> as.create(tService));
     }
 
     @Test
-    void createIncorrectInputServiceTypeNull(){
+    void createIncorrectInputServiceTypeNull(){ //-
         tService.setType(null);
         assertThrows(IncorrectInputException.class, ()-> as.create(tService));
     }
 
     @Test
-    void createIncorrectInputServiceTypeVoid(){
+    void createIncorrectInputServiceTypeVoid(){ //-
         tService.setType("");
         assertThrows(IncorrectInputException.class, ()-> as.create(tService));
     }
 
     @Test
-    void createIncorrectInputNullAddress(){
+    void createIncorrectInputNullAddress(){ //-
         tService.setAddress(null);
         assertThrows(IncorrectInputException.class, ()->as.create(tService));
     }
 
     @Test
-    void createIncorrectInputVoidAddress(){
+    void createIncorrectInputVoidAddress(){ //-
         tService.setAddress("");
         assertThrows(IncorrectInputException.class, ()->as.create(tService));
     }
 
     @Test
-    void createIncorrectInputNumVehiclesAttendedNegative(){
+    void createIncorrectInputNumVehiclesAttendedNegative(){ //-
         tService.setNumVehiclesAttended(-1);
         assertThrows(IncorrectInputException.class, ()->as.create(tService));
     }
 
     @Test
-    void createIncorrectInputNumVehiclesAttendedNull(){
+    void createIncorrectInputNumVehiclesAttendedNull(){ //-
         tService.setNumVehiclesAttended(null);
         assertThrows(IncorrectInputException.class, ()->as.create(tService));
     }
 
     @Test
-    void createIncorrectInputActiveNull(){
+    void createIncorrectInputActiveNull(){ //-
         tService.setActive(null);
         assertThrows(IncorrectInputException.class, ()->as.create(tService));
     }
@@ -112,13 +112,13 @@ public class ASServiceTest {
 
     // --------------------- DROP --------------------
     @Test
-    void dropServiceSuccessful() throws ASException, IncorrectInputException {
+    void dropServiceSuccessful() throws ASException, IncorrectInputException { //-
         as.drop(as.create(tService));
         assertTrue(!as.show(tService.getId()).isActive());
     }
 
     @Test
-    void dropServiceWithContractAssociatedSuccessful() throws ASException, IncorrectInputException {
+    void dropServiceWithContractAssociatedSuccessful() throws ASException, IncorrectInputException { //-
         Integer idService = as.create(tService);
         Integer idMainOffice = asMainOffice.create(tMainOffice);
 
@@ -133,7 +133,7 @@ public class ASServiceTest {
     }
 
     @Test
-    void dropIncorrectServiceWithContractActive() throws ASException, IncorrectInputException {
+    void dropIncorrectServiceWithContractActive() throws ASException, IncorrectInputException { //-
         Integer idService = as.create(tService);
         Integer idMainOffice = asMainOffice.create(tMainOffice);
 
@@ -148,7 +148,7 @@ public class ASServiceTest {
     }
 
     @Test
-    void dropIncorrectServiceAlreadyInactive() throws ASException, IncorrectInputException {
+    void dropIncorrectServiceAlreadyInactive() throws ASException, IncorrectInputException { //-
         Integer idService = as.drop(as.create(tService));
 
         assertThrows(ASException.class, ()-> as.drop(idService));
@@ -157,23 +157,23 @@ public class ASServiceTest {
     @Test
     void dropIncorrectServiceNotExist(){
         assertThrows(ASException.class, ()-> as.drop(20));
-    }
+    } //-
 
     @Test
     void dropIncorrectServiceIdNull(){
         assertThrows(IncorrectInputException.class, ()-> as.drop(null));
-    }
+    } //-
 
     @Test
     void dropIncorrectServiceIdNegative(){
         assertThrows(IncorrectInputException.class, ()-> as.drop(-1));
-    }
+    } //-
 
 
     // --------------------- UPDATE --------------------
 
     @Test
-    void updateServiceSuccessful() throws ASException, IncorrectInputException {
+    void updateServiceSuccessful() throws ASException, IncorrectInputException { //-
         // tService = new TService(null, 200, true, "Taller","Calle mercado,3",12345);
 
         TService oldService = as.show(as.create(tService));
@@ -191,13 +191,15 @@ public class ASServiceTest {
     }
 
     @Test
-    void updateIncorrectServiceSameType() throws ASException, IncorrectInputException {
+    void updateIncorrectServiceSameType() throws ASException, IncorrectInputException { //-
         // tService = new TService(null, 200, true, "Taller","Calle mercado,3",12345);
-        as.create(tService);
+        Integer idService = as.create(tService);
 
         TService service2 = new TService(null,200,true,
                 "Lavado","Calle mayor",100);
         as.create(service2);
+
+        tService.setId(idService);
 
         tService.setType("Lavado");
         assertThrows(ASException.class, ()->as.update(tService));
