@@ -12,7 +12,7 @@ import presentation.controller.LightContext;
 public class ShowContract implements Command {
 	@Override
 	public LightContext execute(LightContext in) throws ASException, IncorrectInputException {
-		TContract ret = ASContractFactory.getInstance().generateASContract().show(((TContract)in.getData()).getId());
+		TContract ret = ASContractFactory.getInstance().generateASContract().show(((TContract)in.getData()).getIdMainOffice(),((TContract) in.getData()).getIdService());
 		return new LightContext(Event.SHOW_CONTRACT, ret);
 	}
 }

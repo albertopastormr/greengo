@@ -2,7 +2,6 @@ package business.contract;
 
 public class TContract {
 
-    private Integer id;
     private Integer serviceLevel;
     private Integer idMainOffice;
     private Integer idService;
@@ -11,20 +10,11 @@ public class TContract {
     public TContract() {
     }
 
-    public TContract(Integer id, Integer serviceLevel, Integer idMainOffice, Integer idService, Boolean active) {
-        this.id = id;
+    public TContract(Integer idMainOffice, Integer idService, Integer serviceLevel, Boolean active) {
         this.serviceLevel = serviceLevel;
         this.idMainOffice = idMainOffice;
         this.idService = idService;
         this.active = active;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public Integer getServiceLevel() {
@@ -62,7 +52,6 @@ public class TContract {
     @Override
     public String toString(){
         String ret = "";
-        ret += String.format("%-13s %13s %n", "Id: ", id);
         ret += String.format("%-10s %10s %n", "Main office id: ", idMainOffice);
         ret += String.format("%-13s %13s %n", "service id: ", idService);
         ret += String.format("%-13s %13s %n", "Active: ", active);

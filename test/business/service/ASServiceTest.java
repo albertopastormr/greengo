@@ -206,7 +206,7 @@ public class ASServiceTest {
     }
 
     @Test
-    void updateIncorrectActiveModified() throws ASException, IncorrectInputException {
+    void updateIncorrectActiveModified() throws ASException, IncorrectInputException { //-
         // tService = new TService(null, 200, true, "Taller","Calle mercado,3",12345);
         as.create(tService);
         tService.setActive(false); //active field can't be modified
@@ -215,93 +215,81 @@ public class ASServiceTest {
     }
 
     @Test
-    void updateIncorrectServiceNotExist() {
+    void updateIncorrectServiceNotExist() { //-
         tService.setId(20);
         assertThrows(ASException.class, ()-> as.update(tService));
     }
 
     @Test
-    void updateIncorrectInputNullID() {
+    void updateIncorrectInputNullID() { //-
         tService.setId(null);
         assertThrows(IncorrectInputException.class, ()-> as.update(tService));
     }
 
     @Test
-    void updateIncorrectInputId0() {
+    void updateIncorrectInputId0() { //-
         tService.setId(0);
         assertThrows(IncorrectInputException.class, ()-> as.update(tService));
     }
 
     @Test
-    void updateIncorrectInputNegativeId() {
+    void updateIncorrectInputNegativeId() { //-
         tService.setId(-1);
         assertThrows(IncorrectInputException.class, ()-> as.update(tService));
     }
 
     @Test
-    void updateIncorrectInputNegativeCapacity(){
+    void updateIncorrectInputNegativeCapacity(){ //-
         tService.setCapacity(-10);
         assertThrows(IncorrectInputException.class, ()->as.update(tService));
     }
 
     @Test
-    void updateIncorrectInputCapacity0(){
+    void updateIncorrectInputCapacity0(){ //-
         tService.setCapacity(0);
         assertThrows(IncorrectInputException.class, ()->as.update(tService));
     }
 
     @Test
-    void updateIncorrectInputNullActive(){
+    void updateIncorrectInputNullActive(){ //-
         tService.setActive(null);
         assertThrows(IncorrectInputException.class, ()->as.update(tService));
     }
 
     @Test
-    void updateIncorrectInputNullType(){
+    void updateIncorrectInputNullType(){//-
         tService.setType(null);
         assertThrows(IncorrectInputException.class,()->as.update(tService));
     }
 
     @Test
-    void updateIncorrectInputVoidType(){
+    void updateIncorrectInputVoidType(){ //-
         tService.setType("");
         assertThrows(IncorrectInputException.class,()->as.update(tService));
     }
 
     @Test
-    void updateIncorrectInputNullAddress(){
+    void updateIncorrectInputNullAddress(){ //-
         tService.setAddress(null);
         assertThrows(IncorrectInputException.class,()->as.update(tService));
     }
 
     @Test
-    void updateIncorrectInputVoidAddress(){
+    void updateIncorrectInputVoidAddress(){ //-
         tService.setAddress("");
         assertThrows(IncorrectInputException.class,()->as.update(tService));
     }
 
     @Test
-    void updateIncorrectInputNegativeNumVehicleAttended(){
+    void updateIncorrectInputNegativeNumVehicleAttended(){ //-
         tService.setNumVehiclesAttended(-1);
-        assertThrows(IncorrectInputException.class,()->as.update(tService));
-    }
-
-    @Test
-    void updateIncorrectInputNullNumVehicleAttended(){
-        tService.setNumVehiclesAttended(null);
-        assertThrows(IncorrectInputException.class,()->as.update(tService));
-    }
-
-    @Test
-    void updateIncorrectInputNumVehicleAttended0(){
-        tService.setNumVehiclesAttended(0);
         assertThrows(IncorrectInputException.class,()->as.update(tService));
     }
 
     // --------------------- SHOW --------------------
 
     @Test
-    public void showServiceSuccessful() throws ASException, IncorrectInputException {
+    public void showServiceSuccessful() throws ASException, IncorrectInputException { //-
         Integer idService = as.create(tService);
         assertTrue(checkTransferValues(tService, as.show(idService)));
     }
@@ -309,24 +297,23 @@ public class ASServiceTest {
     @Test
     void showServiceNotExits(){
         assertThrows(ASException.class, ()-> as.show(20));
-    }
+    } //-
 
     @Test
     void showServiceIdNegative(){
         assertThrows(IncorrectInputException.class, ()-> as.show(-1));
-    }
+    } //-
 
     @Test
-    void showServiceIdNull() { assertThrows(IncorrectInputException.class, ()-> as.show(null)); }
+    void showServiceIdNull() { assertThrows(IncorrectInputException.class, ()-> as.show(null)); } //-
 
     @Test
-    void showServiceId0() { assertThrows(IncorrectInputException.class, ()-> as.show(0)); }
+    void showServiceId0() { assertThrows(IncorrectInputException.class, ()-> as.show(0)); } //-
 
     // ----------------- SHOW ALL -------------------
 
-
     @Test
-    void showAllServiceSuccessful() throws ASException, IncorrectInputException {
+    void showAllServiceSuccessful() throws ASException, IncorrectInputException { //-
         Integer idService1 = as.create(tService);
         tService.setType("Reparaciones");
 
@@ -342,14 +329,14 @@ public class ASServiceTest {
     }
 
     @Test
-    void showAllCitySuccessfulEmpty() throws ASException {
+    void showAllCitySuccessfulEmpty() throws ASException { //-
         Collection<TService> c = as.showAll();
         assertTrue(c.isEmpty());
     }
 
     //show service by level
     @Test
-    void showServicesFromLevelSuccessful() throws ASException, IncorrectInputException {
+    void showServicesFromLevelSuccessful() throws ASException, IncorrectInputException { //-
         // Contract one
 
         Integer idService = as.create(tService);
@@ -383,22 +370,22 @@ public class ASServiceTest {
     }
 
     @Test
-    void showServicesFromLevelEmpty() throws ASException, IncorrectInputException {
+    void showServicesFromLevelEmpty() throws ASException, IncorrectInputException { //-
         assertTrue(as.showServicesByLevel(3).isEmpty());
     }
 
     @Test
-    void showServicesFromLevelIncorrectInputNullLevel() {
+    void showServicesFromLevelIncorrectInputNullLevel() { //-
         assertThrows(IncorrectInputException.class, ()-> as.showServicesByLevel(null));
     }
 
     @Test
-    void showServicesFromLevelIncorrectInputLevel0() {
+    void showServicesFromLevelIncorrectInputLevel0() { //-
         assertThrows(IncorrectInputException.class, ()-> as.showServicesByLevel(0));
     }
 
     @Test
-    void showServicesFromLevelIncorrectInputNegativeLevel() {
+    void showServicesFromLevelIncorrectInputNegativeLevel() { //-
         assertThrows(IncorrectInputException.class, ()-> as.showServicesByLevel(-1));
     }
 

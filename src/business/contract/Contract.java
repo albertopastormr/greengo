@@ -26,8 +26,9 @@ public class Contract implements Serializable {
 
 	private static final long serialVersionUID = 0;
 
-	@Id @GeneratedValue(strategy= GenerationType.IDENTITY)
-	private Integer id;
+	//@Id @GeneratedValue(strategy= GenerationType.IDENTITY)
+	//private Integer id;
+	@EmbeddedId private ContractId id;
 
 	@Version
 	private Integer version;
@@ -46,7 +47,7 @@ public class Contract implements Serializable {
 	}
 
     public Contract(TContract tc) {
-        this.id = tc.getId();
+        this.id = new ContractId(tc.getIdMainOffice(), tc.getIdService());
         this.service = getService();
         this.mainOffice = getMainOffice();
         this.serviceLevel = tc.getServiceLevel();
@@ -57,11 +58,11 @@ public class Contract implements Serializable {
 		return serialVersionUID;
 	}
 
-	public Integer getId() {
+	public ContractId getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(ContractId id) {
 		this.id = id;
 	}
 

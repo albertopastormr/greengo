@@ -3,6 +3,7 @@ package business.contract.as.imp;
 import business.ASException;
 import business.IncorrectInputException;
 import business.contract.Contract;
+import business.contract.ContractId;
 import business.contract.TContract;
 import business.contract.as.ASContract;
 import business.mainoffice.MainOffice;
@@ -18,8 +19,8 @@ public class ASContractImp implements ASContract {
     /*This is related to JPA*/
 
     @Override
-    public Integer create(TContract tContract) throws ASException, IncorrectInputException {
-        Integer id;
+    public ContractId create(TContract tContract) throws ASException, IncorrectInputException {
+        ContractId id;
         checkValuesToCreate(tContract);
 
         try{
@@ -78,11 +79,13 @@ public class ASContractImp implements ASContract {
     }
 
     @Override
-    public Integer drop(Integer id) throws ASException, IncorrectInputException {
-        Integer idRet;
+    public ContractId drop(Integer mainOfficeId, Integer serviceId) throws ASException, IncorrectInputException {
+        ContractId idRet;
 
-        if(id == null) throw new IncorrectInputException("Id field can't be empty");
-        if(id <= 0) throw new IncorrectInputException("Id field must be a positive integer greater than zero");
+        if(mainOfficeId == null && serviceId == null) throw new IncorrectInputException("Id field can't be empty");
+        if(mainOfficeId <= 0 && serviceId <= 0) throw new IncorrectInputException("Id field must be a positive integer greater than zero");
+
+        ContractId idContract = new ContractId(mainOfficeId, serviceId);
 
         try {
             EntityManagerFactory emf = Persistence.createEntityManagerFactory("greengo");
@@ -90,7 +93,7 @@ public class ASContractImp implements ASContract {
             EntityTransaction transaction = em.getTransaction();
 
             transaction.begin();
-            Contract contract = em.find(Contract.class, id);
+            Contract contract = em.find(Contract.class, idContract);
 
             if(contract == null){
                 transaction.rollback();
@@ -115,9 +118,12 @@ public class ASContractImp implements ASContract {
     }
 
     @Override
-    public Integer update(TContract tContract) throws ASException, IncorrectInputException {
-        Integer id;
+    public ContractId update(TContract tContract) throws ASException, IncorrectInputException {
+        ContractId id;
         checkValuesToUpdate(tContract);
+
+        ContractId idContract = new ContractId(tContract.getIdMainOffice(), tContract.getIdService());
+
         try {
             EntityManagerFactory emf = Persistence.createEntityManagerFactory("greengo");
             EntityManager em = emf.createEntityManager();
@@ -125,7 +131,7 @@ public class ASContractImp implements ASContract {
 
             transaction.begin();
 
-            Contract contract = em.find(Contract.class, tContract.getId());
+            Contract contract = em.find(Contract.class, idContract);
 
             if (contract == null) {
                 transaction.rollback();
@@ -164,11 +170,13 @@ public class ASContractImp implements ASContract {
     }
 
     @Override
-    public TContract show(Integer id) throws ASException, IncorrectInputException{
-        if(id == null) throw new IncorrectInputException("Id field can't be empty");
-        if(id <= 0) throw new IncorrectInputException("Id field must be a positive integer greater than zero");
+    public TContract show(Integer mainOfficeId, Integer serviceId) throws ASException, IncorrectInputException{
+        if(mainOfficeId == null && serviceId == null) throw new IncorrectInputException("Id field can't be empty");
+        if(mainOfficeId <= 0 && serviceId <= 0) throw new IncorrectInputException("Id field must be a positive integer greater than zero");
 
         TContract tContract;
+
+        ContractId idContract = new ContractId(mainOfficeId, serviceId);
 
         try{
             EntityManagerFactory emf = Persistence.createEntityManagerFactory("greengo");
@@ -177,12 +185,12 @@ public class ASContractImp implements ASContract {
 
             transaction.begin();
 
-            Contract contract = em.find(Contract.class, id);
+            Contract contract = em.find(Contract.class, idContract);
             if(contract == null){
                 transaction.rollback();
                 throw new ASException("The contract doesn't exist");
             }
-            tContract = new TContract(contract.getId(), contract.getServiceLevel(),
+            tContract = new TContract(contract.getServiceLevel(),
                     contract.getMainOffice().getId(), contract.getService().getId(), contract.isActive());
 
             transaction.commit();
@@ -212,7 +220,7 @@ public class ASContractImp implements ASContract {
             Collection<Contract> contractList = query.getResultList();
 
             for(Contract c: contractList){
-                tContractList.add(new TContract(c.getId(), c.getServiceLevel(),
+                tContractList.add(new TContract(c.getServiceLevel(),
                         c.getMainOffice().getId(), c.getService().getId(), c.isActive()));
             }
 
@@ -238,8 +246,8 @@ public class ASContractImp implements ASContract {
     }
 
     private static void checkValuesToUpdate(TContract contract) throws IncorrectInputException {
-        if(contract.getId() == null) throw new IncorrectInputException("Id field must be empty");
-        if(contract.getId() <= 0 ) throw new IncorrectInputException("Id field must be a positive integer greater than zero");
+        //if(contract.getId() == null) throw new IncorrectInputException("Id field must be empty");
+        //if(contract.getId() <= 0 ) throw new IncorrectInputException("Id field must be a positive integer greater than zero");
         if(contract.getServiceLevel() == null) throw new IncorrectInputException("Service level field can't be empty");
         if(contract.getServiceLevel() < 0) throw new IncorrectInputException("Service level field must be a positive integer");
     }
