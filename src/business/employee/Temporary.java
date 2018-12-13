@@ -17,6 +17,11 @@ public class Temporary extends Employee implements Serializable {
 	public Temporary() {
 	}
 
+	@Override
+	public float getDetailedSalary() {
+		return 0;
+	}
+
 	public Temporary(TTemporaryEmployee tt) {
 		super(tt);
 		numWorkedHours = tt.getNumWorkedHours();

@@ -22,6 +22,11 @@ public class Permanent extends Employee implements Serializable {
 	public Permanent() {
 	}
 
+	@Override
+	public float getDetailedSalary() {
+		return 0;
+	}
+
 	public Permanent(TPermanentEmployee tp) {
 		super(tp);
 		apportionment= tp.getApportionment();
