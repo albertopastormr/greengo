@@ -62,11 +62,6 @@ class ASMainOfficeTest {
         assertTrue(asMainOffice.create(tMainOffice)>0);
     }
 
-    @Test
-    void createMainOfficeIncorrectInput(){//id must be null
-        tMainOffice.setId(0);
-        assertThrows(IncorrectInputException.class, () -> asMainOffice.create(tMainOffice));
-    }
 
     @Test
     void createMainOfficeIncorrectInput2(){//address mustn't be null

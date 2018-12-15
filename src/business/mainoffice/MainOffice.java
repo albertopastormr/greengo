@@ -59,7 +59,6 @@ public class MainOffice implements Serializable {
 		this.address = tm.getAddress();
 		this.city = tm.getCity();
 		this.active = tm.isActive();
-		//TODO revisar esto
 		this.employee = new ArrayList<>();
 		this.contract = new ArrayList<>();
 	}

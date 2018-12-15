@@ -81,7 +81,6 @@ public class ASMainOfficeImp implements ASMainOffice {
                 transaction.rollback();
                 throw new ASException("The main office is already disabled");
             }
-            //TODO Comprobar esto en interfaz, se creo antes de hacer empleado y contrato
             for (Contract contract : contractslist) {
                 if (contract.isActive()) {
                     transaction.rollback();
@@ -257,7 +256,6 @@ public class ASMainOfficeImp implements ASMainOffice {
     }
 
 	private static void checkValuesToCreate(TMainOffice office) throws IncorrectInputException{
-        if(office.getId()!= null) throw new IncorrectInputException("Id must be empty");
 	    if(office.getAddress() == null) throw new IncorrectInputException("Address field can't be empty");
 	    if(office.getCity() == null) throw new IncorrectInputException("City field can't be empty");
 	    if(office.isActive() == null) throw new IncorrectInputException("Active field can't be empty");
