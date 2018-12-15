@@ -74,6 +74,8 @@ public class TService {
         String ret = "";
         Integer addressLength = Math.max(address.length(), type.length());
         if(addressLength <= 8) addressLength = 9;
+        if(addressLength <= "Vehicles attended: ".length()) addressLength = "Vehicles attended: ".length();
+
         String regex = "%-" + addressLength + "s %" + addressLength + "s %n";
 
         ret += String.format(regex, "Id: ", id);

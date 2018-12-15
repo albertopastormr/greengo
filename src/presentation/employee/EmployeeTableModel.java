@@ -1,6 +1,8 @@
 package presentation.employee;
 
 import business.employee.TEmployee;
+import business.employee.TPermanentEmployee;
+import business.employee.TTemporaryEmployee;
 import presentation.util.TableModel;
 
 public class EmployeeTableModel extends TableModel<TEmployee> {
@@ -31,6 +33,12 @@ public class EmployeeTableModel extends TableModel<TEmployee> {
 			case 5:
 				s = list.get(indiceFil).getType();
 				break;
+            case 6:
+                if(list.get(indiceFil).getType().equals("Temporary")){
+                    s = ((TTemporaryEmployee)list.get(indiceFil)).getNumWorkedHours();
+                }
+                else s = ((TPermanentEmployee)list.get(indiceFil)).getApportionment();
+
 			default:
 				assert (false);
 		}

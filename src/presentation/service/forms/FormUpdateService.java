@@ -22,7 +22,6 @@ public class FormUpdateService extends  JDialog{
 	private JTextField addressText;
 	private JTextField capacityText;
 	private JTextField vehicles_attendedText;
-	private JComboBox activeComboBox;
 
 	public FormUpdateService() {
 		setTitle("Update service");
@@ -102,6 +101,7 @@ public class FormUpdateService extends  JDialog{
 					service.setAddress(Util.parseString(addressText.getText()));
 					service.setCapacity(Util.parseNoNegativeInt(capacityText.getText()));
 					service.setNumVehiclesAttended(Util.parseNoNegativeInt(vehicles_attendedText.getText()));
+					service.setActive(true);
 					dispose();
 					AppController.getInstance().execute(new LightContext(Event.UPDATE_SERVICE, service));
 				} catch (Exception ex) {

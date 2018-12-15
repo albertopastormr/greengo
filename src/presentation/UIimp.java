@@ -99,7 +99,7 @@ public class UIimp extends UI{
 			case SHOW_SERVICE_BY_LEVEL:
 				TableModel modelService = new ServiceTableModel(ServicePanel.getColumnId());
 				modelService.setList((List<TService>) context.getData());
-				ViewHelpers.createSpecificTable(modelService, "Show services by lavel");
+				ViewHelpers.createSpecificTable(modelService, "Show services by level");
 				break;
 			case CREATE_RENTAL:
 				Util.inform("Added rental with id " + (context.getData()));

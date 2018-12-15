@@ -11,7 +11,7 @@ import java.awt.*;
 
 public class EmployeePanel extends JPanel {
 
-	private final String[] columnId = {"Id", "Id card number", "Salary", "Active", "Id Main Office", "Type"};
+	private final String[] columnId = {"Id", "Id card number", "Salary", "Active", "Id Main Office", "Type", "Identifier"};
 	private TableModel model;
 
 	public EmployeePanel(PanelTabs panelTabs) {
