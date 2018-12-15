@@ -10,6 +10,8 @@ import business.mainoffice.as.imp.ASMainOfficeImp;
 import business.service.TService;
 import business.service.as.ASService;
 import business.service.as.imp.ASServiceImp;
+import integration.DAOException;
+import integration.Util;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -32,6 +34,13 @@ class ASContractTest {
     @BeforeEach
     @Test
     void setUp() throws ASException, IncorrectInputException {
+
+
+        try {
+            Util.deleteAll();
+        } catch (DAOException e) {
+            e.printStackTrace();
+        }
 
         tMainOffice = new TMainOffice(1,"manu","C/algomas",true);
         tService = new TService(1,1,true,"tipo planta", "~", 1);

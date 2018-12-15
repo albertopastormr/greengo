@@ -140,7 +140,7 @@ public class ASEmployeeImp implements ASEmployee {
 
             List<Employee> employeeList = query.getResultList();
 
-            MainOffice mainOffice = em.find(MainOffice.class, tEmployee.getIdMainOffice());
+            MainOffice mainOffice = em.find(MainOffice.class, tEmployee.getIdMainOffice(),LockModeType.OPTIMISTIC_FORCE_INCREMENT);
 
             if (!employeeList.isEmpty() && !(employeeList.get(0).getId().equals(tEmployee.getId()))) {
                 transaction.rollback();
