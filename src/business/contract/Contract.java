@@ -17,7 +17,7 @@ import business.service.Service;
 		@NamedQuery(name = "Contract.findBymain_Office",
                 query = "select obj from Contract obj where :mainOffice = obj.mainOffice "),
 		@NamedQuery(name = "Contract.findByservice_level",
-                query = "select obj from Contract obj where :serviceLevel = obj.serviceLevel group by obj.id "),
+                query = "select obj from Contract obj where :serviceLevel = obj.serviceLevel "),
 		@NamedQuery(name = "Contract.findByActive",
                 query = "select obj from Contract obj where :active = obj.active "),
         @NamedQuery(name = "Contract.findAllContracts",
