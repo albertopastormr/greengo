@@ -42,7 +42,7 @@ public abstract class Employee implements Serializable {
 	private Boolean active;
 
 
-	private String dtype;
+	private String type;
 
 
 	public Employee() {
@@ -103,9 +103,9 @@ public abstract class Employee implements Serializable {
 		this.active = active;
 	}
 
-	public String getType() { return dtype; }
+	public String getType() { return type; }
 
-	public void setType(String type) { this.dtype = type; }
+	public void setType(String type) { this.type = type; }
 
 
 }

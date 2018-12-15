@@ -34,11 +34,11 @@ public class ASEmployeeImp implements ASEmployee {
             Query query = em.createNamedQuery("Employee.findByidCardNumber", Employee.class);
             query.setParameter("idCardNumber", tEmployee.getIdCardNumber());
 
-            List<Employee> employeeList = query.getResultList();
+            List<Employee> employeesList = query.getResultList();
 
             MainOffice mainOffice = em.find(MainOffice.class, tEmployee.getIdMainOffice());
 
-            if (!employeeList.isEmpty()) {
+            if (!employeesList.isEmpty()) {
                 transaction.rollback();
                 throw new ASException("ERROR: There is an employee with the same idCardNumber " +
                         "(" + tEmployee.getIdCardNumber() + ") (duplication)");
@@ -234,7 +234,7 @@ public class ASEmployeeImp implements ASEmployee {
 
     @Override
     public Collection<TEmployee> showAll() throws ASException {
-        Collection<TEmployee> tEmployeeArrayList =  new ArrayList<>();
+        Collection<TEmployee> employeesList =  new ArrayList<>();
         try {
 
             EntityManagerFactory emf = Persistence.createEntityManagerFactory("greengo");
@@ -251,12 +251,12 @@ public class ASEmployeeImp implements ASEmployee {
             for (Employee employee : employeeList) {
                 if(employee.getType().equals("Temporary")){
                     Temporary temporary = em.find(Temporary.class, employee.getId());
-                    tEmployeeArrayList.add( new TTemporaryEmployee(employee.getId(), employee.getIdCardNumber(), employee.getSalary(),
+                    employeesList.add( new TTemporaryEmployee(employee.getId(), employee.getIdCardNumber(), employee.getSalary(),
                             employee.isActive(), employee.getMainOffice().getId(), temporary.getNumWorkedHours()));
                 }
                 else{
                     Permanent permanent = em.find(Permanent.class, employee.getId());
-                    tEmployeeArrayList.add( new TPermanentEmployee(employee.getId(), employee.getIdCardNumber(), employee.getSalary(),
+                    employeesList.add( new TPermanentEmployee(employee.getId(), employee.getIdCardNumber(), employee.getSalary(),
                             employee.isActive(), employee.getMainOffice().getId(), permanent.getApportionment()));
                 }
             }
@@ -268,7 +268,7 @@ public class ASEmployeeImp implements ASEmployee {
         }catch(PersistenceException | EclipseLinkException e){
             throw new ASException(e.getMessage());
         }
-        return tEmployeeArrayList;
+        return employeesList;
     }
 
     private static void checkValuesToCreate(TEmployee employee) throws IncorrectInputException {

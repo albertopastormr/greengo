@@ -8,11 +8,11 @@ import java.util.Collection;
 
 public interface ASEmployee {
 
-    Integer create(TEmployee client) throws IncorrectInputException, ASException;
+    Integer create(TEmployee tEmployee) throws IncorrectInputException, ASException;
 
     Integer drop(Integer id) throws IncorrectInputException, ASException;
 
-    Integer update(TEmployee client) throws IncorrectInputException, ASException;
+    Integer update(TEmployee tEmployee) throws IncorrectInputException, ASException;
 
     TEmployee show (Integer id) throws IncorrectInputException, ASException;
 
