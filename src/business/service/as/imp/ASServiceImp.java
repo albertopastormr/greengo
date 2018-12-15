@@ -236,9 +236,11 @@ public class ASServiceImp implements ASService {
             List<Contract> listContracts = query.getResultList();
 
             for (Contract contract : listContracts) {
-                tServicesList.add(new TService(contract.getService().getId(), contract.getService().getCapacity(),
+                TService newService = new TService(contract.getService().getId(), contract.getService().getCapacity(),
                         contract.getService().isActive(), contract.getService().getType(),
-                        contract.getService().getAddress(), contract.getService().getNumVehiclesAttended()));
+                        contract.getService().getAddress(), contract.getService().getNumVehiclesAttended());
+                if(!tServicesList.contains(newService))
+                    tServicesList.add(newService);
             }
 
             transaction.commit();

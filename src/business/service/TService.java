@@ -87,4 +87,15 @@ public class TService {
 
         return ret;
     }
+
+	@Override
+	public boolean equals(Object b){
+		TService aux = (TService) b;
+		return this.getId().equals(aux.getId())
+				&& this.getType().equals(aux.getType())
+				&& this.getCapacity().equals(aux.getCapacity())
+				&& this.getAddress().equals(aux.getAddress())
+				&& this.getNumVehiclesAttended().equals(aux.getNumVehiclesAttended())
+				&& this.isActive().equals(aux.isActive());
+	}
 }
