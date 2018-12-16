@@ -81,7 +81,7 @@ public class ASEmployeeImp implements ASEmployee {
         Integer id;
 
         if(idEmployee == null) throw  new IncorrectInputException("Id field can't be empty");
-        if(idEmployee < 0) throw new IncorrectInputException("Id field must be a positive integer greater than zero");
+        if(idEmployee <= 0) throw new IncorrectInputException("Id field must be a positive integer greater than zero");
 
         try{
             EntityManagerFactory emf = Persistence.createEntityManagerFactory("greengo");
@@ -189,7 +189,7 @@ public class ASEmployeeImp implements ASEmployee {
     public TEmployee show(Integer idEmployee) throws  ASException, IncorrectInputException{
 
         if(idEmployee == null) throw  new IncorrectInputException("Id field can't be empty");
-        if(idEmployee < 0) throw new IncorrectInputException("Id field must be a positive integer greater than zero");
+        if(idEmployee <= 0) throw new IncorrectInputException("Id field must be a positive integer greater than zero");
 
         TEmployee tEmployee;
 
@@ -207,18 +207,15 @@ public class ASEmployeeImp implements ASEmployee {
                 throw new ASException("ERROR: The employee doesn't exist");
             }
 
-            tEmployee = new TEmployee(employee.getId(), employee.getIdCardNumber(), employee.getSalary(),
-                    employee.isActive(), employee.getMainOffice().getId(), employee.getType());
-
-            if(tEmployee.getType().equals("Temporary")){
+            if(employee.getType().equals("Temporary")){
                 Temporary temporary = em.find(Temporary.class,idEmployee);
-                tEmployee = new TTemporaryEmployee(tEmployee.getId(), tEmployee.getIdCardNumber(), tEmployee.getSalary(),
-                        tEmployee.isActive(), tEmployee.getIdMainOffice(), temporary.getNumWorkedHours());
+                tEmployee = new TTemporaryEmployee(employee.getId(), employee.getIdCardNumber(), employee.getSalary(),
+                        employee.isActive(), employee.getMainOffice().getId(), temporary.getNumWorkedHours());
             }
             else{
                 Permanent permanent = em.find(Permanent.class, idEmployee);
-                tEmployee = new TPermanentEmployee(tEmployee.getId(), tEmployee.getIdCardNumber(), tEmployee.getSalary(),
-                        tEmployee.isActive(), tEmployee.getIdMainOffice(), permanent.getApportionment());
+                tEmployee = new TPermanentEmployee(employee.getId(), employee.getIdCardNumber(), employee.getSalary(),
+                        employee.isActive(), employee.getMainOffice().getId(), permanent.getApportionment());
             }
             transaction.commit();
 
@@ -234,7 +231,7 @@ public class ASEmployeeImp implements ASEmployee {
 
     @Override
     public Collection<TEmployee> showAll() throws ASException {
-        Collection<TEmployee> employeesList =  new ArrayList<>();
+        Collection<TEmployee> employees =  new ArrayList<>();
         try {
 
             EntityManagerFactory emf = Persistence.createEntityManagerFactory("greengo");
@@ -245,19 +242,21 @@ public class ASEmployeeImp implements ASEmployee {
             Query query = em.createNamedQuery("Employee.findByActive", Employee.class);
             query.setParameter("active", true);
 
-            Collection<Employee> employeeList = query.getResultList();
+            Collection<Employee> resultList = query.getResultList();
 
 
-            for (Employee employee : employeeList) {
+            for (Employee employee : resultList) {
                 if(employee.getType().equals("Temporary")){
                     Temporary temporary = em.find(Temporary.class, employee.getId());
-                    employeesList.add( new TTemporaryEmployee(employee.getId(), employee.getIdCardNumber(), employee.getSalary(),
-                            employee.isActive(), employee.getMainOffice().getId(), temporary.getNumWorkedHours()));
+                    employees.add( new TTemporaryEmployee(employee.getId(), employee.getIdCardNumber(),
+                            employee.getSalary(), employee.isActive(), employee.getMainOffice().getId(),
+                            temporary.getNumWorkedHours()));
                 }
                 else{
                     Permanent permanent = em.find(Permanent.class, employee.getId());
-                    employeesList.add( new TPermanentEmployee(employee.getId(), employee.getIdCardNumber(), employee.getSalary(),
-                            employee.isActive(), employee.getMainOffice().getId(), permanent.getApportionment()));
+                    employees.add( new TPermanentEmployee(employee.getId(), employee.getIdCardNumber(),
+                            employee.getSalary(), employee.isActive(), employee.getMainOffice().getId(),
+                            permanent.getApportionment()));
                 }
             }
 
@@ -268,12 +267,12 @@ public class ASEmployeeImp implements ASEmployee {
         }catch(PersistenceException | EclipseLinkException e){
             throw new ASException(e.getMessage());
         }
-        return employeesList;
+        return employees;
     }
 
     private static void checkValuesToCreate(TEmployee employee) throws IncorrectInputException {
         if(employee.getSalary() == null) throw new IncorrectInputException("Salary field can't be empty");
-        if(employee.getSalary() < 0) throw new IncorrectInputException("Salary field must be a positive integer");
+        if(employee.getSalary() <= 0) throw new IncorrectInputException("Salary field must be a positive integer");
         if(employee.getIdMainOffice() == null) throw new IncorrectInputException("Id main office field can't be empty");
         if(employee.getIdMainOffice() <= 0) throw new IncorrectInputException("Id main office must be a positive " +
                 "integer greater than zero");
