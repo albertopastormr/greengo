@@ -134,6 +134,7 @@ public class ASServiceImp implements ASService {
             serviceBD.setActive(true);
             serviceBD.setAddress(tService.getAddress());
             serviceBD.setType(tService.getType());
+            serviceBD.setCapacity(tService.getCapacity());
             serviceBD.setNumVehiclesAttended(tService.getNumVehiclesAttended());
             id = serviceBD.getId();
 
@@ -269,8 +270,7 @@ public class ASServiceImp implements ASService {
     }
 
     private static void checkValuesForUpdate(TService tService) throws IncorrectInputException {
-        if (tService.getId() == null)
-            throw new IncorrectInputException("ID not specified");
+        if (tService.getId() == null) throw new IncorrectInputException("ID not specified");
 
         if (tService.getId() <= 0) throw new IncorrectInputException("ID must be a positive integer greater than zero");
 

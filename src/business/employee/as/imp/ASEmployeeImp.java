@@ -54,18 +54,15 @@ public class ASEmployeeImp implements ASEmployee {
             if (tEmployee.getType().equals("Permanent")) {
                 Permanent permanent = new Permanent((TPermanentEmployee) tEmployee);
                 permanent.setMainOffice(mainOffice);
-                permanent.setApportionment( ((TPermanentEmployee)tEmployee).getApportionment());
                 em.persist(permanent);
-                transaction.commit();
                 id = permanent.getId();
             } else if (tEmployee.getType().equals("Temporary")) {
                 Temporary temporary = new Temporary((TTemporaryEmployee) tEmployee);
                 temporary.setMainOffice(mainOffice);
-                temporary.setNumWorkedHours( ((TTemporaryEmployee) tEmployee).getNumWorkedHours());
                 em.persist(temporary);
-                transaction.commit();
                 id = temporary.getId();
             }
+            transaction.commit();
             em.close();
             emf.close();
 
@@ -159,12 +156,10 @@ public class ASEmployeeImp implements ASEmployee {
 
             if (tEmployee.getType().equals("Permanent")) {
                 Permanent permanent = em.find(Permanent.class, tEmployee.getId());
-                permanent.setMainOffice(mainOffice);
                 permanent.setApportionment( ((TPermanentEmployee)tEmployee).getApportionment());
                 em.persist(permanent);
             } else if (tEmployee.getType().equals("Temporary")) {
                 Temporary temporary = em.find(Temporary.class, tEmployee.getId());
-                temporary.setMainOffice(mainOffice);
                 temporary.setNumWorkedHours( ((TTemporaryEmployee) tEmployee).getNumWorkedHours());
                 em.persist(temporary);
             }

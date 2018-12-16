@@ -20,7 +20,6 @@ public class ASMainOfficeImp implements ASMainOffice {
         Integer id;
         checkValuesToCreate(tMainOffice);
 
-        MainOffice mainOfficeObject = new MainOffice(tMainOffice);
         try {
 
             EntityManagerFactory emf = Persistence.createEntityManagerFactory("greengo");
@@ -30,14 +29,16 @@ public class ASMainOfficeImp implements ASMainOffice {
             transaction.begin();
 
             Query query = em.createNamedQuery("MainOffice.findByaddress", MainOffice.class);
-            query.setParameter("address", mainOfficeObject.getAddress());
+            query.setParameter("address", tMainOffice.getAddress());
 
             List<MainOffice> mainOfficesList = query.getResultList();
 
             if (!mainOfficesList.isEmpty()) {
                 transaction.rollback();
-                throw new ASException("ERROR: There is a tMainOffice with the same address (" + tMainOffice.getAddress() + ") (duplication)");
+                throw new ASException("ERROR: There is a tMainOffice with the same address (" +
+                        tMainOffice.getAddress() + ") (duplication)");
             } else {
+                MainOffice mainOfficeObject = new MainOffice(tMainOffice);
                 em.persist(mainOfficeObject);
                 transaction.commit();
                 id = mainOfficeObject.getId();
@@ -131,9 +132,11 @@ public class ASMainOfficeImp implements ASMainOffice {
             if (mainOfficeBD == null) {
                 transaction.rollback();
                 throw new ASException("The MainOffice doesn't exist");
-            } else if (!addressMainOfficeList.isEmpty() && !addressMainOfficeList.get(0).getId().equals(mainOfficeBD.getId())) {
+            }
+            if (!addressMainOfficeList.isEmpty() && !addressMainOfficeList.get(0).getId().equals(mainOfficeBD.getId())) {
                 transaction.rollback();
-                throw new ASException("ERROR: There is a tMainOffice with the same address (" + tMainoffice.getAddress() + ") (duplication)");
+                throw new ASException("ERROR: There is a tMainOffice with the same address ("
+                        + tMainoffice.getAddress() + ") (duplication)");
             }
 
             id = mainOfficeBD.getId();
@@ -171,7 +174,8 @@ public class ASMainOfficeImp implements ASMainOffice {
                 transaction.rollback();
                 throw new ASException("The main office doesn't exist");
             }
-            tMainOffice = new TMainOffice(mainOffice.getId(), mainOffice.getCity(), mainOffice.getAddress(), mainOffice.isActive());
+            tMainOffice = new TMainOffice(mainOffice.getId(), mainOffice.getCity(), mainOffice.getAddress(),
+                    mainOffice.isActive());
             transaction.commit();
             em.close();
             emf.close();
@@ -219,7 +223,7 @@ public class ASMainOfficeImp implements ASMainOffice {
         Float result = 0f;
 
         if (idMainOffice == null) throw new IncorrectInputException("Id field can't be empty");
-        if (idMainOffice < 0) throw new IncorrectInputException("Id must be a positive integer greater than zero");
+        if (idMainOffice <= 0) throw new IncorrectInputException("Id must be a positive integer greater than zero");
 
         try {
 

@@ -82,8 +82,8 @@ public class ASContractImp implements ASContract {
     public ContractId drop(Integer mainOfficeId, Integer serviceId) throws ASException, IncorrectInputException {
         ContractId idRet;
 
-        if(mainOfficeId == null && serviceId == null) throw new IncorrectInputException("Id field can't be empty");
-        if(mainOfficeId <= 0 && serviceId <= 0) throw new IncorrectInputException("Id field must be a positive integer greater than zero");
+        if(mainOfficeId == null || serviceId == null) throw new IncorrectInputException("Id fields can't be empty");
+        if(mainOfficeId <= 0 || serviceId <= 0) throw new IncorrectInputException("Id fields must be a positive integer greater than zero");
 
         ContractId idContract = new ContractId(mainOfficeId, serviceId);
 
@@ -141,13 +141,7 @@ public class ASContractImp implements ASContract {
             MainOffice mainOffice = contract.getMainOffice();
             Service service = contract.getService();
 
-            if (mainOffice == null) {
-                transaction.rollback();
-                throw new ASException("ERROR: The Main Office doesn't exist");
-            } else if (service == null) {
-                transaction.rollback();
-                throw new ASException("ERROR: The Service doesn't exist");
-            } else if (!mainOffice.isActive()) {
+            if (!mainOffice.isActive()) {
                 transaction.rollback();
                 throw new ASException("ERROR: The Main Office is disabled");
             } else if (!service.isActive()) {
@@ -171,8 +165,8 @@ public class ASContractImp implements ASContract {
 
     @Override
     public TContract show(Integer mainOfficeId, Integer serviceId) throws ASException, IncorrectInputException{
-        if(mainOfficeId == null && serviceId == null) throw new IncorrectInputException("Id field can't be empty");
-        if(mainOfficeId <= 0 && serviceId <= 0) throw new IncorrectInputException("Id field must be a positive integer greater than zero");
+        if(mainOfficeId == null || serviceId == null) throw new IncorrectInputException("Id field can't be empty");
+        if(mainOfficeId <= 0 || serviceId <= 0) throw new IncorrectInputException("Id field must be a positive integer greater than zero");
 
         TContract tContract;
 
@@ -246,8 +240,6 @@ public class ASContractImp implements ASContract {
     }
 
     private static void checkValuesToUpdate(TContract contract) throws IncorrectInputException {
-        //if(contract.getId() == null) throw new IncorrectInputException("Id field must be empty");
-        //if(contract.getId() <= 0 ) throw new IncorrectInputException("Id field must be a positive integer greater than zero");
         if(contract.getServiceLevel() == null) throw new IncorrectInputException("Service level field can't be empty");
         if(contract.getServiceLevel() < 0) throw new IncorrectInputException("Service level field must be a positive integer");
     }
