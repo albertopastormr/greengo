@@ -32,7 +32,6 @@ class ASContractTest {
     private static TContract tContract2;
 
     @BeforeEach
-    @Test
     void setUp() throws ASException, IncorrectInputException {
 
 
@@ -45,7 +44,7 @@ class ASContractTest {
         tMainOffice = new TMainOffice(1,"manu","C/algomas",true);
         tService = new TService(1,1,true,"tipo planta", "~", 1);
         tContract = new TContract(1,1,1,true);
-        tContract2 = new TContract(4,1,1,true);
+        tContract2 = new TContract(2,1,1,true);
 
         asMainOffice.create(tMainOffice);
         asService.create(tService);
@@ -179,6 +178,7 @@ class ASContractTest {
 
     @Test
     void updateIncorrectMainOfficeActive() throws ASException, IncorrectInputException {
+        tContract.setActive(false);
         asContract.create(tContract);
         asMainOffice.drop(tContract.getIdMainOffice());
         assertThrows(ASException.class, () -> asContract.update(tContract));
@@ -193,6 +193,7 @@ class ASContractTest {
 
     @Test
     void updateIncorrectServiceActive() throws ASException, IncorrectInputException {
+        tContract.setActive(false);
         asContract.create(tContract);
         asService.drop(tContract.getIdService());
         assertThrows(ASException.class, () -> asContract.update(tContract));
@@ -208,7 +209,8 @@ class ASContractTest {
 
     @Test
     void updateIncorrectMainOfficeServiceActive() throws ASException, IncorrectInputException {
-        asContract.create(tContract);
+        ContractId idContract = asContract.create(tContract);
+        asContract.drop(idContract.getMainOfficeId(),idContract.getServiceId());
         asMainOffice.drop(tContract.getIdMainOffice());
         asService.drop(tContract.getIdService());
         assertThrows(ASException.class, () -> asContract.update(tContract));
@@ -233,6 +235,7 @@ class ASContractTest {
 
     @Test
     void showAllOK() throws ASException, IncorrectInputException {
+        asMainOffice.create(new TMainOffice(2,"Avila","C/Villamayor",true));
         asContract.create(tContract);
         asContract.create(tContract2);
         ArrayList<TContract> result = (ArrayList<TContract>) asContract.showAll();
@@ -242,8 +245,8 @@ class ASContractTest {
 
     @Test
     void showAllIncorrectActive() throws ASException, IncorrectInputException {
+        asMainOffice.create(new TMainOffice(2,"Avila","C/Villamayor",true));
         asContract.create(tContract);
-        tContract2.setActive(false);
         asContract.create(tContract2);
         asContract.drop(tContract2.getIdMainOffice(),tContract2.getIdService());
         ArrayList<TContract> result = (ArrayList<TContract>) asContract.showAll();

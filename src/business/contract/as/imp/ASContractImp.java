@@ -237,7 +237,7 @@ public class ASContractImp implements ASContract {
 
     private static void checkValuesToCreate(TContract contract) throws IncorrectInputException {
         if(contract.getServiceLevel() == null) throw new IncorrectInputException("Service level field can't be empty");
-        if(contract.getServiceLevel() < 0) throw new IncorrectInputException("Service level field must be a positive integer");
+        if(contract.getServiceLevel() <= 0) throw new IncorrectInputException("Service level field must be a positive integer");
         if(contract.getIdMainOffice() == null) throw new IncorrectInputException("Id main office field can't be empty");
         if(contract.getIdMainOffice() <= 0) throw new IncorrectInputException("Id main office must be a positive integer greater than zero");
         if(contract.getIdService() == null) throw new IncorrectInputException("Id service field can't be empty");

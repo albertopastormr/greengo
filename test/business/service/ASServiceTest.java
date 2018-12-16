@@ -63,11 +63,7 @@ public class ASServiceTest {
         assertThrows(ASException.class, ()-> as.create(tService2));
     }
 
-    @Test
-    void createIncorrectInputServiceIdNegative() throws ASException, IncorrectInputException { //-
-        tService.setId(-1);
-        assertThrows(IncorrectInputException.class, ()-> as.create(tService));
-    }
+
 
     @Test
     void createIncorrectInputServiceTypeNull(){ //-
