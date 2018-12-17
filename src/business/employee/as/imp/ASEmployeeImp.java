@@ -55,14 +55,15 @@ public class ASEmployeeImp implements ASEmployee {
                 Permanent permanent = new Permanent((TPermanentEmployee) tEmployee);
                 permanent.setMainOffice(mainOffice);
                 em.persist(permanent);
+                transaction.commit();
                 id = permanent.getId();
             } else if (tEmployee.getType().equals("Temporary")) {
                 Temporary temporary = new Temporary((TTemporaryEmployee) tEmployee);
                 temporary.setMainOffice(mainOffice);
                 em.persist(temporary);
+                transaction.commit();
                 id = temporary.getId();
             }
-            transaction.commit();
             em.close();
             emf.close();
 
