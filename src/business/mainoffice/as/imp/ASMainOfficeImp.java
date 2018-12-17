@@ -235,7 +235,7 @@ public class ASMainOfficeImp implements ASMainOffice {
 
 
 
-            MainOffice mainOffice = em.find(MainOffice.class,idMainOffice);
+            MainOffice mainOffice = em.find(MainOffice.class,idMainOffice,LockModeType.OPTIMISTIC);
 
             if(mainOffice == null){
                 transaction.rollback();
