@@ -87,8 +87,8 @@ public class ASEmployeeImp implements ASEmployee {
             EntityTransaction transaction = em.getTransaction();
 
             transaction.begin();
-
             Employee employee = em.find(Employee.class, idEmployee);
+
 
             if(employee == null){
                 transaction.rollback();
@@ -99,7 +99,7 @@ public class ASEmployeeImp implements ASEmployee {
                 transaction.rollback();
                 throw  new ASException("ERROR: The employee is already disabled");
             }
-
+            em.lock(employee.getMainOffice(), LockModeType.OPTIMISTIC_FORCE_INCREMENT);
             id = employee.getId();
             employee.setActive(false);
             transaction.commit();
