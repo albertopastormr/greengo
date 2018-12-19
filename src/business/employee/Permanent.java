@@ -41,8 +41,9 @@ public class Permanent extends Employee implements Serializable {
 
 	@Override
 	public Float getDetailedSalary() {
-		//TODO comprobar
-		return getSalary() + apportionment;
+		Float result;
+		result = getSalary() + apportionment;
+		return result;
 	}
 
 }

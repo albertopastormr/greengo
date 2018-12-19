@@ -233,24 +233,30 @@ public class ASMainOfficeImp implements ASMainOffice {
 
             transaction.begin();
 
-
-
             MainOffice mainOffice = em.find(MainOffice.class,idMainOffice,LockModeType.OPTIMISTIC);
 
             if(mainOffice == null){
                 transaction.rollback();
-                throw  new ASException("The Main Office doesn't exist");
+                throw new ASException("The Main Office doesn't exist");
+            }
+
+            if(!mainOffice.isActive()){
+                transaction.rollback();
+                throw new ASException("The MainOffice is disabled");
             }
 
             Collection<Employee> employeesList = mainOffice.getEmployee();
 
             for (Employee employee : employeesList) {
-                result += employee.getDetailedSalary();
+                em.lock(employee, LockModeType.OPTIMISTIC);
+                if(employee.isActive())
+                    result += employee.getDetailedSalary();
             }
 
             transaction.commit();
             em.close();
             emf.close();
+
 
         } catch (PersistenceException | EclipseLinkException e) {
             throw new ASException(e.getMessage());
