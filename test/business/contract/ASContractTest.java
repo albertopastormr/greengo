@@ -50,7 +50,6 @@ class ASContractTest {
         asService.create(tService);
     }
 
-    @Test
     boolean checkValuesTContract(TContract expected, TContract actual){
         return  expected.getServiceLevel().equals(actual.getServiceLevel())
                 && expected.getIdService().equals(actual.getIdService())

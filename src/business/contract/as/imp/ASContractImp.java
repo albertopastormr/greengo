@@ -31,7 +31,12 @@ public class ASContractImp implements ASContract {
 
             transaction.begin();
 
+            ContractId contractId = new ContractId(tContract.getIdMainOffice(), tContract.getIdService());
+
             Contract contractObject = new Contract(tContract);
+
+            Query contractIdQuery = em.createNamedQuery("Contract.findByid", Contract.class);
+            contractIdQuery.setParameter("id", contractId);
 
             Query serviceQuery = em.createNamedQuery("Service.findByid", Service.class);
             serviceQuery.setParameter("id", tContract.getIdService());
@@ -42,7 +47,12 @@ public class ASContractImp implements ASContract {
 
             List<Service> serviceList = serviceQuery.getResultList();
             List<MainOffice> mainOfficeList = mainOfficeQuery.getResultList();
+            List<ContractId> contractIdList = contractIdQuery.getResultList();
 
+            if(!contractIdList.isEmpty()){
+                transaction.rollback();
+                throw new ASException("ERROR: there is a contract with the same contract-id.");
+            }
             if(serviceList.isEmpty()){
                 transaction.rollback();
                 throw new ASException("ERROR: The service doesn't exist");

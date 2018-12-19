@@ -145,6 +145,10 @@ public class ASEmployeeImp implements ASEmployee {
                 throw new ASException("ERROR: There is an employee with the same idCardNumber" +
                         "(" + tEmployee.getIdCardNumber() + ") (duplication)");
             }
+            if(!employee.getType().equals(tEmployee.getType())){
+                transaction.rollback();
+                throw new ASException("ERROR: Type changing is not allowed");
+            }
             if (mainOffice == null) {
                 transaction.rollback();
                 throw new ASException("ERROR: The Main Office doesn't exist");
@@ -167,6 +171,7 @@ public class ASEmployeeImp implements ASEmployee {
 
             employee.setIdCardNumber(tEmployee.getIdCardNumber());
             employee.setSalary(tEmployee.getSalary());
+            employee.setActive(tEmployee.isActive());
             employee.setMainOffice(mainOffice);
 
             transaction.commit();
